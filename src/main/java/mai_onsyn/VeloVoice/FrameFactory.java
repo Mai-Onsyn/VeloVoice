@@ -719,6 +719,10 @@ public class FrameFactory {
                     return;
                 }
 
+                if (((SmoothTextField) saveBox.getChildren().get(1)).getTextField().getText().isEmpty()) {
+                    logger.prompt("还没指定输出路径呢");
+                    return;
+                }
                 File outputFolder = new File(((SmoothTextField) saveBox.getChildren().get(1)).getTextField().getText());
                 if (!outputFolder.exists()) if (!outputFolder.mkdirs()) {
                     logger.error("无法创建音频输出目录 - " + outputFolder.getAbsolutePath());
