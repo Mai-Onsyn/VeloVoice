@@ -1,0 +1,24 @@
+.slider {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+}
+
+.slider .thumb {
+    -fx-background-color: #00000000;
+}
+
+.slider .increment-button,
+.slider .decrement-button {
+    -fx-background-color: #333333;
+    -fx-padding: 5px;
+}
+
+.slider .tick-mark {
+    -fx-stroke: #000000;
+    -fx-stroke-width: 1px;
+}
+
+.slider .tick-label {
+    -fx-text-fill: #000000;
+    -fx-font-size: 12px;
+}
