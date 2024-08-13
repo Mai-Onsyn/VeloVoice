@@ -25,7 +25,7 @@ public class ConfigListener {
     private static final DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
     static boolean light_theme_cache = false;
-    static Color theme_color_cache = Color.CORNFLOWERBLUE;
+    static Color theme_color_cache = Color.DARKCYAN;
 
     static {
         try {
