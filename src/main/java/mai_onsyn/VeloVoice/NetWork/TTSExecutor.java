@@ -184,6 +184,7 @@ public class TTSExecutor {
                             try {
                                 data = client.sendText(UUID.randomUUID(), message);
                             } catch (InterruptedException e) {
+                                Thread.currentThread().interrupt();
                                 break rootLoop;
                             }
 
