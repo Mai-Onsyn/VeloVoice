@@ -916,7 +916,7 @@ public class FrameFactory {
             {
                 Label label = ModuleCreator.createLabel("超时时间(秒)");
 
-                SmoothSlider slider = ModuleCreator.createSlider(0, 30, timeoutSeconds);
+                SmoothSlider slider = ModuleCreator.createSlider(1, 30, timeoutSeconds);
                 SmoothTextField textField = ModuleCreator.createTextField();
                 textField.getTextField().setText(String.valueOf(timeoutSeconds));
 
@@ -959,7 +959,7 @@ public class FrameFactory {
             {
                 Label label = ModuleCreator.createLabel("切片最大长度");
 
-                SmoothSlider slider = ModuleCreator.createSlider(0, 512, textPieceSize);
+                SmoothSlider slider = ModuleCreator.createSlider(16, 512, textPieceSize);
                 SmoothTextField textField = ModuleCreator.createTextField();
                 textField.getTextField().setText(String.valueOf(textPieceSize));
 
@@ -1475,12 +1475,12 @@ public class FrameFactory {
                     isUpdating[0] = true;
                     switch (checkDecimal(nv)) {
                         case 0 -> {
-                            double value = Math.max(0, Math.min(slider.getMax(), Double.parseDouble(nv)));
+                            double value = Math.max(slider.getMin(), Math.min(slider.getMax(), Double.parseDouble(nv)));
                             slider.setValue(value);
-                            Platform.runLater(() -> textField.getTextField().setText(numberFormat.format(value)));
+                            if (value != Double.parseDouble(nv)) textField.getTextField().setText(numberFormat.format(value));
                         }
                         case 3 -> {
-                            Platform.runLater(() -> textField.getTextField().setText(ov));
+                            textField.getTextField().setText(ov);
                             defaultToolkit.beep();
                         }
                     }
@@ -1510,14 +1510,13 @@ public class FrameFactory {
                     isUpdating[0] = true;
                     switch (checkInteger(nv)) {
                         case 0 -> {
-                            double value = Math.max(0, Math.min(slider.getMax(), Integer.parseInt(nv)));
+                            int value = (int) Math.max(slider.getMin(), Math.min(slider.getMax(), Integer.parseInt(nv)));
                             slider.setValue(value);
-                            if (value != Integer.parseInt(nv)) {
-                                Platform.runLater(() -> textField.getTextField().setText(String.valueOf(value)));
-                            }
+                            if (value != Integer.parseInt(nv)) textField.getTextField().setText(String.valueOf(value));
+
                         }
                         case 2 -> {
-                            Platform.runLater(() -> textField.getTextField().setText(ov));
+                            textField.getTextField().setText(ov);
                             defaultToolkit.beep();
                         }
                     }

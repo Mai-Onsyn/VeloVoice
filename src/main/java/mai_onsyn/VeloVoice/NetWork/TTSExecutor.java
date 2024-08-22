@@ -9,6 +9,7 @@ import mai_onsyn.VeloVoice.NetWork.TTS.TTSClient;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
@@ -140,7 +141,7 @@ public class TTSExecutor {
         currentProgress.setValue(0);
 
         List<Thread> virtualThreads = new ArrayList<>(THREAD_COUNT);
-        try (FileOutputStream fos = new FileOutputStream(output)) {
+        try {
             List<String> tasks = new ArrayList<>(input);
             List<Integer> taskIDs = new ArrayList<>(taskCount);
             for (int i = 0; i < taskCount; i++) taskIDs.add(i);
@@ -213,11 +214,16 @@ public class TTSExecutor {
             CompletableFuture<?> threadsMonitor = CompletableFuture.allOf(monitorList);
             threadsMonitor.get();
 
-            for (int i = 0; i < taskCount; i++) {
-                for (byte[] bytes : resultPool.get(i)) {
-                    fos.write(bytes);
+            try (FileOutputStream fos = new FileOutputStream(output)) {
+                for (int i = 0; i < taskCount; i++) {
+                    for (byte[] bytes : resultPool.get(i)) {
+                        fos.write(bytes);
+                    }
                 }
+            } catch (IOException e) {
+                logger.error("写入文件时发生错误: " + e);
             }
+
         } catch (Exception e) {
             if (e instanceof InterruptedException) {
                 virtualThreads.forEach(Thread::interrupt);
