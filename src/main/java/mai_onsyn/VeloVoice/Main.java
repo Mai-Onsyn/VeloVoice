@@ -3,8 +3,6 @@ package mai_onsyn.VeloVoice;
 import javafx.application.Application;
 import mai_onsyn.VeloVoice.App.ConfigListener;
 
-import java.util.Objects;
-
 public class Main {
 
     static {

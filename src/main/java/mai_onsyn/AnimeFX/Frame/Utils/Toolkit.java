@@ -22,6 +22,7 @@ import javafx.util.Duration;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 
 public class Toolkit {
 
@@ -53,6 +54,12 @@ public class Toolkit {
     }
 
     public static Image loadImage(String uri) throws IOException {
+
+        URL resource = Toolkit.class.getResource(uri.startsWith("/") ? uri : "/" + uri);
+        if (resource != null) {
+            return new Image(resource.toString());
+        }
+
         try {
             return new Image(uri);
         } catch (IllegalArgumentException _) {}

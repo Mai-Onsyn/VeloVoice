@@ -64,6 +64,12 @@ public class AutoPane extends Pane {
         flushWidth(super.getPrefWidth());
         flushHeight(super.getHeight());
     }
+    public void delete(Node node) {
+        nodeAlignData.remove(node);
+        flipRelativeMode.remove(node);
+        rest.remove(node);
+        super.getChildren().remove(node);
+    }
     public void flipRelativeMode(Node node, Motion motion) {
         Boolean[] data = flipRelativeMode.get(node);
         if (data == null) {

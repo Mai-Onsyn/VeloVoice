@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ibm.icu.impl.locale.XCldrStub;
 import javafx.scene.paint.Color;
-import mai_onsyn.AnimeFX.Frame.Module.FXLogger;
 import mai_onsyn.AnimeFX.Frame.Utils.Toolkit;
 
 import java.io.FileWriter;
@@ -56,6 +55,11 @@ public class ConfigListener {
             isAppendVolumeName = configJson.getBoolean("WebChapterAppendVolumeName");
             isAppendOrdinal = configJson.getBoolean("SaveFileAppendOrdinal");
 
+            splitChapter = configJson.getBoolean("SplitChapter");
+            isAppendNameForSplitChapter = configJson.getBoolean("AppendNameForSplitChapter");
+            maxAudioDuration = configJson.getInteger("MaxAudioDuration");
+            previewText = configJson.getString("PreviewText");
+
             logLevel = configJson.getInteger("LogLevel");
         }
         catch (Exception e) {
@@ -96,6 +100,11 @@ public class ConfigListener {
         configJson.put("WebChapterAppendVolumeName", isAppendVolumeName);
         configJson.put("SaveFileAppendOrdinal", isAppendOrdinal);
 
+        configJson.put("AppendNameForSplitChapter", isAppendNameForSplitChapter);
+        configJson.put("SplitChapter", splitChapter);
+        configJson.put("MaxAudioDuration", maxAudioDuration);
+        configJson.put("PreviewText", previewText);
+
         configJson.put("LogLevel", logLevel);
 
         try (FileWriter fw = new FileWriter(configPath)) {
@@ -121,6 +130,11 @@ public class ConfigListener {
         private static boolean cachedIsAppendVolumeName;
         private static boolean cachedIsAppendOrdinal;
 
+        private static boolean cachedSplitChapter;
+        private static boolean cachedIsAppendNameForSplitChapter;
+        public static double cachedMaxAudioDuration;
+        public static String cachedPreviewText;
+
         static void cacheCurrentValues() {
             cached_LIGHT_THEME = LIGHT_THEME;
             cached_BACKGROUND_AMBIGUITY = BACKGROUND_AMBIGUITY;
@@ -136,6 +150,11 @@ public class ConfigListener {
             cachedTextSplitSymbols = new ArrayList<>(textSplitSymbols);
             cachedIsAppendVolumeName = isAppendVolumeName;
             cachedIsAppendOrdinal = isAppendOrdinal;
+
+            cachedPreviewText = previewText;
+            cachedSplitChapter = splitChapter;
+            cachedIsAppendNameForSplitChapter = isAppendNameForSplitChapter;
+            cachedMaxAudioDuration = maxAudioDuration;
         }
 
         static boolean checkForChanges() {
@@ -150,7 +169,11 @@ public class ConfigListener {
                     textPieceSize != cachedTextPieceSize ||
                     !Objects.equals(textSplitSymbols, cachedTextSplitSymbols) ||
                     isAppendVolumeName != cachedIsAppendVolumeName ||
-                    isAppendOrdinal != cachedIsAppendOrdinal;
+                    isAppendOrdinal != cachedIsAppendOrdinal ||
+                    isAppendNameForSplitChapter != cachedIsAppendNameForSplitChapter ||
+                    !Objects.equals(previewText, cachedPreviewText) ||
+                    splitChapter != cachedSplitChapter ||
+                    maxAudioDuration != cachedMaxAudioDuration;
         }
     }
 

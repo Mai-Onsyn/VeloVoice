@@ -6,6 +6,7 @@ import java.util.List;
 
 public class AppConfig {
     public enum LoadType {
+        LOCAL_DIRECTLY,
         LOCAL_FULL,
         LOCAL_VOLUMED,
         WENKU8
@@ -13,7 +14,7 @@ public class AppConfig {
 
     public static boolean pausing = false;
 
-    public static LoadType loadType = LoadType.LOCAL_FULL;
+    public static LoadType loadType = LoadType.LOCAL_DIRECTLY;
     public static String voiceModel = "zh-CN-XiaoyiNeural";
     public static double configWindowChangeWidth = 820;
 
@@ -27,7 +28,9 @@ public class AppConfig {
     public static List<Character> textSplitSymbols = new ArrayList<>(Arrays.asList('。', '？', '！', '…', '，', ' '));
     public static boolean isAppendVolumeName = true;
     public static boolean isAppendOrdinal = true;
+
+    public static String previewText = "全名制作人们大家好，我是练习时长2.5年的个人练习生0d00，喜欢唱、跳、ciallo、0b0000001011010001";
     public static boolean splitChapter = false;
-    public static boolean isAppendNameForSplitChapter = false;
-    public static int maxMp3Duration = 20;
+    public static double maxAudioDuration = 20;
+    public static boolean isAppendNameForSplitChapter = true;
 }

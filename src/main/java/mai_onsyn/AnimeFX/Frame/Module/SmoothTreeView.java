@@ -319,6 +319,20 @@ public class SmoothTreeView extends AutoPane {
                 menu.addItem(new HBox(createFileButton), new HBox(createDirButton));
             }
 
+            DiffusionButton renameButton = popupButtonStyle.createButton("重命名");
+            renameButton.setOnMouseClicked(event -> {
+                NamePopup namePopup = new NamePopup("重命名", 200, 100)
+                        .borderShape(20)
+                        .popupStyle(namePopupStyle)
+                        .init();
+                namePopup.showOnCenter();
+                menu.hide();
+                namePopup.setOnTextAvailable((o, ov, text) -> {
+                    cell.setText(text);
+                });
+            });
+            menu.addItem(new HBox(renameButton));
+
             DiffusionButton deleteButton;
             if (cell != root.getData()) {
                 deleteButton = popupButtonStyle.createButton("删除");

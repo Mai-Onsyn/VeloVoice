@@ -196,6 +196,11 @@ public class SmoothSwitch extends Pane {
             }
         });
 
+        super.disabledProperty().addListener((o, ov, nv) -> {
+            if (nv) super.setOpacity(0.5);
+            else super.setOpacity(1);
+        });
+
         super.setClip(borderClip);
         super.getChildren().addAll(border, circle);
 

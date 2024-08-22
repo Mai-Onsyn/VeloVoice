@@ -1,8 +1,9 @@
 package mai_onsyn.VeloVoice.NetWork;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONArray;
+//import com.alibaba.fastjson2.JSON;
+//import com.alibaba.fastjson2.JSONArray;
 
 import java.io.*;
 import java.net.URI;
@@ -43,7 +44,8 @@ public class Voice {
             response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.body() != null) {
-                JSONArray jsonArray = JSON.parseArray(response.body());
+                //JSONArray jsonArray = JSON.parseArray(response.body());
+                JSONArray jsonArray = JSONArray.parseArray(response.body());
                 voiceList.clear();
                 for (Object o : jsonArray) {
                     voiceList.add(com.alibaba.fastjson.JSON.parseObject(o.toString()));

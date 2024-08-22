@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -14,6 +15,7 @@ import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -28,13 +30,14 @@ import mai_onsyn.AnimeFX.Frame.Module.Assistant.DataCell;
 import mai_onsyn.AnimeFX.Frame.Styles.CellStyle;
 import mai_onsyn.AnimeFX.Frame.Styles.NamePopupStyle;
 import mai_onsyn.AnimeFX.Frame.Utils.Toolkit;
-import mai_onsyn.VeloVoice.App.Runtime;
 import mai_onsyn.VeloVoice.NetWork.Crawler.Websites.WenKu8;
 import mai_onsyn.VeloVoice.NetWork.TTS.EdgeTTSClient;
+import mai_onsyn.VeloVoice.NetWork.TTS.TTSClient;
 import mai_onsyn.VeloVoice.NetWork.Voice;
 import mai_onsyn.VeloVoice.Text.TTS;
 import mai_onsyn.VeloVoice.Text.TextFactory;
 import mai_onsyn.VeloVoice.Text.TextLoader;
+import mai_onsyn.VeloVoice.Utils.AudioPlayer;
 import mai_onsyn.VeloVoice.Utils.Structure;
 
 import java.io.File;
@@ -42,8 +45,8 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.UUID;
 
 import static mai_onsyn.VeloVoice.App.AppConfig.*;
 import static mai_onsyn.VeloVoice.App.Runtime.*;
@@ -63,40 +66,24 @@ public class FrameFactory {
 
         AutoPane loadBox = new AutoPane();
         {
-            Label typeLabel = new Label("加载模式");
-            typeLabel.setFont(FONT_NORMAL);
-            typeLabel.setTextFill(TEXT_COLOR);
+            Label label = ModuleCreator.createLabel("加载模式");
 
             List<DiffusionButton> choices = new ArrayList<>();
             List<LoadType> loadTypes = List.of(
+                    LoadType.LOCAL_DIRECTLY,
                     LoadType.LOCAL_FULL,
                     LoadType.LOCAL_VOLUMED,
                     LoadType.WENKU8
             );
             List<String> choiceButtonNames = List.of(
+                    "本地(文件)",
                     "本地(全集)",
                     "本地(分卷)",
                     "轻小说文库"
             );
-            SmoothChoiceBox choiceBox = new SmoothChoiceBox(25)
-                    .font(FONT_NORMAL)
-                    .popupAnimeDuration(100)
-                    .borderShape(10)
-                    .popupBorderShape(10)
-                    .popupMaxHeight(300)
-                    .borderColor(THEME_COLOR)
-                    .bgColor(MODULE_BG_COLOR)
-                    .bgFocusColor(BUTTON_FOCUS_COLOR)
-                    .fillColor(BUTTON_PRESSED_COLOR)
-                    .textColor(TEXT_COLOR)
-                    .textFocusColor(BUTTON_TEXT_FOCUS_COLOR)
-                    .borderRadius(0.5)
-                    .height(fontSize * 1.4)
-                    .width(fontSize * 5)
-                    .animeDuration(BUTTON_ANIME_DURATION)
-                    .init();
+            SmoothChoiceBox choiceBox = ModuleCreator.createChoiceBox(FONT_NORMAL, 300);
             choiceBox.setText(choiceButtonNames.getFirst());
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 4; i++) {
                 int I = i;
                 DiffusionButton choiceButton = new DiffusionButton()
                         .name(choiceButtonNames.get(i))
@@ -110,7 +97,7 @@ public class FrameFactory {
                         .borderShape(10)
                         .animeDuration(BUTTON_ANIME_DURATION)
                         .init();
-                choiceButton.setOnMouseClicked(event -> {
+                choiceButton.setOnMouseClicked(_ -> {
                     loadType = loadTypes.get(I);
                     choiceBox.setText(choiceButtonNames.get(I));
                 });
@@ -118,10 +105,10 @@ public class FrameFactory {
             }
             choiceBox.addItem(choices.toArray(new DiffusionButton[0]));
 
-            loadBox.setPosition(typeLabel, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
+            loadBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
             loadBox.setPosition(choiceBox, false, fontSize * 4, 0, 0, 0);
 
-            loadBox.getChildren().addAll(typeLabel, choiceBox);
+            loadBox.getChildren().addAll(label, choiceBox);
         }
 
         treeView = new SmoothTreeView(new ThemedCellStyle())
@@ -138,54 +125,36 @@ public class FrameFactory {
                 .namePopupStyle(new ThemedNamePopupStyle())
                 .init();
 
-        SmoothTextField inputField = new SmoothTextField()
-                .borderShape(10)
-                .borderColor(THEME_COLOR)
-                .bgColor(MODULE_BG_COLOR)
-                .borderRadius(0.5)
-                .font(FONT_SMALLER)
-                .textColor(TEXT_COLOR)
-                .buttonStyle(buttonStyle)
-                .subLineColor(TEXT_COLOR)
-                .init();
+        SmoothTextField inputField = ModuleCreator.createTextField();
         inputField.getTextField().setPromptText("txt所在文件夹/目录地址");
         //inputField.getTextField().setText("D:\\Users\\Desktop\\Test\\FullModeTest");
+
+        treeView.setOnDragOver(event -> {
+            if (event.getDragboard().hasFiles()) {
+                event.acceptTransferModes(TransferMode.COPY);
+            }
+            event.consume();
+        });
+
+        treeView.setOnDragDropped(event -> {
+            event.setDropCompleted(true);
+            event.consume();
+
+            List<File> files = event.getDragboard().getFiles();
+            if (files == null || files.isEmpty()) return;
+
+            Structure<List<String>> parent = new Structure<>("Root");
+            for (File file : files) {
+                collectFilesToTreeView(file, parent);
+            }
+            Structure.Factory.writeToTreeView(parent, treeView, true);
+        });
 
 
         AutoPane operationPane = new AutoPane();
         {
-            DiffusionButton saveTreeButton = new DiffusionButton()
-                    .name("保存文本结构")
-                    .height(fontSize * 1.4)
-                    .width(fontSize * 5)
-                    .borderShape(10)
-                    .borderColor(THEME_COLOR)
-                    .bgColor(MODULE_BG_COLOR)
-                    .bgFocusColor(BUTTON_FOCUS_COLOR)
-                    .fillColor(BUTTON_PRESSED_COLOR)
-                    .textColor(TEXT_COLOR)
-                    .textFocusColor(BUTTON_TEXT_FOCUS_COLOR)
-                    .borderRadius(0.5)
-                    .font(FONT_NORMAL)
-                    .animeDuration(BUTTON_ANIME_DURATION)
-                    .init();
-
-
-            DiffusionButton loadButton = new DiffusionButton()
-                    .name("加载")
-                    .height(fontSize * 1.4)
-                    .width(fontSize * 3)
-                    .borderShape(10)
-                    .borderColor(THEME_COLOR)
-                    .bgColor(MODULE_BG_COLOR)
-                    .bgFocusColor(BUTTON_FOCUS_COLOR)
-                    .fillColor(BUTTON_PRESSED_COLOR)
-                    .textColor(TEXT_COLOR)
-                    .textFocusColor(BUTTON_TEXT_FOCUS_COLOR)
-                    .borderRadius(0.5)
-                    .font(FONT_NORMAL)
-                    .animeDuration(BUTTON_ANIME_DURATION)
-                    .init();
+            DiffusionButton saveTreeButton = ModuleCreator.createButton("保存文本结构");
+            DiffusionButton loadButton = ModuleCreator.createButton("加载");
 
             loadButton.setOnMouseClicked(event -> {
                 if (event.getButton() == MouseButton.PRIMARY) {
@@ -197,64 +166,38 @@ public class FrameFactory {
                         }
                         logger.prompt("尝试加载 - " + urlString);
 
-                        Structure<List<String>> loadStructure;
+                        Structure<List<String>> rootStructure;
 
                         try {
                             switch (loadType) {
-                                case LOCAL_FULL -> {
+                                case LOCAL_DIRECTLY, LOCAL_FULL, LOCAL_VOLUMED -> {
                                     File targetFolder = new File(urlString);
                                     if (!targetFolder.exists()) {
                                         logger.error("指定文件夹不存在 - " + urlString);
                                         return;
                                     }
-                                    File[] series = targetFolder.listFiles((dir, name) -> name.endsWith(".txt"));
+                                    File[] series = targetFolder.listFiles((_, name) -> name.endsWith(".txt"));
                                     if (series == null || series.length == 0) {
                                         logger.error("指定文件夹内没有可读取的txt文件");
                                         return;
                                     }
-                                    loadStructure = new Structure<>("Root");
+                                    rootStructure = new Structure<>("Root");
                                     for (File file : series) {
-                                        String fileName = file.getName();
-                                        Structure<List<String>> seriesStructure = Structure.Factory.of(TextFactory.parseFromSeries(TextLoader.load(file)));
-                                        seriesStructure.setName(fileName.substring(0, fileName.lastIndexOf(".")));
-                                        loadStructure.getChildren().add(seriesStructure);
-                                        logger.prompt("已加载 - " + seriesStructure.getName());
+                                        collectFilesToTreeView(file, rootStructure);
                                     }
-                                    Structure.Factory.writeToTreeView(loadStructure, treeView, true);
-                                }
-                                case LOCAL_VOLUMED -> {
-                                    File targetFolder = new File(urlString);
-                                    if (!targetFolder.exists()) {
-                                        logger.error("指定文件夹不存在 - " + urlString);
-                                        return;
-                                    }
-                                    File[] volumes = targetFolder.listFiles((dir, name) -> name.endsWith(".txt"));
-                                    if (volumes == null || volumes.length == 0) {
-                                        logger.error("指定文件夹内没有可读取的txt文件");
-                                        return;
-                                    }
-                                    loadStructure = new Structure<>("Root");
-                                    for (File file : volumes) {
-                                        Structure<List<String>> volumesStructure = Structure.Factory.of(TextFactory.parseFromVolume(TextLoader.load(file)));
-                                        loadStructure.getChildren().add(volumesStructure);
-                                        logger.prompt("已加载 - " + volumesStructure.getName());
-                                    }
-                                    //System.out.println(loadStructure);
-                                    Structure.Factory.writeToTreeView(loadStructure, treeView, true);
-
+                                    Structure.Factory.writeToTreeView(rootStructure, treeView, true);
                                 }
                                 case WENKU8 -> {
                                     if (urlString.contains("https://www.wenku8.net/book/") || urlString.contains("https://www.wenku8.net/novel/")) {
-                                        loadStructure = new WenKu8(urlString).getContents();
-                                        logger.prompt("已加载 - " + loadStructure.getName());
-                                        Structure.Factory.writeToTreeView(loadStructure, treeView, false);
+                                        rootStructure = new WenKu8(urlString).getContents();
+                                        logger.prompt("已加载 - " + rootStructure.getName());
+                                        Structure.Factory.writeToTreeView(rootStructure, treeView, false);
                                     }
                                     else logger.error(String.format("加载失败 - \"%s\" 不是正确的轻小说文库小说地址", urlString));
                                 }
                             }
                         } catch (Exception e) {
-                            if (e instanceof NoSuchElementException) logger.error("加载失败，不支持的格式 - " + e);
-                            else logger.error("加载失败 - " + e);
+                            logger.error("加载失败 - " + e);
                         }
                     });
                 }
@@ -301,6 +244,46 @@ public class FrameFactory {
         return pane;
     }
 
+    private static void collectFilesToTreeView(File file, Structure<List<String>> parent) {
+        if (file.isFile()) {
+            String fileName = file.getName();
+            if (file.getName().endsWith(".txt")) {
+                fileName = fileName.substring(0, fileName.length() - 4);
+                try {
+                    Structure<List<String>> children;
+                    switch (loadType) {
+                        case LOCAL_FULL -> {
+                            children = Structure.Factory.of(TextFactory.parseFromSeries(TextLoader.load(file)));
+                            children.setName(fileName);
+                        }
+                        case LOCAL_VOLUMED -> {
+                            children = Structure.Factory.of(TextFactory.parseFromVolume(TextLoader.load(file)));
+                        }
+                        case LOCAL_DIRECTLY -> {
+                            children = new Structure<>(fileName, new ArrayList<>(List.of(TextLoader.load(file))));
+                        }
+                        default -> children = new Structure<>("null");
+                    }
+                    logger.prompt("已加载 - " + file.getName());
+                    parent.getChildren().add(children);
+                } catch (Exception e) {
+                    logger.warn(String.format("加载失败：%s - %s", file.getAbsolutePath(), e));
+                }
+            }
+        }
+        else if (file.isDirectory()) {
+            Structure<List<String>> subStructure = new Structure<>(file.getName());
+            File[] subFiles = file.listFiles();
+            if (subFiles != null) {
+                for (File subFile : subFiles) {
+                    collectFilesToTreeView(subFile, subStructure);
+                }
+            }
+            parent.getChildren().add(subStructure);
+        }
+        else logger.warn(String.format("Not a correct File : %s", file.getAbsolutePath()));
+    }
+
     public static TextArea MAIN_PRESENT_AREA;
     public static AutoPane getTextArea() {
         AutoPane pane = new AutoPane();
@@ -327,27 +310,9 @@ public class FrameFactory {
 
         AutoPane modelBox = new AutoPane();
         {
-            Label modelLabel = new Label("模型");
-            modelLabel.setFont(FONT_NORMAL);
-            modelLabel.setTextFill(TEXT_COLOR);
+            Label label = ModuleCreator.createLabel("模型");
 
-            SmoothChoiceBox voiceChoiceBox = new SmoothChoiceBox(25)
-                    .font(FONT_SMALLER)
-                    .popupAnimeDuration(100)
-                    .borderShape(10)
-                    .popupBorderShape(10)
-                    .popupMaxHeight(600)
-                    .borderColor(THEME_COLOR)
-                    .bgColor(MODULE_BG_COLOR)
-                    .bgFocusColor(BUTTON_FOCUS_COLOR)
-                    .fillColor(BUTTON_PRESSED_COLOR)
-                    .textColor(TEXT_COLOR)
-                    .textFocusColor(BUTTON_TEXT_FOCUS_COLOR)
-                    .borderRadius(0.5)
-                    .height(fontSize * 1.4)
-                    .width(fontSize * 12)
-                    .animeDuration(BUTTON_ANIME_DURATION)
-                    .init();
+            SmoothChoiceBox voiceChoiceBox = ModuleCreator.createChoiceBox(FONT_SMALLER, 600);
             List<DiffusionButton> choices = new ArrayList<>(Voice.getVoiceList().size());
             voiceChoiceBox.setText(Voice.get(voiceModel).getString("ShortName"));
             EdgeTTSClient.setVoice(Voice.get(voiceModel));
@@ -373,55 +338,52 @@ public class FrameFactory {
             }
             voiceChoiceBox.addItem(choices.toArray(new DiffusionButton[0]));
 
+            DiffusionButton preview = ModuleCreator.createButton("试听", FONT_SMALLER, 10);
 
-            modelBox.setPosition(modelLabel, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
-            modelBox.setPosition(voiceChoiceBox, false, fontSize * 2.5, 0, 0, fontSize * 1.4);
+            preview.setOnMouseClicked(event -> {
+                if (event.getButton() != MouseButton.PRIMARY) return;
+
+
+                Thread.ofVirtual().name("Preview-Thread").start(() -> {
+                    try {
+                        logger.prompt("开始加载预览语音");
+                        TTSClient ttsClient = new EdgeTTSClient();
+                        ttsClient.connect();
+                        List<byte[]> audioByteArrayList = ttsClient.sendText(UUID.randomUUID(), previewText);
+                        ttsClient.close();
+                        logger.prompt("正在播放预览语音");
+                        AudioPlayer.play(audioByteArrayList);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            });
+
+
+            modelBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
+            modelBox.setPosition(voiceChoiceBox, false, fontSize * 2.5, 50, 0, fontSize * 1.4);
+            modelBox.setPosition(preview, false, 40, 0, 0, fontSize * 1.4);
             modelBox.flipRelativeMode(voiceChoiceBox, AutoPane.Motion.BOTTOM);
+            modelBox.flipRelativeMode(preview, AutoPane.Motion.LEFT);
+            modelBox.flipRelativeMode(preview, AutoPane.Motion.BOTTOM);
 
-            modelBox.getChildren().addAll(modelLabel, voiceChoiceBox);
+            modelBox.getChildren().addAll(label, voiceChoiceBox, preview);
         }
 
         AutoPane rateBox = new AutoPane();
         {
-            Label label = new Label("语速");
-            label.setFont(FONT_NORMAL);
-            label.setTextFill(TEXT_COLOR);
+            Label label = ModuleCreator.createLabel("语速");
 
-            Circle thumb = new Circle(10);
-            thumb.setStroke(THEME_COLOR);
-            thumb.setStrokeWidth(0.5);
-            SmoothSlider slider = new SmoothSlider(0.05, 2, 1.75)
-                    .thumb(thumb)
-                    .trackColor(SLIDER_BG_COLOR)
-                    .trackProgressColor(TRANSPERTANT_THEME_COLOR)
-                    .thumbColor(SLIDER_THUMB_COLOR)
-                    .hoverColor(SLIDER_THUMB_HOVER_COLOR)
-                    .pressedColor(SLIDER_THUMB_PRESSED_COLOR)
-                    .init();
-            SmoothTextField textField = new SmoothTextField()
-                    .borderShape(10)
-                    .borderColor(THEME_COLOR)
-                    .bgColor(MODULE_BG_COLOR)
-                    .borderRadius(0.5)
-                    .font(FONT_SMALLER)
-                    .textColor(TEXT_COLOR)
-                    .buttonStyle(buttonStyle)
-                    .subLineColor(TEXT_COLOR)
-                    .init();
+            SmoothSlider slider = ModuleCreator.createSlider(0.05, 2, 1.75);
+            SmoothTextField textField = ModuleCreator.createTextField();
             textField.getTextField().setText("1.75");
             EdgeTTSClient.setVoiceRate(1.75);
 
             rateBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
             rateBox.setPosition(textField, false, 40, 0, 0, 0);
             rateBox.flipRelativeMode(textField, AutoPane.Motion.LEFT);
-
-            Rectangle sliderClip = new Rectangle(100, 50);
-            slider.setClip(sliderClip);
-            sliderClip.setLayoutX(10);
-            sliderClip.setLayoutY(12);
-            sliderClip.setHeight(40);
             rateBox.setPosition(slider, false, fontSize * 2.5 - 25, 30, -15, 0);
-            slider.widthProperty().addListener((o, ov, nv) -> sliderClip.setWidth(nv.doubleValue() - 20));
+
             boolean[] isUpdating = new boolean[1];
             slider.valueProperty().addListener((o, ov, nv) -> {
                 double value = Math.round(nv.doubleValue() / 0.05) * 0.05;
@@ -433,80 +395,24 @@ public class FrameFactory {
                 }
             });
 
-            textField.getTextField().textProperty().addListener((o, ov, nv) -> {
-                if (!isUpdating[0]) {
-
-                    isUpdating[0] = true;
-                    switch (checkDecimal(nv)) {
-                        case 0 -> {
-                            double value = Math.max(0, Math.min(slider.getMax(), Double.parseDouble(nv)));
-                            slider.setValue(value);
-                            if (value !=Double.parseDouble(nv)) {
-                                textField.getTextField().setText(String.valueOf(value));
-                            }
-                        }
-                        case 3 -> {
-                            textField.getTextField().setText(ov);
-                            defaultToolkit.beep();
-                        }
-                    }
-                    isUpdating[0] = false;
-                }
-            });
-            textField.getTextField().focusedProperty().addListener((o, ov, nv) -> {
-                String text = textField.getTextField().getText();
-                switch (checkDecimal(text)) {
-                    case 1 -> {
-                        textField.getTextField().setText(text + "0");
-                        slider.setValue(Double.parseDouble(text + "0"));
-                    }
-                    case 2, 3 -> slider.setValue(1.5);
-                }
-            });
+            ModuleCreator.setAsDecimalField(textField, isUpdating, slider);
 
             rateBox.getChildren().addAll(label, slider, textField);
         }
 
         AutoPane volumeBox = new AutoPane();
         {
-            Label label = new Label("音量");
-            label.setFont(FONT_NORMAL);
-            label.setTextFill(TEXT_COLOR);
+            Label label = ModuleCreator.createLabel("音量");
 
-            Circle thumb = new Circle(10);
-            thumb.setStroke(THEME_COLOR);
-            thumb.setStrokeWidth(0.5);
-            SmoothSlider slider = new SmoothSlider(0.05, 1.5, 1)
-                    .thumb(thumb)
-                    .trackColor(SLIDER_BG_COLOR)
-                    .trackProgressColor(TRANSPERTANT_THEME_COLOR)
-                    .thumbColor(SLIDER_THUMB_COLOR)
-                    .hoverColor(SLIDER_THUMB_HOVER_COLOR)
-                    .pressedColor(SLIDER_THUMB_PRESSED_COLOR)
-                    .init();
-            SmoothTextField textField = new SmoothTextField()
-                    .borderShape(10)
-                    .borderColor(THEME_COLOR)
-                    .bgColor(MODULE_BG_COLOR)
-                    .borderRadius(0.5)
-                    .font(FONT_SMALLER)
-                    .textColor(TEXT_COLOR)
-                    .buttonStyle(buttonStyle)
-                    .subLineColor(TEXT_COLOR)
-                    .init();
+            SmoothSlider slider = ModuleCreator.createSlider(0.05, 1.5, 1);
+            SmoothTextField textField = ModuleCreator.createTextField();
             textField.getTextField().setText("1");
 
             volumeBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
             volumeBox.setPosition(textField, false, 40, 0, 0, 0);
             volumeBox.flipRelativeMode(textField, AutoPane.Motion.LEFT);
 
-            Rectangle sliderClip = new Rectangle(100, 50);
-            slider.setClip(sliderClip);
-            sliderClip.setLayoutX(10);
-            sliderClip.setLayoutY(12);
-            sliderClip.setHeight(40);
             volumeBox.setPosition(slider, false, fontSize * 2.5 - 25, 30, -15, 0);
-            slider.widthProperty().addListener((o, ov, nv) -> sliderClip.setWidth(nv.doubleValue() - 20));
             boolean[] isUpdating = new boolean[1];
             slider.valueProperty().addListener((o, ov, nv) -> {
                 double value = Math.round(nv.doubleValue() / 0.05) * 0.05;
@@ -518,80 +424,24 @@ public class FrameFactory {
                 }
             });
 
-            textField.getTextField().textProperty().addListener((o, ov, nv) -> {
-                if (!isUpdating[0]) {
-
-                    isUpdating[0] = true;
-                    switch (checkDecimal(nv)) {
-                        case 0 -> {
-                            double value = Math.max(0, Math.min(slider.getMax(), Double.parseDouble(nv)));
-                            slider.setValue(value);
-                            if (value !=Double.parseDouble(nv)) {
-                                textField.getTextField().setText(String.valueOf(value));
-                            }
-                        }
-                        case 3 -> {
-                            textField.getTextField().setText(ov);
-                            defaultToolkit.beep();
-                        }
-                    }
-                    isUpdating[0] = false;
-                }
-            });
-            textField.getTextField().focusedProperty().addListener((o, ov, nv) -> {
-                String text = textField.getTextField().getText();
-                switch (checkDecimal(text)) {
-                    case 1 -> {
-                        textField.getTextField().setText(text + "0");
-                        slider.setValue(Double.parseDouble(text + "0"));
-                    }
-                    case 2, 3 -> slider.setValue(1);
-                }
-            });
+            ModuleCreator.setAsDecimalField(textField, isUpdating, slider);
 
             volumeBox.getChildren().addAll(label, slider, textField);
         }
 
         AutoPane pitchBox = new AutoPane();
         {
-            Label label = new Label("音调");
-            label.setFont(FONT_NORMAL);
-            label.setTextFill(TEXT_COLOR);
+            Label label = ModuleCreator.createLabel("音调");
 
-            Circle thumb = new Circle(10);
-            thumb.setStroke(THEME_COLOR);
-            thumb.setStrokeWidth(0.5);
-            SmoothSlider slider = new SmoothSlider(0.05, 2, 1)
-                    .thumb(thumb)
-                    .trackColor(SLIDER_BG_COLOR)
-                    .trackProgressColor(TRANSPERTANT_THEME_COLOR)
-                    .thumbColor(SLIDER_THUMB_COLOR)
-                    .hoverColor(SLIDER_THUMB_HOVER_COLOR)
-                    .pressedColor(SLIDER_THUMB_PRESSED_COLOR)
-                    .init();
-            SmoothTextField textField = new SmoothTextField()
-                    .borderShape(10)
-                    .borderColor(THEME_COLOR)
-                    .bgColor(MODULE_BG_COLOR)
-                    .borderRadius(0.5)
-                    .font(FONT_SMALLER)
-                    .textColor(TEXT_COLOR)
-                    .buttonStyle(buttonStyle)
-                    .subLineColor(TEXT_COLOR)
-                    .init();
+            SmoothSlider slider = ModuleCreator.createSlider(0.05, 2, 1);
+            SmoothTextField textField = ModuleCreator.createTextField();
             textField.getTextField().setText("1");
 
             pitchBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
             pitchBox.setPosition(textField, false, 40, 0, 0, 0);
             pitchBox.flipRelativeMode(textField, AutoPane.Motion.LEFT);
 
-            Rectangle sliderClip = new Rectangle(100, 50);
-            slider.setClip(sliderClip);
-            sliderClip.setLayoutX(10);
-            sliderClip.setLayoutY(12);
-            sliderClip.setHeight(40);
             pitchBox.setPosition(slider, false, fontSize * 2.5 - 25, 30, -15, 0);
-            slider.widthProperty().addListener((o, ov, nv) -> sliderClip.setWidth(nv.doubleValue() - 20));
             boolean[] isUpdating = new boolean[1];
             slider.valueProperty().addListener((o, ov, nv) -> {
                 double value = Math.round(nv.doubleValue() / 0.05) * 0.05;
@@ -603,114 +453,30 @@ public class FrameFactory {
                 }
             });
 
-            textField.getTextField().textProperty().addListener((o, ov, nv) -> {
-                if (!isUpdating[0]) {
-
-                    isUpdating[0] = true;
-                    switch (checkDecimal(nv)) {
-                        case 0 -> {
-                            double value = Math.max(0, Math.min(slider.getMax(), Double.parseDouble(nv)));
-                            slider.setValue(value);
-                            if (value !=Double.parseDouble(nv)) {
-                                textField.getTextField().setText(String.valueOf(value));
-                            }
-                        }
-                        case 3 -> {
-                            textField.getTextField().setText(ov);
-                            defaultToolkit.beep();
-                        }
-                    }
-                    isUpdating[0] = false;
-                }
-            });
-            textField.getTextField().focusedProperty().addListener((o, ov, nv) -> {
-                String text = textField.getTextField().getText();
-                switch (checkDecimal(text)) {
-                    case 1 -> {
-                        textField.getTextField().setText(text + "0");
-                        slider.setValue(Double.parseDouble(text + "0"));
-                    }
-                    case 2, 3 -> slider.setValue(1);
-                }
-            });
+            ModuleCreator.setAsDecimalField(textField, isUpdating, slider);
 
             pitchBox.getChildren().addAll(label, slider, textField);
         }
 
         AutoPane saveBox = new AutoPane();
         {
-            Label saveLabel = new Label("输出路径");
-            saveLabel.setFont(FONT_NORMAL);
-            saveLabel.setTextFill(TEXT_COLOR);
+            Label label = ModuleCreator.createLabel("输出路径");
 
-            SmoothTextField textField = new SmoothTextField()
-                    .borderShape(10)
-                    .borderColor(THEME_COLOR)
-                    .bgColor(MODULE_BG_COLOR)
-                    .borderRadius(0.5)
-                    .font(FONT_SMALLER)
-                    .textColor(TEXT_COLOR)
-                    .buttonStyle(buttonStyle)
-                    .subLineColor(TEXT_COLOR)
-                    .init();
+            SmoothTextField textField = ModuleCreator.createTextField();
             textField.getTextField().setPromptText("音频输出文件夹");
             //textField.getTextField().setText("D:\\Users\\Desktop\\Test\\VoiceTest");
 
-            saveBox.setPosition(saveLabel, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
+            saveBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
             saveBox.setPosition(textField, false, fontSize * 4, 0, 0, 0);
 
-            saveBox.getChildren().addAll(saveLabel, textField);
+            saveBox.getChildren().addAll(label, textField);
         }
 
         AutoPane operationBox = new AutoPane();
         {
-            DiffusionButton startButton = new DiffusionButton()
-                    .name("开始")
-                    .height(fontSize * 1.4)
-                    .width(fontSize * 5)
-                    .borderShape(40)
-                    .borderColor(THEME_COLOR)
-                    .bgColor(MODULE_BG_COLOR)
-                    .bgFocusColor(BUTTON_FOCUS_COLOR)
-                    .fillColor(BUTTON_PRESSED_COLOR)
-                    .textColor(TEXT_COLOR)
-                    .textFocusColor(BUTTON_TEXT_FOCUS_COLOR)
-                    .borderRadius(0.5)
-                    .font(FONT_NORMAL)
-                    .animeDuration(BUTTON_ANIME_DURATION)
-                    .init();
-
-            DiffusionButton pauseButton = new DiffusionButton()
-                    .name("暂停")
-                    .height(fontSize * 1.4)
-                    .width(fontSize * 5)
-                    .borderShape(40)
-                    .borderColor(THEME_COLOR)
-                    .bgColor(MODULE_BG_COLOR)
-                    .bgFocusColor(BUTTON_FOCUS_COLOR)
-                    .fillColor(BUTTON_PRESSED_COLOR)
-                    .textColor(TEXT_COLOR)
-                    .textFocusColor(BUTTON_TEXT_FOCUS_COLOR)
-                    .borderRadius(0.5)
-                    .font(FONT_NORMAL)
-                    .animeDuration(BUTTON_ANIME_DURATION)
-                    .init();
-
-            DiffusionButton stopButton = new DiffusionButton()
-                    .name("终止")
-                    .height(fontSize * 1.4)
-                    .width(fontSize * 5)
-                    .borderShape(40)
-                    .borderColor(THEME_COLOR)
-                    .bgColor(MODULE_BG_COLOR)
-                    .bgFocusColor(BUTTON_FOCUS_COLOR)
-                    .fillColor(BUTTON_PRESSED_COLOR)
-                    .textColor(TEXT_COLOR)
-                    .textFocusColor(BUTTON_TEXT_FOCUS_COLOR)
-                    .borderRadius(0.5)
-                    .font(FONT_NORMAL)
-                    .animeDuration(BUTTON_ANIME_DURATION)
-                    .init();
+            DiffusionButton startButton = ModuleCreator.createButton("开始", FONT_NORMAL, 30);
+            DiffusionButton pauseButton = ModuleCreator.createButton("暂停", FONT_NORMAL, 30);
+            DiffusionButton stopButton = ModuleCreator.createButton("终止", FONT_NORMAL, 30);
 
             startButton.setOnMouseClicked(event -> {
                 if (event.getButton() != MouseButton.PRIMARY) return;
@@ -862,7 +628,7 @@ public class FrameFactory {
 
         drawSettingsWindow(root);
 
-        root.setPrefSize(800, 600);
+        root.setPrefSize(960, 600);
         stage.setMinWidth(400);
         stage.setMinHeight(300);
         stage.setTitle("设置");
@@ -876,23 +642,18 @@ public class FrameFactory {
         {
             AutoPane titleBox = new AutoPane();
             {
-                Label head = new Label("窗口");
-                head.setFont(FONT_NORMAL);
-                head.setTextFill(TEXT_COLOR);
+                Label label = ModuleCreator.createLabel("窗口");
 
-                titleBox.setPosition(head, AutoPane.AlignmentMode.CENTER, AutoPane.LocateMode.RELATIVE, 0.5, 0.5);
-                titleBox.getChildren().addAll(head);
+                titleBox.setPosition(label, AutoPane.AlignmentMode.CENTER, AutoPane.LocateMode.RELATIVE, 0.5, 0.5);
+                titleBox.getChildren().addAll(label);
             }
 
             AutoPane themeBox = new AutoPane();
             {
-                Label label = new Label("主题");
-                label.setFont(FONT_NORMAL);
-                label.setTextFill(TEXT_COLOR);
-
+                Label label = ModuleCreator.createLabel("主题");
 
                 SmoothSwitch switchButton = new SmoothSwitch()
-                        .width(fontSize * 2)
+                        .width(fontSize * 2.2)
                         .height(fontSize * 1.2)
                         .state(LIGHT_THEME)
                         .bgColor(DARK_THEME_COLOR)
@@ -910,9 +671,7 @@ public class FrameFactory {
                         .init();
                 //switchButton.changedProperty().setValue(true);
 
-                Label valueLabel = new Label(LIGHT_THEME ? "Light" : "Dark♂");
-                valueLabel.setFont(FONT_NORMAL);
-                valueLabel.setTextFill(TEXT_COLOR);
+                Label valueLabel = ModuleCreator.createLabel(LIGHT_THEME ? "Light" : "Dark♂");
 
                 switchButton.stateProperty().addListener((o, ov, nv) -> {
                     LIGHT_THEME = nv;
@@ -922,16 +681,14 @@ public class FrameFactory {
 
                 themeBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
                 themeBox.setPosition(switchButton, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 6, fontSize * 0.7);
-                themeBox.setPosition(valueLabel, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 8.5, fontSize * 0.7);
+                themeBox.setPosition(valueLabel, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 9, fontSize * 0.7);
 
                 themeBox.getChildren().addAll(label, switchButton, valueLabel);
             }
 
             AutoPane colorBox = new AutoPane();
             {
-                Label label = new Label("主题色");
-                label.setFont(FONT_NORMAL);
-                label.setTextFill(TEXT_COLOR);
+                Label label = ModuleCreator.createLabel("主题色");
 
                 SmoothChoiceBox choiceBox = new SmoothChoiceBox(25)
                         .name("#" + Toolkit.colorToString(THEME_COLOR))
@@ -986,20 +743,9 @@ public class FrameFactory {
 
             AutoPane bgImageBox = new AutoPane();
             {
-                Label label = new Label("背景图片");
-                label.setFont(FONT_NORMAL);
-                label.setTextFill(TEXT_COLOR);
+                Label label = ModuleCreator.createLabel("背景图片");
 
-                SmoothTextField textField = new SmoothTextField()
-                        .borderShape(10)
-                        .borderColor(THEME_COLOR)
-                        .bgColor(MODULE_BG_COLOR)
-                        .borderRadius(0.5)
-                        .font(FONT_SMALLER)
-                        .textColor(TEXT_COLOR)
-                        .buttonStyle(buttonStyle)
-                        .subLineColor(TEXT_COLOR)
-                        .init();
+                SmoothTextField textField = ModuleCreator.createTextField();
                 textField.getTextField().setPromptText("图片url");
 
                 textField.getTextField().textProperty().addListener((o, ov, nv) -> {
@@ -1025,44 +771,17 @@ public class FrameFactory {
 
             AutoPane bgImageAmbiguityBox = new AutoPane();
             {
-                Label label = new Label("背景模糊度");
-                label.setFont(FONT_NORMAL);
-                label.setTextFill(TEXT_COLOR);
+                Label label = ModuleCreator.createLabel("背景模糊度");
 
-                Circle thumb = new Circle(10);
-                thumb.setStroke(THEME_COLOR);
-                thumb.setStrokeWidth(0.5);
-                SmoothSlider slider = new SmoothSlider(0, 60, BACKGROUND_AMBIGUITY)
-                        .thumb(thumb)
-                        .trackColor(SLIDER_BG_COLOR)
-                        .trackProgressColor(TRANSPERTANT_THEME_COLOR)
-                        .thumbColor(SLIDER_THUMB_COLOR)
-                        .hoverColor(SLIDER_THUMB_HOVER_COLOR)
-                        .pressedColor(SLIDER_THUMB_PRESSED_COLOR)
-                        .init();
-                SmoothTextField textField = new SmoothTextField()
-                        .borderShape(10)
-                        .borderColor(THEME_COLOR)
-                        .bgColor(MODULE_BG_COLOR)
-                        .borderRadius(0.5)
-                        .font(FONT_SMALLER)
-                        .textColor(TEXT_COLOR)
-                        .buttonStyle(buttonStyle)
-                        .subLineColor(TEXT_COLOR)
-                        .init();
+                SmoothSlider slider = ModuleCreator.createSlider(0, 60, BACKGROUND_AMBIGUITY);
+                SmoothTextField textField = ModuleCreator.createTextField();
                 textField.getTextField().setText(String.valueOf((int) BACKGROUND_AMBIGUITY));
 
                 bgImageAmbiguityBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
                 bgImageAmbiguityBox.setPosition(textField, false, 40, 0, 0, 0);
                 bgImageAmbiguityBox.flipRelativeMode(textField, AutoPane.Motion.LEFT);
-
-                Rectangle sliderClip = new Rectangle(100, 50);
-                slider.setClip(sliderClip);
-                sliderClip.setLayoutX(10);
-                sliderClip.setLayoutY(12);
-                sliderClip.setHeight(40);
                 bgImageAmbiguityBox.setPosition(slider, false, fontSize * 6 - 25, 30, -15, 0);
-                slider.widthProperty().addListener((o, ov, nv) -> sliderClip.setWidth(nv.doubleValue() - 20));
+
                 boolean[] isUpdating = new boolean[1];
                 slider.valueProperty().addListener((o, ov, nv) -> {
                     double value = Math.round(nv.doubleValue());
@@ -1079,83 +798,24 @@ public class FrameFactory {
                     }
                 });
 
-                textField.getTextField().textProperty().addListener((o, ov, nv) -> {
-                    if (!isUpdating[0]) {
-
-                        isUpdating[0] = true;
-                        switch (checkDecimal(nv)) {
-                            case 0 -> {
-                                double value = Math.max(0, Math.min(slider.getMax(), Double.parseDouble(nv)));
-                                slider.setValue(value);
-                                if (value !=Double.parseDouble(nv)) {
-                                    textField.getTextField().setText(String.valueOf((int) value));
-                                }
-                            }
-                            case 3 -> {
-                                textField.getTextField().setText(ov);
-                                defaultToolkit.beep();
-                            }
-                        }
-                        isUpdating[0] = false;
-                    }
-                });
-                textField.getTextField().focusedProperty().addListener((o, ov, nv) -> {
-                    String text = textField.getTextField().getText();
-                    switch (checkDecimal(text)) {
-                        case 1 -> {
-                            textField.getTextField().setText(text.substring(0, text.length() - 2));
-                            slider.setValue(Double.parseDouble(text + "0"));
-                        }
-                        case 2, 3 -> {
-                            textField.getTextField().setText(String.valueOf((int) BACKGROUND_AMBIGUITY));
-                            slider.setValue(BACKGROUND_AMBIGUITY);
-                        }
-                    }
-                });
+                ModuleCreator.setAsDecimalField(textField, isUpdating, slider);
 
                 bgImageAmbiguityBox.getChildren().addAll(label, slider, textField);
             }
 
             AutoPane bgImageBrightnessBox = new AutoPane();
             {
-                Label label = new Label(LIGHT_THEME ? "背景亮度" : "背景暗度");
-                label.setFont(FONT_NORMAL);
-                label.setTextFill(TEXT_COLOR);
+                Label label = ModuleCreator.createLabel(LIGHT_THEME ? "背景亮度" : "背景暗度");
 
-                Circle thumb = new Circle(10);
-                thumb.setStroke(THEME_COLOR);
-                thumb.setStrokeWidth(0.5);
-                SmoothSlider slider = new SmoothSlider(0, 1, BACKGROUND_BRIGHTNESS)
-                        .thumb(thumb)
-                        .trackColor(SLIDER_BG_COLOR)
-                        .trackProgressColor(TRANSPERTANT_THEME_COLOR)
-                        .thumbColor(SLIDER_THUMB_COLOR)
-                        .hoverColor(SLIDER_THUMB_HOVER_COLOR)
-                        .pressedColor(SLIDER_THUMB_PRESSED_COLOR)
-                        .init();
-                SmoothTextField textField = new SmoothTextField()
-                        .borderShape(10)
-                        .borderColor(THEME_COLOR)
-                        .bgColor(MODULE_BG_COLOR)
-                        .borderRadius(0.5)
-                        .font(FONT_SMALLER)
-                        .textColor(TEXT_COLOR)
-                        .buttonStyle(buttonStyle)
-                        .subLineColor(TEXT_COLOR)
-                        .init();
+                SmoothSlider slider = ModuleCreator.createSlider(0, 1, BACKGROUND_BRIGHTNESS);
+                SmoothTextField textField = ModuleCreator.createTextField();
                 textField.getTextField().setText(numberFormat.format(BACKGROUND_BRIGHTNESS));
 
                 bgImageBrightnessBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
                 bgImageBrightnessBox.setPosition(textField, false, 40, 0, 0, 0);
                 bgImageBrightnessBox.flipRelativeMode(textField, AutoPane.Motion.LEFT);
 
-                Rectangle sliderClip = new Rectangle(100, 50);
-                slider.setClip(sliderClip);
-                sliderClip.setLayoutX(10);
-                sliderClip.setLayoutY(12);
-                sliderClip.setHeight(40);
                 bgImageBrightnessBox.setPosition(slider, false, fontSize * 6 - 25, 30, -15, 0);
-                slider.widthProperty().addListener((o, ov, nv) -> sliderClip.setWidth(nv.doubleValue() - 20));
                 boolean[] isUpdating = new boolean[1];
                 slider.valueProperty().addListener((o, ov, nv) -> {
                     double value = Math.round(nv.doubleValue() / 0.05) * 0.05;
@@ -1173,123 +833,39 @@ public class FrameFactory {
                     }
                 });
 
-                textField.getTextField().textProperty().addListener((o, ov, nv) -> {
-                    if (!isUpdating[0]) {
-
-                        isUpdating[0] = true;
-                        switch (checkDecimal(nv)) {
-                            case 0 -> {
-                                double value = Math.max(0, Math.min(slider.getMax(), Double.parseDouble(nv)));
-                                slider.setValue(value);
-                                if (value !=Double.parseDouble(nv)) {
-                                    textField.getTextField().setText(String.valueOf(value));
-                                }
-                            }
-                            case 3 -> {
-                                textField.getTextField().setText(ov);
-                                defaultToolkit.beep();
-                            }
-                        }
-                        isUpdating[0] = false;
-                    }
-                });
-                textField.getTextField().focusedProperty().addListener((o, ov, nv) -> {
-                    String text = textField.getTextField().getText();
-                    switch (checkDecimal(text)) {
-                        case 1 -> {
-                            textField.getTextField().setText(text + "0");
-                            slider.setValue(Double.parseDouble(text + "0"));
-                        }
-                        case 2, 3 -> {
-                            textField.getTextField().setText(String.valueOf(BACKGROUND_BRIGHTNESS));
-                            slider.setValue(BACKGROUND_BRIGHTNESS);
-                        }
-                    }
-                });
+                ModuleCreator.setAsDecimalField(textField, isUpdating, slider);
 
                 bgImageBrightnessBox.getChildren().addAll(label, slider, textField);
             }
 
 
-            windowConfig.setPosition(titleBox, false, 0, 0, 0, fontSize * 1.4);
-            windowConfig.flipRelativeMode(titleBox, AutoPane.Motion.BOTTOM);
-
-            windowConfig.setPosition(themeBox, false, 0, 0, fontSize * 1.4 + spacing, fontSize * 2.8 + spacing);
-            windowConfig.flipRelativeMode(themeBox, AutoPane.Motion.BOTTOM);
-
-            windowConfig.setPosition(colorBox, false, 0, 0, fontSize * 2.8 + spacing * 2, fontSize * 4.2 + spacing * 2);
-            windowConfig.flipRelativeMode(colorBox, AutoPane.Motion.BOTTOM);
-
-            windowConfig.setPosition(bgImageBox, false, 0, 0, fontSize * 4.2 + spacing * 3, fontSize * 5.6 + spacing * 3);
-            windowConfig.flipRelativeMode(bgImageBox, AutoPane.Motion.BOTTOM);
-
-            windowConfig.setPosition(bgImageAmbiguityBox, false, 0, 0, fontSize * 5.6 + spacing * 4, fontSize * 7 + spacing * 4);
-            windowConfig.flipRelativeMode(bgImageAmbiguityBox, AutoPane.Motion.BOTTOM);
-
-            windowConfig.setPosition(bgImageBrightnessBox, false, 0, 0, fontSize * 7 + spacing * 5, fontSize * 8.4 + spacing * 5);
-            windowConfig.flipRelativeMode(bgImageBrightnessBox, AutoPane.Motion.BOTTOM);
-
-
+            collectConfigPart(windowConfig, titleBox, themeBox, colorBox, bgImageBox, bgImageAmbiguityBox, bgImageBrightnessBox);
             titleBox.setStyle("-fx-background-color: #" + Toolkit.colorToString(TRANSPERTANT_THEME_COLOR));
-            //themeBox.setStyle("-fx-background-color: #8f00ff10");
-            //colorBox.setStyle("-fx-background-color: #8f00ff10");
-
-
-            windowConfig.getChildren().addAll(titleBox, themeBox, colorBox, bgImageBox, bgImageAmbiguityBox, bgImageBrightnessBox);
         }
 
         AutoPane networkConfig = new AutoPane();
         {
             AutoPane titleBox = new AutoPane();
             {
-                Label head = new Label("网络");
-                head.setFont(FONT_NORMAL);
-                head.setTextFill(TEXT_COLOR);
+                Label label = ModuleCreator.createLabel("网络");
 
-                titleBox.setPosition(head, AutoPane.AlignmentMode.CENTER, AutoPane.LocateMode.RELATIVE, 0.5, 0.5);
-                titleBox.getChildren().addAll(head);
+                titleBox.setPosition(label, AutoPane.AlignmentMode.CENTER, AutoPane.LocateMode.RELATIVE, 0.5, 0.5);
+                titleBox.getChildren().addAll(label);
             }
 
             AutoPane threadBox = new AutoPane();
             {
-                Label label = new Label("连接线程数");
-                label.setFont(FONT_NORMAL);
-                label.setTextFill(TEXT_COLOR);
+                Label label = ModuleCreator.createLabel("连接线程数");
 
-                Circle thumb = new Circle(10);
-                thumb.setStroke(THEME_COLOR);
-                thumb.setStrokeWidth(0.5);
-                SmoothSlider slider = new SmoothSlider(1, 128, maxConnectThread)
-                        .thumb(thumb)
-                        .trackColor(SLIDER_BG_COLOR)
-                        .trackProgressColor(TRANSPERTANT_THEME_COLOR)
-                        .thumbColor(SLIDER_THUMB_COLOR)
-                        .hoverColor(SLIDER_THUMB_HOVER_COLOR)
-                        .pressedColor(SLIDER_THUMB_PRESSED_COLOR)
-                        .init();
-                SmoothTextField textField = new SmoothTextField()
-                        .borderShape(10)
-                        .borderColor(THEME_COLOR)
-                        .bgColor(MODULE_BG_COLOR)
-                        .borderRadius(0.5)
-                        .font(FONT_SMALLER)
-                        .textColor(TEXT_COLOR)
-                        .buttonStyle(buttonStyle)
-                        .subLineColor(TEXT_COLOR)
-                        .init();
+                SmoothSlider slider = ModuleCreator.createSlider(1, 128, maxConnectThread);
+                SmoothTextField textField = ModuleCreator.createTextField();
                 textField.getTextField().setText(String.valueOf(maxConnectThread));
 
                 threadBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
                 threadBox.setPosition(textField, false, 40, 0, 0, 0);
                 threadBox.flipRelativeMode(textField, AutoPane.Motion.LEFT);
 
-                Rectangle sliderClip = new Rectangle(100, 50);
-                slider.setClip(sliderClip);
-                sliderClip.setLayoutX(10);
-                sliderClip.setLayoutY(12);
-                sliderClip.setHeight(40);
                 threadBox.setPosition(slider, false, fontSize * 6 - 25, 30, -15, 0);
-                slider.widthProperty().addListener((o, ov, nv) -> sliderClip.setWidth(nv.doubleValue() - 20));
                 boolean[] isUpdating = new boolean[1];
                 slider.valueProperty().addListener((o, ov, nv) -> {
                     int value = (int) Math.round(nv.doubleValue());
@@ -1301,79 +877,25 @@ public class FrameFactory {
                     }
                 });
 
-                textField.getTextField().textProperty().addListener((o, ov, nv) -> {
-                    if (!isUpdating[0]) {
-
-                        isUpdating[0] = true;
-                        switch (checkInteger(nv)) {
-                            case 0 -> {
-                                double value = Math.max(0, Math.min(slider.getMax(), Integer.parseInt(nv)));
-                                slider.setValue(value);
-                                if (value != Integer.parseInt(nv)) {
-                                    textField.getTextField().setText(String.valueOf((int) value));
-                                }
-                            }
-                            case 2 -> {
-                                textField.getTextField().setText(ov);
-                                defaultToolkit.beep();
-                            }
-                        }
-                        isUpdating[0] = false;
-                    }
-                });
-                textField.getTextField().focusedProperty().addListener((o, ov, nv) -> {
-                    String text = textField.getTextField().getText();
-                    switch (checkInteger(text)) {
-                        case 1, 2 -> {
-                            textField.getTextField().setText(String.valueOf(maxConnectThread));
-                            slider.setValue(maxConnectThread);
-                        }
-                    }
-                });
+                ModuleCreator.setAsIntegerField(textField, isUpdating, slider);
 
                 threadBox.getChildren().addAll(label, slider, textField);
             }
             
             AutoPane retryBox = new AutoPane();
             {
-                Label label = new Label("重试次数");
-                label.setFont(FONT_NORMAL);
-                label.setTextFill(TEXT_COLOR);
+                Label label = ModuleCreator.createLabel("重试次数");
 
-                Circle thumb = new Circle(10);
-                thumb.setStroke(THEME_COLOR);
-                thumb.setStrokeWidth(0.5);
-                SmoothSlider slider = new SmoothSlider(1, 5, retryCount)
-                        .thumb(thumb)
-                        .trackColor(SLIDER_BG_COLOR)
-                        .trackProgressColor(TRANSPERTANT_THEME_COLOR)
-                        .thumbColor(SLIDER_THUMB_COLOR)
-                        .hoverColor(SLIDER_THUMB_HOVER_COLOR)
-                        .pressedColor(SLIDER_THUMB_PRESSED_COLOR)
-                        .init();
-                SmoothTextField textField = new SmoothTextField()
-                        .borderShape(10)
-                        .borderColor(THEME_COLOR)
-                        .bgColor(MODULE_BG_COLOR)
-                        .borderRadius(0.5)
-                        .font(FONT_SMALLER)
-                        .textColor(TEXT_COLOR)
-                        .buttonStyle(buttonStyle)
-                        .subLineColor(TEXT_COLOR)
-                        .init();
+                SmoothSlider slider = ModuleCreator.createSlider(0, 5, retryCount);
+                SmoothTextField textField = ModuleCreator.createTextField();
                 textField.getTextField().setText(String.valueOf(retryCount));
 
                 retryBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
                 retryBox.setPosition(textField, false, 40, 0, 0, 0);
                 retryBox.flipRelativeMode(textField, AutoPane.Motion.LEFT);
 
-                Rectangle sliderClip = new Rectangle(100, 50);
-                slider.setClip(sliderClip);
-                sliderClip.setLayoutX(10);
-                sliderClip.setLayoutY(12);
-                sliderClip.setHeight(40);
                 retryBox.setPosition(slider, false, fontSize * 6 - 25, 30, -15, 0);
-                slider.widthProperty().addListener((o, ov, nv) -> sliderClip.setWidth(nv.doubleValue() - 20));
+
                 boolean[] isUpdating = new boolean[1];
                 slider.valueProperty().addListener((o, ov, nv) -> {
                     int value = (int) Math.round(nv.doubleValue());
@@ -1385,79 +907,24 @@ public class FrameFactory {
                     }
                 });
 
-                textField.getTextField().textProperty().addListener((o, ov, nv) -> {
-                    if (!isUpdating[0]) {
-
-                        isUpdating[0] = true;
-                        switch (checkInteger(nv)) {
-                            case 0 -> {
-                                double value = Math.max(0, Math.min(slider.getMax(), Integer.parseInt(nv)));
-                                slider.setValue(value);
-                                if (value != Integer.parseInt(nv)) {
-                                    textField.getTextField().setText(String.valueOf((int) value));
-                                }
-                            }
-                            case 2 -> {
-                                textField.getTextField().setText(ov);
-                                defaultToolkit.beep();
-                            }
-                        }
-                        isUpdating[0] = false;
-                    }
-                });
-                textField.getTextField().focusedProperty().addListener((o, ov, nv) -> {
-                    String text = textField.getTextField().getText();
-                    switch (checkInteger(text)) {
-                        case 1, 2 -> {
-                            textField.getTextField().setText(String.valueOf(retryCount));
-                            slider.setValue(retryCount);
-                        }
-                    }
-                });
+                ModuleCreator.setAsIntegerField(textField, isUpdating, slider);
 
                 retryBox.getChildren().addAll(label, slider, textField);
             }
 
             AutoPane timeoutBox = new AutoPane();
             {
-                Label label = new Label("超时时间(秒)");
-                label.setFont(FONT_NORMAL);
-                label.setTextFill(TEXT_COLOR);
+                Label label = ModuleCreator.createLabel("超时时间(秒)");
 
-                Circle thumb = new Circle(10);
-                thumb.setStroke(THEME_COLOR);
-                thumb.setStrokeWidth(0.5);
-                SmoothSlider slider = new SmoothSlider(1, 60, timeoutSeconds)
-                        .thumb(thumb)
-                        .trackColor(SLIDER_BG_COLOR)
-                        .trackProgressColor(TRANSPERTANT_THEME_COLOR)
-                        .thumbColor(SLIDER_THUMB_COLOR)
-                        .hoverColor(SLIDER_THUMB_HOVER_COLOR)
-                        .pressedColor(SLIDER_THUMB_PRESSED_COLOR)
-                        .init();
-                SmoothTextField textField = new SmoothTextField()
-                        .borderShape(10)
-                        .borderColor(THEME_COLOR)
-                        .bgColor(MODULE_BG_COLOR)
-                        .borderRadius(0.5)
-                        .font(FONT_SMALLER)
-                        .textColor(TEXT_COLOR)
-                        .buttonStyle(buttonStyle)
-                        .subLineColor(TEXT_COLOR)
-                        .init();
+                SmoothSlider slider = ModuleCreator.createSlider(0, 30, timeoutSeconds);
+                SmoothTextField textField = ModuleCreator.createTextField();
                 textField.getTextField().setText(String.valueOf(timeoutSeconds));
 
                 timeoutBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
                 timeoutBox.setPosition(textField, false, 40, 0, 0, 0);
                 timeoutBox.flipRelativeMode(textField, AutoPane.Motion.LEFT);
-
-                Rectangle sliderClip = new Rectangle(100, 50);
-                slider.setClip(sliderClip);
-                sliderClip.setLayoutX(10);
-                sliderClip.setLayoutY(12);
-                sliderClip.setHeight(40);
                 timeoutBox.setPosition(slider, false, fontSize * 6 - 25, 30, -15, 0);
-                slider.widthProperty().addListener((o, ov, nv) -> sliderClip.setWidth(nv.doubleValue() - 20));
+
                 boolean[] isUpdating = new boolean[1];
                 slider.valueProperty().addListener((o, ov, nv) -> {
                     int value = (int) Math.round(nv.doubleValue());
@@ -1469,108 +936,38 @@ public class FrameFactory {
                     }
                 });
 
-                textField.getTextField().textProperty().addListener((o, ov, nv) -> {
-                    if (!isUpdating[0]) {
-
-                        isUpdating[0] = true;
-                        switch (checkInteger(nv)) {
-                            case 0 -> {
-                                double value = Math.max(0, Math.min(slider.getMax(), Integer.parseInt(nv)));
-                                slider.setValue(value);
-                                if (value != Integer.parseInt(nv)) {
-                                    textField.getTextField().setText(String.valueOf((int) value));
-                                }
-                            }
-                            case 2 -> {
-                                textField.getTextField().setText(ov);
-                                defaultToolkit.beep();
-                            }
-                        }
-                        isUpdating[0] = false;
-                    }
-                });
-                textField.getTextField().focusedProperty().addListener((o, ov, nv) -> {
-                    String text = textField.getTextField().getText();
-                    switch (checkInteger(text)) {
-                        case 1, 2 -> {
-                            textField.getTextField().setText(String.valueOf(timeoutSeconds));
-                            slider.setValue(timeoutSeconds);
-                        }
-                    }
-                });
+                ModuleCreator.setAsIntegerField(textField, isUpdating, slider);
 
                 timeoutBox.getChildren().addAll(label, slider, textField);
             }
 
-            networkConfig.setPosition(titleBox, false, 0, 0, 0, fontSize * 1.4);
-            networkConfig.flipRelativeMode(titleBox, AutoPane.Motion.BOTTOM);
-
-            networkConfig.setPosition(threadBox, false, 0, 0, fontSize * 1.4 + spacing, fontSize * 2.8 + spacing);
-            networkConfig.flipRelativeMode(threadBox, AutoPane.Motion.BOTTOM);
-
-            networkConfig.setPosition(retryBox, false, 0, 0, fontSize * 2.8 + spacing * 2, fontSize * 4.2 + spacing * 2);
-            networkConfig.flipRelativeMode(retryBox, AutoPane.Motion.BOTTOM);
-
-            networkConfig.setPosition(timeoutBox, false, 0, 0, fontSize * 4.2 + spacing * 3, fontSize * 5.6 + spacing * 3);
-            networkConfig.flipRelativeMode(timeoutBox, AutoPane.Motion.BOTTOM);
-
+            collectConfigPart(networkConfig, titleBox, threadBox, retryBox, timeoutBox);
             titleBox.setStyle("-fx-background-color: #" + Toolkit.colorToString(TRANSPERTANT_THEME_COLOR));
-
-            networkConfig.getChildren().addAll(titleBox, threadBox, retryBox, timeoutBox);
         }
 
         AutoPane textConfig = new AutoPane();
         {
             AutoPane titleBox = new AutoPane();
             {
-                Label head = new Label("文本");
-                head.setFont(FONT_NORMAL);
-                head.setTextFill(TEXT_COLOR);
+                Label label = ModuleCreator.createLabel("文本");
 
-                titleBox.setPosition(head, AutoPane.AlignmentMode.CENTER, AutoPane.LocateMode.RELATIVE, 0.5, 0.5);
-                titleBox.getChildren().addAll(head);
+                titleBox.setPosition(label, AutoPane.AlignmentMode.CENTER, AutoPane.LocateMode.RELATIVE, 0.5, 0.5);
+                titleBox.getChildren().addAll(label);
             }
 
             AutoPane pieceBox = new AutoPane();
             {
-                Label label = new Label("切片最大长度");
-                label.setFont(FONT_NORMAL);
-                label.setTextFill(TEXT_COLOR);
+                Label label = ModuleCreator.createLabel("切片最大长度");
 
-                Circle thumb = new Circle(10);
-                thumb.setStroke(THEME_COLOR);
-                thumb.setStrokeWidth(0.5);
-                SmoothSlider slider = new SmoothSlider(1, 512, textPieceSize)
-                        .thumb(thumb)
-                        .trackColor(SLIDER_BG_COLOR)
-                        .trackProgressColor(TRANSPERTANT_THEME_COLOR)
-                        .thumbColor(SLIDER_THUMB_COLOR)
-                        .hoverColor(SLIDER_THUMB_HOVER_COLOR)
-                        .pressedColor(SLIDER_THUMB_PRESSED_COLOR)
-                        .init();
-                SmoothTextField textField = new SmoothTextField()
-                        .borderShape(10)
-                        .borderColor(THEME_COLOR)
-                        .bgColor(MODULE_BG_COLOR)
-                        .borderRadius(0.5)
-                        .font(FONT_SMALLER)
-                        .textColor(TEXT_COLOR)
-                        .buttonStyle(buttonStyle)
-                        .subLineColor(TEXT_COLOR)
-                        .init();
+                SmoothSlider slider = ModuleCreator.createSlider(0, 512, textPieceSize);
+                SmoothTextField textField = ModuleCreator.createTextField();
                 textField.getTextField().setText(String.valueOf(textPieceSize));
 
                 pieceBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
                 pieceBox.setPosition(textField, false, 40, 0, 0, 0);
                 pieceBox.flipRelativeMode(textField, AutoPane.Motion.LEFT);
-
-                Rectangle sliderClip = new Rectangle(100, 50);
-                slider.setClip(sliderClip);
-                sliderClip.setLayoutX(10);
-                sliderClip.setLayoutY(12);
-                sliderClip.setHeight(40);
                 pieceBox.setPosition(slider, false, fontSize * 6 - 25, 30, -15, 0);
-                slider.widthProperty().addListener((o, ov, nv) -> sliderClip.setWidth(nv.doubleValue() - 20));
+
                 boolean[] isUpdating = new boolean[1];
                 slider.valueProperty().addListener((o, ov, nv) -> {
                     int value = (int) Math.round(nv.doubleValue());
@@ -1582,55 +979,16 @@ public class FrameFactory {
                     }
                 });
 
-                textField.getTextField().textProperty().addListener((o, ov, nv) -> {
-                    if (!isUpdating[0]) {
-
-                        isUpdating[0] = true;
-                        switch (checkInteger(nv)) {
-                            case 0 -> {
-                                double value = Math.max(0, Math.min(slider.getMax(), Integer.parseInt(nv)));
-                                slider.setValue(value);
-                                if (value != Integer.parseInt(nv)) {
-                                    textField.getTextField().setText(String.valueOf((int) value));
-                                }
-                            }
-                            case 2 -> {
-                                textField.getTextField().setText(ov);
-                                defaultToolkit.beep();
-                            }
-                        }
-                        isUpdating[0] = false;
-                    }
-                });
-                textField.getTextField().focusedProperty().addListener((o, ov, nv) -> {
-                    String text = textField.getTextField().getText();
-                    switch (checkInteger(text)) {
-                        case 1, 2 -> {
-                            textField.getTextField().setText(String.valueOf(textPieceSize));
-                            slider.setValue(textPieceSize);
-                        }
-                    }
-                });
+                ModuleCreator.setAsIntegerField(textField, isUpdating, slider);
 
                 pieceBox.getChildren().addAll(label, slider, textField);
             }
 
             AutoPane symbolBox = new AutoPane();
             {
-                Label label = new Label("切片首选符号");
-                label.setFont(FONT_NORMAL);
-                label.setTextFill(TEXT_COLOR);
+                Label label = ModuleCreator.createLabel("切片首选符号");
 
-                SmoothTextField textField = new SmoothTextField()
-                        .borderShape(10)
-                        .borderColor(THEME_COLOR)
-                        .bgColor(MODULE_BG_COLOR)
-                        .borderRadius(0.5)
-                        .font(FONT_SMALLER)
-                        .textColor(TEXT_COLOR)
-                        .buttonStyle(buttonStyle)
-                        .subLineColor(TEXT_COLOR)
-                        .init();
+                SmoothTextField textField = ModuleCreator.createTextField();
                 textField.getTextField().setPromptText("图片url");
 
                 textField.getTextField().textProperty().addListener((o, ov, nv) -> {
@@ -1648,32 +1006,11 @@ public class FrameFactory {
 
             AutoPane appendNameBox = new AutoPane();
             {
-                Label label = new Label("章节名添加卷名");
-                label.setFont(FONT_NORMAL);
-                label.setTextFill(TEXT_COLOR);
+                Label label = ModuleCreator.createLabel("章节名添加卷名");
 
+                SmoothSwitch switchButton = ModuleCreator.createSwitch(isAppendVolumeName);
 
-                SmoothSwitch switchButton = new SmoothSwitch()
-                        .width(fontSize * 2)
-                        .height(fontSize * 1.2)
-                        .state(isAppendVolumeName)
-                        .bgColor(MODULE_BG_COLOR)
-                        .bgOpenColor(TRANSPERTANT_THEME_COLOR)
-                        .bgHoverColor(Toolkit.adjustBrightness(MODULE_BG_COLOR, MODULE_BG_COLOR.getBrightness() + (LIGHT_THEME ? -0.2 : 0.2)))
-                        .bgOpenHoverColor(Toolkit.adjustBrightness(THEME_COLOR, THEME_COLOR.getBrightness() + (LIGHT_THEME ? -0.2 : 0.2)))
-                        .thumbColor(THEME_COLOR)
-                        .thumbOpenColor(SLIDER_THUMB_COLOR)
-                        .thumbHoverColor(Toolkit.adjustBrightness(THEME_COLOR, THEME_COLOR.getBrightness() + (LIGHT_THEME ? -0.2 : 0.2)))
-                        .thumbPressedColor(Toolkit.adjustBrightness(THEME_COLOR, THEME_COLOR.getBrightness() + (LIGHT_THEME ? -0.4 : 0.4)))
-                        .thumbOpenHoverColor(Toolkit.adjustBrightness(SLIDER_THUMB_COLOR, SLIDER_THUMB_COLOR.getBrightness() + (LIGHT_THEME ? -0.2 : 0.2)))
-                        .thumbOpenPressedColor(Toolkit.adjustBrightness(SLIDER_THUMB_COLOR, SLIDER_THUMB_COLOR.getBrightness() + (LIGHT_THEME ? -0.4 : 0.4)))
-                        .borderRadius(0.5)
-                        .borderColor(THEME_COLOR)
-                        .init();
-
-                Label valueLabel = new Label(isAppendVolumeName ? "启用" : "禁用");
-                valueLabel.setFont(FONT_NORMAL);
-                valueLabel.setTextFill(TEXT_COLOR);
+                Label valueLabel = ModuleCreator.createLabel(isAppendVolumeName ? "启用" : "禁用");
 
                 switchButton.stateProperty().addListener((o, ov, nv) -> {
                     isAppendVolumeName = nv;
@@ -1683,39 +1020,19 @@ public class FrameFactory {
 
                 appendNameBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
                 appendNameBox.setPosition(switchButton, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 6, fontSize * 0.7);
-                appendNameBox.setPosition(valueLabel, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 8.5, fontSize * 0.7);
+                appendNameBox.setPosition(valueLabel, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 9, fontSize * 0.7);
 
                 appendNameBox.getChildren().addAll(label, switchButton, valueLabel);
             }
 
             AutoPane appendOrdinal = new AutoPane();
             {
-                Label label = new Label("文件名添加序号");
-                label.setFont(FONT_NORMAL);
-                label.setTextFill(TEXT_COLOR);
+                Label label = ModuleCreator.createLabel("文件名添加序号");
 
 
-                SmoothSwitch switchButton = new SmoothSwitch()
-                        .width(fontSize * 2)
-                        .height(fontSize * 1.2)
-                        .state(isAppendOrdinal)
-                        .bgColor(MODULE_BG_COLOR)
-                        .bgOpenColor(TRANSPERTANT_THEME_COLOR)
-                        .bgHoverColor(Toolkit.adjustBrightness(MODULE_BG_COLOR, MODULE_BG_COLOR.getBrightness() + (LIGHT_THEME ? -0.2 : 0.2)))
-                        .bgOpenHoverColor(Toolkit.adjustBrightness(THEME_COLOR, THEME_COLOR.getBrightness() + (LIGHT_THEME ? -0.2 : 0.2)))
-                        .thumbColor(THEME_COLOR)
-                        .thumbOpenColor(SLIDER_THUMB_COLOR)
-                        .thumbHoverColor(Toolkit.adjustBrightness(THEME_COLOR, THEME_COLOR.getBrightness() + (LIGHT_THEME ? -0.2 : 0.2)))
-                        .thumbPressedColor(Toolkit.adjustBrightness(THEME_COLOR, THEME_COLOR.getBrightness() + (LIGHT_THEME ? -0.4 : 0.4)))
-                        .thumbOpenHoverColor(Toolkit.adjustBrightness(SLIDER_THUMB_COLOR, SLIDER_THUMB_COLOR.getBrightness() + (LIGHT_THEME ? -0.2 : 0.2)))
-                        .thumbOpenPressedColor(Toolkit.adjustBrightness(SLIDER_THUMB_COLOR, SLIDER_THUMB_COLOR.getBrightness() + (LIGHT_THEME ? -0.4 : 0.4)))
-                        .borderRadius(0.5)
-                        .borderColor(THEME_COLOR)
-                        .init();
+                SmoothSwitch switchButton = ModuleCreator.createSwitch(isAppendOrdinal);
 
-                Label valueLabel = new Label(isAppendOrdinal ? "启用" : "禁用");
-                valueLabel.setFont(FONT_NORMAL);
-                valueLabel.setTextFill(TEXT_COLOR);
+                Label valueLabel = ModuleCreator.createLabel(isAppendOrdinal ? "启用" : "禁用");
 
                 switchButton.stateProperty().addListener((o, ov, nv) -> {
                     isAppendOrdinal = nv;
@@ -1725,43 +1042,144 @@ public class FrameFactory {
 
                 appendOrdinal.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
                 appendOrdinal.setPosition(switchButton, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 6, fontSize * 0.7);
-                appendOrdinal.setPosition(valueLabel, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 8.5, fontSize * 0.7);
+                appendOrdinal.setPosition(valueLabel, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 9, fontSize * 0.7);
 
                 appendOrdinal.getChildren().addAll(label, switchButton, valueLabel);
             }
 
-            textConfig.setPosition(titleBox, false, 0, 0, 0, fontSize * 1.4);
-            textConfig.flipRelativeMode(titleBox, AutoPane.Motion.BOTTOM);
-
-            textConfig.setPosition(pieceBox, false, 0, 0, fontSize * 1.4 + spacing, fontSize * 2.8 + spacing);
-            textConfig.flipRelativeMode(pieceBox, AutoPane.Motion.BOTTOM);
-
-            textConfig.setPosition(symbolBox, false, 0, 0, fontSize * 2.8 + spacing * 2, fontSize * 4.2 + spacing * 2);
-            textConfig.flipRelativeMode(symbolBox, AutoPane.Motion.BOTTOM);
-
-            textConfig.setPosition(appendNameBox, false, 0, 0, fontSize * 4.2 + spacing * 3, fontSize * 5.6 + spacing * 3);
-            textConfig.flipRelativeMode(appendNameBox, AutoPane.Motion.BOTTOM);
-
-            textConfig.setPosition(appendOrdinal, false, 0, 0, fontSize * 5.6 + spacing * 4, fontSize * 7 + spacing * 4);
-            textConfig.flipRelativeMode(appendOrdinal, AutoPane.Motion.BOTTOM);
-
+            collectConfigPart(textConfig, titleBox, pieceBox, symbolBox, appendNameBox, appendOrdinal);
             titleBox.setStyle("-fx-background-color: #" + Toolkit.colorToString(TRANSPERTANT_THEME_COLOR));
+        }
 
-            textConfig.getChildren().addAll(titleBox, pieceBox, symbolBox, appendNameBox, appendOrdinal);
+        AutoPane audioConfig = new AutoPane();
+        {
+            AutoPane titleBox = new AutoPane();
+            {
+                Label label = ModuleCreator.createLabel("音频");
+
+                titleBox.setPosition(label, AutoPane.AlignmentMode.CENTER, AutoPane.LocateMode.RELATIVE, 0.5, 0.5);
+                titleBox.getChildren().addAll(label);
+            }
+
+            AutoPane previewTextBox = new AutoPane();
+            {
+                Label label = ModuleCreator.createLabel("试听文本");
+
+                SmoothTextField textField = ModuleCreator.createTextField();
+                textField.getTextField().setPromptText("一段优美的语言");
+
+                textField.getTextField().textProperty().addListener((o, ov, nv) -> {
+                    if (Objects.equals(nv, ov) || nv.isEmpty()) return;
+
+                    previewText = nv;
+                });
+                textField.getTextField().focusedProperty().addListener((o, ov, nv) -> {
+                    if (!nv && textField.getTextField().getText().isEmpty()) {
+                        textField.getTextField().setText("全名制作人们大家好，我是练习时长2.5年的个人练习生0d00，喜欢唱、跳、ciallo、0b0000001011010001");
+                    }
+                });
+                textField.getTextField().setText(previewText);
+
+                previewTextBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
+                previewTextBox.setPosition(textField, false, fontSize * 6, 0, 0, 0);
+
+                previewTextBox.getChildren().addAll(label, textField);
+            }
+
+            AutoPane appendChapterNameBox = new AutoPane();
+            {
+                Label label = ModuleCreator.createLabel("分段添加名称");
+
+                SmoothSwitch switchButton = ModuleCreator.createSwitch(isAppendNameForSplitChapter);
+
+                Label valueLabel = ModuleCreator.createLabel(isAppendNameForSplitChapter ? "启用" : "禁用");
+
+                switchButton.stateProperty().addListener((o, ov, nv) -> {
+                    isAppendNameForSplitChapter = nv;
+                    valueLabel.setText(isAppendNameForSplitChapter ? "启用" : "禁用");
+                });
+
+                if (!splitChapter) appendChapterNameBox.setDisable(true);
+
+                appendChapterNameBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
+                appendChapterNameBox.setPosition(switchButton, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 6, fontSize * 0.7);
+                appendChapterNameBox.setPosition(valueLabel, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 9, fontSize * 0.7);
+
+                appendChapterNameBox.getChildren().addAll(label, switchButton, valueLabel);
+            }
+
+            AutoPane maxAudioDurationBox = new AutoPane();
+            {
+                Label label = ModuleCreator.createLabel("分段时长");
+
+                SmoothSlider slider = ModuleCreator.createSlider(0, 120, maxAudioDuration);
+                SmoothTextField textField = ModuleCreator.createTextField();
+                textField.getTextField().setText(String.valueOf((int) maxAudioDuration));
+
+                maxAudioDurationBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
+                maxAudioDurationBox.setPosition(textField, false, 40, 0, 0, 0);
+                maxAudioDurationBox.flipRelativeMode(textField, AutoPane.Motion.LEFT);
+                maxAudioDurationBox.setPosition(slider, false, fontSize * 6 - 25, 30, -15, 0);
+
+                boolean[] isUpdating = new boolean[1];
+                slider.valueProperty().addListener((o, ov, nv) -> {
+                    double value = Math.round(nv.doubleValue());
+                    maxAudioDuration = value;
+
+                    Blend effect = Toolkit.getColorBlend(LIGHT_THEME ? LIGHT_THEME_COLOR : DARK_THEME_COLOR, BACKGROUND_BRIGHTNESS);
+                    effect.setBottomInput(new GaussianBlur(value));
+                    Toolkit.setBackGroundImageEffect(FrameApp.rootPane, effect);
+                    Toolkit.setBackGroundImageEffect(root, effect);
+                    if (!isUpdating[0]) {
+                        isUpdating[0] = true;
+                        textField.getTextField().setText(numberFormat.format(value));
+                        isUpdating[0] = false;
+                    }
+                });
+
+                ModuleCreator.setAsDecimalField(textField, isUpdating, slider);
+                if (!splitChapter) maxAudioDurationBox.setDisable(true);
+
+                maxAudioDurationBox.getChildren().addAll(label, slider, textField);
+            }
+
+            AutoPane splitChapterBox = new AutoPane();
+            {
+                Label label = ModuleCreator.createLabel("分段章节音频");
+
+                SmoothSwitch switchButton = ModuleCreator.createSwitch(splitChapter);
+
+                Label valueLabel = ModuleCreator.createLabel(splitChapter ? "启用" : "禁用");
+
+                switchButton.stateProperty().addListener((o, ov, nv) -> {
+                    splitChapter = nv;
+                    valueLabel.setText(splitChapter ? "启用" : "禁用");
+                    if (splitChapter) {
+                        appendChapterNameBox.setDisable(false);
+                        maxAudioDurationBox.setDisable(false);
+                    }
+                    else {
+                        appendChapterNameBox.setDisable(true);
+                        maxAudioDurationBox.setDisable(true);
+                    }
+                });
+
+
+                splitChapterBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
+                splitChapterBox.setPosition(switchButton, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 6, fontSize * 0.7);
+                splitChapterBox.setPosition(valueLabel, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 9, fontSize * 0.7);
+
+                splitChapterBox.getChildren().addAll(label, switchButton, valueLabel);
+            }
+
+            collectConfigPart(audioConfig, titleBox, previewTextBox, splitChapterBox, appendChapterNameBox, maxAudioDurationBox);
+            titleBox.setStyle("-fx-background-color: #" + Toolkit.colorToString(TRANSPERTANT_THEME_COLOR));
         }
 
         AutoPane rootBox = new AutoPane();
 
-        rootBox.setPosition(windowConfig, false, false, false, false, 0, 0, 0, fontSize * 8.4 + spacing * 6);
-        rootBox.setPosition(networkConfig, false, false, false, false, 0, 0, fontSize * 8.4 + spacing * 9, fontSize * 14 + spacing * 12);
-        rootBox.setPosition(textConfig, false, false, false, false, 0, 0, fontSize * 14 + spacing * 15, fontSize * 21 + spacing * 20);
-        rootBox.setMaxHeight(fontSize * 21 + spacing * 20);
-        rootBox.setMinHeight(fontSize * 21 + spacing * 20);
-        rootBox.flipRelativeMode(windowConfig, AutoPane.Motion.BOTTOM, true);
-        rootBox.flipRelativeMode(networkConfig, AutoPane.Motion.BOTTOM, true);
-        rootBox.flipRelativeMode(textConfig, AutoPane.Motion.BOTTOM, true);
+        typeConfigPartTile(rootBox, windowConfig, networkConfig, textConfig, audioConfig);
 
-        rootBox.getChildren().addAll(windowConfig, networkConfig, textConfig);
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(rootBox);
         scrollPane.setFitToWidth(true);
@@ -1775,26 +1193,15 @@ public class FrameFactory {
                 widthExceedsThreshold.set(exceedsThresholdNow);
             }
         });
+
         widthExceedsThreshold.addListener((o, ov, nv) -> {
-            if (nv) {
-                rootBox.setPosition(windowConfig, false, true, false, false, 0, 0.6866666666, 0, 0);
-                rootBox.setPosition(networkConfig, true, true, false, false, 0.3433333333, 0.3433333333, 0, 0);
-                rootBox.setPosition(textConfig, true, false, false, false, 0.6866666666, 0, 0, 0);
-                rootBox.setMaxHeight(fontSize * 8.4 + spacing * 6);
-                rootBox.setMinHeight(fontSize * 8.4 + spacing * 6);
-                rootBox.flipRelativeMode(windowConfig, AutoPane.Motion.BOTTOM, false);
-                rootBox.flipRelativeMode(networkConfig, AutoPane.Motion.BOTTOM, false);
-                rootBox.flipRelativeMode(textConfig, AutoPane.Motion.BOTTOM, false);
-            } else {
-                rootBox.setPosition(windowConfig, false, false, false, false, 0, 0, 0, fontSize * 8.4 + spacing * 6);
-                rootBox.setPosition(networkConfig, false, false, false, false, 0, 0, fontSize * 8.4 + spacing * 9, fontSize * 14 + spacing * 12);
-                rootBox.setPosition(textConfig, false, false, false, false, 0, 0, fontSize * 14 + spacing * 15, fontSize * 21 + spacing * 20);
-                rootBox.setMaxHeight(fontSize * 21 + spacing * 20);
-                rootBox.setMinHeight(fontSize * 21 + spacing * 20);
-                rootBox.flipRelativeMode(windowConfig, AutoPane.Motion.BOTTOM, true);
-                rootBox.flipRelativeMode(networkConfig, AutoPane.Motion.BOTTOM, true);
-                rootBox.flipRelativeMode(textConfig, AutoPane.Motion.BOTTOM, true);
+            rootBox.getChildren().clear();
+            for (Node node : rootBox.getChildren()) {
+                rootBox.delete(node);
             }
+
+            if (nv) typeConfigPartTile(rootBox, windowConfig, networkConfig, textConfig, audioConfig);
+            else typeConfigPartVertical(rootBox, windowConfig, networkConfig, textConfig, audioConfig);
         });
 
         root.setPosition(scrollPane, false, 20, 20, 20, 20);
@@ -1939,6 +1346,241 @@ public class FrameFactory {
         }
 
         return sb.toString();
+    }
+
+    private static class ModuleCreator {
+        public static SmoothTextField createTextField() {
+            return new SmoothTextField()
+                    .borderShape(10)
+                    .borderColor(THEME_COLOR)
+                    .bgColor(MODULE_BG_COLOR)
+                    .borderRadius(0.5)
+                    .font(FONT_SMALLER)
+                    .textColor(TEXT_COLOR)
+                    .buttonStyle(buttonStyle)
+                    .subLineColor(TEXT_COLOR)
+                    .init();
+        }
+
+        public static SmoothChoiceBox createChoiceBox(Font font, double maxHeight) {
+            return new SmoothChoiceBox(25)
+                    .font(font)
+                    .popupAnimeDuration(100)
+                    .borderShape(10)
+                    .popupBorderShape(10)
+                    .popupMaxHeight(maxHeight)
+                    .borderColor(THEME_COLOR)
+                    .bgColor(MODULE_BG_COLOR)
+                    .bgFocusColor(BUTTON_FOCUS_COLOR)
+                    .fillColor(BUTTON_PRESSED_COLOR)
+                    .textColor(TEXT_COLOR)
+                    .textFocusColor(BUTTON_TEXT_FOCUS_COLOR)
+                    .borderRadius(0.5)
+                    .height(fontSize * 1.4)
+                    .width(fontSize * 5)
+                    .animeDuration(BUTTON_ANIME_DURATION)
+                    .init();
+        }
+
+        public static DiffusionButton createButton(String name) {
+            return new DiffusionButton()
+                    .name(name)
+                    .height(fontSize * 1.4)
+                    .width(fontSize * 5)
+                    .borderShape(10)
+                    .borderColor(THEME_COLOR)
+                    .bgColor(MODULE_BG_COLOR)
+                    .bgFocusColor(BUTTON_FOCUS_COLOR)
+                    .fillColor(BUTTON_PRESSED_COLOR)
+                    .textColor(TEXT_COLOR)
+                    .textFocusColor(BUTTON_TEXT_FOCUS_COLOR)
+                    .borderRadius(0.5)
+                    .font(FONT_NORMAL)
+                    .animeDuration(BUTTON_ANIME_DURATION)
+                    .init();
+        }
+
+        public static DiffusionButton createButton(String name, Font font, double borderShape) {
+            return new DiffusionButton()
+                    .name(name)
+                    .height(fontSize * 1.4)
+                    .width(fontSize * 5)
+                    .borderShape(borderShape)
+                    .borderColor(THEME_COLOR)
+                    .bgColor(MODULE_BG_COLOR)
+                    .bgFocusColor(BUTTON_FOCUS_COLOR)
+                    .fillColor(BUTTON_PRESSED_COLOR)
+                    .textColor(TEXT_COLOR)
+                    .textFocusColor(BUTTON_TEXT_FOCUS_COLOR)
+                    .borderRadius(0.5)
+                    .font(font)
+                    .animeDuration(BUTTON_ANIME_DURATION)
+                    .init();
+        }
+
+        public static SmoothSlider createSlider(double min, double max, double value) {
+            Circle thumb = new Circle(10);
+            thumb.setStroke(THEME_COLOR);
+            thumb.setStrokeWidth(0.5);
+            SmoothSlider slider = new SmoothSlider(min, max, value)
+                    .thumb(thumb)
+                    .trackColor(SLIDER_BG_COLOR)
+                    .trackProgressColor(TRANSPERTANT_THEME_COLOR)
+                    .thumbColor(SLIDER_THUMB_COLOR)
+                    .hoverColor(SLIDER_THUMB_HOVER_COLOR)
+                    .pressedColor(SLIDER_THUMB_PRESSED_COLOR)
+                    .init();
+
+            Rectangle sliderClip = new Rectangle(100, 50);
+            slider.setClip(sliderClip);
+            sliderClip.setLayoutX(10);
+            sliderClip.setLayoutY(12);
+            sliderClip.setHeight(40);
+            slider.widthProperty().addListener((o, ov, nv) -> sliderClip.setWidth(nv.doubleValue() - 20));
+
+            return slider;
+        }
+
+        public static SmoothSwitch createSwitch(boolean value) {
+            return new SmoothSwitch()
+                    .width(fontSize * 2.2)
+                    .height(fontSize * 1.2)
+                    .state(value)
+                    .bgColor(MODULE_BG_COLOR)
+                    .bgOpenColor(TRANSPERTANT_THEME_COLOR)
+                    .bgHoverColor(Toolkit.adjustBrightness(MODULE_BG_COLOR, MODULE_BG_COLOR.getBrightness() + (LIGHT_THEME ? -0.2 : 0.2)))
+                    .bgOpenHoverColor(Toolkit.adjustBrightness(THEME_COLOR, THEME_COLOR.getBrightness() + (LIGHT_THEME ? -0.2 : 0.2)))
+                    .thumbColor(THEME_COLOR)
+                    .thumbOpenColor(SLIDER_THUMB_COLOR)
+                    .thumbHoverColor(Toolkit.adjustBrightness(THEME_COLOR, THEME_COLOR.getBrightness() + (LIGHT_THEME ? -0.2 : 0.2)))
+                    .thumbPressedColor(Toolkit.adjustBrightness(THEME_COLOR, THEME_COLOR.getBrightness() + (LIGHT_THEME ? -0.4 : 0.4)))
+                    .thumbOpenHoverColor(Toolkit.adjustBrightness(SLIDER_THUMB_COLOR, SLIDER_THUMB_COLOR.getBrightness() + (LIGHT_THEME ? -0.2 : 0.2)))
+                    .thumbOpenPressedColor(Toolkit.adjustBrightness(SLIDER_THUMB_COLOR, SLIDER_THUMB_COLOR.getBrightness() + (LIGHT_THEME ? -0.4 : 0.4)))
+                    .borderRadius(0.5)
+                    .borderColor(THEME_COLOR)
+                    .init();
+        }
+
+        public static Label createLabel(String text) {
+            Label label = new Label(text);
+            label.setFont(FONT_NORMAL);
+            label.setTextFill(TEXT_COLOR);
+            return label;
+        }
+
+        public static void setAsDecimalField(SmoothTextField textField, boolean[] isUpdating, SmoothSlider slider) {
+            textField.getTextField().textProperty().addListener((o, ov, nv) -> {
+                if (!isUpdating[0]) {
+
+                    isUpdating[0] = true;
+                    switch (checkDecimal(nv)) {
+                        case 0 -> {
+                            double value = Math.max(0, Math.min(slider.getMax(), Double.parseDouble(nv)));
+                            slider.setValue(value);
+                            Platform.runLater(() -> textField.getTextField().setText(numberFormat.format(value)));
+                        }
+                        case 3 -> {
+                            Platform.runLater(() -> textField.getTextField().setText(ov));
+                            defaultToolkit.beep();
+                        }
+                    }
+                    isUpdating[0] = false;
+                }
+            });
+
+            textField.getTextField().focusedProperty().addListener((o, ov, nv) -> {
+                String text = textField.getTextField().getText();
+                switch (checkDecimal(text)) {
+                    case 1 -> {
+                        textField.getTextField().setText(text.substring(0, text.length() - 1));
+                        slider.setValue(Double.parseDouble(text + "0"));
+                    }
+                    case 2, 3 -> {
+                        slider.setValue(1.0);
+                        textField.getTextField().setText("1");
+                    }
+                }
+            });
+        }
+
+        public static void setAsIntegerField(SmoothTextField textField, boolean[] isUpdating, SmoothSlider slider) {
+            textField.getTextField().textProperty().addListener((o, ov, nv) -> {
+                if (!isUpdating[0]) {
+
+                    isUpdating[0] = true;
+                    switch (checkInteger(nv)) {
+                        case 0 -> {
+                            double value = Math.max(0, Math.min(slider.getMax(), Integer.parseInt(nv)));
+                            slider.setValue(value);
+                            if (value != Integer.parseInt(nv)) {
+                                Platform.runLater(() -> textField.getTextField().setText(String.valueOf(value)));
+                            }
+                        }
+                        case 2 -> {
+                            Platform.runLater(() -> textField.getTextField().setText(ov));
+                            defaultToolkit.beep();
+                        }
+                    }
+                    isUpdating[0] = false;
+                }
+            });
+            textField.getTextField().focusedProperty().addListener((o, ov, nv) -> {
+                String text = textField.getTextField().getText();
+                switch (checkInteger(text)) {
+                    case 1, 2 -> {
+                        textField.getTextField().setText("1");
+                        slider.setValue(1.0);
+                    }
+                }
+            });
+        }
+    }
+
+    private static void collectConfigPart(AutoPane root, AutoPane... children) {
+        double top = 0;
+
+        for (AutoPane child : children) {
+            root.setPosition(child, false, 0, 0, top, top + fontSize * 1.4);
+            root.flipRelativeMode(child, AutoPane.Motion.BOTTOM);
+            root.getChildren().add(child);
+            top += fontSize * 1.4 + spacing;
+        }
+    }
+
+    private static double getConfigPartHeight(AutoPane pane) {
+        int childCount = pane.getChildren().size();
+
+        return (childCount + 1) * (fontSize * 1.4 + spacing);
+    }
+
+    private static void typeConfigPartVertical(AutoPane root, AutoPane... children) {
+        double startY = 0;
+        for (AutoPane config : children) {
+            root.setPosition(config, false, 0, 0, startY, startY + getConfigPartHeight(config));
+            root.flipRelativeMode(config, AutoPane.Motion.BOTTOM, true);
+            root.getChildren().add(config);
+            startY += getConfigPartHeight(config);
+        }
+        root.setMaxHeight(startY);
+        root.setMinHeight(startY);
+    }
+
+    private static void typeConfigPartTile(AutoPane root, AutoPane... children) {
+        AutoPane boxA = new AutoPane();
+        AutoPane boxB = new AutoPane();
+
+        typeConfigPartVertical(boxA, children[0], children[1]);
+        typeConfigPartVertical(boxB, children[2], children[3]);
+
+        double height = Math.max(boxA.getMaxHeight(), boxB.getMaxHeight());
+
+        root.setMaxHeight(height);
+        root.setMinHeight(height);
+
+        root.setPosition(boxA, true , 0, 0.515, 0, 0);
+        root.setPosition(boxB, true , 0.515, 0, 0, 0);
+
+        root.getChildren().addAll(boxA, boxB);
     }
 }
 
