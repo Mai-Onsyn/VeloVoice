@@ -3,6 +3,7 @@ package mai_onsyn.VeloVoice.App;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ibm.icu.impl.locale.XCldrStub;
+import com.kieferlam.javafxblur.Blur;
 import javafx.scene.paint.Color;
 import mai_onsyn.AnimeFX.Frame.Utils.Toolkit;
 
@@ -41,7 +42,9 @@ public class ConfigListener {
             BACKGROUND_AMBIGUITY = configJson.getDouble("BackgroundAmbiguity");
             BACKGROUND_BRIGHTNESS = configJson.getDouble("BackgroundBrightness");
             BACKGROUND_IMAGE_URI = configJson.getString("BackgroundImageURI");
+            enableWinUI = configJson.getBoolean("EnableWinUI");
 
+            //触发AppConfig类加载
             maxConnectThread = configJson.getInteger("ConnectThreadCount");
             retryCount = configJson.getInteger("RetryCount");
             timeoutSeconds = configJson.getInteger("TimeoutSeconds");
@@ -59,6 +62,13 @@ public class ConfigListener {
             isAppendNameForSplitChapter = configJson.getBoolean("AppendNameForSplitChapter");
             maxAudioDuration = configJson.getInteger("MaxAudioDuration");
             previewText = configJson.getString("PreviewText");
+
+            blurMode = switch (configJson.getString("BlurMode")) {
+                case "Transparent" -> Blur.NONE;
+                case "Blur Behind" -> Blur.BLUR_BEHIND;
+                case "Acrylic" -> Blur.ACRYLIC;
+                default -> null;
+            };
 
             logLevel = configJson.getInteger("LogLevel");
         }
@@ -105,6 +115,14 @@ public class ConfigListener {
         configJson.put("MaxAudioDuration", maxAudioDuration);
         configJson.put("PreviewText", previewText);
 
+        configJson.put("EnableWinUI", enableWinUI);
+        configJson.put("BlurMode", switch (blurMode) {
+            case ACRYLIC -> "Acrylic";
+            case BLUR_BEHIND -> "Blur Behind";
+            case NONE -> "Transparent";
+        });
+
+
         configJson.put("LogLevel", logLevel);
 
         try (FileWriter fw = new FileWriter(configPath)) {
@@ -120,6 +138,8 @@ public class ConfigListener {
         private static double cached_BACKGROUND_BRIGHTNESS;
         private static String cached_BACKGROUND_IMAGE_URI;
         private static Color cached_THEME_COLOR;
+        private static boolean cached_enableWinUI;
+        private static Blur cached_blurMode;
 
         private static int cachedMaxConnectThread;
         private static int cachedRetryCount;
@@ -141,6 +161,8 @@ public class ConfigListener {
             cached_BACKGROUND_BRIGHTNESS = BACKGROUND_BRIGHTNESS;
             cached_BACKGROUND_IMAGE_URI = BACKGROUND_IMAGE_URI;
             cached_THEME_COLOR = THEME_COLOR;
+            cached_enableWinUI = enableWinUI;
+            cached_blurMode = blurMode;
 
             cachedMaxConnectThread = maxConnectThread;
             cachedRetryCount = retryCount;
@@ -173,7 +195,9 @@ public class ConfigListener {
                     isAppendNameForSplitChapter != cachedIsAppendNameForSplitChapter ||
                     !Objects.equals(previewText, cachedPreviewText) ||
                     splitChapter != cachedSplitChapter ||
-                    maxAudioDuration != cachedMaxAudioDuration;
+                    maxAudioDuration != cachedMaxAudioDuration ||
+                    enableWinUI != cached_enableWinUI ||
+                    blurMode != cached_blurMode;
         }
     }
 

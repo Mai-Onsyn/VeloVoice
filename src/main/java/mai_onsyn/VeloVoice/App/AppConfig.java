@@ -1,5 +1,7 @@
 package mai_onsyn.VeloVoice.App;
 
+import mai_onsyn.VeloVoice.Utils.Util;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +15,7 @@ public class AppConfig {
     }
 
     public static boolean pausing = false;
+    public static boolean isWindowSupport = Util.isWindowSupport() && Theme.enableWinUI;
 
     public static LoadType loadType = LoadType.LOCAL_DIRECTLY;
     public static String voiceModel = "zh-CN-XiaoyiNeural";

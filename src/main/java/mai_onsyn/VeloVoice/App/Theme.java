@@ -1,9 +1,11 @@
 package mai_onsyn.VeloVoice.App;
 
+import com.kieferlam.javafxblur.Blur;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import mai_onsyn.AnimeFX.Frame.Utils.Toolkit;
+import mai_onsyn.VeloVoice.Utils.Util;
 
 import java.util.List;
 
@@ -38,6 +40,9 @@ public class Theme {
     public static double BACKGROUND_BRIGHTNESS = 0.75;
     public static String BACKGROUND_IMAGE_URI = "textures/bg.png";
 
+    public static boolean enableWinUI = false;
+    public static Blur blurMode = Blur.ACRYLIC;
+
     public static Image BACKGROUND_IMAGE;
     public static final Font FONT_NORMAL = new Font(14);
     public static final Font FONT_SMALLER = new Font(12.25);
@@ -69,7 +74,7 @@ public class Theme {
     public static final Color TREE_SWITCHED_TEXT_FOCUS_COLOR;
 
     static {
-        MODULE_BG_COLOR = LIGHT_THEME ? Toolkit.adjustOpacity(LIGHT_THEME_COLOR, 0.3) : Toolkit.adjustOpacity(DARK_THEME_COLOR, 0.3);
+        MODULE_BG_COLOR = LIGHT_THEME ? Toolkit.adjustOpacity(LIGHT_THEME_COLOR, 0.1) : Toolkit.adjustOpacity(DARK_THEME_COLOR, 0.1);
         MODULE_BG_TRANSPERTANT_COLOR = Toolkit.adjustOpacity(MODULE_BG_COLOR, 0);
 
         BUTTON_FOCUS_COLOR = new Color(0.6, 0.6, 0.6, 0.5);

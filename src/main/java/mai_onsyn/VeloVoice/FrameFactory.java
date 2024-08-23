@@ -1,6 +1,10 @@
 package mai_onsyn.VeloVoice;
 
 import com.ibm.icu.impl.locale.XCldrStub;
+import com.kieferlam.javafxblur.Blur;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -13,15 +17,18 @@ import javafx.scene.control.TextArea;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.Stage;
+import javafx.stage.*;
+import javafx.stage.Window;
+import javafx.util.Duration;
 import mai_onsyn.AnimeFX.Frame.Layout.AutoPane;
 import mai_onsyn.AnimeFX.Frame.Module.*;
 import mai_onsyn.AnimeFX.Frame.Styles.ButtonStyle;
@@ -30,6 +37,7 @@ import mai_onsyn.AnimeFX.Frame.Module.Assistant.DataCell;
 import mai_onsyn.AnimeFX.Frame.Styles.CellStyle;
 import mai_onsyn.AnimeFX.Frame.Styles.NamePopupStyle;
 import mai_onsyn.AnimeFX.Frame.Utils.Toolkit;
+import mai_onsyn.VeloVoice.App.Theme;
 import mai_onsyn.VeloVoice.NetWork.Crawler.Websites.WenKu8;
 import mai_onsyn.VeloVoice.NetWork.TTS.EdgeTTSClient;
 import mai_onsyn.VeloVoice.NetWork.TTS.TTSClient;
@@ -39,7 +47,9 @@ import mai_onsyn.VeloVoice.Text.TextFactory;
 import mai_onsyn.VeloVoice.Text.TextLoader;
 import mai_onsyn.VeloVoice.Utils.AudioPlayer;
 import mai_onsyn.VeloVoice.Utils.Structure;
+import mai_onsyn.VeloVoice.Utils.Util;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -584,32 +594,32 @@ public class FrameFactory {
         return pane;
     }
 
+    public static Stage settingsWindow;
     public static DiffusionButton getSettingsButton() {
-        DiffusionButton settingsButton = new DiffusionButton()
-                .ftImage(new Image(LIGHT_THEME ? "textures/setting_light.png" : "textures/setting_dark.png"))
-                .borderShape(10)
-                .bgColor(MODULE_BG_TRANSPERTANT_COLOR)
-                .bgFocusColor(BUTTON_FOCUS_COLOR)
-                .fillColor(BUTTON_PRESSED_COLOR)
-                .textColor(TEXT_COLOR)
-                .textFocusColor(BUTTON_TEXT_FOCUS_COLOR)
-                .ftImageRatio(0.7)
-                .animeDuration(BUTTON_ANIME_DURATION)
-                .init();
+        DiffusionButton settingsButton = ModuleCreator.createCleanImageButton(new Image(LIGHT_THEME ? "textures/setting_light.png" : "textures/setting_dark.png"), BUTTON_FOCUS_COLOR, BUTTON_PRESSED_COLOR);
 
-        Stage settingsWindow = getSettingsWindow();
-        Platform.runLater(() -> settingsButton.getScene().getWindow().setOnCloseRequest(_ -> {
+        settingsWindow = getSettingsWindow();
+                Platform.runLater(() -> settingsButton.getScene().getWindow().setOnCloseRequest(_ -> {
             if (settingsWindow.isShowing()) settingsWindow.close();
         }));
 
         settingsButton.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
+                settingsWindow.setOpacity(1);
                 if (!settingsWindow.isShowing()) {
+                    settingsWindow.setWidth(960);
+                    settingsWindow.setHeight(600);
+                    settingsWindow.setIconified(false);
+                    settingsWindow.setMaximized(false);
                     settingsWindow.show();
+                    if (isWindowSupport) Blur.applyBlur(settingsWindow, Theme.blurMode);
                 }
                 else {
+                    if (settingsWindow.isIconified()) {
+                        settingsWindow.setIconified(false);
+                    }
                     settingsWindow.toFront();
-                    //Toolkit.getDefaultToolkit().beep();
+                    defaultToolkit.beep();
                 }
             }
         });
@@ -619,6 +629,7 @@ public class FrameFactory {
 
     private static Stage getSettingsWindow() {
         Stage stage = new Stage();
+        stage.setTitle("设置");
 
         AutoPane root = new AutoPane();
         root.setOnMousePressed(_ -> root.requestFocus());
@@ -626,12 +637,37 @@ public class FrameFactory {
         Scene scene = new Scene(root);
         stage.setScene(scene);
 
-        drawSettingsWindow(root);
+        {
+            if (isWindowSupport) {
+                scene.setFill(Color.TRANSPARENT);
+                root.setBackground(Background.EMPTY);
+                stage.initStyle(StageStyle.TRANSPARENT);
+
+                Rectangle WINDOW_SHADOW = new Rectangle();
+                WINDOW_SHADOW.setFill(Theme.LIGHT_THEME ? Theme.LIGHT_THEME_COLOR : Theme.DARK_THEME_COLOR);
+                WINDOW_SHADOW.setOpacity(0.01);
+                root.setPosition(WINDOW_SHADOW, false, 0, 0, 0, 0);
+                root.getChildren().add(WINDOW_SHADOW);
+
+                AutoPane contentPane = new AutoPane();
+                drawSettingsWindow(contentPane);
+
+                AutoPane titlePane = getWindowModule(stage);
+
+                root.setPosition(titlePane, false, 0, 0, 0, 28);
+                root.setPosition(contentPane, false, 0, 0, 28, 0);
+                root.flipRelativeMode(titlePane, AutoPane.Motion.BOTTOM);
+
+                root.getChildren().addAll(contentPane, titlePane);
+
+                Util.DrawUtil.addDrawFunc(stage, root);
+            }
+            else drawSettingsWindow(root);
+        }
 
         root.setPrefSize(960, 600);
         stage.setMinWidth(400);
         stage.setMinHeight(300);
-        stage.setTitle("设置");
         stage.getIcons().add(new Image("textures/icon.png"));
 
         return stage;
@@ -753,12 +789,14 @@ public class FrameFactory {
                         BACKGROUND_IMAGE = Toolkit.loadImage(nv);
                         BACKGROUND_IMAGE_URI = nv;
 
-                        Blend effect = Toolkit.getColorBlend(LIGHT_THEME ? LIGHT_THEME_COLOR : DARK_THEME_COLOR, BACKGROUND_BRIGHTNESS);
-                        effect.setBottomInput(new GaussianBlur(BACKGROUND_AMBIGUITY));
-                        Toolkit.addBackGroundImage(FrameApp.rootPane, BACKGROUND_IMAGE);
-                        Toolkit.setBackGroundImageEffect(FrameApp.rootPane, effect);
-                        Toolkit.addBackGroundImage(root, BACKGROUND_IMAGE);
-                        Toolkit.setBackGroundImageEffect(root, effect);
+                        if (!enableWinUI) {
+                            Blend effect = Toolkit.getColorBlend(LIGHT_THEME ? LIGHT_THEME_COLOR : DARK_THEME_COLOR, BACKGROUND_BRIGHTNESS);
+                            effect.setBottomInput(new GaussianBlur(BACKGROUND_AMBIGUITY));
+                            Toolkit.addBackGroundImage(FrameApp.rootPane, BACKGROUND_IMAGE);
+                            Toolkit.setBackGroundImageEffect(FrameApp.rootPane, effect);
+                            Toolkit.addBackGroundImage(root, BACKGROUND_IMAGE);
+                            Toolkit.setBackGroundImageEffect(root, effect);
+                        }
                     } catch (IOException _) {}
                 });
                 textField.getTextField().setText(BACKGROUND_IMAGE_URI);
@@ -838,8 +876,105 @@ public class FrameFactory {
                 bgImageBrightnessBox.getChildren().addAll(label, slider, textField);
             }
 
+            AutoPane choiceWinUIBox = new AutoPane();
+            {
+                Label label = ModuleCreator.createLabel("Blur Effect");
 
-            collectConfigPart(windowConfig, titleBox, themeBox, colorBox, bgImageBox, bgImageAmbiguityBox, bgImageBrightnessBox);
+                List<DiffusionButton> choices = new ArrayList<>();
+                List<Blur> blurs = List.of(
+                        Blur.NONE,
+                        Blur.BLUR_BEHIND,
+                        Blur.ACRYLIC
+                );
+                List<String> choiceButtonNames = List.of(
+                        "Transparent",
+                        "Blur Behind",
+                        "Acrylic"
+                );
+                SmoothChoiceBox choiceBox = ModuleCreator.createChoiceBox(FONT_NORMAL, 300);
+                choiceBox.setText(switch (blurMode) {
+                    case ACRYLIC -> "Acrylic";
+                    case BLUR_BEHIND -> "Blur Behind";
+                    case NONE -> "Transparent";
+                });
+                for (int i = 0; i < 3; i++) {
+                    int I = i;
+                    DiffusionButton choiceButton = new DiffusionButton()
+                            .name(choiceButtonNames.get(i))
+                            .height(fontSize * 1.4)
+                            .bgColor(MODULE_BG_COLOR)
+                            .bgFocusColor(BUTTON_FOCUS_COLOR)
+                            .fillColor(BUTTON_PRESSED_COLOR)
+                            .textColor(TEXT_COLOR)
+                            .textFocusColor(BUTTON_TEXT_FOCUS_COLOR)
+                            .font(FONT_NORMAL)
+                            .borderShape(10)
+                            .animeDuration(BUTTON_ANIME_DURATION)
+                            .init();
+                    choiceButton.setOnMouseClicked(_ -> {
+                        blurMode = blurs.get(I);
+                        Blur.applyBlur(FrameApp.STAGE, blurMode);
+                        Blur.applyBlur(settingsWindow, blurMode);
+                        choiceBox.setText(choiceButtonNames.get(I));
+                    });
+                    choices.add(choiceButton);
+                }
+                choiceBox.addItem(choices.toArray(new DiffusionButton[0]));
+
+                choiceWinUIBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
+                choiceWinUIBox.setPosition(choiceBox, false, fontSize * 6, 0, 0, 0);
+
+                choiceWinUIBox.getChildren().addAll(label, choiceBox);
+            }
+
+            AutoPane enableWinUIBox = new AutoPane();
+            {
+                Label label = ModuleCreator.createLabel("Windows UI");
+
+
+                SmoothSwitch switchButton = ModuleCreator.createSwitch(enableWinUI);
+
+                Label valueLabel = ModuleCreator.createLabel(enableWinUI ? "启用" : "禁用");
+
+                switchButton.stateProperty().addListener((o, ov, nv) -> {
+                    enableWinUI = nv;
+                    valueLabel.setText(enableWinUI ? "启用" : "禁用");
+
+                    bgImageBox.setDisable(nv);
+                    bgImageAmbiguityBox.setDisable(nv);
+                    bgImageBrightnessBox.setDisable(nv);
+                    choiceWinUIBox.setDisable(!nv);
+                    if (nv) {
+                        if (FrameApp.rootPane.getChildren().getFirst() instanceof ImageView) FrameApp.rootPane.getChildren().removeFirst();
+                        if (root.getChildren().getFirst() instanceof ImageView) root.getChildren().removeFirst();
+                    }
+                    else {
+                        Blend effect = Toolkit.getColorBlend(LIGHT_THEME ? LIGHT_THEME_COLOR : DARK_THEME_COLOR, BACKGROUND_BRIGHTNESS);
+                        effect.setBottomInput(new GaussianBlur(BACKGROUND_AMBIGUITY));
+                        Toolkit.addBackGroundImage(FrameApp.rootPane, BACKGROUND_IMAGE);
+                        Toolkit.setBackGroundImageEffect(FrameApp.rootPane, effect);
+                        Toolkit.addBackGroundImage(root, BACKGROUND_IMAGE);
+                        Toolkit.setBackGroundImageEffect(root, effect);
+                    }
+                });
+
+
+                enableWinUIBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
+                enableWinUIBox.setPosition(switchButton, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 6, fontSize * 0.7);
+                enableWinUIBox.setPosition(valueLabel, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 9, fontSize * 0.7);
+
+                enableWinUIBox.getChildren().addAll(label, switchButton, valueLabel);
+            }
+
+            if (enableWinUI) {
+                bgImageBox.setDisable(true);
+                bgImageAmbiguityBox.setDisable(true);
+                bgImageBrightnessBox.setDisable(true);
+            } else choiceWinUIBox.setDisable(true);
+            if (!Util.isWindowSupport()) enableWinUIBox.setDisable(true);
+
+
+            collectConfigPart(windowConfig, titleBox, themeBox, colorBox, enableWinUIBox, choiceWinUIBox, bgImageBox, bgImageAmbiguityBox, bgImageBrightnessBox);
             titleBox.setStyle("-fx-background-color: #" + Toolkit.colorToString(TRANSPERTANT_THEME_COLOR));
         }
 
@@ -1265,6 +1400,113 @@ public class FrameFactory {
         progressPane.getChildren().addAll(totalProgressBar, chapterProgressBar, totalLabel, chapterLabel);
     }
 
+    public static AutoPane getWindowModule(Stage stage) {
+        AutoPane bar = new AutoPane();
+
+        ImageView icon = new ImageView(new Image("textures/icon.png"));
+        icon.setFitWidth(18);
+        icon.setFitHeight(18);
+        Label title = new Label(stage.getTitle());
+        title.setTextFill(TEXT_COLOR);
+
+        DiffusionButton minimize = ModuleCreator.createCleanImageButton(LIGHT_THEME ? new Image("textures/minimize_light.png") : new Image("textures/minimize_dark.png"), Toolkit.adjustBrightness(BUTTON_FOCUS_COLOR, LIGHT_THEME ? 0.4 : 0.5), BUTTON_PRESSED_COLOR);
+        DiffusionButton maximize = ModuleCreator.createCleanImageButton(LIGHT_THEME ? new Image("textures/maximize_light.png") : new Image("textures/maximize_dark.png"), Toolkit.adjustBrightness(BUTTON_FOCUS_COLOR, LIGHT_THEME ? 0.4 : 0.5), BUTTON_PRESSED_COLOR);
+        DiffusionButton close = ModuleCreator.createCleanImageButton(LIGHT_THEME ? new Image("textures/close_light.png") : new Image("textures/close_dark.png"), Toolkit.adjustOpacity(Color.rgb(232, 17, 35), 1), Toolkit.adjustSaturation(Color.rgb(232, 17, 35), 0.5));
+
+        close.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+
+                Timeline fade = new Timeline(new KeyFrame(Duration.millis(100), new KeyValue(stage.opacityProperty(), 0)));
+                fade.play();
+
+                // 动画结束时关闭窗口
+                fade.setOnFinished(_ -> {
+                    stage.close();
+                    stage.setOpacity(1);
+                    if (settingsWindow.isShowing()) {
+                        Timeline settingCloseFade = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(settingsWindow.opacityProperty(), 0)));
+                        settingCloseFade.setOnFinished(_ -> {
+                            settingsWindow.close();
+                        });
+                        settingCloseFade.play();
+                    }
+                });
+
+            }
+        });
+        minimize.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                Timeline fade = new Timeline(new KeyFrame(Duration.millis(100), new KeyValue(stage.opacityProperty(), 0)));
+                fade.play();
+                fade.setOnFinished(_ -> {
+                    stage.setIconified(true);
+                });
+            }
+        });
+
+        stage.iconifiedProperty().addListener((o, ov, nv) -> {
+            if (!nv) {
+                Timeline fade = new Timeline(new KeyFrame(Duration.millis(100), new KeyValue(stage.opacityProperty(), 1)));
+                fade.play();
+                Platform.runLater(() -> {
+                    stage.getScene().getRoot().requestLayout();
+                    stage.getScene().getRoot().setVisible(false);
+                    stage.getScene().getRoot().setVisible(true);
+                });
+            }
+        });
+
+        maximize.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                stage.setMaximized(!stage.isMaximized());
+                if (stage.isMaximized()) stage.setHeight(Screen.getPrimary().getBounds().getHeight() - java.awt.Toolkit.getDefaultToolkit().getScreenInsets(GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration()).bottom);
+            }
+        });
+
+        final double[] offset = new double[2];
+        bar.setOnMousePressed(event -> {
+            offset[0] = event.getSceneX();
+            offset[1] = event.getSceneY();
+        });
+        bar.setOnMouseDragged(event -> {
+            if (stage.isMaximized()) {
+                stage.setMaximized(false);
+            }
+            stage.setX(event.getScreenX() - offset[0]);
+            stage.setY(event.getScreenY() - offset[1]);
+        });
+        bar.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                stage.setMaximized(!stage.isMaximized());
+                if (stage.isMaximized()) stage.setHeight(Screen.getPrimary().getBounds().getHeight() - java.awt.Toolkit.getDefaultToolkit().getScreenInsets(GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration()).bottom);
+            }
+        });
+        bar.addEventFilter(MouseEvent.MOUSE_DRAGGED, event -> {
+            if (event.getTarget() != bar) {
+                event.consume();
+            }
+        });
+
+        bar.setPosition(icon, false, 5, 22, 5, 22);
+        bar.setPosition(title, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, 30, 15);
+        bar.setPosition(minimize, false, 144, 96, 0, 0);
+        bar.setPosition(maximize, false, 96, 48, 0, 0);
+        bar.setPosition(close, false, 48, 0, 0, 0);
+
+        bar.flipRelativeMode(icon, AutoPane.Motion.RIGHT);
+        bar.flipRelativeMode(icon, AutoPane.Motion.BOTTOM);
+        bar.flipRelativeMode(minimize, AutoPane.Motion.LEFT);
+        bar.flipRelativeMode(maximize, AutoPane.Motion.LEFT);
+        bar.flipRelativeMode(close, AutoPane.Motion.LEFT);
+
+        bar.setStyle(String.format("-fx-background-color: #%s", Toolkit.colorToString(Toolkit.adjustOpacity(MODULE_BG_COLOR, 0.4))));
+
+
+        bar.getChildren().addAll(icon, title, minimize, maximize, close);
+
+        return bar;
+    }
+
     /**
      * 0 - readable number;
      * 1 - decimal end with '.';
@@ -1396,6 +1638,20 @@ public class FrameFactory {
                     .textFocusColor(BUTTON_TEXT_FOCUS_COLOR)
                     .borderRadius(0.5)
                     .font(FONT_NORMAL)
+                    .animeDuration(BUTTON_ANIME_DURATION)
+                    .init();
+        }
+
+        public static DiffusionButton createCleanImageButton (Image image, Color focusColor, Color pressColor) {
+            return new DiffusionButton()
+                    .ftImage(image)
+                    .borderShape(10)
+                    .bgColor(Toolkit.adjustOpacity(focusColor, 0))
+                    .bgFocusColor(focusColor)
+                    .fillColor(pressColor)
+                    .textColor(TEXT_COLOR)
+                    .textFocusColor(BUTTON_TEXT_FOCUS_COLOR)
+                    .ftImageRatio(0.7)
                     .animeDuration(BUTTON_ANIME_DURATION)
                     .init();
         }
