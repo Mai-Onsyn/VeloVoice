@@ -5,7 +5,6 @@ import com.sun.jna.platform.win32.WinNT;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Util {

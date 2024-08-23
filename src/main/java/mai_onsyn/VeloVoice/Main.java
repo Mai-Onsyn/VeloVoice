@@ -22,6 +22,7 @@ public class Main {
 //            }
 //        }
 
+        //System.out.println("launch");
         Application.launch(FrameApp.class);
     }
 
