@@ -92,6 +92,14 @@
             <artifactId>jna-platform</artifactId>
             <version>5.14.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.kieferlam.JavaFX-Blur</groupId>
+            <artifactId>javafxblur</artifactId>
+            <version>0.0.2</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/javafxblur.jar</systemPath>
+        </dependency>
     </dependencies>
 
 
