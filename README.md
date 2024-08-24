@@ -63,5 +63,7 @@
 
 ## 下载
 
-你可以在我的蓝奏云盘找到最新版：<https://wwpz.lanzouv.com/b0ukj384f> 密码：14ix\
+都来这了，Releases页面不正是个很好的地方吗？
+不过蓝奏盘也是推荐的：<https://wwpz.lanzouv.com/b0ukj384f> 密码：14ix\
 如果你心情很好或者有钞能力也可以选择去这里下载：<https://pan.baidu.com/s/1uAGJ3xO1p4pJuM41pKftfQ?pwd=jvav>
+- 注：Test-v0.2及之后的版本需要运行此软件的java的bin目录下有项目lib文件夹里的javafxblur.dll，否则Windows 10 April 2018 Update (1803, build 17134)或更高的版本可能会出错，要是嫌麻烦还请直接下带jre运行库的zip压缩包。
