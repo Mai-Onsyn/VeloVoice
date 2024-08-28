@@ -483,7 +483,7 @@ public class FrameFactory {
 
             SmoothTextField textField = ModuleCreator.createTextField();
             textField.getTextField().setPromptText("音频输出文件夹");
-            textField.getTextField().setText("D:\\Users\\Desktop\\Test");
+            //textField.getTextField().setText("D:\\Users\\Desktop\\Test");
 
             saveBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
             saveBox.setPosition(textField, false, fontSize * 4, 0, 0, 0);
