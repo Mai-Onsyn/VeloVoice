@@ -4,6 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -37,10 +38,11 @@ public class NamePopup extends Popup {
         this.popupStyle = popupStyle;
         return this;
     }
+    private SmoothTextField textField;
 
     public NamePopup init() {
 
-        SmoothTextField textField = popupStyle.createTextField();
+        textField = popupStyle.createTextField();
 
         Label label = popupStyle.createDescription(description);
 
@@ -121,6 +123,10 @@ public class NamePopup extends Popup {
 
     public void setOnTextAvailable(ChangeListener<String> listener) {
         this.onTextAvailable = listener;
+    }
+
+    public TextField getTextField() {
+        return textField.getTextField();
     }
 
 }

@@ -6,8 +6,10 @@ import mai_onsyn.AnimeFX.Frame.Module.FXLogger;
 
 public class Runtime {
 
-    public static boolean runningState = false;
+    public static boolean systemSupportButLibraryNotExist = false;
+    public static boolean consoleMode = false;
 
+    public static boolean runningState = false;
     public static Thread TaskMainThread;
 
     public static FXLogger logger;

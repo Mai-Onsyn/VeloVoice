@@ -1,31 +1,31 @@
 package mai_onsyn.VeloVoice.Utils;
 
-import com.sun.jna.platform.win32.Kernel32;
-import com.sun.jna.platform.win32.WinNT;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class Util {
     /**
      * Windows 10 April 2018 Update (1803, build 17134) required to run
      */
     public static boolean isWindowSupport() {
-        if(!System.getProperty("os.name").equals("Windows 10")) {
-            return false;
-        }
-        Kernel32 kernel = Kernel32.INSTANCE;
-        WinNT.OSVERSIONINFOEX vex = new WinNT.OSVERSIONINFOEX();
-        if (kernel.GetVersionEx(vex)) {
-            try {
-                int build = Integer.parseInt(vex.dwBuildNumber.toString());
-                return build >= 17134;
-            } catch (NumberFormatException ex) {
-                return false;
+        try {
+            Process process = Runtime.getRuntime().exec("wmic os get buildnumber /value");
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (line.trim().startsWith("BuildNumber=")) {
+                        int buildNumber = Integer.parseInt(line.trim().split("=")[1]);
+                        return buildNumber >= 17134;
+                    }
+                }
             }
-        }
-        return false;
+        } catch (Exception _) {}
+        return false; // 如果执行失败，返回false
     }
 
     public static class DrawUtil {
@@ -94,5 +94,34 @@ public class Util {
                 stage.setHeight(nextHeight);
             });
         }
+    }
+
+    public static String padZero(int number, int maxNumber) {
+        // 获取最大数字的位数
+        int maxLength = String.valueOf(maxNumber).length();
+        // 将数字转为字符串
+        String numberStr = String.valueOf(number);
+        // 使用String.format来补0
+        return String.format("%0" + maxLength + "d", number);
+    }
+
+    public static String formatDuration(long milliseconds) {
+
+        long h = milliseconds / 3600000;
+        long m = (milliseconds % 3600000) / 60000;
+        long s = ((milliseconds % 3600000) % 60000) / 1000;
+        long S = milliseconds % 1000;
+
+        StringBuilder sb = new StringBuilder();
+
+        if (h > 0) sb.append(h).append("h ");
+        if (m > 0) sb.append(m).append("m ");
+        if (s > 0 || S > 0) {
+            sb.append(s);
+            if (S > 0) sb.append(".").append(S / 100);
+            sb.append("s");
+        }
+
+        return sb.toString();
     }
 }

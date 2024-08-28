@@ -91,7 +91,10 @@ public class EdgeTTSClient extends TTSClient {
             super.send(message);
             return future.get(AppConfig.timeoutSeconds, TimeUnit.SECONDS);
         } catch (Exception e) {
-            if (!(e instanceof InterruptedException)) logger.debug("Error message: " + text + " because: " + e);
+            if (!(e instanceof InterruptedException)) {
+                if (logger != null) logger.debug("Error message: " + text + " because: " + e);
+                else System.out.println("Error message: " + text + " because: " + e);
+            }
             else throw new InterruptedException();
             return null;
         }
@@ -187,7 +190,7 @@ public class EdgeTTSClient extends TTSClient {
     @Override
     public void onError(Exception e) {
         currentStatus.set(Status.ERROR);
-        throw new RuntimeException(e);
+        //throw new RuntimeException(e);
     }
 
 //    private void attemptReconnect() {

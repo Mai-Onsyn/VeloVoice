@@ -1,6 +1,5 @@
 package mai_onsyn.VeloVoice;
 
-import com.ibm.icu.impl.locale.XCldrStub;
 import com.kieferlam.javafxblur.Blur;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -27,7 +26,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.*;
-import javafx.stage.Window;
 import javafx.util.Duration;
 import mai_onsyn.AnimeFX.Frame.Layout.AutoPane;
 import mai_onsyn.AnimeFX.Frame.Module.*;
@@ -38,6 +36,7 @@ import mai_onsyn.AnimeFX.Frame.Styles.CellStyle;
 import mai_onsyn.AnimeFX.Frame.Styles.NamePopupStyle;
 import mai_onsyn.AnimeFX.Frame.Utils.Toolkit;
 import mai_onsyn.VeloVoice.App.Theme;
+import mai_onsyn.VeloVoice.NetWork.Crawler.Websites.LiNovel;
 import mai_onsyn.VeloVoice.NetWork.Crawler.Websites.WenKu8;
 import mai_onsyn.VeloVoice.NetWork.TTS.EdgeTTSClient;
 import mai_onsyn.VeloVoice.NetWork.TTS.TTSClient;
@@ -57,6 +56,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static mai_onsyn.VeloVoice.App.AppConfig.*;
 import static mai_onsyn.VeloVoice.App.Runtime.*;
@@ -83,17 +83,19 @@ public class FrameFactory {
                     LoadType.LOCAL_DIRECTLY,
                     LoadType.LOCAL_FULL,
                     LoadType.LOCAL_VOLUMED,
-                    LoadType.WENKU8
+                    LoadType.WEN_KU8,
+                    LoadType.LI_NOVEL
             );
             List<String> choiceButtonNames = List.of(
                     "本地(文件)",
                     "本地(全集)",
                     "本地(分卷)",
-                    "轻小说文库"
+                    "轻小说文库",
+                    "轻之文库"
             );
             SmoothChoiceBox choiceBox = ModuleCreator.createChoiceBox(FONT_NORMAL, 300);
             choiceBox.setText(choiceButtonNames.getFirst());
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < loadTypes.size(); i++) {
                 int I = i;
                 DiffusionButton choiceButton = new DiffusionButton()
                         .name(choiceButtonNames.get(i))
@@ -155,7 +157,7 @@ public class FrameFactory {
 
             Structure<List<String>> parent = new Structure<>("Root");
             for (File file : files) {
-                collectFilesToTreeView(file, parent);
+                collectFilesToStructure(file, parent);
             }
             Structure.Factory.writeToTreeView(parent, treeView, true);
         });
@@ -193,17 +195,25 @@ public class FrameFactory {
                                     }
                                     rootStructure = new Structure<>("Root");
                                     for (File file : series) {
-                                        collectFilesToTreeView(file, rootStructure);
+                                        collectFilesToStructure(file, rootStructure);
                                     }
                                     Structure.Factory.writeToTreeView(rootStructure, treeView, true);
                                 }
-                                case WENKU8 -> {
+                                case WEN_KU8 -> {
                                     if (urlString.contains("https://www.wenku8.net/book/") || urlString.contains("https://www.wenku8.net/novel/")) {
                                         rootStructure = new WenKu8(urlString).getContents();
                                         logger.prompt("已加载 - " + rootStructure.getName());
                                         Structure.Factory.writeToTreeView(rootStructure, treeView, false);
                                     }
                                     else logger.error(String.format("加载失败 - \"%s\" 不是正确的轻小说文库小说地址", urlString));
+                                }
+                                case LI_NOVEL -> {
+                                    if (urlString.contains("https://www.linovel.net/book/")) {
+                                        rootStructure = new LiNovel(urlString).getContents();
+                                        logger.prompt("已加载 - " + rootStructure.getName());
+                                        Structure.Factory.writeToTreeView(rootStructure, treeView, false);
+                                    }
+                                    else logger.error(String.format("加载失败 - \"%s\" 不是正确的轻之文库小说地址", urlString));
                                 }
                             }
                         } catch (Exception e) {
@@ -254,7 +264,7 @@ public class FrameFactory {
         return pane;
     }
 
-    private static void collectFilesToTreeView(File file, Structure<List<String>> parent) {
+    private static void collectFilesToStructure(File file, Structure<List<String>> parent) {
         if (file.isFile()) {
             String fileName = file.getName();
             if (file.getName().endsWith(".txt")) {
@@ -286,7 +296,7 @@ public class FrameFactory {
             File[] subFiles = file.listFiles();
             if (subFiles != null) {
                 for (File subFile : subFiles) {
-                    collectFilesToTreeView(subFile, subStructure);
+                    collectFilesToStructure(subFile, subStructure);
                 }
             }
             parent.getChildren().add(subStructure);
@@ -352,7 +362,6 @@ public class FrameFactory {
 
             preview.setOnMouseClicked(event -> {
                 if (event.getButton() != MouseButton.PRIMARY) return;
-
 
                 Thread.ofVirtual().name("Preview-Thread").start(() -> {
                     try {
@@ -474,7 +483,7 @@ public class FrameFactory {
 
             SmoothTextField textField = ModuleCreator.createTextField();
             textField.getTextField().setPromptText("音频输出文件夹");
-            //textField.getTextField().setText("D:\\Users\\Desktop\\Test\\VoiceTest");
+            textField.getTextField().setText("D:\\Users\\Desktop\\Test");
 
             saveBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
             saveBox.setPosition(textField, false, fontSize * 4, 0, 0, 0);
@@ -518,9 +527,11 @@ public class FrameFactory {
                 TaskMainThread = Thread.ofVirtual().name("Task-Main-Thread").start(() -> {
                     long startTime = System.currentTimeMillis();
                     TTS.startNewTask(tasks, outputFolder);
-                    logger.prompt(String.format("完成！耗时 %s", formatDuration(System.currentTimeMillis() - startTime)));
+                    logger.prompt(String.format("完成！耗时 %s", Util.formatDuration(System.currentTimeMillis() - startTime)));
                     progressPane.setVisible(false);
                     runningState = false;
+                    pausing = false;
+                    pauseButton.setText("暂停");
                 });
             });
             pauseButton.setOnMouseClicked(event -> {
@@ -546,6 +557,7 @@ public class FrameFactory {
                     }
                     TaskMainThread.interrupt();
                     runningState = false;
+                    if (TTS.executor.tasks != null) TTS.executor.tasks.clear();
                     logger.prompt("世界が終わる―――");
                 }
             });
@@ -599,18 +611,19 @@ public class FrameFactory {
         DiffusionButton settingsButton = ModuleCreator.createCleanImageButton(new Image(LIGHT_THEME ? "textures/setting_light.png" : "textures/setting_dark.png"), BUTTON_FOCUS_COLOR, BUTTON_PRESSED_COLOR);
 
         settingsWindow = getSettingsWindow();
-                Platform.runLater(() -> settingsButton.getScene().getWindow().setOnCloseRequest(_ -> {
+        FrameApp.STAGE.setOnCloseRequest(_ -> {
             if (settingsWindow.isShowing()) settingsWindow.close();
-        }));
+        });
 
         settingsButton.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
-                settingsWindow.setOpacity(1);
                 if (!settingsWindow.isShowing()) {
-                    settingsWindow.setWidth(960);
-                    settingsWindow.setHeight(600);
-                    settingsWindow.setIconified(false);
-                    settingsWindow.setMaximized(false);
+                    if (isWindowSupport) {
+                        settingsWindow = getSettingsWindow();
+                        FrameApp.STAGE.setOnCloseRequest(_ -> {
+                            if (settingsWindow.isShowing()) settingsWindow.close();
+                        });
+                    }
                     settingsWindow.show();
                     if (isWindowSupport) Blur.applyBlur(settingsWindow, Theme.blurMode);
                 }
@@ -678,7 +691,7 @@ public class FrameFactory {
         {
             AutoPane titleBox = new AutoPane();
             {
-                Label label = ModuleCreator.createLabel("窗口");
+                Label label = ModuleCreator.createLabel("图形");
 
                 titleBox.setPosition(label, AutoPane.AlignmentMode.CENTER, AutoPane.LocateMode.RELATIVE, 0.5, 0.5);
                 titleBox.getChildren().addAll(label);
@@ -958,21 +971,29 @@ public class FrameFactory {
                     }
                 });
 
+                Label warnLabel = ModuleCreator.createLabel("不稳定！");
+                warnLabel.setTextFill(THEME_COLOR);
 
                 enableWinUIBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
                 enableWinUIBox.setPosition(switchButton, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 6, fontSize * 0.7);
                 enableWinUIBox.setPosition(valueLabel, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 9, fontSize * 0.7);
+                enableWinUIBox.setPosition(warnLabel, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 12, fontSize * 0.7);
 
-                enableWinUIBox.getChildren().addAll(label, switchButton, valueLabel);
+                enableWinUIBox.getChildren().addAll(label, switchButton, valueLabel, warnLabel);
             }
 
-            if (enableWinUI) {
+            if (isWindowSupport) {
                 bgImageBox.setDisable(true);
                 bgImageAmbiguityBox.setDisable(true);
                 bgImageBrightnessBox.setDisable(true);
-            } else choiceWinUIBox.setDisable(true);
-            if (!Util.isWindowSupport()) enableWinUIBox.setDisable(true);
+            } else {
+                choiceWinUIBox.setDisable(true);
+            }
 
+            if (systemSupportButLibraryNotExist || !Util.isWindowSupport()) {
+                choiceWinUIBox.setDisable(true);
+                enableWinUIBox.setDisable(true);
+            }
 
             collectConfigPart(windowConfig, titleBox, themeBox, colorBox, enableWinUIBox, choiceWinUIBox, bgImageBox, bgImageAmbiguityBox, bgImageBrightnessBox);
             titleBox.setStyle("-fx-background-color: #" + Toolkit.colorToString(TRANSPERTANT_THEME_COLOR));
@@ -1021,7 +1042,7 @@ public class FrameFactory {
             {
                 Label label = ModuleCreator.createLabel("重试次数");
 
-                SmoothSlider slider = ModuleCreator.createSlider(0, 5, retryCount);
+                SmoothSlider slider = ModuleCreator.createSlider(0, 24, retryCount);
                 SmoothTextField textField = ModuleCreator.createTextField();
                 textField.getTextField().setText(String.valueOf(retryCount));
 
@@ -1131,7 +1152,7 @@ public class FrameFactory {
                     textSplitSymbols.clear();
                     textSplitSymbols.addAll(nv.chars().mapToObj(c -> (char) c).toList());
                 });
-                textField.getTextField().setText(XCldrStub.Joiner.on("").join(textSplitSymbols));
+                textField.getTextField().setText(textSplitSymbols.stream().map(String::valueOf).collect(Collectors.joining("")));
 
                 symbolBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
                 symbolBox.setPosition(textField, false, fontSize * 6, 0, 0, 0);
@@ -1160,10 +1181,9 @@ public class FrameFactory {
                 appendNameBox.getChildren().addAll(label, switchButton, valueLabel);
             }
 
-            AutoPane appendOrdinal = new AutoPane();
+            AutoPane appendOrdinalBox = new AutoPane();
             {
                 Label label = ModuleCreator.createLabel("文件名添加序号");
-
 
                 SmoothSwitch switchButton = ModuleCreator.createSwitch(isAppendOrdinal);
 
@@ -1175,14 +1195,57 @@ public class FrameFactory {
                 });
 
 
-                appendOrdinal.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
-                appendOrdinal.setPosition(switchButton, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 6, fontSize * 0.7);
-                appendOrdinal.setPosition(valueLabel, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 9, fontSize * 0.7);
+                appendOrdinalBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
+                appendOrdinalBox.setPosition(switchButton, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 6, fontSize * 0.7);
+                appendOrdinalBox.setPosition(valueLabel, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 9, fontSize * 0.7);
 
-                appendOrdinal.getChildren().addAll(label, switchButton, valueLabel);
+                appendOrdinalBox.getChildren().addAll(label, switchButton, valueLabel);
             }
 
-            collectConfigPart(textConfig, titleBox, pieceBox, symbolBox, appendNameBox, appendOrdinal);
+            AutoPane appendExtraChapterNameBox = new AutoPane();
+            {
+                Label label = ModuleCreator.createLabel("添加额外章节名");
+
+                SmoothSwitch switchButton = ModuleCreator.createSwitch(isAppendExtraChapterName);
+
+                Label valueLabel = ModuleCreator.createLabel(isAppendExtraChapterName ? "启用" : "禁用");
+
+                switchButton.stateProperty().addListener((o, ov, nv) -> {
+                    isAppendExtraChapterName = nv;
+                    valueLabel.setText(isAppendExtraChapterName ? "启用" : "禁用");
+                });
+
+
+                appendExtraChapterNameBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
+                appendExtraChapterNameBox.setPosition(switchButton, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 6, fontSize * 0.7);
+                appendExtraChapterNameBox.setPosition(valueLabel, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 9, fontSize * 0.7);
+
+                appendExtraChapterNameBox.getChildren().addAll(label, switchButton, valueLabel);
+            }
+
+            AutoPane appendExtraVolumeNameBox = new AutoPane();
+            {
+                Label label = ModuleCreator.createLabel("添加额外卷名");
+
+
+                SmoothSwitch switchButton = ModuleCreator.createSwitch(isAppendExtraVolumeName);
+
+                Label valueLabel = ModuleCreator.createLabel(isAppendExtraVolumeName ? "启用" : "禁用");
+
+                switchButton.stateProperty().addListener((o, ov, nv) -> {
+                    isAppendExtraVolumeName = nv;
+                    valueLabel.setText(isAppendExtraVolumeName ? "启用" : "禁用");
+                });
+
+
+                appendExtraVolumeNameBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
+                appendExtraVolumeNameBox.setPosition(switchButton, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 6, fontSize * 0.7);
+                appendExtraVolumeNameBox.setPosition(valueLabel, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 9, fontSize * 0.7);
+
+                appendExtraVolumeNameBox.getChildren().addAll(label, switchButton, valueLabel);
+            }
+
+            collectConfigPart(textConfig, titleBox, pieceBox, symbolBox, appendNameBox, appendOrdinalBox, appendExtraChapterNameBox, appendExtraVolumeNameBox);
             titleBox.setStyle("-fx-background-color: #" + Toolkit.colorToString(TRANSPERTANT_THEME_COLOR));
         }
 
@@ -1247,7 +1310,7 @@ public class FrameFactory {
             {
                 Label label = ModuleCreator.createLabel("分段时长");
 
-                SmoothSlider slider = ModuleCreator.createSlider(0, 120, maxAudioDuration);
+                SmoothSlider slider = ModuleCreator.createSlider(1, 120, maxAudioDuration);
                 SmoothTextField textField = ModuleCreator.createTextField();
                 textField.getTextField().setText(String.valueOf((int) maxAudioDuration));
 
@@ -1261,10 +1324,6 @@ public class FrameFactory {
                     double value = Math.round(nv.doubleValue());
                     maxAudioDuration = value;
 
-                    Blend effect = Toolkit.getColorBlend(LIGHT_THEME ? LIGHT_THEME_COLOR : DARK_THEME_COLOR, BACKGROUND_BRIGHTNESS);
-                    effect.setBottomInput(new GaussianBlur(value));
-                    Toolkit.setBackGroundImageEffect(FrameApp.rootPane, effect);
-                    Toolkit.setBackGroundImageEffect(root, effect);
                     if (!isUpdating[0]) {
                         isUpdating[0] = true;
                         textField.getTextField().setText(numberFormat.format(value));
@@ -1280,7 +1339,7 @@ public class FrameFactory {
 
             AutoPane splitChapterBox = new AutoPane();
             {
-                Label label = ModuleCreator.createLabel("分段章节音频");
+                Label label = ModuleCreator.createLabel("分段保存音频");
 
                 SmoothSwitch switchButton = ModuleCreator.createSwitch(splitChapter);
 
@@ -1568,26 +1627,6 @@ public class FrameFactory {
         if (!s.matches("\\d+")) return 2;
 
         return 0;
-    }
-
-    private static String formatDuration(long milliseconds) {
-
-        long h = milliseconds / 3600000;
-        long m = (milliseconds % 3600000) / 60000;
-        long s = ((milliseconds % 3600000) % 60000) / 1000;
-        long S = milliseconds % 1000;
-
-        StringBuilder sb = new StringBuilder();
-
-        if (h > 0) sb.append(h).append("h ");
-        if (m > 0) sb.append(m).append("m ");
-        if (s > 0 || S > 0) {
-            sb.append(s);
-            if (S > 0) sb.append(".").append(S / 100);
-            sb.append("s");
-        }
-
-        return sb.toString();
     }
 
     private static class ModuleCreator {

@@ -1,29 +1,44 @@
 package mai_onsyn.VeloVoice;
 
-import com.kieferlam.javafxblur.Blur;
 import javafx.application.Application;
 import mai_onsyn.VeloVoice.App.ConfigListener;
-import mai_onsyn.VeloVoice.Utils.Util;
+import mai_onsyn.VeloVoice.App.Runtime;
+import mai_onsyn.VeloVoice.App.Theme;
+import mai_onsyn.VeloVoice.NetWork.Voice;
+
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static mai_onsyn.VeloVoice.App.AppConfig.isWindowSupport;
 
 public class Main {
 
     static {
         Thread configSaveThread = ConfigListener.CONFIG_SAVE_THREAD;    //加载ConfigListener类的静态代码块
         configSaveThread.start();
-        if (Util.isWindowSupport()) Blur.loadBlurLibrary();
+        try {
+            if (isWindowSupport) System.loadLibrary("javafxblur"); //Blur.loadBlurLibrary();
+        } catch (UnsatisfiedLinkError e) {
+            Runtime.systemSupportButLibraryNotExist = true;
+            isWindowSupport = false;
+            Theme.enableWinUI = false;
+        }
     }
 
     public static void main(String[] args) {
 
-//        if (args.length != 0) {
-//            if (Objects.equals(args[0], "no-gui")) {
-//                ConsoleApp.main(args);
-//                return;
-//            }
-//        }
+        if (args.length != 0) {
+            if (Objects.equals(args[0], "no-gui")) {
+                Runtime.consoleMode = true;
+                ConsoleApp.main(args);
+                return;
+            }
+        }
+        //System.out.println(Arrays.toString(args));
 
-        //System.out.println("launch");
         Application.launch(FrameApp.class);
+
     }
 
 }

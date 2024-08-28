@@ -4,8 +4,11 @@ import javafx.application.Platform;
 import javafx.scene.control.Label;
 import mai_onsyn.AnimeFX.Frame.Module.SmoothProgressBar;
 import mai_onsyn.VeloVoice.App.AppConfig;
+import mai_onsyn.VeloVoice.App.Runtime;
 import mai_onsyn.VeloVoice.NetWork.TTS.EdgeTTSClient;
 import mai_onsyn.VeloVoice.NetWork.TTS.TTSClient;
+import mai_onsyn.VeloVoice.Utils.AudioPlayer;
+import mai_onsyn.VeloVoice.Utils.Util;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,7 +32,8 @@ public class TTSExecutor {
     }
 
     public boolean connect() {
-        logger.prompt("开始建立TTS连接");
+        if (logger != null) logger.prompt("开始建立TTS连接");
+        else System.out.println("开始建立TTS连接");
         try {
             CompletableFuture<?>[] threadMonitor = new CompletableFuture[THREAD_COUNT];
             for (int i = 0; i < clients.size(); i++) {
@@ -47,7 +51,8 @@ public class TTSExecutor {
 
                         if (!client.isOpen()) {
                             client = new EdgeTTSClient();
-                            logger.warn(String.format("线程%s连接错误，尝试第%d次重连", Thread.currentThread().getName(), tryCount + 1));
+                            if (logger != null) logger.warn(String.format("线程%s连接错误，尝试第%d次重连", Thread.currentThread().getName(), tryCount + 1));
+                            else System.out.println(String.format("线程%s连接错误，尝试第%d次重连", Thread.currentThread().getName(), tryCount + 1));
                             client.connect();
                             clients.set(I, client);
                             continue;
@@ -57,7 +62,7 @@ public class TTSExecutor {
                     }
 
                     threadMonitor[I].complete(null);
-                    Platform.runLater(() -> {
+                    if (!consoleMode) Platform.runLater(() -> {
                         ((SmoothProgressBar) progressPane.getChildren().get(0)).setProgress(progress);
                         ((Label) progressPane.getChildren().get(2)).setText(String.format("连接TTS - %.1f%% - [%d/%d]", progress * 100, I + 1, THREAD_COUNT));
                         progressPane.flushWidth(progressPane.getLayoutBounds().getWidth());
@@ -66,10 +71,12 @@ public class TTSExecutor {
             }
             CompletableFuture<?> all = CompletableFuture.allOf(threadMonitor);
             all.get();
-            logger.prompt(clients.size() + "个TTS连接已建立");
+            if (logger != null) logger.prompt(clients.size() + "个TTS连接已建立");
+            else System.out.println(clients.size() + "个TTS连接已建立");
             return true;
         } catch (Exception e) {
-            logger.error("连接中止，因为 " + e);
+            if (logger != null) logger.error("连接中止，因为 " + e);
+            else System.out.println("连接中止，因为 " + e);
             return false;
         }
 //        long endTime = System.currentTimeMillis() + AppConfig.timeoutSeconds * 1000L;
@@ -119,22 +126,26 @@ public class TTSExecutor {
                 }
             }
             if (allClosed) {
-                logger.prompt("TTS连接已关闭");
+                if (logger != null) logger.prompt("TTS连接已关闭");
+                else System.out.println("TTS连接已关闭");
                 return true;
             }
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                logger.warn("等待关闭过程被中断");
+                if (logger != null) logger.warn("等待关闭过程被中断");
+                else System.out.println("等待关闭过程被中断");
                 return false;
             }
         }
-        logger.error("超时 - 部分TTS连接未能成功关闭！");
+        if (logger != null) logger.error("超时 - 部分TTS连接未能成功关闭！");
+        else System.out.println("超时 - 部分TTS连接未能成功关闭！");
         return false;
     }
 
-    public void execute2(List<String> input, File output) throws InterruptedException {
+    public List<String> tasks;
+    public void execute2(List<String> input, File outputFolder, String fileName) throws InterruptedException {
         final int taskCount = input.size();
         currentCount = taskCount;
 
@@ -142,7 +153,7 @@ public class TTSExecutor {
 
         List<Thread> virtualThreads = new ArrayList<>(THREAD_COUNT);
         try {
-            List<String> tasks = new ArrayList<>(input);
+            tasks = new ArrayList<>(input);
             List<Integer> taskIDs = new ArrayList<>(taskCount);
             for (int i = 0; i < taskCount; i++) taskIDs.add(i);
 
@@ -162,6 +173,7 @@ public class TTSExecutor {
                                 Thread.sleep(100);
                             } catch (InterruptedException e) {
                                 Thread.currentThread().interrupt();
+                                tasks.clear();
                                 break;
                             }
                             continue;
@@ -186,12 +198,14 @@ public class TTSExecutor {
                                 data = client.sendText(UUID.randomUUID(), message);
                             } catch (InterruptedException e) {
                                 Thread.currentThread().interrupt();
+                                tasks.clear();
                                 break rootLoop;
                             }
 
                             if (data == null) {
                                 client = new EdgeTTSClient();
-                                logger.warn(String.format("线程%s连接错误，尝试第%d次重连", Thread.currentThread().getName(), tryCount + 1));
+                                if (logger != null) logger.warn(String.format("线程%s连接错误，尝试第%d次重连", Thread.currentThread().getName(), tryCount + 1));
+                                else System.out.println(String.format("线程%s连接错误，尝试第%d次重连", Thread.currentThread().getName(), tryCount + 1));
                                 client.connect();
                                 clients.set(I, client);
                             }
@@ -199,12 +213,14 @@ public class TTSExecutor {
 
                         if (data == null) {
                             data = new ArrayList<>();
-                            logger.error(String.format("线程%s已达最大重试次数，语句\"%s\"将被忽略！", Thread.currentThread().getName(), message));
+                            if (logger != null) logger.error(String.format("线程%s已达最大重试次数，语句\"%s\"将被忽略！", Thread.currentThread().getName(), message));
+                            else System.out.println(String.format("线程%s已达最大重试次数，语句\"%s\"将被忽略！", Thread.currentThread().getName(), message));
                         }
 
                         synchronized (this) {
                             resultPool.put(messageID, data);
                             currentProgress.setValue(currentProgress.getValue() + 1);
+                            if (consoleMode) System.out.printf("\r当前 - %s - %.2f%% - [%d/%d]", currentFile, (float) currentProgress.get() / currentCount * 100, currentProgress.get(), currentCount);
                         }
                     }
                     monitor.complete(null);
@@ -213,15 +229,71 @@ public class TTSExecutor {
 
             CompletableFuture<?> threadsMonitor = CompletableFuture.allOf(monitorList);
             threadsMonitor.get();
+            System.out.println();
 
-            try (FileOutputStream fos = new FileOutputStream(output)) {
-                for (int i = 0; i < taskCount; i++) {
-                    for (byte[] bytes : resultPool.get(i)) {
-                        fos.write(bytes);
+            if (AppConfig.splitChapter) {
+                int totalBytes = countAudio(resultPool);
+                int fileByteSize = (int) (360_000 * AppConfig.maxAudioDuration);
+                int fileCount = totalBytes / fileByteSize;
+                //System.out.println("fileCount: " + fileCount + " totalBytes: " + totalBytes);
+                FileOutputStream fos;
+                if (fileCount == 0) fos = new FileOutputStream(new File(outputFolder, fileName + ".mp3"));
+                else fos = new FileOutputStream(new File(outputFolder, String.format("%s_p%s.mp3", fileName, Util.padZero(0, fileCount))));
+                try {
+                    int byteCount = 0;
+                    int piece = 0;
+                    for (int i = 0; i < taskCount; i++) {
+
+                        for (byte[] bytes : resultPool.get(i)) {
+                            fos.write(bytes);
+                            byteCount += bytes.length;
+                        }
+
+                        if (byteCount > 360_000 * AppConfig.maxAudioDuration) {
+                            byteCount = 0;
+                            fos.close();
+                            fos = new FileOutputStream(new File(outputFolder, String.format("%s_p%s.mp3", fileName, Util.padZero(++piece, fileCount))));
+                            if (AppConfig.isAppendNameForSplitChapter) {
+                                for (byte[] bytes : resultPool.get(0)) {
+                                    fos.write(bytes);
+                                    byteCount += bytes.length;
+                                }
+                                //暂时没加重连检测 祈祷不要断线吧...............................................................
+                                EdgeTTSClient client = new EdgeTTSClient();
+                                client.connect();
+                                List<byte[]> counterVoice = client.sendText(UUID.randomUUID(), "p" + piece);
+                                client.close();
+
+                                for (byte[] bytes : counterVoice) {
+                                    fos.write(bytes);
+                                    byteCount += bytes.length;
+                                }
+                            }
+                        }
                     }
+
+                } catch (IOException e) {
+                    if (logger != null) logger.error("写入文件时发生错误: " + e);
+                    else System.out.println("写入文件时发生错误: " + e);
+                } finally {
+                    fos.close();
                 }
-            } catch (IOException e) {
-                logger.error("写入文件时发生错误: " + e);
+
+            }
+            else {
+                int byteCount = 0;
+                try (FileOutputStream fos = new FileOutputStream(new File(outputFolder, fileName + ".mp3"))) {
+                    for (int i = 0; i < taskCount; i++) {
+                        for (byte[] bytes : resultPool.get(i)) {
+                            fos.write(bytes);
+                            byteCount += bytes.length;
+                        }
+                    }
+                } catch (IOException e) {
+                    if (logger != null) logger.error("写入文件时发生错误: " + e);
+                    else System.out.println("写入文件时发生错误: " + e);
+                }
+                //System.out.println(byteCount);
             }
 
         } catch (Exception e) {
@@ -230,133 +302,21 @@ public class TTSExecutor {
                 //shutdown();
                 throw new InterruptedException();
             }
-            else logger.error(String.format("章节\"%s\"转换时出错，因为 - %s", currentFile, e));
+            else {
+                if (logger != null) logger.error(String.format("章节\"%s\"转换时出错，因为 - %s", currentFile, e));
+                else System.out.printf("章节\"%s\"转换时出错，因为 - %s%n", currentFile, e);
+            }
         }
     }
 
-//    @Deprecated
-//    public void execute(List<String> tasks, File output) {
-//        final int taskCount = tasks.size();
-//        currentProgressCount = taskCount;
-//
-//        int currentCount = -1;
-//        List<String> resultPool = new ArrayList<>();
-//
-//        tryLoop:
-//        while (currentCount < AppConfig.retryCount) {
-//            if (Thread.currentThread().isInterrupted()) {
-//                logger.debug("Executor exit in loop head");
-//                return;
-//            }
-//            if (currentCount == -1) {
-//                TTS.temptTotalCount = TTS.overallProgress.getValue();
-//            } else TTS.overallProgress.setValue(TTS.temptTotalCount);
-//            resultPool.clear();
-//            currentCount++;
-//
-//            Platform.runLater(() -> completeCountProperty.set(0));
-//
-//            Thread[] threads = null;
-//            try (FileOutputStream fos = new FileOutputStream(output)) {
-//
-//                threads = new Thread[THREAD_COUNT];
-//
-//                List<String>[] splitTasks = splitTask(tasks);
-//                List<List<byte[]>> resultList = new ArrayList<>(THREAD_COUNT);
-//                for (int i = 0; i < splitTasks.length; i++) {
-//                    int I = i;
-//                    resultList.add(new ArrayList<>());
-//                    threads[i] = Thread.ofVirtual().name("TTS-Task-Thread-" + i).start(() -> {
-//                        try {
-//                            TTSClient client = clients.get(I);
-//                            for (String message : splitTasks[I]) {
-//                                Timer timer = new Timer();
-//                                timer.schedule(new TimerTask() {
-//                                    @Override
-//                                    public void run() {
-//                                        System.out.println(splitTasks[I].indexOf(message) + " / " + (splitTasks[I].size() - 1) + ": " + message);
-//                                    }
-//                                }, AppConfig.timeoutSeconds * 1000L);
-//                                List<byte[]> bytes = client.sendText(UUID.randomUUID(), message);
-//                                timer.cancel();
-//                                synchronized (resultList.get(I)) {
-//                                    resultPool.add(message);
-//                                    resultList.get(I).addAll(bytes);
-//                                    Platform.runLater(() -> completeCountProperty.set(completeCountProperty.get() + 1));
-//                                }
-//                            }
-//                        } catch (Exception e) {
-//                            Thread.currentThread().interrupt();
-//                        }
-//                    });
-//                }
-//
-//                AtomicLong startTime = new AtomicLong(System.currentTimeMillis());
-//
-//                completeCountProperty.addListener((o, ov, nv) -> {
-//                    startTime.set(System.currentTimeMillis()); // 每次更新重置计时
-//                });
-//
-//                while (completeCountProperty.get() != taskCount) {
-//                    if (Thread.currentThread().isInterrupted()) return; //终止
-//                    if (AppConfig.pausing) startTime.set(System.currentTimeMillis());   //暂停不计时
-//                    long elapsedTime = System.currentTimeMillis() - startTime.get();
-//                    if (elapsedTime > AppConfig.timeoutSeconds * 4000L) {
-//                        logger.warn("超时！重试次数：" + (currentCount + 1));
-//                        //logger.log("超时字符串：" + findDifferent(tasks, resultPool));
-//                        for (Thread thread : threads) {
-//                            thread.interrupt(); // 中断线程
-//                        }
-//                        if (!Thread.currentThread().isInterrupted()) continue tryLoop; // 重新执行任务
-//                        else {
-//                            logger.debug("Executor exit in loop inner body");
-//                            return;    //终止信号
-//                        }
-//                    }
-//                    //logger.log(String.valueOf(Thread.currentThread().isInterrupted()));
-//                    Thread.sleep(500);
-//                }
-//
-//                for (List<byte[]> data : resultList) {
-//                    for (byte[] bytes : data) {
-//                        fos.write(bytes);
-//                    }
-//                }
-//
-//                return;
-//
-//            } catch (Exception e) {
-//                if (threads != null) {
-//                    for (Thread thread : threads) {
-//                        thread.interrupt(); // 中断线程
-//                    }
-//                }
-//                Thread.currentThread().interrupt();
-//                logger.debug("Executor exit in Exception");
-//            }
-//        }
-//    }
-
-    private List<String>[] splitTask(List<String> tasks) {
-        int minChildrenSize = tasks.size() / THREAD_COUNT;
-        int remainder = tasks.size() % THREAD_COUNT;
-
-        List<String>[] result = new List[THREAD_COUNT];
-
-        int index = 0;
-        for (int i = 0; i < THREAD_COUNT; i++) {
-            result[i] = new ArrayList<>();
-            for (int j = 0; j < minChildrenSize; j++) {
-                result[i].add(tasks.get(index));
-                index++;
-            }
-
-            if (i < remainder) {
-                result[i].add(tasks.get(index));
-                index++;
+    private int countAudio(Map<Integer, List<byte[]>> lines) {
+        int count = 0;
+        int i = 0;
+        while (lines.get(i) != null) {
+            for (byte[] bytes : lines.get(i++)) {
+                count += bytes.length;
             }
         }
-
-        return result;
+        return count;
     }
 }

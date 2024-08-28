@@ -2,7 +2,6 @@ package mai_onsyn.VeloVoice.App;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.ibm.icu.impl.locale.XCldrStub;
 import com.kieferlam.javafxblur.Blur;
 import javafx.scene.paint.Color;
 import mai_onsyn.AnimeFX.Frame.Utils.Toolkit;
@@ -13,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static mai_onsyn.VeloVoice.App.Theme.*;
 import static mai_onsyn.VeloVoice.App.AppConfig.*;
@@ -57,6 +57,8 @@ public class ConfigListener {
             }
             isAppendVolumeName = configJson.getBoolean("WebChapterAppendVolumeName");
             isAppendOrdinal = configJson.getBoolean("SaveFileAppendOrdinal");
+            isAppendExtraChapterName = configJson.getBoolean("WebChapterAppendExtraChapterName");
+            isAppendExtraVolumeName = configJson.getBoolean("WebVolumeAppendExtraVolumeName");
 
             splitChapter = configJson.getBoolean("SplitChapter");
             isAppendNameForSplitChapter = configJson.getBoolean("AppendNameForSplitChapter");
@@ -86,7 +88,7 @@ public class ConfigListener {
                         VariableChangeListener.cacheCurrentValues();
                         writeConfigurations();
                     }
-                    Thread.sleep(2500); //每隔一坤秒保存一次配置文件
+                    Thread.sleep(1000); //每隔一秒保存一次配置文件
                 }
             } catch (Exception _) {}
         });
@@ -106,9 +108,11 @@ public class ConfigListener {
         configJson.put("TimeoutSeconds", timeoutSeconds);
 
         configJson.put("TextPieceLength", textPieceSize);
-        configJson.put("TextSplitSymbols", XCldrStub.Joiner.on("").join(textSplitSymbols));
+        configJson.put("TextSplitSymbols", textSplitSymbols.stream().map(String::valueOf).collect(Collectors.joining("")));
         configJson.put("WebChapterAppendVolumeName", isAppendVolumeName);
         configJson.put("SaveFileAppendOrdinal", isAppendOrdinal);
+        configJson.put("WebChapterAppendExtraChapterName", isAppendExtraChapterName);
+        configJson.put("WebVolumeAppendExtraVolumeName", isAppendExtraVolumeName);
 
         configJson.put("AppendNameForSplitChapter", isAppendNameForSplitChapter);
         configJson.put("SplitChapter", splitChapter);
@@ -149,6 +153,8 @@ public class ConfigListener {
         private static List<Character> cachedTextSplitSymbols = new ArrayList<>();
         private static boolean cachedIsAppendVolumeName;
         private static boolean cachedIsAppendOrdinal;
+        private static boolean cachedIsAppendExtraChapterName;
+        private static boolean cachedIsAppendExtraVolumeName;
 
         private static boolean cachedSplitChapter;
         private static boolean cachedIsAppendNameForSplitChapter;
@@ -172,6 +178,8 @@ public class ConfigListener {
             cachedTextSplitSymbols = new ArrayList<>(textSplitSymbols);
             cachedIsAppendVolumeName = isAppendVolumeName;
             cachedIsAppendOrdinal = isAppendOrdinal;
+            cachedIsAppendExtraChapterName = isAppendExtraChapterName;
+            cachedIsAppendExtraVolumeName = isAppendExtraVolumeName;
 
             cachedPreviewText = previewText;
             cachedSplitChapter = splitChapter;
@@ -197,7 +205,9 @@ public class ConfigListener {
                     splitChapter != cachedSplitChapter ||
                     maxAudioDuration != cachedMaxAudioDuration ||
                     enableWinUI != cached_enableWinUI ||
-                    blurMode != cached_blurMode;
+                    blurMode != cached_blurMode ||
+                    isAppendExtraChapterName != cachedIsAppendExtraChapterName ||
+                    isAppendExtraVolumeName != cachedIsAppendExtraVolumeName;
         }
     }
 

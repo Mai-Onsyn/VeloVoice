@@ -325,6 +325,9 @@ public class SmoothTreeView extends AutoPane {
                         .borderShape(20)
                         .popupStyle(namePopupStyle)
                         .init();
+
+                namePopup.getTextField().setText(cell.getText());
+                namePopup.getTextField().selectAll();
                 namePopup.showOnCenter();
                 menu.hide();
                 namePopup.setOnTextAvailable((o, ov, text) -> {

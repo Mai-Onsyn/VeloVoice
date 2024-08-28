@@ -88,12 +88,13 @@ public class FXLogger extends SmoothTextArea {
         //logMenu.setOnMouseEntered(event -> logMenu.setCursor(Cursor.DEFAULT));
     }
 
+    private boolean firstLine = true;
     private void log(String s) {
-        if (logMenu.getText().isEmpty()) {
+        if (firstLine) {
             Platform.runLater(() -> logMenu.appendText("[" + format.format(new Date()) + "] " + s));
-            return;
+            firstLine = false;
         }
-        Platform.runLater(() -> logMenu.appendText("\n[" + format.format(new Date()) + "] " + s));
+        else Platform.runLater(() -> logMenu.appendText("\n[" + format.format(new Date()) + "] " + s));
     }
 
     public void debug(String s) {

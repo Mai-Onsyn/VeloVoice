@@ -161,37 +161,26 @@ public class SmoothTextField extends AutoPane {
             line.setEndY(height - 3.5 * font.getSize() / 15);
             line.setStartX(width / 2);
             line.setEndX(width / 2);
+            line.setVisible(false);
 
             textField.focusedProperty().addListener((o, ov, nv) -> {
                 isFocused = nv;
                 Timeline startTimeline;
                 Timeline endTimeline;
                 if (nv) {
+                    line.setVisible(true);
                     startTimeline = new Timeline(new KeyFrame(Duration.millis(animeDuration), new KeyValue(line.startXProperty(), border.getArcWidth() / 2)));
                     endTimeline = new Timeline(new KeyFrame(Duration.millis(animeDuration), new KeyValue(line.endXProperty(), width - border.getArcWidth() / 2)));
                 }
                 else {
                     startTimeline = new Timeline(new KeyFrame(Duration.millis(animeDuration), new KeyValue(line.startXProperty(), width / 2)));
                     endTimeline = new Timeline(new KeyFrame(Duration.millis(animeDuration), new KeyValue(line.endXProperty(), width / 2)));
+                    endTimeline.setOnFinished(f -> line.setVisible(false));
                 }
                 startTimeline.play();
                 endTimeline.play();
             });
         });
-
-        super.heightProperty().addListener((o, ov, nv) -> {
-        });
-
-        /*
-        textField.addEventFilter(ScrollEvent.SCROLL, event -> {
-            double deltaY = event.getDeltaY();
-            double scroll = textField.getScrollTop() - deltaY * 3;
-            scroll = Math.max(0, scroll);
-            scroll = Math.min(textField.getMaxScrollTop(), scroll);
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(animeDuration), new KeyValue(textField.scrollTopProperty(), scroll)));
-            timeline.play();
-        });
-         */
 
         super.getChildren().addAll(border, textField, line);
         return this;

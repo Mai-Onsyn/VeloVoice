@@ -218,4 +218,6 @@ public class SmoothSwitch extends Pane {
     public BooleanProperty stateProperty() {
         return this.open;
     }
+
+
 }

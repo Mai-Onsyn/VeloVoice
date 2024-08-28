@@ -3,6 +3,7 @@ package mai_onsyn.VeloVoice.Text;
 import mai_onsyn.VeloVoice.App.AppConfig;
 import mai_onsyn.VeloVoice.NetWork.TTSExecutor;
 import mai_onsyn.VeloVoice.Utils.Structure;
+import mai_onsyn.VeloVoice.Utils.Util;
 
 import java.io.File;
 import java.util.List;
@@ -12,18 +13,20 @@ import static mai_onsyn.VeloVoice.App.Runtime.*;
 
 public class TTS {
 
-    private static TTSExecutor executor;
+    public static TTSExecutor executor;
 
     public static void startNewTask(Structure<List<String>> tree, File structureRoot) {
         currentFile = "";
         totalCount = countStructure(tree, 0);
         totalProgress.setValue(0);
         executor = new TTSExecutor(AppConfig.maxConnectThread);
-        executor.connect();
+        if (!executor.connect()) {
+            return;
+        }
         try {
-            if (tree.getChildren().size() == 1) runTask(tree.getChildren().getFirst(), structureRoot, false, 0);
+            if (tree.getChildren().size() == 1) runTask(tree.getChildren().getFirst(), structureRoot, false, 0, 1);
             else for (int i = 0; i < tree.getChildren().size(); i++) {
-                runTask(tree.getChildren().get(i), structureRoot, isAppendOrdinal, i + 1);
+                runTask(tree.getChildren().get(i), structureRoot, isAppendOrdinal, i + 1, tree.getChildren().size());
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -32,27 +35,29 @@ public class TTS {
         currentFile = "";
     }
 
-    private static void runTask(Structure<List<String>> tree, File structureRoot, boolean ordinal, int counter) throws InterruptedException {
+    private static void runTask(Structure<List<String>> tree, File structureRoot, boolean ordinal, int counter, int rootSize) throws InterruptedException {
+        //System.out.println(Thread.currentThread().isInterrupted());
         if (Thread.currentThread().isInterrupted()) {
-            logger.debug("TTS exit");
+            //logger.debug("TTS exit");
             return; //终止信号
         }
         if (tree.getData() == null) {
-            structureRoot = new File(structureRoot, ordinal ? String.format("%02d. %s", counter, tree.getName()) : tree.getName());
+            structureRoot = new File(structureRoot, ordinal ? String.format("%s. %s", Util.padZero(counter, rootSize), tree.getName()) : tree.getName());
             if (!structureRoot.exists()) if (!structureRoot.mkdirs()) {
-                logger.error("无法创建音频输出文件夹 - " + structureRoot.getAbsolutePath());
+                if (logger != null) logger.error("无法创建音频输出文件夹 - " + structureRoot.getAbsolutePath());
+                else System.out.println("无法创建音频输出文件夹 - " + structureRoot.getAbsolutePath());
                 return;
             }
 
-            if (tree.getChildren().size() == 1) runTask(tree.getChildren().getFirst(), structureRoot, false, 0);
+            if (tree.getChildren().size() == 1) runTask(tree.getChildren().getFirst(), structureRoot, false, 0, 1);
             else for (int i = 0; i < tree.getChildren().size(); i++) {
-                runTask(tree.getChildren().get(i), structureRoot, isAppendOrdinal, i + 1);
+                runTask(tree.getChildren().get(i), structureRoot, isAppendOrdinal, i + 1, tree.getChildren().size());
             }
         }
         else {
             currentFile = tree.getName();
-            logger.info("当前 - \"" + currentFile + "\"");
-            executor.execute2(tree.getData(), new File(structureRoot, ordinal ? String.format("%02d. %s.mp3", counter, tree.getName()) : String.format("%s.mp3", tree.getName())));
+            if (logger != null) logger.info("当前 - \"" + currentFile + "\"");
+            executor.execute2(tree.getData(), structureRoot, ordinal ? String.format("%s. %s", Util.padZero(counter, rootSize), tree.getName()) : tree.getName());
         }
     }
 

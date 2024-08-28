@@ -12,6 +12,7 @@ import javafx.stage.StageStyle;
 import mai_onsyn.AnimeFX.Frame.Layout.AutoPane;
 import mai_onsyn.AnimeFX.Frame.Layout.NamePopup;
 import mai_onsyn.AnimeFX.Frame.Module.DiffusionButton;
+import mai_onsyn.VeloVoice.App.Runtime;
 import mai_onsyn.VeloVoice.App.Theme;
 import mai_onsyn.VeloVoice.Utils.Util;
 
@@ -54,6 +55,7 @@ public class FrameApp extends Application {
         if (isWindowSupport) Blur.applyBlur(stage, Theme.blurMode);
 
         logger.prompt("Application launched!");
+        if (systemSupportButLibraryNotExist) logger.error("找不到文件：javafxblur.dll");
     }
 
     private void drawRoot(AutoPane root) {

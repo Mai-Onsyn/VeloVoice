@@ -25,7 +25,7 @@ public class AudioPlayer {
         }
     }
 
-    private static byte[] mergeByteArrays(List<byte[]> byteArrayList) {
+    public static byte[] mergeByteArrays(List<byte[]> byteArrayList) {
         int totalLength = 0;
         for (byte[] byteArray : byteArrayList) {
             totalLength += byteArray.length;

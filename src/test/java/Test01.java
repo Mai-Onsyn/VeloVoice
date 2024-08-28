@@ -1,14 +1,9 @@
-import javafx.application.Application;
-import javafx.stage.Stage;
+import mai_onsyn.VeloVoice.Utils.Util;
 
-public class Test01 extends Application {
+import java.util.Locale;
 
-    @Override
-    public void start(Stage stage) {
-    }
+public class Test01 {
 
     public static void main(String[] args) {
-        launch(args);
     }
-
 }
