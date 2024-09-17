@@ -4,6 +4,7 @@
 
 这是一个用于将txt格式小说按章节目录形式拆解为文件目录结构，或从网络上爬取小说存储为文件目录结构，并通过Edge TTS（Edge浏览器的大声朗读功能）将章节文本转为mp3语音文件。
 - <https://www.bilibili.com/video/BV15ketemETA>
+- <https://www.bilibili.com/video/BV159tbeqEDA>
 
 ## 特点
 
