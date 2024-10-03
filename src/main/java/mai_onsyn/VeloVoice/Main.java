@@ -4,11 +4,8 @@ import javafx.application.Application;
 import mai_onsyn.VeloVoice.App.ConfigListener;
 import mai_onsyn.VeloVoice.App.Runtime;
 import mai_onsyn.VeloVoice.App.Theme;
-import mai_onsyn.VeloVoice.NetWork.Voice;
 
-import java.util.Arrays;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static mai_onsyn.VeloVoice.App.AppConfig.isWindowSupport;
 

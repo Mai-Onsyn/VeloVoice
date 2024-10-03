@@ -22,8 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static mai_onsyn.VeloVoice.App.AppConfig.isAppendOrdinal;
-import static mai_onsyn.VeloVoice.App.AppConfig.loadType;
+import static mai_onsyn.VeloVoice.App.AppConfig.*;
 import static mai_onsyn.VeloVoice.App.Runtime.logger;
 
 public class ConsoleApp {
@@ -135,19 +134,38 @@ public class ConsoleApp {
         System.out.println("===============当前结构树===============");
         System.out.println(rootStructure);
 
-        File textOutputFolder = new File(textPath);
         if (saveText) {
+            System.out.println("目前配置会保存章节文本文件到 - " + textPath);
+            System.out.println("是否继续？(y/n)");
+            if (!new Scanner(System.in).next().equals("y")) {
+                return;
+            }
+            File textOutputFolder = new File(textPath);
             try {
-                if (rootStructure.getChildren().size() == 1) Structure.Factory.saveToFile(rootStructure.getChildren().getFirst(), textOutputFolder, false, 0);
+                if (rootStructure.getChildren().size() == 1) Structure.Factory.saveToFile(rootStructure.getChildren().getFirst(), textOutputFolder, false, 0, 0);
                 else {
                     for (int i = 0; i < rootStructure.getChildren().size(); i++) {
-                        Structure.Factory.saveToFile(rootStructure.getChildren().get(i), textOutputFolder, isAppendOrdinal, i + 1);
+                        Structure.Factory.saveToFile(rootStructure.getChildren().get(i), textOutputFolder, isAppendOrdinal, i + 1, rootStructure.getChildren().size());
                     }
                 }
                 System.out.println("已保存文件树到 - " + textOutputFolder.getAbsolutePath());
             } catch (Exception e) {
                 System.out.println("保存文件树失败 - " + e);
             }
+        }
+
+
+        System.out.println("当前配置为：");
+        System.out.println("   模型 - " + model.get("ShortName"));
+        System.out.println("   语速 - " + voiceRate);
+        System.out.println("   音量 - " + voiceVolume);
+        System.out.println("   音调 - " + voicePitch);
+        System.out.println("   线程数量 - " + maxConnectThread);
+        System.out.println("   音频输出目录 - " + audioPath);
+        System.out.println("一切准备就绪，即将进行TTS转换");
+        System.out.println("是否继续？(y/n)");
+        if (!new Scanner(System.in).next().equals("y")) {
+            return;
         }
 
         long startTime = System.currentTimeMillis();
@@ -169,8 +187,8 @@ public class ConsoleApp {
                       //3: 从轻小说文库加载整个小说系列，需要轻小说文库的小说地址
                       //4: 从轻之文库加载整个小说系列
                       "LoadType": 0,
-                                        
-                                        
+                    
+                    
                       //小说源地址，根据LoadType的值进行不同的处理
                       //e.g.1 "C:/Users/XXX/Desktop/Novels"
                       //e.g.2 "/storage/emulated/0/Files/"
@@ -178,20 +196,20 @@ public class ConsoleApp {
                       //e.g.4 "https://www.wenku8.net/book/XXX.htm"
                       //e.g.5 "https://www.linovel.net/book/107897.html“
                       "SourcePath": "文件夹路径或网页地址",
-                                        
-                                        
+                    
+                    
                       //是否保存加载出来的文本，如果为true，则将文本保存到TextSavePath指定的文件夹中
                       //保存文本会在TTS转换之前进行
                       "IsSaveText": false,
                       "TextSavePath": "文件夹路径",
-                                        
-                                        
+                    
+                    
                       //TTS转换结果的输出目录
                       "AudioSavePath": "文件夹路径",
-                                        
-                                        
+                    
+                    
                       //TTS配置
-                                        
+                    
                       //语音模型，以下是可用的中文语音模型
                       //zh-TW-YunJheNeural, zh-TW-HsiaoYuNeural, zh-TW-HsiaoChenNeural,
                       //zh-HK-WanLungNeural, zh-HK-HiuMaanNeural, zh-HK-HiuGaaiNeural,
@@ -199,16 +217,16 @@ public class ConsoleApp {
                       //zh-CN-YunxiaNeural, zh-CN-YunxiNeural, zh-CN-YunjianNeural,
                       //zh-CN-XiaoyiNeural, zh-CN-XiaoxiaoNeural
                       "VoiceModel": "zh-CN-XiaoxiaoNeural",
-                                        
+                    
                       //语速，范围0.0-2.0
                       "VoiceRate": 1.5,
-                                        
+                    
                       //音调，范围0.0-1.5
                       "VoicePitch": 1.0,
-                                        
+                    
                       //音量，范围0.0-2.0
                       "VoiceVolume": 1.0
-                                        
+                    
                     }
                     """;
 

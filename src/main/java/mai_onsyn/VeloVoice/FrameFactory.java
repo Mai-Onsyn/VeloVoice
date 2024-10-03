@@ -36,6 +36,7 @@ import mai_onsyn.AnimeFX.Frame.Styles.CellStyle;
 import mai_onsyn.AnimeFX.Frame.Styles.NamePopupStyle;
 import mai_onsyn.AnimeFX.Frame.Utils.Toolkit;
 import mai_onsyn.VeloVoice.App.Theme;
+import mai_onsyn.VeloVoice.NetWork.Crawler.Websites.Kakuyomu;
 import mai_onsyn.VeloVoice.NetWork.Crawler.Websites.LiNovel;
 import mai_onsyn.VeloVoice.NetWork.Crawler.Websites.WenKu8;
 import mai_onsyn.VeloVoice.NetWork.TTS.EdgeTTSClient;
@@ -84,14 +85,16 @@ public class FrameFactory {
                     LoadType.LOCAL_FULL,
                     LoadType.LOCAL_VOLUMED,
                     LoadType.WEN_KU8,
-                    LoadType.LI_NOVEL
+                    LoadType.LI_NOVEL,
+                    LoadType.KAKUYOMU
             );
             List<String> choiceButtonNames = List.of(
                     "本地(文件)",
                     "本地(全集)",
                     "本地(分卷)",
                     "轻小说文库",
-                    "轻之文库"
+                    "轻之文库",
+                    "角川文库Web"
             );
             SmoothChoiceBox choiceBox = ModuleCreator.createChoiceBox(FONT_NORMAL, 300);
             choiceBox.setText(choiceButtonNames.getFirst());
@@ -215,6 +218,14 @@ public class FrameFactory {
                                     }
                                     else logger.error(String.format("加载失败 - \"%s\" 不是正确的轻之文库小说地址", urlString));
                                 }
+                                case KAKUYOMU -> {
+                                    if (urlString.contains("https://kakuyomu.jp/works/")) {
+                                        rootStructure = new Kakuyomu(urlString).getContents();
+                                        logger.prompt("已加载 - " + rootStructure.getName());
+                                        Structure.Factory.writeToTreeView(rootStructure, treeView, false);
+                                    }
+                                    else logger.error(String.format("加载失败 - \"%s\" 不是正确的角川文库小说地址", urlString));
+                                }
                             }
                         } catch (Exception e) {
                             logger.error("加载失败 - " + e);
@@ -230,10 +241,10 @@ public class FrameFactory {
                     Thread.ofVirtual().name("Save-Tree-Thread").start(() -> {
                         try {
                             Structure<List<String>> structure = Structure.Factory.ofItem(treeView.getRoot());
-                            if (structure.getChildren().size() == 1) Structure.Factory.saveToFile(structure.getChildren().getFirst(), dir, false, 0);
+                            if (structure.getChildren().size() == 1) Structure.Factory.saveToFile(structure.getChildren().getFirst(), dir, false, 0, 0);
                             else {
                                 for (int i = 0; i < structure.getChildren().size(); i++) {
-                                    Structure.Factory.saveToFile(structure.getChildren().get(i), dir, isAppendOrdinal, i + 1);
+                                    Structure.Factory.saveToFile(structure.getChildren().get(i), dir, isAppendOrdinal, i + 1, structure.getChildren().size());
                                 }
                             }
                             logger.prompt("已保存文件树到 - " + dir.getAbsolutePath());

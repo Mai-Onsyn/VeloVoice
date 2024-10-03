@@ -133,22 +133,22 @@ public class Structure<T> {
             }
         }
 
-        public static void saveToFile(Structure<List<String>> tree, File structureRoot, boolean ordinal, int counter) {
+        public static void saveToFile(Structure<List<String>> tree, File structureRoot, boolean ordinal, int counter, int superSize) {
             if (tree.getData() == null) {
-                File childFile = new File(structureRoot, ordinal ? String.format("%02d. %s", counter, tree.getName()) : tree.getName());
+                File childFile = new File(structureRoot, ordinal ? String.format("%s. %s", Util.padZero(counter, superSize), tree.getName()) : tree.getName());
                 if (!childFile.exists()) {
                     if (!childFile.mkdirs()) throw new RuntimeException("Cannot make dirs: " + childFile.getAbsolutePath());
                 }
 
-                if (tree.getChildren().size() == 1) saveToFile(tree.getChildren().getFirst(), childFile, false, 0);
+                if (tree.getChildren().size() == 1) saveToFile(tree.getChildren().getFirst(), childFile, false, 0, 0);
                 else {
                     for (int i = 0; i < tree.getChildren().size(); i++) {
-                        saveToFile(tree.getChildren().get(i), childFile, AppConfig.isAppendOrdinal, i + 1);
+                        saveToFile(tree.getChildren().get(i), childFile, AppConfig.isAppendOrdinal, i + 1, tree.getChildren().size());
                     }
                 }
             }
             else {
-                try (FileWriter fileWriter = new FileWriter(new File(structureRoot, ordinal ? String.format("%02d. %s.txt", counter, tree.getName()) : String.format("%s.txt", tree.getName())))) {
+                try (FileWriter fileWriter = new FileWriter(new File(structureRoot, ordinal ? String.format("%s. %s.txt", Util.padZero(counter, superSize), tree.getName()) : String.format("%s.txt", tree.getName())))) {
                     List<String> data = tree.getData();
                     fileWriter.write(data.getFirst());
                     for (int i = 1; i < data.size(); i++) {

@@ -42,16 +42,22 @@ public class WenKu8 implements NovelSite {
         Elements tableRows = catalog.select("body table tbody").first().select("tr");
         Structure<String> volumeURLList = parseVolumeURLs(tableRows);
 
+        int i = 0;
         for (Structure<String> volumeURLStructure : volumeURLList.getChildren()) {
-            Structure<List<String>> volumeStructure = new Structure<>(volumeURLStructure.getName());
+            String volumeName = volumeURLStructure.getName();
+            if (AppConfig.isAppendExtraVolumeName) volumeName = String.format("第%d卷 %s", ++i, volumeName);
+            Structure<List<String>> volumeStructure = new Structure<>(volumeName);
 
+            int counter = 0;
             for (Structure<String> chapterURLStructure : volumeURLStructure.getChildren()) {
-                String chapterTitle = chapterURLStructure.getName();
+                StringBuilder chapterName = new StringBuilder();
+                if (AppConfig.isAppendVolumeName) chapterName.append(volumeName).append(" ");
+                if (AppConfig.isAppendExtraChapterName) chapterName.append("第").append(++counter).append("章").append(" ");
+                chapterName.append(chapterURLStructure.getName());
                 String chapterURL = chapterURLStructure.getData();
                 List<String> chapterContents = parseChapterContent(chapterURL);
-                String title = AppConfig.isAppendVolumeName ? volumeURLStructure.getName() + " " + chapterTitle : chapterTitle;
-                chapterContents.addFirst(title);
-                volumeStructure.add(new Structure<>(title, chapterContents));
+                chapterContents.addFirst(chapterName.toString());
+                volumeStructure.add(new Structure<>(chapterName.toString(), chapterContents));
                 //System.out.println(title);
             }
 
