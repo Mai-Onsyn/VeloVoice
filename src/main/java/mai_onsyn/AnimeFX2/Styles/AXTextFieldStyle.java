@@ -4,6 +4,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public interface AXTextFieldStyle extends AXBaseStyle{
+
+    AXContextPaneStyle getContextPaneStyle();
+
     Color getLineColor();
     Color getTextColor();
     Color getTextSelectedColor();

@@ -12,6 +12,11 @@ public class DefaultAXTextAreaStyle extends DefaultAXBaseStyle implements AXText
     private double areaInsets = 5.0;
 
     @Override
+    public AXContextPaneStyle getContextMenuStyle() {
+        return new DefaultAXContextPaneStyle();
+    }
+
+    @Override
     public Color getTextColor() {
         return textColor;
     }

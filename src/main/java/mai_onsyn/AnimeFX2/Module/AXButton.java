@@ -4,6 +4,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
@@ -13,6 +15,7 @@ import javafx.util.Duration;
 import mai_onsyn.AnimeFX2.LanguageSwitchable;
 import mai_onsyn.AnimeFX2.Styles.DefaultAXButtonStyle;
 import mai_onsyn.AnimeFX2.Styles.AXButtonStyle;
+import mai_onsyn.AnimeFX2.Utls.Toolkit;
 
 import java.util.Map;
 
@@ -58,25 +61,29 @@ public class AXButton extends AXBase implements LanguageSwitchable {
         super.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
                 Circle circle = new Circle(0, style.getFillColor());
-                circle.setCenterX(event.getSceneX() - super.getLayoutX());
-                circle.setCenterY(event.getSceneY() - super.getLayoutY());
+
+                Point2D layout = super.localToScene(0, 0);
+                Bounds layoutBounds = super.getLayoutBounds();
+
+                circle.setCenterX(event.getSceneX() - layout.getX());
+                circle.setCenterY(event.getSceneY() - layout.getY());
                 super.getChildren().add(1, circle);
-                Timeline bloom = new Timeline(new KeyFrame(Duration.millis(200 * style.getAnimeRate()), new KeyValue(circle.radiusProperty(), 1.414 * Math.max(super.getWidth(), super.getHeight()))));
+                Timeline bloom = new Timeline(new KeyFrame(Duration.millis(200 * style.getAnimeRate()), new KeyValue(circle.radiusProperty(), 1.414 * Math.max(layoutBounds.getWidth(), layoutBounds.getHeight()))));
                 bloom.play();
                 bloom.setOnFinished(_ -> {
                     Timeline fade = new Timeline(new KeyFrame(Duration.millis(200 * style.getAnimeRate()), new KeyValue(circle.opacityProperty(), 0)));
                     fade.setOnFinished(_ -> super.getChildren().remove(circle));
-                    Thread.ofVirtual().start(() -> {
-                        while (isPressed) {
-                            try {
-                                Thread.sleep(10);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-
-                        fade.play();
-                    });
+//                    Thread.ofVirtual().start(() -> {
+//                        while (isPressed) {
+//                            try {
+//                                Thread.sleep(10);
+//                            } catch (InterruptedException e) {
+//                                throw new RuntimeException(e);
+//                            }
+//                        }
+//
+//                    });
+                    fade.play();
                 });
             }
         });
@@ -124,6 +131,10 @@ public class AXButton extends AXBase implements LanguageSwitchable {
     @Override
     public Map<String, LanguageSwitchable> getLanguageElements() {
         return null;
+    }
+
+    public Label getTextLabel() {
+        return textLabel;
     }
 
     public AXButtonStyle style() {

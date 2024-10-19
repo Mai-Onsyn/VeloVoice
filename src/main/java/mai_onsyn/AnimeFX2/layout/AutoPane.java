@@ -210,7 +210,7 @@ public class AutoPane extends Pane {
                 text.setFont(label.getFont());
                 yield text.getLayoutBounds().getWidth();
             }
-            case Region region -> region.getPrefWidth();
+            case Region region -> region.getLayoutBounds().getWidth();
             case Rectangle rectangle -> rectangle.getWidth();
             case ImageView imageView -> imageView.getFitWidth();
             case null, default -> 0;
@@ -224,7 +224,7 @@ public class AutoPane extends Pane {
                 text.setFont(label.getFont());
                 yield text.getLayoutBounds().getHeight();
             }
-            case Region region -> region.getPrefHeight();
+            case Region region -> region.getLayoutBounds().getHeight();
             case Rectangle rectangle -> rectangle.getHeight();
             case ImageView imageView -> imageView.getFitHeight();
             case null, default -> 0;

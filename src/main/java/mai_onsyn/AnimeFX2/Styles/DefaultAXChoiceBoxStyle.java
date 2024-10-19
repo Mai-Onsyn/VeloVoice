@@ -1,24 +1,14 @@
 package mai_onsyn.AnimeFX2.Styles;
 
 import javafx.scene.image.Image;
-import mai_onsyn.AnimeFX2.Utls.Toolkit;
-
-import java.io.IOException;
+import mai_onsyn.AnimeFX2.ResourceManager;
 
 public class DefaultAXChoiceBoxStyle extends DefaultAXBaseStyle implements AXChoiceBoxStyle {
 
     private double signalRelateX = 5;
     private double signalScale = 20;
     private RelativePosition signalRelate = RelativePosition.RIGHT;
-    private Image signalImage;
-
-    {
-        try {
-            signalImage = Toolkit.loadImage("textures/icons/triangle.png");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private Image signalImage = ResourceManager.triangle;
 
 
     @Override

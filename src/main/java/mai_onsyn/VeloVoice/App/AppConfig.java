@@ -12,9 +12,10 @@ public class AppConfig {
         LOCAL_DIRECTLY(0),
         LOCAL_FULL(1),
         LOCAL_VOLUMED(2),
-        WEN_KU8(3),
-        LI_NOVEL(4),
-        KAKUYOMU(5);
+        LOCAL_EPUB(3),
+        WEN_KU8(4),
+        LI_NOVEL(5),
+        KAKUYOMU(6);
 
         LoadType(int i) {}
 

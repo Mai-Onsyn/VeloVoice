@@ -31,7 +31,6 @@ public class AXChoiceBox extends AXButton {
 
 
     public AXChoiceBox() {
-        super();
         super.setTheme(style);
 
         super.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {

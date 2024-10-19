@@ -8,44 +8,20 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Font;
 import javafx.util.Duration;
 import mai_onsyn.AnimeFX2.LanguageSwitchable;
+import mai_onsyn.AnimeFX2.ResourceManager;
 import mai_onsyn.AnimeFX2.Styles.AXTextFieldStyle;
 import mai_onsyn.AnimeFX2.Styles.DefaultAXTextFieldStyle;
 import mai_onsyn.AnimeFX2.layout.AXContextPane;
 import mai_onsyn.AnimeFX2.Utls.Toolkit;
 
-import java.io.IOException;
 import java.util.Map;
 
 public class AXTextField extends AXBase implements LanguageSwitchable {
-
-    private static final WritableImage copyIcon;
-    private static final WritableImage pasteIcon;
-    private static final WritableImage cutIcon;
-    private static final WritableImage selectAllIcon;
-    private static final WritableImage clearIcon;
-    private static final WritableImage undoIcon;
-
-    static {
-        try {
-            copyIcon = new WritableImage(Toolkit.loadImage("textures/icons/copy.png").getPixelReader(), 512, 512);
-            pasteIcon = new WritableImage(Toolkit.loadImage("textures/icons/paste.png").getPixelReader(), 512, 512);
-            cutIcon = new WritableImage(Toolkit.loadImage("textures/icons/cut.png").getPixelReader(), 512, 512);
-            selectAllIcon = new WritableImage(Toolkit.loadImage("textures/icons/select_all.png").getPixelReader(), 512, 512);
-            clearIcon = new WritableImage(Toolkit.loadImage("textures/icons/clear.png").getPixelReader(), 512, 512);
-            undoIcon = new WritableImage(Toolkit.loadImage("textures/icons/undo.png").getPixelReader(), 512, 512);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     private AXTextFieldStyle style = new DefaultAXTextFieldStyle();
 
@@ -65,15 +41,16 @@ public class AXTextField extends AXBase implements LanguageSwitchable {
     public AXTextField() {
         super();
         super.setTheme(style);
+        contextMenu.setTheme(style.getContextPaneStyle());
         textField.getStylesheets().add("style.css");
 
-        double itemHeight = contextMenu.getStyle().getItemHeight();
-        setupContextMenuItem(copy, copyIcon, "Copy", "Ctrl+C", itemHeight);
-        setupContextMenuItem(paste, pasteIcon, "Paste", "Ctrl+V", itemHeight);
-        setupContextMenuItem(cut, cutIcon, "Cut", "Ctrl+X", itemHeight);
-        setupContextMenuItem(undo, undoIcon, "Undo", "Ctrl+Z", itemHeight);
-        setupContextMenuItem(selectAll, selectAllIcon, "Select All", "Ctrl+A", itemHeight);
-        setupContextMenuItem(clear, clearIcon, "Clear", "", itemHeight);
+        double itemHeight = style.getContextPaneStyle().getItemHeight();
+        AXContextPane.setupContextMenuItem(copy, ResourceManager.copy, "Copy", "Ctrl+C", itemHeight);
+        AXContextPane.setupContextMenuItem(paste, ResourceManager.paste, "Paste", "Ctrl+V", itemHeight);
+        AXContextPane.setupContextMenuItem(cut, ResourceManager.cut, "Cut", "Ctrl+X", itemHeight);
+        AXContextPane.setupContextMenuItem(undo, ResourceManager.undo, "Undo", "Ctrl+Z", itemHeight);
+        AXContextPane.setupContextMenuItem(selectAll, ResourceManager.selectAll, "Select All", "Ctrl+A", itemHeight);
+        AXContextPane.setupContextMenuItem(clear, ResourceManager.clear, "Clear", "", itemHeight);
 
         copy.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
             if (event.getButton() == MouseButton.PRIMARY) textField.copy();
@@ -145,30 +122,6 @@ public class AXTextField extends AXBase implements LanguageSwitchable {
 
         super.getChildren().addAll(textField, line);
         this.update();
-    }
-
-    private void setupContextMenuItem(AXButton button, WritableImage icon, String text, String shortcut, double itemHeight) {
-        ImageView imageView = new ImageView(icon);
-        Label name = (Label) button.getChildren().getLast();
-        name.setText(text);
-        name.setFont(new Font(name.getFont().getName(), name.getFont().getSize()));  // 默认字体
-
-        // 设置快捷键提示
-        Label prompt = new Label(shortcut);
-        prompt.setFont(new Font(name.getFont().getName(), name.getFont().getSize() * 0.8));
-        prompt.setTextFill(Color.GRAY);
-
-        // 将图标、名称、快捷键提示添加到按钮
-        button.getChildren().addAll(imageView, prompt);
-
-        // 设置各个组件的位置和布局
-        button.setPosition(imageView, false, itemHeight * 0.1, itemHeight * 0.9, itemHeight * 0.1, itemHeight * 0.1);
-        button.flipRelativeMode(imageView, Motion.RIGHT);
-
-        Toolkit.adjustImageColor(icon, button.style().getTextColor());  // 调整图标颜色
-
-        button.setPosition(name, AlignmentMode.LEFT_CENTER, LocateMode.ABSOLUTE, itemHeight * 1.2, itemHeight / 2);
-        button.setPosition(prompt, AlignmentMode.RIGHT_CENTER, LocateMode.ABSOLUTE, -itemHeight * 0.1, itemHeight / 2);
     }
 
 

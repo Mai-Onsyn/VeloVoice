@@ -3,11 +3,15 @@ package mai_onsyn.AnimeFX2.layout;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Popup;
 import javafx.stage.Window;
 import javafx.util.Duration;
@@ -17,9 +21,6 @@ import mai_onsyn.AnimeFX2.Module.AXButton;
 import mai_onsyn.AnimeFX2.Styles.AXContextPaneStyle;
 import mai_onsyn.AnimeFX2.Styles.DefaultAXContextPaneStyle;
 import mai_onsyn.AnimeFX2.Utls.Toolkit;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class AXContextPane extends Popup implements AutoUpdatable {
     private AXContextPaneStyle style = new DefaultAXContextPaneStyle();
@@ -118,5 +119,29 @@ public class AXContextPane extends Popup implements AutoUpdatable {
 
     public ScrollPane getScrollPane() {
         return this.scrollPane;
+    }
+
+    public static void setupContextMenuItem(AXButton button, WritableImage icon, String text, String shortcut, double itemHeight) {
+        ImageView imageView = new ImageView(icon);
+        Label name = button.getTextLabel();
+        name.setText(text);
+        name.setFont(new Font(name.getFont().getName(), name.getFont().getSize()));  // 默认字体
+
+        // 设置快捷键提示
+        Label prompt = new Label(shortcut);
+        prompt.setFont(new Font(name.getFont().getName(), name.getFont().getSize() * 0.8));
+        prompt.setTextFill(Color.GRAY);
+
+        // 将图标、名称、快捷键提示添加到按钮
+        button.getChildren().addAll(imageView, prompt);
+
+        // 设置各个组件的位置和布局
+        button.setPosition(imageView, false, itemHeight * 0.1, itemHeight * 0.9, itemHeight * 0.1, itemHeight * 0.1);
+        button.flipRelativeMode(imageView, AutoPane.Motion.RIGHT);
+
+        Toolkit.adjustImageColor(icon, button.style().getTextColor());  // 调整图标颜色
+
+        button.setPosition(name, AutoPane.AlignmentMode.LEFT_CENTER, AutoPane.LocateMode.ABSOLUTE, itemHeight * 1.2, itemHeight / 2);
+        button.setPosition(prompt, AutoPane.AlignmentMode.RIGHT_CENTER, AutoPane.LocateMode.ABSOLUTE, -itemHeight * 0.1, itemHeight / 2);
     }
 }

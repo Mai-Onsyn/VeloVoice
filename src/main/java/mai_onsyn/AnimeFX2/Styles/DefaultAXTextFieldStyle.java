@@ -9,10 +9,15 @@ public class DefaultAXTextFieldStyle extends DefaultAXBaseStyle implements AXTex
     private Color textColor = Color.BLACK;
     private Color textSelectedColor = Color.HOTPINK;
     private Color textSelectedBGColor = Color.LIGHTBLUE;
-    private Font textFont = new Font(30);
+    private Font textFont = new Font(12);
     private double areaInsets = 5.0;
     private double lineWeight = 1.0;
-    private double lineInsets = 5.0;
+    private double lineInsets = 2.5;
+
+    @Override
+    public AXContextPaneStyle getContextPaneStyle() {
+        return new DefaultAXContextPaneStyle();
+    }
 
     @Override
     public Color getLineColor() {

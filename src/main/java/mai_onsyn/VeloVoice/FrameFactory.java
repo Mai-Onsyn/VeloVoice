@@ -84,14 +84,16 @@ public class FrameFactory {
                     LoadType.LOCAL_DIRECTLY,
                     LoadType.LOCAL_FULL,
                     LoadType.LOCAL_VOLUMED,
+                    LoadType.LOCAL_EPUB,
                     LoadType.WEN_KU8,
                     LoadType.LI_NOVEL,
                     LoadType.KAKUYOMU
             );
             List<String> choiceButtonNames = List.of(
-                    "本地(文件)",
+                    "本地(TXT)",
                     "本地(全集)",
                     "本地(分卷)",
+                    "本地(EPUB)",
                     "轻小说文库",
                     "轻之文库",
                     "角川文库Web"
@@ -201,6 +203,16 @@ public class FrameFactory {
                                         collectFilesToStructure(file, rootStructure);
                                     }
                                     Structure.Factory.writeToTreeView(rootStructure, treeView, true);
+                                }
+                                case LOCAL_EPUB -> {
+                                    File targetFile = new File(urlString);
+                                    if (!targetFile.exists()) {
+                                        logger.error("指定文件夹不存在 - " + urlString);
+                                        return;
+                                    }
+
+                                    Structure<List<String>> structure = TextFactory.buildStructureFromEpub(urlString);
+                                    Structure.Factory.writeToTreeView(structure, treeView, false);
                                 }
                                 case WEN_KU8 -> {
                                     if (urlString.contains("https://www.wenku8.net/book/") || urlString.contains("https://www.wenku8.net/novel/")) {

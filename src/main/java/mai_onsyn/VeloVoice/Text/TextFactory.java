@@ -2,8 +2,17 @@ package mai_onsyn.VeloVoice.Text;
 
 import mai_onsyn.VeloVoice.App.AppConfig;
 import mai_onsyn.VeloVoice.Utils.Chapter;
+import mai_onsyn.VeloVoice.Utils.Structure;
 import mai_onsyn.VeloVoice.Utils.Volume;
+import nl.siegmann.epublib.domain.Book;
+import nl.siegmann.epublib.domain.Resource;
+import nl.siegmann.epublib.epub.EpubReader;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 public class TextFactory {
@@ -162,6 +171,47 @@ public class TextFactory {
 
     private static String deleteSpace(String s) {
         return s.replace(" ", "");
+    }
+
+    public static Structure<List<String>> buildStructureFromEpub(String epubFilePath) {
+        Structure<List<String>> epubStructure = null;
+
+        try (InputStream epubInputStream = new FileInputStream(epubFilePath)) {
+            EpubReader epubReader = new EpubReader();
+            Book book = epubReader.readEpub(epubInputStream);
+
+            // 添加小说名作为根节点
+            epubStructure = new Structure<>(book.getTitle());
+
+            // 遍历书中的内容
+            for (Resource resource : book.getContents()) {
+                String chapterName = resource.getHref().replaceAll("Text/", "").replaceAll(".xhtml", ""); // 获取章节文件的名称
+                List<String> lines = new ArrayList<>();
+
+                // 将章节内容读取为行并解析为文本
+                String content = new String(resource.getData());
+                Document document = Jsoup.parse(content);
+
+                // 提取文本内容并过滤空行
+                document.select("body").select("*").forEach(element -> {
+                    String text = element.ownText().trim(); // 提取并去除首尾空白
+                    if (!text.isEmpty()) { // 过滤空行
+                        lines.add(text);
+                    }
+                });
+
+                // 根据章节名称创建章节结构
+                Structure<List<String>> chapter = new Structure<>(chapterName, lines);
+
+                // 按照层级关系添加章节
+                epubStructure.add(chapter);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return epubStructure;
     }
 
     /*

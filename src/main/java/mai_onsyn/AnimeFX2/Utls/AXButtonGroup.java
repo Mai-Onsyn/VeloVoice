@@ -1,7 +1,7 @@
 package mai_onsyn.AnimeFX2.Utls;
 
+import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import mai_onsyn.AnimeFX2.AutoUpdatable;
 import mai_onsyn.AnimeFX2.Module.AXButton;
@@ -24,9 +24,11 @@ public class AXButtonGroup implements AutoUpdatable {
 
     private AXButton selectedButton;
     private AXButton lastSelectedButton;
+    private ChangeListener<AXButton> onSelectedChanged;
 
     public AXButtonGroup(AXButton... buttons) {
         register(buttons);
+
     }
 
     public void register(AXButton... e) {
@@ -34,17 +36,11 @@ public class AXButtonGroup implements AutoUpdatable {
 
             buttons.add(button);
 
-            EventHandler<MouseEvent> eventEventHandler = event -> {
-                if (event.getButton() == MouseButton.PRIMARY) {
-                    selectButton(button);
-                }
-            };
+            EventHandler<MouseEvent> eventEventHandler = _ -> selectButton(button);
             button.addEventHandler(MouseEvent.MOUSE_CLICKED, eventEventHandler);
 
             buttonHandlers.put(button, eventEventHandler);
-
         }
-
     }
 
     public void remove(AXButton button) {
@@ -60,6 +56,10 @@ public class AXButtonGroup implements AutoUpdatable {
         if (selectedButton != button) {
             lastSelectedButton = selectedButton;
             selectedButton = button;
+
+            if (onSelectedChanged != null) {
+                onSelectedChanged.changed(null, lastSelectedButton, selectedButton);
+            }
 
             if (lastSelectedButton != null) {
                 lastSelectedButton.setTheme(style);
@@ -80,6 +80,13 @@ public class AXButtonGroup implements AutoUpdatable {
         this.selectedStyle = style;
     }
 
+    public void setOnSelectedChanged(ChangeListener<AXButton> onSelectedChanged) {
+        this.onSelectedChanged = onSelectedChanged;
+    }
+
+    public AXButton getSelectedButton() {
+        return selectedButton;
+    }
 
     @Override
     public void update() {
