@@ -6,7 +6,7 @@
 
     <groupId>mai_onsyn.VeloVoice</groupId>
     <artifactId>VeloVoice</artifactId>
-    <version>0.5</version>
+    <version>0.6</version>
 
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
