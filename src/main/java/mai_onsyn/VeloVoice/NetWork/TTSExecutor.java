@@ -4,10 +4,9 @@ import javafx.application.Platform;
 import javafx.scene.control.Label;
 import mai_onsyn.AnimeFX.Frame.Module.SmoothProgressBar;
 import mai_onsyn.VeloVoice.App.AppConfig;
-import mai_onsyn.VeloVoice.App.Runtime;
 import mai_onsyn.VeloVoice.NetWork.TTS.EdgeTTSClient;
+import mai_onsyn.VeloVoice.NetWork.TTS.FixedEdgeTTSClient;
 import mai_onsyn.VeloVoice.NetWork.TTS.TTSClient;
-import mai_onsyn.VeloVoice.Utils.AudioPlayer;
 import mai_onsyn.VeloVoice.Utils.Util;
 
 import java.io.File;
@@ -27,7 +26,7 @@ public class TTSExecutor {
         THREAD_COUNT = threadCount;
         clients = new ArrayList<>(threadCount);
         for (int i = 0; i < threadCount; i++) {
-            clients.add(new EdgeTTSClient());
+            clients.add(new FixedEdgeTTSClient());
         }
     }
 
@@ -50,7 +49,7 @@ public class TTSExecutor {
                         client.connect();
 
                         if (!client.isOpen()) {
-                            client = new EdgeTTSClient();
+                            client = new FixedEdgeTTSClient();
                             if (logger != null) logger.warn(String.format("线程%s连接错误，尝试第%d次重连", Thread.currentThread().getName(), tryCount + 1));
                             else System.out.println(String.format("线程%s连接错误，尝试第%d次重连", Thread.currentThread().getName(), tryCount + 1));
                             client.connect();
@@ -203,7 +202,7 @@ public class TTSExecutor {
                             }
 
                             if (data == null) {
-                                client = new EdgeTTSClient();
+                                client = new FixedEdgeTTSClient();
                                 if (logger != null) logger.warn(String.format("线程%s连接错误，尝试第%d次重连", Thread.currentThread().getName(), tryCount + 1));
                                 else System.out.println(String.format("线程%s连接错误，尝试第%d次重连", Thread.currentThread().getName(), tryCount + 1));
                                 client.connect();
@@ -259,7 +258,7 @@ public class TTSExecutor {
                                     byteCount += bytes.length;
                                 }
                                 //暂时没加重连检测 祈祷不要断线吧...............................................................
-                                EdgeTTSClient client = new EdgeTTSClient();
+                                TTSClient client = new FixedEdgeTTSClient();
                                 client.connect();
                                 List<byte[]> counterVoice = client.sendText(UUID.randomUUID(), "p" + piece);
                                 client.close();

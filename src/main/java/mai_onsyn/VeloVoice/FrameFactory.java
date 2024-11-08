@@ -40,6 +40,7 @@ import mai_onsyn.VeloVoice.NetWork.Crawler.Websites.Kakuyomu;
 import mai_onsyn.VeloVoice.NetWork.Crawler.Websites.LiNovel;
 import mai_onsyn.VeloVoice.NetWork.Crawler.Websites.WenKu8;
 import mai_onsyn.VeloVoice.NetWork.TTS.EdgeTTSClient;
+import mai_onsyn.VeloVoice.NetWork.TTS.FixedEdgeTTSClient;
 import mai_onsyn.VeloVoice.NetWork.TTS.TTSClient;
 import mai_onsyn.VeloVoice.NetWork.Voice;
 import mai_onsyn.VeloVoice.Text.TTS;
@@ -389,7 +390,7 @@ public class FrameFactory {
                 Thread.ofVirtual().name("Preview-Thread").start(() -> {
                     try {
                         logger.prompt("开始加载预览语音");
-                        TTSClient ttsClient = new EdgeTTSClient();
+                        TTSClient ttsClient = new FixedEdgeTTSClient();
                         ttsClient.connect();
                         List<byte[]> audioByteArrayList = ttsClient.sendText(UUID.randomUUID(), previewText);
                         ttsClient.close();
@@ -1036,7 +1037,7 @@ public class FrameFactory {
             {
                 Label label = ModuleCreator.createLabel("连接线程数");
 
-                SmoothSlider slider = ModuleCreator.createSlider(1, 128, maxConnectThread);
+                SmoothSlider slider = ModuleCreator.createSlider(1, 8, maxConnectThread);
                 SmoothTextField textField = ModuleCreator.createTextField();
                 textField.getTextField().setText(String.valueOf(maxConnectThread));
 

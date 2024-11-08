@@ -2,6 +2,7 @@ package mai_onsyn.VeloVoice.NetWork.TTS;
 
 import com.alibaba.fastjson.JSONObject;
 import mai_onsyn.VeloVoice.App.AppConfig;
+import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
@@ -10,12 +11,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static mai_onsyn.VeloVoice.App.Constants.*;
 import static mai_onsyn.VeloVoice.App.Runtime.logger;
 
-public class EdgeTTSClient extends TTSClient {
+public class EdgeTTSClient extends WebSocketClient implements TTSClient {
 
 
     private static final String mp3Format = "audio-24khz-48kbitrate-mono-mp3";
@@ -55,8 +55,6 @@ public class EdgeTTSClient extends TTSClient {
         dataTemp = new ArrayList<>();
     }
 
-
-    private final AtomicReference<Status> currentStatus = new AtomicReference<>(Status.CLOSING);
     private List<byte[]> dataTemp;
     private volatile CompletableFuture<List<byte[]>> future;
 
@@ -84,8 +82,6 @@ public class EdgeTTSClient extends TTSClient {
                 (voiceVolume - 1) * 100,
                 text.replaceAll("&", "&amp;").replaceAll("<", "&lt;")
         );
-        //System.out.println(message);
-        currentStatus.set(Status.RECEIVING_DATA);
         future = new CompletableFuture<>();
         try {
             super.send(message);
@@ -114,19 +110,7 @@ public class EdgeTTSClient extends TTSClient {
     }
 
     @Override
-    public synchronized List<byte[]> readData() {
-        currentStatus.set(Status.FREE);
-        return this.dataTemp;
-    }
-
-    @Override
-    public synchronized Status getStatus() {
-        return currentStatus.get();
-    }
-
-    @Override
     public void onOpen(ServerHandshake serverHandshake) {
-        currentStatus.set(Status.FREE);
         String dateStr = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z (zzzz)").format(new Date());
         String message = String.format(
                 """
@@ -145,11 +129,11 @@ public class EdgeTTSClient extends TTSClient {
 
     @Override
     public void onMessage(String s) {
+        //System.out.println(s);
         if (s.contains("Path:turn.start")) {
             dataTemp = new ArrayList<>();
         }
         if (s.contains("Path:turn.end")) {
-            currentStatus.set(Status.DATA_AVAILABLE);
             future.complete(List.copyOf(dataTemp));
         }
     }
@@ -184,12 +168,11 @@ public class EdgeTTSClient extends TTSClient {
 
     @Override
     public void onClose(int i, String s, boolean b) {
-        currentStatus.set(Status.CLOSING);
     }
 
     @Override
     public void onError(Exception e) {
-        currentStatus.set(Status.ERROR);
+        e.printStackTrace();
         //throw new RuntimeException(e);
     }
 

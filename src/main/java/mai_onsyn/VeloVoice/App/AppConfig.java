@@ -38,7 +38,7 @@ public class AppConfig {
 
     public static int logLevel = 0;
 
-    public static int maxConnectThread = 16;
+    public static int maxConnectThread = 4;
     public static int retryCount = 5;
     public static int timeoutSeconds = 10;
 

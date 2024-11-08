@@ -3,6 +3,7 @@ package mai_onsyn.AnimeFX2.Module;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -35,23 +36,26 @@ public class AXProgressBar extends AXBase {
         progressBar.setStrokeWidth(style.getInnerBorderRadius());
         progressBar.setStroke(style.getInnerBorderColor());
 
+        progress.addListener((o, ov, nv) -> this.setProgress(nv.doubleValue()));
+
+        super.widthProperty().addListener((o, ov, nv) -> Platform.runLater(() -> this.setProgress(progress.get(), 1)));
+
         super.getChildren().add(progressBar);
     }
 
 
     public void setProgress(double p) {
+        setProgress(p, 200 * style.getAnimeRate());
+    }
+
+    private void setProgress(double p, double duration) {
         p = Math.max(0, Math.min(1, p));
         double width = (super.getLayoutBounds().getWidth() - insets.get() * 2) * p;
 
-        Duration duration;
-
-        if (p <= 1e-8 || p >= 1-1e-8) duration = Duration.millis(10);
-        else duration = Duration.millis(200 * style.getAnimeRate());
-
         progressTimeline.stop();
-        progressTimeline = new Timeline(new KeyFrame(duration,
-                new KeyValue(progressBar.widthProperty(), width),
-                new KeyValue(progress, p)
+        progressTimeline = new Timeline(new KeyFrame(Duration.millis(duration),
+                new KeyValue(progressBar.widthProperty(), width)//,
+                //new KeyValue(progress, p)
         ));
         progressTimeline.play();
     }

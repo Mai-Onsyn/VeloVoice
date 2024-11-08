@@ -15,7 +15,6 @@ import mai_onsyn.AnimeFX2.layout.AXTextInputPopup;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import static mai_onsyn.AnimeFX2.Utls.Toolkit.defaultToolkit;
 
@@ -77,23 +76,18 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
             langMap.put("root.expand_all", expandAll);
             langMap.put("root.clear", clear);
 
+            newFile.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> newFile());
+            newFolder.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> newFolder());
+            paste.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> paste());
+            rename.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> rename());
+            expandAll.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> expandAll());
+            clear.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> clear());
+
             root.getButton().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 if (event.getButton() == MouseButton.SECONDARY) {
                     rootContextMenu.show(this.getScene().getWindow(), event.getScreenX(), event.getScreenY());
                 }
             });
-
-            newFile.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> newFile());
-
-            newFolder.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> newFolder());
-
-            paste.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> paste());
-
-            rename.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> rename());
-
-            expandAll.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> expandAll());
-
-            clear.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> clear());
         }
 
         //FolderContextMenu
@@ -138,27 +132,16 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
             langMap.put("folder.delete", delete);
 
             newFile.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> newFile());
-
             newFolder.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> newFolder());
-
             copy.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> copy());
-
             cut.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> cut());
-
             paste.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> paste());
-
             pasteAppend.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> pasteAppend());
-
             rename.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> rename());
-
             moveUp.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> moveUp());
-
             moveDown.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> moveDown());
-
             expandAll.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> expandAll());
-
             clear.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> clear());
-
             delete.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> delete());
         }
 
@@ -189,17 +172,11 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
             langMap.put("file.delete", delete);
 
             copy.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> copy());
-
             cut.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> cut());
-
             pasteAppend.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> pasteAppend());
-
             rename.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> rename());
-
             moveUp.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> moveUp());
-
             moveDown.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> moveDown());
-
             delete.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> delete());
         }
 
