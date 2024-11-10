@@ -1,7 +1,6 @@
 package mai_onsyn.AnimeFX.Frame.Module;
 
 import javafx.application.Platform;
-import javafx.scene.Cursor;
 import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;

@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.util.Pair;
 
 import java.util.HashMap;
@@ -115,6 +116,11 @@ public class AutoPane extends Pane {
         flushHeight(super.getLayoutBounds().getHeight());
     }
 
+    public void flushSize(double w, double h) {
+        flushWidth(w);
+        flushHeight(h);
+    }
+
     public void flushWidth(double width) {
         for (Map.Entry<Node, Pair<Boolean, Double>[]> entry : nodeAlignData.entrySet()) {
             Node node = entry.getKey();
@@ -220,9 +226,10 @@ public class AutoPane extends Pane {
     private double getHeight(Node node) {
         return switch (node) {
             case Label label -> {
-                Text text = new Text(label.getText());
-                text.setFont(label.getFont());
-                yield text.getLayoutBounds().getHeight();
+//                Text text = new Text(label.getText());
+//                text.setFont(label.getFont());
+//                yield text.getLayoutBounds().getHeight();
+                yield label.getLayoutBounds().getHeight();
             }
             case Region region -> region.getLayoutBounds().getHeight();
             case Rectangle rectangle -> rectangle.getHeight();

@@ -2,6 +2,8 @@ package mai_onsyn.AnimeFX2.Module;
 
 import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.event.EventHandler;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -28,6 +30,12 @@ public class AXTextArea extends AXBase implements LanguageSwitchable {
     private final AXButton undo = contextMenu.createItem();
     private final AXButton selectAll = contextMenu.createItem();
     private final AXButton clear = contextMenu.createItem();
+    private final ChangeListener<Boolean> focusListener = (o, ov, nv) -> {
+        super.fireEvent(new MouseEvent(nv ? MouseEvent.MOUSE_ENTERED : MouseEvent.MOUSE_EXITED, 0, 0, 0, 0, MouseButton.PRIMARY, 1, false, false, false, false, false, false, false, false, false, false, null));
+    };
+    private final EventHandler<MouseEvent> exitHandlerOverwrite = event -> {
+        if (textArea.isFocused()) event.consume();
+    };
 
     public AXTextArea() {
         super();
@@ -74,10 +82,9 @@ public class AXTextArea extends AXBase implements LanguageSwitchable {
         });
         textArea.addEventFilter(MouseEvent.MOUSE_PRESSED, super::fireEvent);
         textArea.addEventFilter(MouseEvent.MOUSE_RELEASED, super::fireEvent);
-        textArea.focusedProperty().addListener((o, ov, nv) -> {super.fireEvent(new MouseEvent(nv ? MouseEvent.MOUSE_ENTERED : MouseEvent.MOUSE_EXITED, 0, 0, 0, 0, MouseButton.PRIMARY, 1, false, false, false, false, false, false, false, false, false, false, null));});
-        super.addEventFilter(MouseEvent.MOUSE_EXITED, event -> {
-            if (textArea.isFocused()) event.consume();
-        });
+
+        textArea.focusedProperty().addListener(focusListener);
+        super.addEventFilter(MouseEvent.MOUSE_EXITED, exitHandlerOverwrite);
 
         textArea.setContextMenu(new ContextMenu());
 
@@ -152,11 +159,15 @@ public class AXTextArea extends AXBase implements LanguageSwitchable {
             contextMenu.showItem(paste, 1);
             contextMenu.showItem(cut, 2);
             contextMenu.showItem(undo, 3);
+            textArea.focusedProperty().addListener(focusListener);
+            super.addEventFilter(MouseEvent.MOUSE_EXITED, exitHandlerOverwrite);
         }
         else if (!b && textArea.isEditable()) {
             contextMenu.removeItem(paste);
             contextMenu.removeItem(cut);
             contextMenu.removeItem(undo);
+            textArea.focusedProperty().removeListener(focusListener);
+            super.removeEventFilter(MouseEvent.MOUSE_EXITED, exitHandlerOverwrite);
         }
         textArea.setEditable(b);
     }

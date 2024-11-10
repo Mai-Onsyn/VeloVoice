@@ -36,7 +36,7 @@ public class LanguageManager {
         Map<String, LanguageSwitchable> children = node.getLanguageElements();
         if (children == null || children.isEmpty()) return;
         for (Map.Entry<String, LanguageSwitchable> entry : children.entrySet()) {
-            register(key + "." + entry.getKey(), entry.getValue());
+            this.register(key + "." + entry.getKey(), entry.getValue());
         }
     }
 

@@ -1037,7 +1037,7 @@ public class FrameFactory {
             {
                 Label label = ModuleCreator.createLabel("连接线程数");
 
-                SmoothSlider slider = ModuleCreator.createSlider(1, 8, maxConnectThread);
+                SmoothSlider slider = ModuleCreator.createSlider(1, 32, maxConnectThread);
                 SmoothTextField textField = ModuleCreator.createTextField();
                 textField.getTextField().setText(String.valueOf(maxConnectThread));
 

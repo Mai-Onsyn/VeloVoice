@@ -3,13 +3,13 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import mai_onsyn.AnimeFX2.LanguageManager;
 import mai_onsyn.AnimeFX2.Module.*;
 import mai_onsyn.AnimeFX2.Styles.DefaultAXTreeItemStyle;
 import mai_onsyn.AnimeFX2.ThemeManager;
-import mai_onsyn.AnimeFX2.Utls.AXButtonGroup;
-import mai_onsyn.AnimeFX2.Utls.AXTreeItem;
+import mai_onsyn.AnimeFX2.Utls.*;
 import mai_onsyn.AnimeFX2.layout.AutoPane;
 import mai_onsyn.AnimeFX2.layout.HDoubleSplitPane;
 
@@ -27,24 +27,23 @@ public class FrameTest extends Application {
         {
 
             AXButton button = new AXButton("Test");
-            AXTextArea textArea = new AXTextArea();
+            AXLogger logger = new AXLogger();
             AXChoiceBox choiceBox = new AXChoiceBox();
-            textArea.setEditable(true);
             for (int i = 0; i < 20; i++) {
                 choiceBox.createItem().setText("Item " + i);
             }
 
-            manager.register(button, textArea);
+            manager.register(button, logger);
 
             languageManager.register("test.button", button);
-            languageManager.register("test.text_area", textArea);
+            languageManager.register("test.text_area", logger);
 
             Thread.ofVirtual().start(() -> {
                 try {
                     while (true) {
-                        Thread.sleep(3000);
+                        Thread.sleep(2000);
                         Platform.runLater(() -> languageManager.switchLanguage("en_us"));
-                        Thread.sleep(3000);
+                        Thread.sleep(2000);
                         Platform.runLater(() -> languageManager.switchLanguage("zh_cn"));
                     }
                 } catch (InterruptedException e) {
@@ -58,11 +57,12 @@ public class FrameTest extends Application {
 //                try {
 //                    double i = 0;
 //                    while (true) {
-//                        Thread.sleep(80);
+//                        Thread.sleep(800);
 //
 //                        i += 0.01;
 //
 //                        progressBar.setProgress(i % 1.0);
+//                        logger.info("Log " + i);
 //                    }
 //                } catch (InterruptedException _) {}
 //            });
@@ -78,9 +78,9 @@ public class FrameTest extends Application {
             root.setPosition(b2, true, 0.1, 0.8, 0, 0.9);
             root.setPosition(b3, true, 0.2, 0.7, 0, 0.9);
 
-            root.getChildren().addAll(button, textArea, choiceBox, b1, b2, b3, progressBar);
+            root.getChildren().addAll(button, logger, choiceBox, b1, b2, b3, progressBar);
             root.setPosition(button, true, true, true, true, 0.1, 0.8, 0.1, 0.8);
-            root.setPosition(textArea, true, true, true, true, 0.6, 0.1, 0.3, 0.2);
+            root.setPosition(logger, true, true, true, true, 0.6, 0.1, 0.3, 0.2);
             root.setPosition(choiceBox, true, true, true, true, 0.8, 0.05, 0.05, 0.1);
             root.setPosition(progressBar, false, 50, 50, 70, 50);
             root.flipRelativeMode(choiceBox, AutoPane.Motion.BOTTOM);
@@ -162,15 +162,51 @@ public class FrameTest extends Application {
 
         }
 
+        {
+            AXLangLabel label = new AXLangLabel("TestTTT");
+            label.setTextFill(Color.BLACK);
+            languageManager.register("test.label", label);
+            label.setStyle("-fx-background-color: #00ff0020;");
+
+            root.getChildren().add(label);
+            root.setPosition(label, true, 0.5, 0.45, 0.5, 0.45);
+        }
+
+
+
         manager.flushAll();
 
-
         AutoPane root2 = new AutoPane();
-        HDoubleSplitPane splitPane = new HDoubleSplitPane(20, 0.3);
-        root2.getChildren().add(splitPane);
-        root2.setPosition(splitPane, false, 0, 0, 10, 10);
+        {
+            root2.setOnMouseClicked(e -> root2.requestFocus());
+            HDoubleSplitPane splitPane = new HDoubleSplitPane(10, 0.4, 100, 50);
+            AutoPane leftPane = splitPane.getLeft();
+            AutoPane rightPane = splitPane.getRight();
 
-        Scene scene = new Scene(root, 800, 600);
+//            {
+//                AXTextArea l = new AXTextArea();
+//                leftPane.getChildren().add(l);
+//                leftPane.setPosition(l, false, 0, 0, 0, 0);
+//
+//                AXTextArea r = new AXTextArea();
+//                rightPane.getChildren().add(r);
+//                rightPane.setPosition(r, false, 0, 0, 0, 0);
+//            }
+
+            {
+                AXFloatTextField textField = new AXFloatTextField(-100, 100, 0);
+
+                leftPane.getChildren().add(textField);
+                leftPane.setPosition(textField, false, 0, 0, 0, 50);
+                leftPane.flipRelativeMode(textField, AutoPane.Motion.BOTTOM);
+            }
+
+
+            root2.getChildren().add(splitPane);
+            root2.setPosition(splitPane, false, 0, 0, 10, 10);
+        }
+
+        Scene scene = new Scene(root2, 800, 600);
         stage.setScene(scene);
         stage.show();
     }
