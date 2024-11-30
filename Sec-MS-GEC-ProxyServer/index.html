@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自动循环播放语音</title>
+</head>
+<body>
+<!-- 多行文本显示 -->
+<div id="textContainer">
+    <p>天王盖地虎，</p>
+    <p>宝塔镇河妖。</p>
+    <p>三国无双，</p>
+    <p>一代天骄，</p>
+    <p>一代宗师。</p>
+    <p>我爱你中国</p>
+    <p>亲爱的母亲</p>
+</div>
+
+<script>
+    // 获取所有可用的语音
+    function getVoices() {
+        return new Promise((resolve) => {
+            let voices = speechSynthesis.getVoices();
+            if (voices.length) {
+                resolve(voices);
+                return;
+            }
+            speechSynthesis.onvoiceschanged = () => {
+                voices = speechSynthesis.getVoices();
+                resolve(voices);
+            };
+        });
+    }
+
+    // 根据语音名称播放文本并监听结束事件
+    async function speakbyvoice(text, voiceName, onEndCallback) {
+        const voices = await getVoices();
+        const utter = new SpeechSynthesisUtterance(text);
+        const voice = voices.find(v => v.name.includes(voiceName));
+        if (voice) {
+            utter.voice = voice;
+        } else {
+            console.warn(`找不到语音：${voiceName}`);
+        }
+        utter.onend = onEndCallback; // 设置播放结束时的回调
+        speechSynthesis.speak(utter);
+    }
+
+    // 开始循环播放
+    function startPlayback() {
+        const paragraphs = document.querySelectorAll("#textContainer p");
+        let currentParagraphIndex = 0;
+
+        function playNextParagraph() {
+            if (currentParagraphIndex >= paragraphs.length) {
+                currentParagraphIndex = 0; // 重置为第一个段落
+                setTimeout(() => {
+                    window.location.reload();  // 页面刷新，延迟确保播放完毕
+                }, 1000); // 延迟 1 秒刷新，确保语音播放完成
+                return; // 停止当前播放
+            }
+            const text = paragraphs[currentParagraphIndex].innerText;
+            speakbyvoice(text, "Xiaoxiao", playNextParagraph);
+            currentParagraphIndex++;
+        }
+
+        playNextParagraph(); // 开始播放第一个段落
+    }
+
+    // 页面加载完成后自动开始播放
+    window.onload = startPlayback;
+</script>
+</body>
+</html>

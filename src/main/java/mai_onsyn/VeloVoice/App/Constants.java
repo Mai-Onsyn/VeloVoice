@@ -22,9 +22,6 @@ public class Constants {
 
 
 
-
-
-
     private static final long COOLDOWN_PERIOD_MS = 30 * 1000;
     private static volatile long lastUpdateTimestamp = 0;
 
@@ -48,7 +45,7 @@ public class Constants {
 
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://edge-sec.myaitool.top/?key=edge"))
+                .uri(URI.create(AppConfig.Sec_MS_GEC_api))
                 .GET()
                 .build();
 
@@ -57,6 +54,7 @@ public class Constants {
         try {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
+            System.out.println(response.body());
             JSONObject responseJson = JSONObject.parseObject(response.body());
 
             String SEC_MS_GEC = responseJson.getString("Sec-MS-GEC");

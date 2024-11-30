@@ -201,12 +201,18 @@ public class FrameTest extends Application {
                 leftPane.flipRelativeMode(textField, AutoPane.Motion.BOTTOM);
             }
 
+            {
+                AXBackGround backGround = new AXBackGround(Toolkit.loadImage("textures/bg.png"), 1.05);
+                root2.getChildren().add(backGround);
+                root2.setPosition(backGround, true, 0.1, 0.1, 0.1, 0.1);
+            }
 
-            root2.getChildren().add(splitPane);
-            root2.setPosition(splitPane, false, 0, 0, 10, 10);
+//
+//            root2.getChildren().add(splitPane);
+//            root2.setPosition(splitPane, false, 50, 50, 50, 50);
         }
 
-        Scene scene = new Scene(root2, 800, 600);
+        Scene scene = new Scene(root2, 1280, 720);
         stage.setScene(scene);
         stage.show();
     }

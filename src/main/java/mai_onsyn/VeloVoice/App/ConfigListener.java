@@ -48,6 +48,7 @@ public class ConfigListener {
             maxConnectThread = configJson.getInteger("ConnectThreadCount");
             retryCount = configJson.getInteger("RetryCount");
             timeoutSeconds = configJson.getInteger("TimeoutSeconds");
+            Sec_MS_GEC_api = configJson.getString("Sec-MS-GEC-API");
 
             textPieceSize = configJson.getInteger("TextPieceLength");
             String symbolString = configJson.getString("TextSplitSymbols");
@@ -106,6 +107,7 @@ public class ConfigListener {
         configJson.put("ConnectThreadCount", maxConnectThread);
         configJson.put("RetryCount", retryCount);
         configJson.put("TimeoutSeconds", timeoutSeconds);
+        configJson.put("Sec-MS-GEC-API", Sec_MS_GEC_api);
 
         configJson.put("TextPieceLength", textPieceSize);
         configJson.put("TextSplitSymbols", textSplitSymbols.stream().map(String::valueOf).collect(Collectors.joining("")));
@@ -148,6 +150,7 @@ public class ConfigListener {
         private static int cachedMaxConnectThread;
         private static int cachedRetryCount;
         private static int cachedTimeoutSeconds;
+        private static String cachedSec_MS_GEC_api;
 
         private static int cachedTextPieceSize;
         private static List<Character> cachedTextSplitSymbols = new ArrayList<>();
@@ -173,6 +176,7 @@ public class ConfigListener {
             cachedMaxConnectThread = maxConnectThread;
             cachedRetryCount = retryCount;
             cachedTimeoutSeconds = timeoutSeconds;
+            cachedSec_MS_GEC_api = Sec_MS_GEC_api;
 
             cachedTextPieceSize = textPieceSize;
             cachedTextSplitSymbols = new ArrayList<>(textSplitSymbols);
@@ -196,6 +200,7 @@ public class ConfigListener {
                     maxConnectThread != cachedMaxConnectThread ||
                     retryCount != cachedRetryCount ||
                     timeoutSeconds != cachedTimeoutSeconds ||
+                    !Objects.equals(Sec_MS_GEC_api, cachedSec_MS_GEC_api) ||
                     textPieceSize != cachedTextPieceSize ||
                     !Objects.equals(textSplitSymbols, cachedTextSplitSymbols) ||
                     isAppendVolumeName != cachedIsAppendVolumeName ||

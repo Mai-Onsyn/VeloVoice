@@ -1121,7 +1121,34 @@ public class FrameFactory {
                 timeoutBox.getChildren().addAll(label, slider, textField);
             }
 
-            collectConfigPart(networkConfig, titleBox, threadBox, retryBox, timeoutBox);
+            AutoPane apiBox = new AutoPane();
+            {
+                Label label = new Label("Sec-MS-GEC-api地址");
+                label.setFont(new Font(10));
+                label.setTextFill(TEXT_COLOR);
+
+                SmoothTextField textField = ModuleCreator.createTextField();
+                textField.getTextField().setPromptText("http://...");
+
+                textField.getTextField().textProperty().addListener((o, ov, nv) -> {
+                    if (nv != null && (Objects.equals(nv, ov) || nv.isEmpty())) return;
+
+                    Sec_MS_GEC_api = nv;
+                });
+                textField.getTextField().focusedProperty().addListener((o, ov, nv) -> {
+                    if (!nv && textField.getTextField().getText() != null) {
+                        textField.getTextField().setText(Sec_MS_GEC_api);
+                    }
+                });
+                textField.getTextField().setText(Sec_MS_GEC_api);
+
+                apiBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
+                apiBox.setPosition(textField, false, fontSize * 6, 0, 0, 0);
+
+                apiBox.getChildren().addAll(label, textField);
+            }
+
+            collectConfigPart(networkConfig, titleBox, threadBox, retryBox, timeoutBox, apiBox);
             titleBox.setStyle("-fx-background-color: #" + Toolkit.colorToString(TRANSPERTANT_THEME_COLOR));
         }
 
@@ -1297,7 +1324,7 @@ public class FrameFactory {
                 });
                 textField.getTextField().focusedProperty().addListener((o, ov, nv) -> {
                     if (!nv && textField.getTextField().getText().isEmpty()) {
-                        textField.getTextField().setText("全名制作人们大家好，我是练习时长2.5年的个人练习生0d00，喜欢唱、跳、ciallo、0b0000001011010001");
+                        textField.getTextField().setText(previewText);
                     }
                 });
                 textField.getTextField().setText(previewText);
