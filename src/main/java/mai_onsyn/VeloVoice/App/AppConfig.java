@@ -37,7 +37,7 @@ public class AppConfig {
 
     public static int logLevel = 0;
 
-    public static int maxConnectThread = 4;
+    public static int maxConnectThread = 2;
     public static int retryCount = 5;
     public static int timeoutSeconds = 10;
     public static String Sec_MS_GEC_api = "http://127.0.0.1:44165/api";
