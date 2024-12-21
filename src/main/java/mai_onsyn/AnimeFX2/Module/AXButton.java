@@ -6,6 +6,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
@@ -15,7 +16,6 @@ import javafx.util.Duration;
 import mai_onsyn.AnimeFX2.LanguageSwitchable;
 import mai_onsyn.AnimeFX2.Styles.DefaultAXButtonStyle;
 import mai_onsyn.AnimeFX2.Styles.AXButtonStyle;
-import mai_onsyn.AnimeFX2.Utls.Toolkit;
 
 import java.util.Map;
 
@@ -98,8 +98,9 @@ public class AXButton extends AXBase implements LanguageSwitchable {
 
 
 
+        textLabel.setAlignment(Pos.CENTER);
         super.getChildren().add(textLabel);
-        super.setPosition(textLabel, AlignmentMode.CENTER, LocateMode.RELATIVE, 0.5, 0.5);
+        super.setPosition(textLabel, false, 0, 0, 0, 0);
     }
 
     @Override

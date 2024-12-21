@@ -7,4 +7,8 @@ public interface AXBackGroundStyle {
     Color getBGShadow();
     double getAnimeRate();
     double getBGOpacity();
+    double getBGBlurStrength();
+
+    void setBGShadow(Color color);
+    void setBGBlurStrength(double strength);
 }

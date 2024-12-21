@@ -7,6 +7,7 @@ public class DefaultAXBackGroundStyle implements AXBackGroundStyle{
     private Color bgShadow = Color.rgb(0, 0, 0, 0.5);
     private double animeRate = 1.0;
     private double bgOpacity = 1.0;
+    private double bgBlur = 10.0;
 
     @Override
     public Color getBGShadow() {
@@ -21,6 +22,21 @@ public class DefaultAXBackGroundStyle implements AXBackGroundStyle{
     @Override
     public double getBGOpacity() {
         return bgOpacity;
+    }
+
+    @Override
+    public double getBGBlurStrength() {
+        return bgBlur;
+    }
+
+    @Override
+    public void setBGShadow(Color color) {
+        this.bgShadow = color;
+    }
+
+    @Override
+    public void setBGBlurStrength(double strength) {
+        this.bgBlur = strength;
     }
 
     public void setBgShadow(Color bgShadow) {

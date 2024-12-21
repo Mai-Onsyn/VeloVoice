@@ -5,8 +5,10 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Point2D;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import mai_onsyn.AnimeFX.Frame.Layout.AutoPane;
@@ -20,15 +22,26 @@ public class AXBackGround extends AutoPane implements AutoUpdatable {
 
     private final ImageView imageView;
     private final Rectangle shadow;
-    private final SimpleDoubleProperty scaleStrengthProperty;
+    private final GaussianBlur effect = new GaussianBlur(0);
     double viewW, viewH;
 
     private Point2D layoutCorner = new Point2D(0, 0);
+    private double layoutWidth;
+    private double layoutHeight;
+//    private Timeline scaleTimeline = new Timeline();
+//    private Timeline moveTimeline = new Timeline();
+//    private double xOffset;
+//    private double yOffset;
+//    private Point2D mousePosition = new Point2D(0, 0);
 
-    public AXBackGround(Image image, double scaleStrength) {
+    public AXBackGround(Image image, Color shadowColor, double blur) {
+        style.setBGShadow(shadowColor);
+        style.setBGBlurStrength(blur);
+        effect.setRadius(blur);
+
         imageView = new ImageView(image);
+        imageView.setEffect(effect);
         shadow = new Rectangle(0, 0, style.getBGShadow());
-        scaleStrengthProperty = new SimpleDoubleProperty(scaleStrength);
 
         shadow.widthProperty().bind(super.widthProperty());
         shadow.heightProperty().bind(super.heightProperty());
@@ -37,74 +50,84 @@ public class AXBackGround extends AutoPane implements AutoUpdatable {
         final double imgH = image.getHeight();
         final double imgRatio = imgW / imgH;
 
-        super.setOnMouseMoved(e -> {
-            double x = e.getX();
-            double y = e.getY();
-
-            // 鼠标在父容器中的相对位置比例
-            double xRatio = x / super.getLayoutBounds().getWidth();
-            double yRatio = y / super.getLayoutBounds().getHeight();
-
-            xRatio = 0.5 * Math.cbrt(2 * xRatio - 1) + 0.5;
-            yRatio = 0.5 * Math.cbrt(2 * yRatio - 1) + 0.5;
-
-            // 计算图片的显示宽度和高度（考虑放大后的尺寸）
-            double imgViewWidth = imageView.getFitWidth();
-            double imgViewHeight = imageView.getFitHeight();
-
-            double xTotal = imgViewWidth - super.getLayoutBounds().getWidth();
-            double yTotal = imgViewHeight - super.getLayoutBounds().getHeight();
-            double xOffset = xTotal * xRatio;
-            double yOffset = yTotal * yRatio;
-
-            imageView.setLayoutX(-xOffset);
-            imageView.setLayoutY(-yOffset);
-        });
-
         super.layoutBoundsProperty().addListener((o, ov, nv) -> {
-            double width = nv.getWidth();
-            double height = nv.getHeight();
+            layoutWidth = nv.getWidth();
+            layoutHeight = nv.getHeight();
 
-            double layoutRatio = width / height;
+            double layoutRatio = layoutWidth / layoutHeight;
 
             if (layoutRatio > imgRatio) {
-                viewW = width;
-                viewH = width / imgRatio;
+                viewW = layoutWidth;
+                viewH = layoutWidth / imgRatio;
             }
             else {
-                viewW = height * imgRatio;
-                viewH = height;
+                viewW = layoutHeight * imgRatio;
+                viewH = layoutHeight;
             }
-            layoutCorner = new Point2D((width - viewW) / 2 * scaleStrengthProperty.get(), (height - viewH) / 2 * scaleStrengthProperty.get());
+            layoutCorner = new Point2D((layoutWidth - viewW) / 2, (layoutHeight - viewH) / 2);
 
             imageView.setFitWidth(viewW);
             imageView.setFitHeight(viewH);
+            imageView.setLayoutX(layoutCorner.getX());
+            imageView.setLayoutY(layoutCorner.getY());
         });
 
-        super.setOnMouseEntered(e -> {
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200),
-                    new KeyValue(imageView.fitWidthProperty(), viewW * scaleStrengthProperty.get()),
-                    new KeyValue(imageView.fitHeightProperty(), viewH * scaleStrengthProperty.get()),
-                    new KeyValue(imageView.layoutXProperty(), layoutCorner.getX()),
-                    new KeyValue(imageView.layoutYProperty(), layoutCorner.getY())
-            ));
-            timeline.play();
-        });
-
-        super.setOnMouseExited(e -> {
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200),
-                    new KeyValue(imageView.fitWidthProperty(), viewW),
-                    new KeyValue(imageView.fitHeightProperty(), viewH),
-                    new KeyValue(imageView.layoutXProperty(), (super.getLayoutBounds().getWidth() - viewW) / 2),
-                    new KeyValue(imageView.layoutYProperty(), (super.getLayoutBounds().getHeight() - viewH) / 2)
-            ));
-            timeline.play();
-        });
-
-
+//        super.setOnMouseMoved(e -> {
+//            mousePosition = new Point2D(e.getX(), e.getY());
+//
+//            layoutOffset();
+//        });
+//
+//        super.setOnMouseEntered(e -> {
+//            //layoutCorner = new Point2D((layoutWidth - viewW * scaleStrengthProperty.get()), (layoutHeight - viewH * scaleStrengthProperty.get()));
+//            //layoutOffset();
+//            scaleTimeline.stop();
+//            scaleTimeline = new Timeline(new KeyFrame(Duration.millis(style.getAnimeRate() * 200),
+//                    new KeyValue(imageView.fitWidthProperty(), viewW * scaleStrengthProperty.get()),
+//                    new KeyValue(imageView.fitHeightProperty(), viewH * scaleStrengthProperty.get()),
+//                    new KeyValue(imageView.layoutXProperty(), xOffset),
+//                    new KeyValue(imageView.layoutYProperty(), yOffset)
+//            ));
+//            scaleTimeline.play();
+//        });
+//
+//        super.setOnMouseExited(e -> {
+//            scaleTimeline.stop();
+//            scaleTimeline = new Timeline(new KeyFrame(Duration.millis(style.getAnimeRate() * 200),
+//                    new KeyValue(imageView.fitWidthProperty(), viewW),
+//                    new KeyValue(imageView.fitHeightProperty(), viewH),
+//                    new KeyValue(imageView.layoutXProperty(), (layoutWidth - viewW) / 2),
+//                    new KeyValue(imageView.layoutYProperty(), (layoutHeight - viewH) / 2)
+//            ));
+//            scaleTimeline.play();
+//        });
         super.getChildren().addAll(imageView, shadow);
     }
 
+    public void setBlurStrength(double strength) {
+        style.setBGBlurStrength(strength);
+        effect.setRadius(strength);
+    }
+
+//    private void layoutOffset() {
+//        double xRatio = 0.5 * Math.sin(Math.PI * (mousePosition.getX() / super.getLayoutBounds().getWidth() - 0.5)) + 0.5;
+//        double yRatio = 0.5 * Math.sin(Math.PI * (mousePosition.getY() / super.getLayoutBounds().getHeight() - 0.5)) + 0.5;
+//
+//        double imgViewWidth = imageView.getFitWidth();
+//        double imgViewHeight = imageView.getFitHeight();
+//
+//        double xTotal = imgViewWidth - super.getLayoutBounds().getWidth();
+//        double yTotal = imgViewHeight - super.getLayoutBounds().getHeight();
+//        xOffset = xTotal * xRatio;
+//        yOffset = yTotal * yRatio;
+//
+//        moveTimeline.stop();
+//        moveTimeline = new Timeline(new KeyFrame(Duration.millis(style.getAnimeRate() * 100),
+//                new KeyValue(imageView.layoutXProperty(), -xOffset),
+//                new KeyValue(imageView.layoutYProperty(), -yOffset)
+//        ));
+//        moveTimeline.play();
+//    }
 
     @Override
     public void update() {

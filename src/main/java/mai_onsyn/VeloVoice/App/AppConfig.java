@@ -32,15 +32,16 @@ public class AppConfig {
     public static boolean isWindowSupport = Util.isWindowSupport() && Theme.enableWinUI;
 
     public static LoadType loadType = LoadType.LOCAL_DIRECTLY;
-    public static String voiceModel = "zh-CN-XiaoyiNeural";
+    public static String voiceModel = "zh-CN-XiaoxiaoNeural";
     public static double configWindowChangeWidth = 820;
 
     public static int logLevel = 0;
 
-    public static int maxConnectThread = 2;
+    public static int connectThread = 2;
     public static int retryCount = 5;
     public static int timeoutSeconds = 10;
     public static String Sec_MS_GEC_api = "http://127.0.0.1:44165/api";
+    public static boolean builtin_Sec_MS_GEC_generation = true;
 
     public static int textPieceSize = 256;
     public static List<Character> textSplitSymbols = new ArrayList<>(Arrays.asList('。', '？', '！', '…', '，', ' '));

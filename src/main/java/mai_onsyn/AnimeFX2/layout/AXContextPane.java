@@ -3,6 +3,7 @@ package mai_onsyn.AnimeFX2.layout;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
@@ -126,6 +127,7 @@ public class AXContextPane extends Popup implements AutoUpdatable {
         Label name = button.getTextLabel();
         name.setText(text);
         name.setFont(new Font(name.getFont().getName(), name.getFont().getSize()));  // 默认字体
+        name.setAlignment(Pos.CENTER_LEFT);
 
         // 设置快捷键提示
         Label prompt = new Label(shortcut);
@@ -141,7 +143,7 @@ public class AXContextPane extends Popup implements AutoUpdatable {
 
         Toolkit.adjustImageColor(icon, button.style().getTextColor());  // 调整图标颜色
 
-        button.setPosition(name, AutoPane.AlignmentMode.LEFT_CENTER, AutoPane.LocateMode.ABSOLUTE, itemHeight * 1.2, itemHeight / 2);
+        button.setPosition(name, false, itemHeight * 1.2, 0, 0, 0);
         button.setPosition(prompt, AutoPane.AlignmentMode.RIGHT_CENTER, AutoPane.LocateMode.ABSOLUTE, -itemHeight * 0.1, itemHeight / 2);
     }
 }

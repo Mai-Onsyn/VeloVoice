@@ -24,7 +24,7 @@ public class Toolkit {
     public static java.awt.Toolkit defaultToolkit = java.awt.Toolkit.getDefaultToolkit();
 
     public static String colorToString(Color color) {
-        return color.toString().substring(2);
+        return "#" + color.toString().substring(2);
     }
 
     public static Image loadImage(String uri) throws IOException {

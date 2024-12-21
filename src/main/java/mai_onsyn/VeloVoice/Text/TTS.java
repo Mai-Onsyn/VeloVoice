@@ -19,7 +19,7 @@ public class TTS {
         currentFile = "";
         totalCount = countStructure(tree, 0);
         totalProgress.setValue(0);
-        executor = new TTSExecutor(AppConfig.maxConnectThread);
+        executor = new TTSExecutor(AppConfig.connectThread);
         if (!executor.connect()) {
             return;
         }

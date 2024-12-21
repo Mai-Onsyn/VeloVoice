@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -44,6 +45,7 @@ public class AXTreeItem extends Pane implements AutoUpdatable {
             }
         });
 
+        item.getTextLabel().setAlignment(Pos.CENTER_LEFT);
         update();
         super.getChildren().addAll(item, childrenBox);
     }

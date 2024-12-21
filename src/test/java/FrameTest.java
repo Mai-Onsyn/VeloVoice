@@ -23,11 +23,11 @@ public class FrameTest extends Application {
         root.setOnMousePressed(_ -> root.requestFocus());
 
         ThemeManager manager = new ThemeManager();
-        LanguageManager languageManager = new LanguageManager(new File("D:\\Users\\Desktop\\Test\\lang"));
+        LanguageManager languageManager = new LanguageManager(new File("D:\\Users\\Desktop\\Files\\Test\\lang"));
         {
 
             AXButton button = new AXButton("Test");
-            AXLogger logger = new AXLogger();
+            AXTextArea logger = new AXTextArea();
             AXChoiceBox choiceBox = new AXChoiceBox();
             for (int i = 0; i < 20; i++) {
                 choiceBox.createItem().setText("Item " + i);
@@ -172,6 +172,11 @@ public class FrameTest extends Application {
             root.setPosition(label, true, 0.5, 0.45, 0.5, 0.45);
         }
 
+        {
+            AXBackGround backGround = new AXBackGround(Toolkit.loadImage("textures/bg.png"), Color.rgb(100, 100, 100, 0.5), 10);
+            root.setPosition(backGround, false, 0, 0, 0, 0);
+            root.getChildren().addFirst(backGround);
+        }
 
 
         manager.flushAll();
@@ -202,9 +207,9 @@ public class FrameTest extends Application {
             }
 
             {
-                AXBackGround backGround = new AXBackGround(Toolkit.loadImage("textures/bg.png"), 1.05);
+                AXBackGround backGround = new AXBackGround(Toolkit.loadImage("textures/bg.png"), Color.rgb(0, 0, 0, 0.5), 10);
                 root2.getChildren().add(backGround);
-                root2.setPosition(backGround, true, 0.1, 0.1, 0.1, 0.1);
+                root2.setPosition(backGround, true, 0, 0, 0, 0);
             }
 
 //
@@ -212,7 +217,7 @@ public class FrameTest extends Application {
 //            root2.setPosition(splitPane, false, 50, 50, 50, 50);
         }
 
-        Scene scene = new Scene(root2, 1280, 720);
+        Scene scene = new Scene(root, 1280, 720);
         stage.setScene(scene);
         stage.show();
     }

@@ -129,9 +129,9 @@ public class AXTextField extends AXBase implements LanguageSwitchable {
     public void update() {
         textField.setStyle(String.format(
                 """
-                -fx-text-fill: #%s;
-                -fx-highlight-fill: #%s;
-                -fx-highlight-text-fill: #%s;
+                -fx-text-fill: %s;
+                -fx-highlight-fill: %s;
+                -fx-highlight-text-fill: %s;
                 """,
                 Toolkit.colorToString(style.getTextColor()),
                 Toolkit.colorToString(style.getTextSelectedBGColor()),

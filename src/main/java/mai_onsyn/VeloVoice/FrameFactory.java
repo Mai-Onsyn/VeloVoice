@@ -1037,9 +1037,9 @@ public class FrameFactory {
             {
                 Label label = ModuleCreator.createLabel("连接线程数");
 
-                SmoothSlider slider = ModuleCreator.createSlider(1, 4, maxConnectThread);
+                SmoothSlider slider = ModuleCreator.createSlider(1, 4, connectThread);
                 SmoothTextField textField = ModuleCreator.createTextField();
-                textField.getTextField().setText(String.valueOf(maxConnectThread));
+                textField.getTextField().setText(String.valueOf(connectThread));
 
                 threadBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
                 threadBox.setPosition(textField, false, 40, 0, 0, 0);
@@ -1049,7 +1049,7 @@ public class FrameFactory {
                 boolean[] isUpdating = new boolean[1];
                 slider.valueProperty().addListener((o, ov, nv) -> {
                     int value = (int) Math.round(nv.doubleValue());
-                    maxConnectThread = value;
+                    connectThread = value;
                     if (!isUpdating[0]) {
                         isUpdating[0] = true;
                         textField.getTextField().setText(numberFormat.format(value));
@@ -1121,6 +1121,30 @@ public class FrameFactory {
                 timeoutBox.getChildren().addAll(label, slider, textField);
             }
 
+            AutoPane builtinSecBox = new AutoPane();
+            SmoothSwitch builtinSecSwitch;
+            {
+                Label label = new Label("内置Sec-MS-GEC生成");
+                label.setFont(new Font(10));
+                label.setTextFill(TEXT_COLOR);
+
+                builtinSecSwitch = ModuleCreator.createSwitch(builtin_Sec_MS_GEC_generation);
+
+                Label valueLabel = ModuleCreator.createLabel(builtin_Sec_MS_GEC_generation ? "启用" : "禁用");
+
+                builtinSecSwitch.stateProperty().addListener((o, ov, nv) -> {
+                    builtin_Sec_MS_GEC_generation = nv;
+                    valueLabel.setText(builtin_Sec_MS_GEC_generation ? "启用" : "禁用");
+                });
+
+
+                builtinSecBox.setPosition(label, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.RELATIVE, 0, 0.5);
+                builtinSecBox.setPosition(builtinSecSwitch, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 6, fontSize * 0.7);
+                builtinSecBox.setPosition(valueLabel, AutoPane.AlignmentMode.LEFT_CENT, AutoPane.LocateMode.ABSOLUTE, fontSize * 9, fontSize * 0.7);
+
+                builtinSecBox.getChildren().addAll(label, builtinSecSwitch, valueLabel);
+            }
+
             AutoPane apiBox = new AutoPane();
             {
                 Label label = new Label("Sec-MS-GEC-api地址");
@@ -1148,7 +1172,12 @@ public class FrameFactory {
                 apiBox.getChildren().addAll(label, textField);
             }
 
-            collectConfigPart(networkConfig, titleBox, threadBox, retryBox, timeoutBox, apiBox);
+            apiBox.setDisable(builtin_Sec_MS_GEC_generation);
+            builtinSecSwitch.stateProperty().addListener((o, ov, nv) -> {
+                apiBox.setDisable(nv);
+            });
+
+            collectConfigPart(networkConfig, titleBox, threadBox, retryBox, timeoutBox, builtinSecBox, apiBox);
             titleBox.setStyle("-fx-background-color: #" + Toolkit.colorToString(TRANSPERTANT_THEME_COLOR));
         }
 

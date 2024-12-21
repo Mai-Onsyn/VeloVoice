@@ -45,10 +45,11 @@ public class ConfigListener {
             enableWinUI = configJson.getBoolean("EnableWinUI");
 
             //触发AppConfig类加载
-            maxConnectThread = configJson.getInteger("ConnectThreadCount");
+            connectThread = configJson.getInteger("ConnectThreadCount");
             retryCount = configJson.getInteger("RetryCount");
             timeoutSeconds = configJson.getInteger("TimeoutSeconds");
             Sec_MS_GEC_api = configJson.getString("Sec-MS-GEC-API");
+            builtin_Sec_MS_GEC_generation = configJson.getBoolean("BuiltinSec_MS_GECGeneration");
 
             textPieceSize = configJson.getInteger("TextPieceLength");
             String symbolString = configJson.getString("TextSplitSymbols");
@@ -104,10 +105,11 @@ public class ConfigListener {
         configJson.put("BackgroundImageURI", BACKGROUND_IMAGE_URI);
         configJson.put("ThemeColor", "#" + Toolkit.colorToString(THEME_COLOR));
 
-        configJson.put("ConnectThreadCount", maxConnectThread);
+        configJson.put("ConnectThreadCount", connectThread);
         configJson.put("RetryCount", retryCount);
         configJson.put("TimeoutSeconds", timeoutSeconds);
         configJson.put("Sec-MS-GEC-API", Sec_MS_GEC_api);
+        configJson.put("BuiltinSec_MS_GECGeneration", builtin_Sec_MS_GEC_generation);
 
         configJson.put("TextPieceLength", textPieceSize);
         configJson.put("TextSplitSymbols", textSplitSymbols.stream().map(String::valueOf).collect(Collectors.joining("")));
@@ -151,6 +153,7 @@ public class ConfigListener {
         private static int cachedRetryCount;
         private static int cachedTimeoutSeconds;
         private static String cachedSec_MS_GEC_api;
+        private static boolean cachedBuiltin_Sec_MS_GEC_generation;
 
         private static int cachedTextPieceSize;
         private static List<Character> cachedTextSplitSymbols = new ArrayList<>();
@@ -173,10 +176,11 @@ public class ConfigListener {
             cached_enableWinUI = enableWinUI;
             cached_blurMode = blurMode;
 
-            cachedMaxConnectThread = maxConnectThread;
+            cachedMaxConnectThread = connectThread;
             cachedRetryCount = retryCount;
             cachedTimeoutSeconds = timeoutSeconds;
             cachedSec_MS_GEC_api = Sec_MS_GEC_api;
+            cachedBuiltin_Sec_MS_GEC_generation = builtin_Sec_MS_GEC_generation;
 
             cachedTextPieceSize = textPieceSize;
             cachedTextSplitSymbols = new ArrayList<>(textSplitSymbols);
@@ -197,10 +201,11 @@ public class ConfigListener {
                     Double.compare(BACKGROUND_BRIGHTNESS, cached_BACKGROUND_BRIGHTNESS) != 0 ||
                     !Objects.equals(BACKGROUND_IMAGE_URI, cached_BACKGROUND_IMAGE_URI) ||
                     !Objects.equals(THEME_COLOR, cached_THEME_COLOR) ||
-                    maxConnectThread != cachedMaxConnectThread ||
+                    connectThread != cachedMaxConnectThread ||
                     retryCount != cachedRetryCount ||
                     timeoutSeconds != cachedTimeoutSeconds ||
                     !Objects.equals(Sec_MS_GEC_api, cachedSec_MS_GEC_api) ||
+                    builtin_Sec_MS_GEC_generation != cachedBuiltin_Sec_MS_GEC_generation ||
                     textPieceSize != cachedTextPieceSize ||
                     !Objects.equals(textSplitSymbols, cachedTextSplitSymbols) ||
                     isAppendVolumeName != cachedIsAppendVolumeName ||

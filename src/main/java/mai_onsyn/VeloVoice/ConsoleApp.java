@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import static mai_onsyn.VeloVoice.App.AppConfig.*;
-import static mai_onsyn.VeloVoice.App.Runtime.logger;
 
 public class ConsoleApp {
 
@@ -160,7 +159,7 @@ public class ConsoleApp {
         System.out.println("   语速 - " + voiceRate);
         System.out.println("   音量 - " + voiceVolume);
         System.out.println("   音调 - " + voicePitch);
-        System.out.println("   线程数量 - " + maxConnectThread);
+        System.out.println("   线程数量 - " + connectThread);
         System.out.println("   音频输出目录 - " + audioPath);
         System.out.println("一切准备就绪，即将进行TTS转换");
         System.out.println("是否继续？(y/n)");
