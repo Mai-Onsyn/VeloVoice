@@ -23,7 +23,7 @@ public class FrameTest extends Application {
         root.setOnMousePressed(_ -> root.requestFocus());
 
         ThemeManager manager = new ThemeManager();
-        LanguageManager languageManager = new LanguageManager(new File("D:\\Users\\Desktop\\Files\\Test\\lang"));
+        LanguageManager languageManager = new LanguageManager("D:\\Users\\Desktop\\Files\\Test\\lang");
         {
 
             AXButton button = new AXButton("Test");
@@ -120,7 +120,7 @@ public class FrameTest extends Application {
         }
 
         {
-            AXTreeView<String> treeView = new AXTreeView<>();
+            AXTreeView<String> treeView = new AXTreeView<>(null);
             manager.register(treeView);
             languageManager.register("test.treeview", treeView);
 
@@ -173,7 +173,7 @@ public class FrameTest extends Application {
         }
 
         {
-            AXBackGround backGround = new AXBackGround(Toolkit.loadImage("textures/bg.png"), Color.rgb(100, 100, 100, 0.5), 10);
+            AXBackGround backGround = new AXBackGround(Toolkit.loadImage("textures/bg.png"), Color.rgb(100, 100, 100, 0.5), 1.05, 10);
             root.setPosition(backGround, false, 0, 0, 0, 0);
             root.getChildren().addFirst(backGround);
         }
@@ -207,9 +207,9 @@ public class FrameTest extends Application {
             }
 
             {
-                AXBackGround backGround = new AXBackGround(Toolkit.loadImage("textures/bg.png"), Color.rgb(0, 0, 0, 0.5), 10);
+                AXBackGround backGround = new AXBackGround(Toolkit.loadImage("textures/bg.png"), Color.rgb(0, 0, 0, 0.5), 1.05, 0);
                 root2.getChildren().add(backGround);
-                root2.setPosition(backGround, true, 0, 0, 0, 0);
+                root2.setPosition(backGround, true, 0.1, 0.1, 0.1, 0.1);
             }
 
 //

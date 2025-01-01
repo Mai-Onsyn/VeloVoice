@@ -16,6 +16,7 @@ import mai_onsyn.AnimeFX2.LanguageSwitchable;
 import mai_onsyn.AnimeFX2.Styles.AXChoiceBoxStyle;
 import mai_onsyn.AnimeFX2.Styles.DefaultAXChoiceBoxStyle;
 import mai_onsyn.AnimeFX2.Utls.AXButtonGroup;
+import mai_onsyn.AnimeFX2.Utls.Toolkit;
 import mai_onsyn.AnimeFX2.layout.AXContextPane;
 
 import java.util.HashMap;
@@ -43,14 +44,14 @@ public class AXChoiceBox extends AXButton {
         itemPane.setOnShown(event -> {
             rotateTimeline.stop();
             rotateTimeline = new Timeline(new KeyFrame(Duration.millis(200 * style.getAnimeRate()),
-                    new KeyValue(signalView.rotateProperty(), 180)
+                    new KeyValue(signalView.rotateProperty(), 180, Toolkit.SHARP_OUT)
             ));
             rotateTimeline.play();
         });
         itemPane.setOnHidden(event -> {
             rotateTimeline.stop();
             rotateTimeline = new Timeline(new KeyFrame(Duration.millis(200 * style.getAnimeRate()),
-                    new KeyValue(signalView.rotateProperty(), 0)
+                    new KeyValue(signalView.rotateProperty(), 0, Toolkit.SHARP_OUT)
             ));
             rotateTimeline.play();
         });

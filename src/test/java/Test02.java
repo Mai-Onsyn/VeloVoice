@@ -1,32 +1,33 @@
-import mai_onsyn.VeloVoice.Main;
-import mai_onsyn.VeloVoice.NetWork.TTS.EdgeTTSClient;
-import mai_onsyn.VeloVoice.NetWork.TTS.FixedEdgeTTSClient;
-import mai_onsyn.VeloVoice.NetWork.TTS.TTSClient;
-import mai_onsyn.VeloVoice.NetWork.Voice;
-
-import java.util.List;
-import java.util.UUID;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public class Test02 {
 
-    public static void main(String[] args) throws InterruptedException {
-
-        new Main();
-        EdgeTTSClient.setVoice(Voice.get("zh-CN-XiaoyiNeural"));
-
-        TTSClient client = new FixedEdgeTTSClient();
-
-        client.connect();
-        System.out.println("连接成功");
-        List<byte[]> bytes = client.sendText(UUID.randomUUID(), "Test");
-        System.out.println("发送成功");
-
-        //Thread.sleep(1000 * 60 * 10);
-
-        System.out.println("关闭连接");
-        client.close();
-
+    public static void main(String[] args) {
+//        try {
+//            Map<String, String> jsonFiles = readJsonFiles("lang"); // 假设资源目录为 resources/data
+//            for (Map.Entry<String, String> entry : jsonFiles.entrySet()) {
+//                System.out.println("File: " + entry.getKey());
+//                System.out.println("Content: " + entry.getValue());
+//            }
+//        } catch (IOException | URISyntaxException e) {
+//            e.printStackTrace();
+//        }
     }
+
+
 
 
 }

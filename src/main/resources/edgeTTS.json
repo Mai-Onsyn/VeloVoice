@@ -1,0 +1,5820 @@
+[
+	{
+		"Locale":"af-ZA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Adri Online (Natural) - Afrikaans (South Africa)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"af-ZA-AdriNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (af-ZA, AdriNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"af-ZA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Willem Online (Natural) - Afrikaans (South Africa)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"af-ZA-WillemNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (af-ZA, WillemNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"sq-AL",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Anila Online (Natural) - Albanian (Albania)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"sq-AL-AnilaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (sq-AL, AnilaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"sq-AL",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Ilir Online (Natural) - Albanian (Albania)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"sq-AL-IlirNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (sq-AL, IlirNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"am-ET",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Ameha Online (Natural) - Amharic (Ethiopia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"am-ET-AmehaNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (am-ET, AmehaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"am-ET",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Mekdes Online (Natural) - Amharic (Ethiopia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"am-ET-MekdesNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (am-ET, MekdesNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-DZ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Amina Online (Natural) - Arabic (Algeria)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-DZ-AminaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-DZ, AminaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-DZ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Ismael Online (Natural) - Arabic (Algeria)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-DZ-IsmaelNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-DZ, IsmaelNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-BH",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Ali Online (Natural) - Arabic (Bahrain)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-BH-AliNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-BH, AliNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-BH",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Laila Online (Natural) - Arabic (Bahrain)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-BH-LailaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-BH, LailaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-EG",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Salma Online (Natural) - Arabic (Egypt)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-EG-SalmaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-EG, SalmaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-EG",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Shakir Online (Natural) - Arabic (Egypt)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-EG-ShakirNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-EG, ShakirNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-IQ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Bassel Online (Natural) - Arabic (Iraq)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-IQ-BasselNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-IQ, BasselNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-IQ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Rana Online (Natural) - Arabic (Iraq)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-IQ-RanaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-IQ, RanaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-JO",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Sana Online (Natural) - Arabic (Jordan)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-JO-SanaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-JO, SanaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-JO",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Taim Online (Natural) - Arabic (Jordan)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-JO-TaimNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-JO, TaimNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-KW",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Fahed Online (Natural) - Arabic (Kuwait)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-KW-FahedNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-KW, FahedNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-KW",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Noura Online (Natural) - Arabic (Kuwait)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-KW-NouraNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-KW, NouraNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-LB",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Layla Online (Natural) - Arabic (Lebanon)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-LB-LaylaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-LB, LaylaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-LB",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Rami Online (Natural) - Arabic (Lebanon)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-LB-RamiNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-LB, RamiNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-LY",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Iman Online (Natural) - Arabic (Libya)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-LY-ImanNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-LY, ImanNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-LY",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Omar Online (Natural) - Arabic (Libya)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-LY-OmarNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-LY, OmarNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-MA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Jamal Online (Natural) - Arabic (Morocco)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-MA-JamalNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-MA, JamalNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-MA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Mouna Online (Natural) - Arabic (Morocco)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-MA-MounaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-MA, MounaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-OM",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Abdullah Online (Natural) - Arabic (Oman)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-OM-AbdullahNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-OM, AbdullahNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-OM",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Aysha Online (Natural) - Arabic (Oman)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-OM-AyshaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-OM, AyshaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-QA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Amal Online (Natural) - Arabic (Qatar)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-QA-AmalNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-QA, AmalNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-QA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Moaz Online (Natural) - Arabic (Qatar)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-QA-MoazNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-QA, MoazNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-SA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Hamed Online (Natural) - Arabic (Saudi Arabia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-SA-HamedNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-SA, HamedNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-SA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Zariyah Online (Natural) - Arabic (Saudi Arabia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-SA-ZariyahNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-SA, ZariyahNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-SY",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Amany Online (Natural) - Arabic (Syria)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-SY-AmanyNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-SY, AmanyNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-SY",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Laith Online (Natural) - Arabic (Syria)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-SY-LaithNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-SY, LaithNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-TN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Hedi Online (Natural) - Arabic (Tunisia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-TN-HediNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-TN, HediNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-TN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Reem Online (Natural) - Arabic (Tunisia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-TN-ReemNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-TN, ReemNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-AE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Fatima Online (Natural) - Arabic (United Arab Emirates)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-AE-FatimaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-AE, FatimaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-AE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Hamdan Online (Natural) - Arabic (United Arab Emirates)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-AE-HamdanNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-AE, HamdanNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-YE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Maryam Online (Natural) - Arabic (Yemen)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-YE-MaryamNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-YE, MaryamNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ar-YE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Saleh Online (Natural) - Arabic (Yemen)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ar-YE-SalehNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ar-YE, SalehNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"az-AZ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Babek Online (Natural) - Azerbaijani (Azerbaijan)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"az-AZ-BabekNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (az-AZ, BabekNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"az-AZ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Banu Online (Natural) - Azerbaijani (Azerbaijan)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"az-AZ-BanuNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (az-AZ, BanuNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"bn-BD",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Nabanita Online (Natural) - Bangla (Bangladesh)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"bn-BD-NabanitaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (bn-BD, NabanitaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"bn-BD",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Pradeep Online (Natural) - Bangla (Bangladesh)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"bn-BD-PradeepNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (bn-BD, PradeepNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"bn-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Bashkar Online (Natural) - Bangla (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"bn-IN-BashkarNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (bn-IN, BashkarNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"bn-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Tanishaa Online (Natural) - Bengali (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"bn-IN-TanishaaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (bn-IN, TanishaaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"bs-BA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Goran Online (Natural) - Bosnian (Bosnia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"bs-BA-GoranNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (bs-BA, GoranNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"bs-BA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Vesna Online (Natural) - Bosnian (Bosnia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"bs-BA-VesnaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (bs-BA, VesnaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"bg-BG",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Borislav Online (Natural) - Bulgarian (Bulgaria)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"bg-BG-BorislavNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (bg-BG, BorislavNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"bg-BG",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Kalina Online (Natural) - Bulgarian (Bulgaria)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"bg-BG-KalinaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (bg-BG, KalinaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"my-MM",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Nilar Online (Natural) - Burmese (Myanmar)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"my-MM-NilarNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (my-MM, NilarNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"my-MM",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Thiha Online (Natural) - Burmese (Myanmar)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"my-MM-ThihaNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (my-MM, ThihaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ca-ES",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Enric Online (Natural) - Catalan (Spain)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ca-ES-EnricNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ca-ES, EnricNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ca-ES",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Joana Online (Natural) - Catalan (Spain)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ca-ES-JoanaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ca-ES, JoanaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"zh-HK",
+		"Status":"GA",
+		"FriendlyName":"Microsoft HiuGaai Online (Natural) - Chinese (Cantonese Traditional)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"zh-HK-HiuGaaiNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (zh-HK, HiuGaaiNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"zh-HK",
+		"Status":"GA",
+		"FriendlyName":"Microsoft HiuMaan Online (Natural) - Chinese (Hong Kong)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"zh-HK-HiuMaanNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (zh-HK, HiuMaanNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"zh-HK",
+		"Status":"GA",
+		"FriendlyName":"Microsoft WanLung Online (Natural) - Chinese (Hong Kong)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"zh-HK-WanLungNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (zh-HK, WanLungNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"zh-CN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Xiaoxiao Online (Natural) - Chinese (Mainland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"zh-CN-XiaoxiaoNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (zh-CN, XiaoxiaoNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Warm"
+			],
+			"ContentCategories":[
+				"News",
+				"Novel"
+			]
+		}
+	},
+	{
+		"Locale":"zh-CN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Xiaoyi Online (Natural) - Chinese (Mainland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"zh-CN-XiaoyiNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (zh-CN, XiaoyiNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Lively"
+			],
+			"ContentCategories":[
+				"Cartoon",
+				"Novel"
+			]
+		}
+	},
+	{
+		"Locale":"zh-CN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Yunjian Online (Natural) - Chinese (Mainland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"zh-CN-YunjianNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (zh-CN, YunjianNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Passion"
+			],
+			"ContentCategories":[
+				"Sports",
+				" Novel"
+			]
+		}
+	},
+	{
+		"Locale":"zh-CN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Yunxi Online (Natural) - Chinese (Mainland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"zh-CN-YunxiNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (zh-CN, YunxiNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Lively",
+				"Sunshine"
+			],
+			"ContentCategories":[
+				"Novel"
+			]
+		}
+	},
+	{
+		"Locale":"zh-CN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Yunxia Online (Natural) - Chinese (Mainland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"zh-CN-YunxiaNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (zh-CN, YunxiaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Cute"
+			],
+			"ContentCategories":[
+				"Cartoon",
+				"Novel"
+			]
+		}
+	},
+	{
+		"Locale":"zh-CN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Yunyang Online (Natural) - Chinese (Mainland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"zh-CN-YunyangNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (zh-CN, YunyangNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Professional",
+				"Reliable"
+			],
+			"ContentCategories":[
+				"News"
+			]
+		}
+	},
+	{
+		"Locale":"zh-CN-liaoning",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Xiaobei Online (Natural) - Chinese (Northeastern Mandarin)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"zh-CN-liaoning-XiaobeiNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (zh-CN-liaoning, XiaobeiNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Humorous"
+			],
+			"ContentCategories":[
+				"Dialect"
+			]
+		}
+	},
+	{
+		"Locale":"zh-TW",
+		"Status":"GA",
+		"FriendlyName":"Microsoft HsiaoChen Online (Natural) - Chinese (Taiwan)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"zh-TW-HsiaoChenNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (zh-TW, HsiaoChenNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"zh-TW",
+		"Status":"GA",
+		"FriendlyName":"Microsoft YunJhe Online (Natural) - Chinese (Taiwan)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"zh-TW-YunJheNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (zh-TW, YunJheNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"zh-TW",
+		"Status":"GA",
+		"FriendlyName":"Microsoft HsiaoYu Online (Natural) - Chinese (Taiwanese Mandarin)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"zh-TW-HsiaoYuNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (zh-TW, HsiaoYuNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"zh-CN-shaanxi",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Xiaoni Online (Natural) - Chinese (Zhongyuan Mandarin Shaanxi)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"zh-CN-shaanxi-XiaoniNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (zh-CN-shaanxi, XiaoniNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Bright"
+			],
+			"ContentCategories":[
+				"Dialect"
+			]
+		}
+	},
+	{
+		"Locale":"hr-HR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Gabrijela Online (Natural) - Croatian (Croatia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"hr-HR-GabrijelaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (hr-HR, GabrijelaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"hr-HR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Srecko Online (Natural) - Croatian (Croatia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"hr-HR-SreckoNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (hr-HR, SreckoNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"cs-CZ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Antonin Online (Natural) - Czech (Czech)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"cs-CZ-AntoninNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (cs-CZ, AntoninNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"cs-CZ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Vlasta Online (Natural) - Czech (Czech)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"cs-CZ-VlastaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (cs-CZ, VlastaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"da-DK",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Christel Online (Natural) - Danish (Denmark)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"da-DK-ChristelNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (da-DK, ChristelNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"da-DK",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Jeppe Online (Natural) - Danish (Denmark)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"da-DK-JeppeNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (da-DK, JeppeNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"nl-BE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Arnaud Online (Natural) - Dutch (Belgium)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"nl-BE-ArnaudNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (nl-BE, ArnaudNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"nl-BE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Dena Online (Natural) - Dutch (Belgium)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"nl-BE-DenaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (nl-BE, DenaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"nl-NL",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Colette Online (Natural) - Dutch (Netherlands)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"nl-NL-ColetteNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (nl-NL, ColetteNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"nl-NL",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Fenna Online (Natural) - Dutch (Netherlands)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"nl-NL-FennaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (nl-NL, FennaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"nl-NL",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Maarten Online (Natural) - Dutch (Netherlands)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"nl-NL-MaartenNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (nl-NL, MaartenNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-AU",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Natasha Online (Natural) - English (Australia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-AU-NatashaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-AU, NatashaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-AU",
+		"Status":"GA",
+		"FriendlyName":"Microsoft William Online (Natural) - English (Australia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-AU-WilliamNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-AU, WilliamNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-CA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Clara Online (Natural) - English (Canada)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-CA-ClaraNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-CA, ClaraNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-CA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Liam Online (Natural) - English (Canada)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-CA-LiamNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-CA, LiamNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-HK",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Sam Online (Natural) - English (Hongkong)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-HK-SamNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-HK, SamNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-HK",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Yan Online (Natural) - English (Hongkong)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-HK-YanNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-HK, YanNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Neerja Online (Natural) - English (India) (Preview)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-IN-NeerjaExpressiveNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-IN, NeerjaExpressiveNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Neerja Online (Natural) - English (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-IN-NeerjaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-IN, NeerjaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Prabhat Online (Natural) - English (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-IN-PrabhatNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-IN, PrabhatNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-IE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Connor Online (Natural) - English (Ireland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-IE-ConnorNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-IE, ConnorNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-IE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Emily Online (Natural) - English (Ireland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-IE-EmilyNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-IE, EmilyNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-KE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Asilia Online (Natural) - English (Kenya)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-KE-AsiliaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-KE, AsiliaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-KE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Chilemba Online (Natural) - English (Kenya)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-KE-ChilembaNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-KE, ChilembaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-NZ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Mitchell Online (Natural) - English (New Zealand)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-NZ-MitchellNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-NZ, MitchellNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-NZ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Molly Online (Natural) - English (New Zealand)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-NZ-MollyNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-NZ, MollyNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-NG",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Abeo Online (Natural) - English (Nigeria)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-NG-AbeoNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-NG, AbeoNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-NG",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Ezinne Online (Natural) - English (Nigeria)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-NG-EzinneNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-NG, EzinneNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-PH",
+		"Status":"GA",
+		"FriendlyName":"Microsoft James Online (Natural) - English (Philippines)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-PH-JamesNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-PH, JamesNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-PH",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Rosa Online (Natural) - English (Philippines)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-PH-RosaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-PH, RosaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-SG",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Luna Online (Natural) - English (Singapore)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-SG-LunaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-SG, LunaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-SG",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Wayne Online (Natural) - English (Singapore)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-SG-WayneNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-SG, WayneNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-US",
+		"Status":"GA",
+		"FriendlyName":"Microsoft AvaMultilingual Online (Natural) - English (United States)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-US-AvaMultilingualNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-US, AvaMultilingualNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Expressive",
+				"Caring",
+				"Pleasant",
+				"Friendly"
+			],
+			"ContentCategories":[
+				"Conversation",
+				"Copilot"
+			]
+		}
+	},
+	{
+		"Locale":"en-US",
+		"Status":"GA",
+		"FriendlyName":"Microsoft AndrewMultilingual Online (Natural) - English (United States)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-US-AndrewMultilingualNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-US, AndrewMultilingualNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Warm",
+				"Confident",
+				"Authentic",
+				"Honest"
+			],
+			"ContentCategories":[
+				"Conversation",
+				"Copilot"
+			]
+		}
+	},
+	{
+		"Locale":"en-US",
+		"Status":"GA",
+		"FriendlyName":"Microsoft EmmaMultilingual Online (Natural) - English (United States)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-US-EmmaMultilingualNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-US, EmmaMultilingualNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Cheerful",
+				"Clear",
+				"Conversational"
+			],
+			"ContentCategories":[
+				"Conversation",
+				"Copilot"
+			]
+		}
+	},
+	{
+		"Locale":"en-US",
+		"Status":"GA",
+		"FriendlyName":"Microsoft BrianMultilingual Online (Natural) - English (United States)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-US-BrianMultilingualNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-US, BrianMultilingualNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Approachable",
+				"Casual",
+				"Sincere"
+			],
+			"ContentCategories":[
+				"Conversation",
+				"Copilot"
+			]
+		}
+	},
+	{
+		"Locale":"en-US",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Ava Online (Natural) - English (United States)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-US-AvaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-US, AvaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Expressive",
+				"Caring",
+				"Pleasant",
+				"Friendly"
+			],
+			"ContentCategories":[
+				"Conversation",
+				"Copilot"
+			]
+		}
+	},
+	{
+		"Locale":"en-US",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Andrew Online (Natural) - English (United States)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-US-AndrewNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-US, AndrewNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Warm",
+				"Confident",
+				"Authentic",
+				"Honest"
+			],
+			"ContentCategories":[
+				"Conversation",
+				"Copilot"
+			]
+		}
+	},
+	{
+		"Locale":"en-US",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Emma Online (Natural) - English (United States)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-US-EmmaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-US, EmmaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Cheerful",
+				"Clear",
+				"Conversational"
+			],
+			"ContentCategories":[
+				"Conversation",
+				"Copilot"
+			]
+		}
+	},
+	{
+		"Locale":"en-US",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Brian Online (Natural) - English (United States)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-US-BrianNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-US, BrianNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Approachable",
+				"Casual",
+				"Sincere"
+			],
+			"ContentCategories":[
+				"Conversation",
+				"Copilot"
+			]
+		}
+	},
+	{
+		"Locale":"en-ZA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Leah Online (Natural) - English (South Africa)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-ZA-LeahNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-ZA, LeahNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-ZA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Luke Online (Natural) - English (South Africa)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-ZA-LukeNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-ZA, LukeNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-TZ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Elimu Online (Natural) - English (Tanzania)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-TZ-ElimuNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-TZ, ElimuNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-TZ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Imani Online (Natural) - English (Tanzania)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-TZ-ImaniNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-TZ, ImaniNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-GB",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Libby Online (Natural) - English (United Kingdom)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-GB-LibbyNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-GB, LibbyNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-GB",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Maisie Online (Natural) - English (United Kingdom)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-GB-MaisieNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-GB, MaisieNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-GB",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Ryan Online (Natural) - English (United Kingdom)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-GB-RyanNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-GB, RyanNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-GB",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Sonia Online (Natural) - English (United Kingdom)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-GB-SoniaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-GB, SoniaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-GB",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Thomas Online (Natural) - English (United Kingdom)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-GB-ThomasNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-GB, ThomasNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-US",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Ana Online (Natural) - English (United States)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-US-AnaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-US, AnaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Cute"
+			],
+			"ContentCategories":[
+				"Cartoon",
+				"Conversation"
+			]
+		}
+	},
+	{
+		"Locale":"en-US",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Aria Online (Natural) - English (United States)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-US-AriaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-US, AriaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Positive",
+				"Confident"
+			],
+			"ContentCategories":[
+				"News",
+				"Novel"
+			]
+		}
+	},
+	{
+		"Locale":"en-US",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Christopher Online (Natural) - English (United States)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-US-ChristopherNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-US, ChristopherNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Reliable",
+				"Authority"
+			],
+			"ContentCategories":[
+				"News",
+				"Novel"
+			]
+		}
+	},
+	{
+		"Locale":"en-US",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Eric Online (Natural) - English (United States)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-US-EricNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-US, EricNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Rational"
+			],
+			"ContentCategories":[
+				"News",
+				"Novel"
+			]
+		}
+	},
+	{
+		"Locale":"en-US",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Guy Online (Natural) - English (United States)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-US-GuyNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-US, GuyNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Passion"
+			],
+			"ContentCategories":[
+				"News",
+				"Novel"
+			]
+		}
+	},
+	{
+		"Locale":"en-US",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Jenny Online (Natural) - English (United States)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-US-JennyNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-US, JennyNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Considerate",
+				"Comfort"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"en-US",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Michelle Online (Natural) - English (United States)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-US-MichelleNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-US, MichelleNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Pleasant"
+			],
+			"ContentCategories":[
+				"News",
+				"Novel"
+			]
+		}
+	},
+	{
+		"Locale":"en-US",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Roger Online (Natural) - English (United States)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-US-RogerNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-US, RogerNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Lively"
+			],
+			"ContentCategories":[
+				"News",
+				"Novel"
+			]
+		}
+	},
+	{
+		"Locale":"en-US",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Steffan Online (Natural) - English (United States)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"en-US-SteffanNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (en-US, SteffanNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Rational"
+			],
+			"ContentCategories":[
+				"News",
+				"Novel"
+			]
+		}
+	},
+	{
+		"Locale":"et-EE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Anu Online (Natural) - Estonian (Estonia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"et-EE-AnuNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (et-EE, AnuNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"et-EE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Kert Online (Natural) - Estonian (Estonia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"et-EE-KertNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (et-EE, KertNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"fil-PH",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Angelo Online (Natural) - Filipino (Philippines)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"fil-PH-AngeloNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (fil-PH, AngeloNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"fil-PH",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Blessica Online (Natural) - Filipino (Philippines)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"fil-PH-BlessicaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (fil-PH, BlessicaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"fi-FI",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Harri Online (Natural) - Finnish (Finland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"fi-FI-HarriNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (fi-FI, HarriNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"fi-FI",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Noora Online (Natural) - Finnish (Finland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"fi-FI-NooraNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (fi-FI, NooraNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"fr-BE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Charline Online (Natural) - French (Belgium)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"fr-BE-CharlineNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (fr-BE, CharlineNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"fr-BE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Gerard Online (Natural) - French (Belgium)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"fr-BE-GerardNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (fr-BE, GerardNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"fr-CA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Thierry Online (Natural) - French (Canada)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"fr-CA-ThierryNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (fr-CA, ThierryNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"fr-CA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Antoine Online (Natural) - French (Canada)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"fr-CA-AntoineNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (fr-CA, AntoineNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"fr-CA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Jean Online (Natural) - French (Canada)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"fr-CA-JeanNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (fr-CA, JeanNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"fr-CA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Sylvie Online (Natural) - French (Canada)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"fr-CA-SylvieNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (fr-CA, SylvieNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"fr-FR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft VivienneMultilingual Online (Natural) - French (France)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"fr-FR-VivienneMultilingualNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (fr-FR, VivienneMultilingualNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"fr-FR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft RemyMultilingual Online (Natural) - French (France)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"fr-FR-RemyMultilingualNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (fr-FR, RemyMultilingualNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"fr-FR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Denise Online (Natural) - French (France)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"fr-FR-DeniseNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (fr-FR, DeniseNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"fr-FR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Eloise Online (Natural) - French (France)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"fr-FR-EloiseNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (fr-FR, EloiseNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"fr-FR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Henri Online (Natural) - French (France)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"fr-FR-HenriNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (fr-FR, HenriNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"fr-CH",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Ariane Online (Natural) - French (Switzerland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"fr-CH-ArianeNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (fr-CH, ArianeNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"fr-CH",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Fabrice Online (Natural) - French (Switzerland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"fr-CH-FabriceNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (fr-CH, FabriceNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"gl-ES",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Roi Online (Natural) - Galician (Spain)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"gl-ES-RoiNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (gl-ES, RoiNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"gl-ES",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Sabela Online (Natural) - Galician (Spain)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"gl-ES-SabelaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (gl-ES, SabelaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ka-GE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Eka Online (Natural) - Georgian (Georgia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ka-GE-EkaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ka-GE, EkaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ka-GE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Giorgi Online (Natural) - Georgian (Georgia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ka-GE-GiorgiNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ka-GE, GiorgiNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"de-AT",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Ingrid Online (Natural) - German (Austria)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"de-AT-IngridNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (de-AT, IngridNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"de-AT",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Jonas Online (Natural) - German (Austria)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"de-AT-JonasNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (de-AT, JonasNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"de-DE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft SeraphinaMultilingual Online (Natural) - German (Germany)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"de-DE-SeraphinaMultilingualNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (de-DE, SeraphinaMultilingualNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"de-DE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft FlorianMultilingual Online (Natural) - German (Germany)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"de-DE-FlorianMultilingualNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (de-DE, FlorianMultilingualNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"de-DE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Amala Online (Natural) - German (Germany)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"de-DE-AmalaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (de-DE, AmalaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"de-DE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Conrad Online (Natural) - German (Germany)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"de-DE-ConradNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (de-DE, ConradNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"de-DE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Katja Online (Natural) - German (Germany)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"de-DE-KatjaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (de-DE, KatjaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"de-DE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Killian Online (Natural) - German (Germany)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"de-DE-KillianNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (de-DE, KillianNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"de-CH",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Jan Online (Natural) - German (Switzerland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"de-CH-JanNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (de-CH, JanNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"de-CH",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Leni Online (Natural) - German (Switzerland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"de-CH-LeniNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (de-CH, LeniNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"el-GR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Athina Online (Natural) - Greek (Greece)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"el-GR-AthinaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (el-GR, AthinaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"el-GR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Nestoras Online (Natural) - Greek (Greece)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"el-GR-NestorasNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (el-GR, NestorasNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"gu-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Dhwani Online (Natural) - Gujarati (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"gu-IN-DhwaniNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (gu-IN, DhwaniNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"gu-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Niranjan Online (Natural) - Gujarati (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"gu-IN-NiranjanNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (gu-IN, NiranjanNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"he-IL",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Avri Online (Natural) - Hebrew (Israel)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"he-IL-AvriNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (he-IL, AvriNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"he-IL",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Hila Online (Natural) - Hebrew (Israel)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"he-IL-HilaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (he-IL, HilaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"hi-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Madhur Online (Natural) - Hindi (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"hi-IN-MadhurNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (hi-IN, MadhurNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"hi-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Swara Online (Natural) - Hindi (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"hi-IN-SwaraNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (hi-IN, SwaraNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"hu-HU",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Noemi Online (Natural) - Hungarian (Hungary)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"hu-HU-NoemiNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (hu-HU, NoemiNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"hu-HU",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Tamas Online (Natural) - Hungarian (Hungary)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"hu-HU-TamasNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (hu-HU, TamasNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"is-IS",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Gudrun Online (Natural) - Icelandic (Iceland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"is-IS-GudrunNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (is-IS, GudrunNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"is-IS",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Gunnar Online (Natural) - Icelandic (Iceland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"is-IS-GunnarNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (is-IS, GunnarNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"id-ID",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Ardi Online (Natural) - Indonesian (Indonesia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"id-ID-ArdiNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (id-ID, ArdiNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"id-ID",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Gadis Online (Natural) - Indonesian (Indonesia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"id-ID-GadisNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (id-ID, GadisNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"iu-Latn-CA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Siqiniq Online (Natural) - Inuktitut (Latin, Canada)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"iu-Latn-CA-SiqiniqNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (iu-Latn-CA, SiqiniqNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"iu-Latn-CA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Taqqiq Online (Natural) - Inuktitut (Latin, Canada)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"iu-Latn-CA-TaqqiqNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (iu-Latn-CA, TaqqiqNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"iu-Cans-CA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Siqiniq Online (Natural) - Inuktitut (Syllabics, Canada)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"iu-Cans-CA-SiqiniqNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (iu-Cans-CA, SiqiniqNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"iu-Cans-CA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Taqqiq Online (Natural) - Inuktitut (Syllabics, Canada)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"iu-Cans-CA-TaqqiqNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (iu-Cans-CA, TaqqiqNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ga-IE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Colm Online (Natural) - Irish (Ireland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ga-IE-ColmNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ga-IE, ColmNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ga-IE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Orla Online (Natural) - Irish (Ireland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ga-IE-OrlaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ga-IE, OrlaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"it-IT",
+		"Status":"GA",
+		"FriendlyName":"Microsoft GiuseppeMultilingual Online (Natural) - Italian (Italy)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"it-IT-GiuseppeMultilingualNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (it-IT, GiuseppeMultilingualNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"it-IT",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Diego Online (Natural) - Italian (Italy)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"it-IT-DiegoNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (it-IT, DiegoNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"it-IT",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Elsa Online (Natural) - Italian (Italy)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"it-IT-ElsaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (it-IT, ElsaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"it-IT",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Isabella Online (Natural) - Italian (Italy)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"it-IT-IsabellaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (it-IT, IsabellaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ja-JP",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Keita Online (Natural) - Japanese (Japan)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ja-JP-KeitaNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ja-JP, KeitaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ja-JP",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Nanami Online (Natural) - Japanese (Japan)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ja-JP-NanamiNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ja-JP, NanamiNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"jv-ID",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Dimas Online (Natural) - Javanese (Indonesia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"jv-ID-DimasNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (jv-ID, DimasNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"jv-ID",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Siti Online (Natural) - Javanese (Indonesia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"jv-ID-SitiNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (jv-ID, SitiNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"kn-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Gagan Online (Natural) - Kannada (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"kn-IN-GaganNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (kn-IN, GaganNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"kn-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Sapna Online (Natural) - Kannada (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"kn-IN-SapnaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (kn-IN, SapnaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"kk-KZ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Aigul Online (Natural) - Kazakh (Kazakhstan)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"kk-KZ-AigulNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (kk-KZ, AigulNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"kk-KZ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Daulet Online (Natural) - Kazakh (Kazakhstan)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"kk-KZ-DauletNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (kk-KZ, DauletNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"km-KH",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Piseth Online (Natural) - Khmer (Cambodia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"km-KH-PisethNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (km-KH, PisethNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"km-KH",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Sreymom Online (Natural) - Khmer (Cambodia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"km-KH-SreymomNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (km-KH, SreymomNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ko-KR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft HyunsuMultilingual Online (Natural) - Korean (Korea)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ko-KR-HyunsuMultilingualNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ko-KR, HyunsuMultilingualNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ko-KR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft InJoon Online (Natural) - Korean (Korea)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ko-KR-InJoonNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ko-KR, InJoonNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ko-KR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft SunHi Online (Natural) - Korean (Korea)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ko-KR-SunHiNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ko-KR, SunHiNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"lo-LA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Chanthavong Online (Natural) - Lao (Laos)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"lo-LA-ChanthavongNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (lo-LA, ChanthavongNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"lo-LA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Keomany Online (Natural) - Lao (Laos)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"lo-LA-KeomanyNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (lo-LA, KeomanyNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"lv-LV",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Everita Online (Natural) - Latvian (Latvia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"lv-LV-EveritaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (lv-LV, EveritaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"lv-LV",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Nils Online (Natural) - Latvian (Latvia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"lv-LV-NilsNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (lv-LV, NilsNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"lt-LT",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Leonas Online (Natural) - Lithuanian (Lithuania)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"lt-LT-LeonasNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (lt-LT, LeonasNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"lt-LT",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Ona Online (Natural) - Lithuanian (Lithuania)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"lt-LT-OnaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (lt-LT, OnaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"mk-MK",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Aleksandar Online (Natural) - Macedonian (Republic of North Macedonia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"mk-MK-AleksandarNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (mk-MK, AleksandarNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"mk-MK",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Marija Online (Natural) - Macedonian (Republic of North Macedonia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"mk-MK-MarijaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (mk-MK, MarijaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ms-MY",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Osman Online (Natural) - Malay (Malaysia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ms-MY-OsmanNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ms-MY, OsmanNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ms-MY",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Yasmin Online (Natural) - Malay (Malaysia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ms-MY-YasminNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ms-MY, YasminNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ml-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Midhun Online (Natural) - Malayalam (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ml-IN-MidhunNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ml-IN, MidhunNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ml-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Sobhana Online (Natural) - Malayalam (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ml-IN-SobhanaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ml-IN, SobhanaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"mt-MT",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Grace Online (Natural) - Maltese (Malta)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"mt-MT-GraceNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (mt-MT, GraceNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"mt-MT",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Joseph Online (Natural) - Maltese (Malta)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"mt-MT-JosephNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (mt-MT, JosephNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"mr-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Aarohi Online (Natural) - Marathi (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"mr-IN-AarohiNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (mr-IN, AarohiNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"mr-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Manohar Online (Natural) - Marathi (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"mr-IN-ManoharNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (mr-IN, ManoharNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"mn-MN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Bataa Online (Natural) - Mongolian (Mongolia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"mn-MN-BataaNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (mn-MN, BataaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"mn-MN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Yesui Online (Natural) - Mongolian (Mongolia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"mn-MN-YesuiNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (mn-MN, YesuiNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ne-NP",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Hemkala Online (Natural) - Nepali (Nepal)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ne-NP-HemkalaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ne-NP, HemkalaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ne-NP",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Sagar Online (Natural) - Nepali (Nepal)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ne-NP-SagarNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ne-NP, SagarNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"nb-NO",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Finn Online (Natural) - Norwegian (Bokmål Norway)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"nb-NO-FinnNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (nb-NO, FinnNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"nb-NO",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Pernille Online (Natural) - Norwegian (Bokmål, Norway)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"nb-NO-PernilleNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (nb-NO, PernilleNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ps-AF",
+		"Status":"GA",
+		"FriendlyName":"Microsoft GulNawaz Online (Natural) - Pashto (Afghanistan)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ps-AF-GulNawazNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ps-AF, GulNawazNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ps-AF",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Latifa Online (Natural) - Pashto (Afghanistan)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ps-AF-LatifaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ps-AF, LatifaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"fa-IR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Dilara Online (Natural) - Persian (Iran)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"fa-IR-DilaraNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (fa-IR, DilaraNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"fa-IR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Farid Online (Natural) - Persian (Iran)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"fa-IR-FaridNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (fa-IR, FaridNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"pl-PL",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Marek Online (Natural) - Polish (Poland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"pl-PL-MarekNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (pl-PL, MarekNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"pl-PL",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Zofia Online (Natural) - Polish (Poland)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"pl-PL-ZofiaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (pl-PL, ZofiaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"pt-BR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft ThalitaMultilingual Online (Natural) - Portuguese (Brazil)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"pt-BR-ThalitaMultilingualNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (pt-BR, ThalitaMultilingualNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"pt-BR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Antonio Online (Natural) - Portuguese (Brazil)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"pt-BR-AntonioNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (pt-BR, AntonioNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"pt-BR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Francisca Online (Natural) - Portuguese (Brazil)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"pt-BR-FranciscaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (pt-BR, FranciscaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"pt-PT",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Duarte Online (Natural) - Portuguese (Portugal)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"pt-PT-DuarteNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (pt-PT, DuarteNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"pt-PT",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Raquel Online (Natural) - Portuguese (Portugal)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"pt-PT-RaquelNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (pt-PT, RaquelNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ro-RO",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Alina Online (Natural) - Romanian (Romania)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ro-RO-AlinaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ro-RO, AlinaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ro-RO",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Emil Online (Natural) - Romanian (Romania)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ro-RO-EmilNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ro-RO, EmilNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ru-RU",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Dmitry Online (Natural) - Russian (Russia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ru-RU-DmitryNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ru-RU, DmitryNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ru-RU",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Svetlana Online (Natural) - Russian (Russia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ru-RU-SvetlanaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ru-RU, SvetlanaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"sr-RS",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Nicholas Online (Natural) - Serbian (Serbia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"sr-RS-NicholasNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (sr-RS, NicholasNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"sr-RS",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Sophie Online (Natural) - Serbian (Serbia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"sr-RS-SophieNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (sr-RS, SophieNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"si-LK",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Sameera Online (Natural) - Sinhala (Sri Lanka)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"si-LK-SameeraNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (si-LK, SameeraNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"si-LK",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Thilini Online (Natural) - Sinhala (Sri Lanka)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"si-LK-ThiliniNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (si-LK, ThiliniNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"sk-SK",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Lukas Online (Natural) - Slovak (Slovakia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"sk-SK-LukasNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (sk-SK, LukasNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"sk-SK",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Viktoria Online (Natural) - Slovak (Slovakia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"sk-SK-ViktoriaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (sk-SK, ViktoriaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"sl-SI",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Petra Online (Natural) - Slovenian (Slovenia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"sl-SI-PetraNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (sl-SI, PetraNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"sl-SI",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Rok Online (Natural) - Slovenian (Slovenia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"sl-SI-RokNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (sl-SI, RokNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"so-SO",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Muuse Online (Natural) - Somali (Somalia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"so-SO-MuuseNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (so-SO, MuuseNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"so-SO",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Ubax Online (Natural) - Somali (Somalia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"so-SO-UbaxNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (so-SO, UbaxNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-AR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Elena Online (Natural) - Spanish (Argentina)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-AR-ElenaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-AR, ElenaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-AR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Tomas Online (Natural) - Spanish (Argentina)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-AR-TomasNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-AR, TomasNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-BO",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Marcelo Online (Natural) - Spanish (Bolivia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-BO-MarceloNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-BO, MarceloNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-BO",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Sofia Online (Natural) - Spanish (Bolivia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-BO-SofiaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-BO, SofiaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-CL",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Catalina Online (Natural) - Spanish (Chile)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-CL-CatalinaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-CL, CatalinaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-CL",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Lorenzo Online (Natural) - Spanish (Chile)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-CL-LorenzoNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-CL, LorenzoNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-CO",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Gonzalo Online (Natural) - Spanish (Colombia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-CO-GonzaloNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-CO, GonzaloNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-CO",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Salome Online (Natural) - Spanish (Colombia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-CO-SalomeNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-CO, SalomeNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-ES",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Ximena Online (Natural) - Spanish (Colombia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-ES-XimenaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-ES, XimenaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-CR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Juan Online (Natural) - Spanish (Costa Rica)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-CR-JuanNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-CR, JuanNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-CR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Maria Online (Natural) - Spanish (Costa Rica)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-CR-MariaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-CR, MariaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-CU",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Belkys Online (Natural) - Spanish (Cuba)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-CU-BelkysNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-CU, BelkysNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-CU",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Manuel Online (Natural) - Spanish (Cuba)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-CU-ManuelNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-CU, ManuelNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-DO",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Emilio Online (Natural) - Spanish (Dominican Republic)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-DO-EmilioNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-DO, EmilioNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-DO",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Ramona Online (Natural) - Spanish (Dominican Republic)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-DO-RamonaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-DO, RamonaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-EC",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Andrea Online (Natural) - Spanish (Ecuador)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-EC-AndreaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-EC, AndreaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-EC",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Luis Online (Natural) - Spanish (Ecuador)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-EC-LuisNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-EC, LuisNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-SV",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Lorena Online (Natural) - Spanish (El Salvador)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-SV-LorenaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-SV, LorenaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-SV",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Rodrigo Online (Natural) - Spanish (El Salvador)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-SV-RodrigoNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-SV, RodrigoNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-GQ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Javier Online (Natural) - Spanish (Equatorial Guinea)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-GQ-JavierNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-GQ, JavierNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-GQ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Teresa Online (Natural) - Spanish (Equatorial Guinea)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-GQ-TeresaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-GQ, TeresaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-GT",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Andres Online (Natural) - Spanish (Guatemala)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-GT-AndresNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-GT, AndresNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-GT",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Marta Online (Natural) - Spanish (Guatemala)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-GT-MartaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-GT, MartaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-HN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Carlos Online (Natural) - Spanish (Honduras)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-HN-CarlosNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-HN, CarlosNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-HN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Karla Online (Natural) - Spanish (Honduras)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-HN-KarlaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-HN, KarlaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-MX",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Dalia Online (Natural) - Spanish (Mexico)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-MX-DaliaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-MX, DaliaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-MX",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Jorge Online (Natural) - Spanish (Mexico)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-MX-JorgeNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-MX, JorgeNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-NI",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Federico Online (Natural) - Spanish (Nicaragua)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-NI-FedericoNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-NI, FedericoNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-NI",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Yolanda Online (Natural) - Spanish (Nicaragua)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-NI-YolandaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-NI, YolandaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-PA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Margarita Online (Natural) - Spanish (Panama)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-PA-MargaritaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-PA, MargaritaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-PA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Roberto Online (Natural) - Spanish (Panama)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-PA-RobertoNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-PA, RobertoNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-PY",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Mario Online (Natural) - Spanish (Paraguay)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-PY-MarioNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-PY, MarioNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-PY",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Tania Online (Natural) - Spanish (Paraguay)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-PY-TaniaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-PY, TaniaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-PE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Alex Online (Natural) - Spanish (Peru)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-PE-AlexNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-PE, AlexNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-PE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Camila Online (Natural) - Spanish (Peru)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-PE-CamilaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-PE, CamilaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-PR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Karina Online (Natural) - Spanish (Puerto Rico)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-PR-KarinaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-PR, KarinaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-PR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Victor Online (Natural) - Spanish (Puerto Rico)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-PR-VictorNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-PR, VictorNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-ES",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Alvaro Online (Natural) - Spanish (Spain)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-ES-AlvaroNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-ES, AlvaroNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-ES",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Elvira Online (Natural) - Spanish (Spain)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-ES-ElviraNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-ES, ElviraNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-US",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Alonso Online (Natural) - Spanish (United States)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-US-AlonsoNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-US, AlonsoNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-US",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Paloma Online (Natural) - Spanish (United States)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-US-PalomaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-US, PalomaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-UY",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Mateo Online (Natural) - Spanish (Uruguay)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-UY-MateoNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-UY, MateoNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-UY",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Valentina Online (Natural) - Spanish (Uruguay)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-UY-ValentinaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-UY, ValentinaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-VE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Paola Online (Natural) - Spanish (Venezuela)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-VE-PaolaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-VE, PaolaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"es-VE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Sebastian Online (Natural) - Spanish (Venezuela)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"es-VE-SebastianNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (es-VE, SebastianNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"su-ID",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Jajang Online (Natural) - Sundanese (Indonesia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"su-ID-JajangNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (su-ID, JajangNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"su-ID",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Tuti Online (Natural) - Sundanese (Indonesia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"su-ID-TutiNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (su-ID, TutiNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"sw-KE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Rafiki Online (Natural) - Swahili (Kenya)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"sw-KE-RafikiNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (sw-KE, RafikiNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"sw-KE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Zuri Online (Natural) - Swahili (Kenya)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"sw-KE-ZuriNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (sw-KE, ZuriNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"sw-TZ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Daudi Online (Natural) - Swahili (Tanzania)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"sw-TZ-DaudiNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (sw-TZ, DaudiNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"sw-TZ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Rehema Online (Natural) - Swahili (Tanzania)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"sw-TZ-RehemaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (sw-TZ, RehemaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"sv-SE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Mattias Online (Natural) - Swedish (Sweden)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"sv-SE-MattiasNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (sv-SE, MattiasNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"sv-SE",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Sofie Online (Natural) - Swedish (Sweden)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"sv-SE-SofieNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (sv-SE, SofieNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ta-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Pallavi Online (Natural) - Tamil (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ta-IN-PallaviNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ta-IN, PallaviNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ta-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Valluvar Online (Natural) - Tamil (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ta-IN-ValluvarNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ta-IN, ValluvarNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ta-MY",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Kani Online (Natural) - Tamil (Malaysia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ta-MY-KaniNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ta-MY, KaniNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ta-MY",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Surya Online (Natural) - Tamil (Malaysia)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ta-MY-SuryaNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ta-MY, SuryaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ta-SG",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Anbu Online (Natural) - Tamil (Singapore)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ta-SG-AnbuNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ta-SG, AnbuNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ta-SG",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Venba Online (Natural) - Tamil (Singapore)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ta-SG-VenbaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ta-SG, VenbaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ta-LK",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Kumar Online (Natural) - Tamil (Sri Lanka)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ta-LK-KumarNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ta-LK, KumarNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ta-LK",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Saranya Online (Natural) - Tamil (Sri Lanka)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ta-LK-SaranyaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ta-LK, SaranyaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"te-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Mohan Online (Natural) - Telugu (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"te-IN-MohanNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (te-IN, MohanNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"te-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Shruti Online (Natural) - Telugu (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"te-IN-ShrutiNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (te-IN, ShrutiNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"th-TH",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Niwat Online (Natural) - Thai (Thailand)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"th-TH-NiwatNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (th-TH, NiwatNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"th-TH",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Premwadee Online (Natural) - Thai (Thailand)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"th-TH-PremwadeeNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (th-TH, PremwadeeNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"tr-TR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Ahmet Online (Natural) - Turkish (Turkey)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"tr-TR-AhmetNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (tr-TR, AhmetNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"tr-TR",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Emel Online (Natural) - Turkish (Turkey)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"tr-TR-EmelNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (tr-TR, EmelNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"uk-UA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Ostap Online (Natural) - Ukrainian (Ukraine)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"uk-UA-OstapNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (uk-UA, OstapNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"uk-UA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Polina Online (Natural) - Ukrainian (Ukraine)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"uk-UA-PolinaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (uk-UA, PolinaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ur-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Gul Online (Natural) - Urdu (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ur-IN-GulNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ur-IN, GulNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ur-IN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Salman Online (Natural) - Urdu (India)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ur-IN-SalmanNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ur-IN, SalmanNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ur-PK",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Asad Online (Natural) - Urdu (Pakistan)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ur-PK-AsadNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ur-PK, AsadNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"ur-PK",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Uzma Online (Natural) - Urdu (Pakistan)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"ur-PK-UzmaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (ur-PK, UzmaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"uz-UZ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Madina Online (Natural) - Uzbek (Uzbekistan)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"uz-UZ-MadinaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (uz-UZ, MadinaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"uz-UZ",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Sardor Online (Natural) - Uzbek (Uzbekistan)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"uz-UZ-SardorNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (uz-UZ, SardorNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"vi-VN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft HoaiMy Online (Natural) - Vietnamese (Vietnam)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"vi-VN-HoaiMyNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (vi-VN, HoaiMyNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"vi-VN",
+		"Status":"GA",
+		"FriendlyName":"Microsoft NamMinh Online (Natural) - Vietnamese (Vietnam)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"vi-VN-NamMinhNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (vi-VN, NamMinhNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"cy-GB",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Aled Online (Natural) - Welsh (United Kingdom)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"cy-GB-AledNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (cy-GB, AledNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"cy-GB",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Nia Online (Natural) - Welsh (United Kingdom)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"cy-GB-NiaNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (cy-GB, NiaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"zu-ZA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Thando Online (Natural) - Zulu (South Africa)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"zu-ZA-ThandoNeural",
+		"Gender":"Female",
+		"Name":"Microsoft Server Speech Text to Speech Voice (zu-ZA, ThandoNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	},
+	{
+		"Locale":"zu-ZA",
+		"Status":"GA",
+		"FriendlyName":"Microsoft Themba Online (Natural) - Zulu (South Africa)",
+		"SuggestedCodec":"audio-24khz-48kbitrate-mono-mp3",
+		"ShortName":"zu-ZA-ThembaNeural",
+		"Gender":"Male",
+		"Name":"Microsoft Server Speech Text to Speech Voice (zu-ZA, ThembaNeural)",
+		"VoiceTag":{
+			"VoicePersonalities":[
+				"Friendly",
+				"Positive"
+			],
+			"ContentCategories":[
+				"General"
+			]
+		}
+	}
+]

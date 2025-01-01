@@ -1,5 +1,6 @@
 package mai_onsyn.AnimeFX2.Utls;
 
+import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -81,9 +82,9 @@ public class AXTreeItem extends Pane implements AutoUpdatable {
             super.getChildren().add(childrenBox);
             expandTimeline.stop();
             expandTimeline = new Timeline(new KeyFrame(Duration.millis(200 * style.getAnimeRate()),
-                    new KeyValue(childrenBox.spacingProperty(), 0),
-                    new KeyValue(childrenBox.layoutYProperty(), style.getItemHeight()),
-                    new KeyValue(childrenBox.opacityProperty(), 1)
+                    new KeyValue(childrenBox.spacingProperty(), 0, Toolkit.SHARP_OUT),
+                    new KeyValue(childrenBox.layoutYProperty(), style.getItemHeight(), Toolkit.SHARP_OUT),
+                    new KeyValue(childrenBox.opacityProperty(), 1, Toolkit.SHARP_OUT)
             ));
             expandTimeline.play();
         }
@@ -99,9 +100,9 @@ public class AXTreeItem extends Pane implements AutoUpdatable {
 
             expandTimeline.stop();
             expandTimeline = new Timeline(new KeyFrame(Duration.millis(200 * style.getAnimeRate()),
-                    new KeyValue(childrenBox.spacingProperty(), -style.getItemHeight()),
-                    new KeyValue(childrenBox.layoutYProperty(), 0),
-                    new KeyValue(childrenBox.opacityProperty(), 0)
+                    new KeyValue(childrenBox.spacingProperty(), -style.getItemHeight(), Toolkit.SHARP_OUT),
+                    new KeyValue(childrenBox.layoutYProperty(), 0, Toolkit.SHARP_OUT),
+                    new KeyValue(childrenBox.opacityProperty(), 0, Toolkit.SHARP_OUT)
             ));
             expandTimeline.setOnFinished(_ -> super.getChildren().remove(childrenBox));
             expandTimeline.play();
@@ -128,7 +129,7 @@ public class AXTreeItem extends Pane implements AutoUpdatable {
             item.flipRelativeMode(iconView, AutoPane.Motion.RIGHT, true);
         }
 
-        item.setPosition(item.getTextLabel(), AutoPane.AlignmentMode.LEFT_CENTER, AutoPane.LocateMode.ABSOLUTE, style.getItemHeight() + style.getTextLeftInsets(), style.getItemHeight() / 2);
+        item.setPosition(item.getTextLabel(), false, style.getItemHeight() + style.getTextLeftInsets(), 0, 0, 0);
 
         item.update();
     }

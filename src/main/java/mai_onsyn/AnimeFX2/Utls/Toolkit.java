@@ -1,5 +1,6 @@
 package mai_onsyn.AnimeFX2.Utls;
 
+import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -22,6 +23,13 @@ import java.net.URL;
 public class Toolkit {
 
     public static java.awt.Toolkit defaultToolkit = java.awt.Toolkit.getDefaultToolkit();
+
+    public static Interpolator SHARP_OUT = new Interpolator() {
+        @Override
+        protected double curve(double t) {
+            return Math.sqrt(Math.sqrt(t));
+        }
+    };
 
     public static String colorToString(Color color) {
         return "#" + color.toString().substring(2);

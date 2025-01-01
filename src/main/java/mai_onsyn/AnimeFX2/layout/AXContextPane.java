@@ -106,10 +106,10 @@ public class AXContextPane extends Popup implements AutoUpdatable {
 
         super.show(ownerWindow, anchorX, anchorY);
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200 * style.getAnimeRate()),
-                new KeyValue(super.opacityProperty(), 1),
-                new KeyValue(root.maxHeightProperty(), height),
-                new KeyValue(root.minHeightProperty(), height),
-                new KeyValue(content.spacingProperty(), 0)
+                new KeyValue(super.opacityProperty(), 1, Toolkit.SHARP_OUT),
+                new KeyValue(root.maxHeightProperty(), height, Toolkit.SHARP_OUT),
+                new KeyValue(root.minHeightProperty(), height, Toolkit.SHARP_OUT),
+                new KeyValue(content.spacingProperty(), 0, Toolkit.SHARP_OUT)
         ));
         timeline.play();
     }

@@ -30,9 +30,11 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
     private final AXContextPane fileContextMenu = new AXContextPane();
 
     private final Map<String, LanguageSwitchable> langMap = new HashMap<>();
+    private final AXTreeItemDataCreator<T> dataCreator;
 
 
-    public AXTreeView() {
+    public AXTreeView(AXTreeItemDataCreator<T> dataCreator) {
+        this.dataCreator = dataCreator;
         ScrollPane scrollPane = new ScrollPane(root);
         Toolkit.addSmoothScrolling(scrollPane);
         scrollPane.getStylesheets().add("style.css");
@@ -272,6 +274,7 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
         });
 
         for (AXTreeItem child : treeItem.getChildrenAsItem()) {
+            System.out.println(child);
             register(child);
         }
     }
@@ -279,6 +282,10 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
     public void setTheme(AXTreeViewStyle style) {
         this.style = style;
         super.setTheme(style);
+    }
+
+    public AXDatableButtonGroup<AXTreeItem> getGroup() {
+        return group;
     }
 
     @Override
@@ -307,13 +314,17 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
         }
     }
 
+    public interface AXTreeItemDataCreator<T> {
+        T create();
+    }
+
 
     private void newFile() {
         if (group.getSelectedButton() != null) {
             textInputPopup.clear();
             textInputPopup.showOnCenter("New File", this.getScene().getWindow());
             textInputPopup.setOnTextAvailable((o, ov, nv) -> {
-                this.add(group.getData(group.getSelectedButton()), createFileItem(nv, null));
+                this.add(group.getData(group.getSelectedButton()), createFileItem(nv, dataCreator.create()));
             });
         }
     }

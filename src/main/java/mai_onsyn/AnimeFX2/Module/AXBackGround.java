@@ -25,19 +25,19 @@ public class AXBackGround extends AutoPane implements AutoUpdatable {
     private final GaussianBlur effect = new GaussianBlur(0);
     double viewW, viewH;
 
-    private Point2D layoutCorner = new Point2D(0, 0);
-    private double layoutWidth;
-    private double layoutHeight;
-//    private Timeline scaleTimeline = new Timeline();
-//    private Timeline moveTimeline = new Timeline();
-//    private double xOffset;
-//    private double yOffset;
-//    private Point2D mousePosition = new Point2D(0, 0);
+    private Point2D mousePoint = new Point2D(0, 0);
+    private double boxW;
+    private double boxH;
+    private double imgRatio;
+    private final SimpleDoubleProperty scale = new SimpleDoubleProperty(1.0);
+    private final SimpleDoubleProperty scaleStrengthProperty;
+    private Timeline scaleTimeline = new Timeline();
 
-    public AXBackGround(Image image, Color shadowColor, double blur) {
+    public AXBackGround(Image image, Color shadowColor, double scaleStrength, double blur) {
         style.setBGShadow(shadowColor);
         style.setBGBlurStrength(blur);
         effect.setRadius(blur);
+        scaleStrengthProperty = new SimpleDoubleProperty(scaleStrength);
 
         imageView = new ImageView(image);
         imageView.setEffect(effect);
@@ -48,60 +48,58 @@ public class AXBackGround extends AutoPane implements AutoUpdatable {
 
         final double imgW = image.getWidth();
         final double imgH = image.getHeight();
-        final double imgRatio = imgW / imgH;
+        imgRatio = imgW / imgH;
 
         super.layoutBoundsProperty().addListener((o, ov, nv) -> {
-            layoutWidth = nv.getWidth();
-            layoutHeight = nv.getHeight();
+            boxW = nv.getWidth();
+            boxH = nv.getHeight();
 
-            double layoutRatio = layoutWidth / layoutHeight;
-
-            if (layoutRatio > imgRatio) {
-                viewW = layoutWidth;
-                viewH = layoutWidth / imgRatio;
-            }
-            else {
-                viewW = layoutHeight * imgRatio;
-                viewH = layoutHeight;
-            }
-            layoutCorner = new Point2D((layoutWidth - viewW) / 2, (layoutHeight - viewH) / 2);
-
-            imageView.setFitWidth(viewW);
-            imageView.setFitHeight(viewH);
-            imageView.setLayoutX(layoutCorner.getX());
-            imageView.setLayoutY(layoutCorner.getY());
+            layoutOffset();
         });
 
-//        super.setOnMouseMoved(e -> {
-//            mousePosition = new Point2D(e.getX(), e.getY());
-//
-//            layoutOffset();
-//        });
-//
-//        super.setOnMouseEntered(e -> {
-//            //layoutCorner = new Point2D((layoutWidth - viewW * scaleStrengthProperty.get()), (layoutHeight - viewH * scaleStrengthProperty.get()));
-//            //layoutOffset();
-//            scaleTimeline.stop();
-//            scaleTimeline = new Timeline(new KeyFrame(Duration.millis(style.getAnimeRate() * 200),
-//                    new KeyValue(imageView.fitWidthProperty(), viewW * scaleStrengthProperty.get()),
-//                    new KeyValue(imageView.fitHeightProperty(), viewH * scaleStrengthProperty.get()),
-//                    new KeyValue(imageView.layoutXProperty(), xOffset),
-//                    new KeyValue(imageView.layoutYProperty(), yOffset)
-//            ));
-//            scaleTimeline.play();
-//        });
-//
-//        super.setOnMouseExited(e -> {
-//            scaleTimeline.stop();
-//            scaleTimeline = new Timeline(new KeyFrame(Duration.millis(style.getAnimeRate() * 200),
-//                    new KeyValue(imageView.fitWidthProperty(), viewW),
-//                    new KeyValue(imageView.fitHeightProperty(), viewH),
-//                    new KeyValue(imageView.layoutXProperty(), (layoutWidth - viewW) / 2),
-//                    new KeyValue(imageView.layoutYProperty(), (layoutHeight - viewH) / 2)
-//            ));
-//            scaleTimeline.play();
-//        });
+        super.setOnMouseMoved(e -> {
+            mousePoint = new Point2D(e.getX(), e.getY());
+            layoutOffset();
+        });
+
+        super.setOnMouseEntered(e -> {
+            mousePoint = new Point2D(e.getX(), e.getY());
+            scaleTimeline.stop();
+            scaleTimeline = new Timeline(new KeyFrame(Duration.millis(200 * style.getAnimeRate()), new KeyValue(scale, scaleStrengthProperty.get())));
+            scaleTimeline.play();
+        });
+        super.setOnMouseExited(e -> {
+            scaleTimeline.stop();
+            scaleTimeline = new Timeline(new KeyFrame(Duration.millis(200 * style.getAnimeRate()), new KeyValue(scale, 1)));
+            scaleTimeline.play();
+        });
+
+        scale.addListener((o, ov, nv) -> {
+            layoutOffset();
+        });
+
         super.getChildren().addAll(imageView, shadow);
+    }
+
+    private void layoutOffset() {
+        double layoutRatio = boxW / boxH;
+
+        if (layoutRatio > imgRatio) {
+            viewW = boxW * scale.get();
+            viewH = boxW / imgRatio * scale.get();
+        }
+        else {
+            viewW = boxH * imgRatio * scale.get();
+            viewH = boxH * scale.get();
+        }
+
+        double px = mousePoint.getX() / boxW * boxW;
+        double py = mousePoint.getY() / boxH * boxH;
+
+        imageView.setFitWidth(viewW);
+        imageView.setFitHeight(viewH);
+        imageView.setLayoutX((1 - scale.get()) * px - (viewW - boxW * scale.get()) / 2);
+        imageView.setLayoutY((1 - scale.get()) * py - (viewH - boxH * scale.get()) / 2);
     }
 
     public void setBlurStrength(double strength) {

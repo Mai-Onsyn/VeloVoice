@@ -16,4 +16,12 @@ public record Sentence(String text, List<byte[]> audio) {
         }
         return result;
     }
+
+    public String getText() {
+        return text;
+    }
+
+    public List<byte[]> getAudioList() {
+        return audio;
+    }
 }

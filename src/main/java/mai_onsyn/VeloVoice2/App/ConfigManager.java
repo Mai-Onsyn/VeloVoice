@@ -48,10 +48,15 @@ public class ConfigManager {
         thread.start();
     }
 
-    private void load() throws Exception {
-        String json = Files.readString(path.toPath());
-        JSONObject jsonObject = JSONObject.parseObject(json);
-        loadItem(config, jsonObject);
+    private void load() {
+        if (!path.exists()) {
+            save(config.toString());
+        }
+        try {
+            String json = Files.readString(path.toPath());
+            JSONObject jsonObject = JSONObject.parseObject(json);
+            loadItem(config, jsonObject);
+        } catch (IOException _) {}
     }
 
     private void loadItem(Config config, JSONObject jsonObject) throws IOException {

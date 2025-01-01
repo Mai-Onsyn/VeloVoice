@@ -16,15 +16,15 @@ import java.util.Map;
 
 public class AXButtonGroup implements AutoUpdatable {
 
-    private AXButtonStyle style = new DefaultAXButtonStyle();
-    private AXButtonStyle selectedStyle = new DefaultAXButtonGroupStyle();
+    protected AXButtonStyle style = new DefaultAXButtonStyle();
+    protected AXButtonStyle selectedStyle = new DefaultAXButtonGroupStyle();
 
     private final List<AXButton> buttons = new ArrayList<>();
     private final Map<AXButton, EventHandler<MouseEvent>> buttonHandlers = new HashMap<>();
 
-    private AXButton selectedButton;
-    private AXButton lastSelectedButton;
-    private ChangeListener<AXButton> onSelectedChanged;
+    protected AXButton selectedButton;
+    protected AXButton lastSelectedButton;
+    protected ChangeListener<AXButton> onSelectedChanged;
 
     public AXButtonGroup(AXButton... buttons) {
         register(buttons);

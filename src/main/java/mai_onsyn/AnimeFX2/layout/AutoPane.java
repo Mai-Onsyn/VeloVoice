@@ -1,21 +1,20 @@
 package mai_onsyn.AnimeFX2.layout;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.util.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class AutoPane extends Pane {
+public class AutoPane extends Region {
     public enum AlignmentMode {
         TOP_LEFT,
         TOP_RIGHT,
@@ -37,6 +36,12 @@ public class AutoPane extends Pane {
     private final Map<Node, Pair<Boolean, Double>[]> nodeAlignData = new HashMap<>();
     private final Map<Node, Boolean[]> flipRelativeMode = new HashMap<>();
     private final Map<Node, Pair<Pair<AlignmentMode, LocateMode>, Point2D>> rest = new HashMap<>();
+
+    public void removePosition(Node node) {
+        nodeAlignData.remove(node);
+        flipRelativeMode.remove(node);
+        rest.remove(node);
+    }
 
     public void setPosition(Node node, boolean lb, boolean rb, boolean tb, boolean bb, double l, double r, double t, double b) {
         nodeAlignData.put(node, new Pair[]{
@@ -97,6 +102,11 @@ public class AutoPane extends Pane {
             case TOP -> data[2] = flip;
             case BOTTOM -> data[3] = flip;
         }
+    }
+
+    @Override
+    public ObservableList<Node> getChildren() {
+        return super.getChildren();
     }
 
     public AutoPane() {
