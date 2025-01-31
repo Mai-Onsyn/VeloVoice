@@ -1,3 +1,27 @@
 {
-  "A": "Hello World"
+  "frame.contextMenu.newFile": "New File",
+  "frame.contextMenu.newFolder": "New Folder",
+  "frame.contextMenu.paste": "Paste",
+  "frame.contextMenu.rename": "Rename",
+  "frame.contextMenu.expandAll": "Expand All",
+  "frame.contextMenu.clear": "Clear",
+  "frame.contextMenu.copy": "Copy",
+  "frame.contextMenu.cut": "Cut",
+  "frame.contextMenu.pasteAppend": "Paste(Append)",
+  "frame.contextMenu.moveUp": "Move Up",
+  "frame.contextMenu.moveDown": "Move Down",
+  "frame.contextMenu.delete": "Delete",
+  "frame.contextMenu.undo": "Undo",
+  "frame.contextMenu.selectAll": "Select All",
+  "frame.main.item.label.edgeTTS.lang": "Language",
+  "frame.main.item.label.edgeTTS.model": "Model",
+  "frame.main.item.label.edgeTTS.rate": "Voice Rate",
+  "frame.main.item.label.edgeTTS.volume": "Voice Volume",
+  "frame.main.item.label.edgeTTS.pitch": "Voice Pith",
+  "frame.main.item.label.edgeTTS.threadCount": "TTS Thread Count",
+  "frame.main.textField.audioFolder": "path to save mp3 file",
+  "frame.main.item.label.audioFolder": "Audio Save Folder",
+  "frame.main.textField.textLoadUri": "uri",
+  "frame.main.item.label.load.textLoadUri": "Load URI",
+  "frame.main.item.label.textProcess.load.title": "Load"
 }

@@ -86,7 +86,7 @@ public class AXBase extends AutoPane implements AutoUpdatable {
         ));
         timeline.play();
 
-        Platform.runLater(super::flushSize);
+        Platform.runLater(super::flush);
     }
 
     public void setTheme(AXBaseStyle style) {

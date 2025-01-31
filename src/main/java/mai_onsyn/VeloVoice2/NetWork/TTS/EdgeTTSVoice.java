@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import java.io.*;
-import java.nio.file.Files;
 
 public class EdgeTTSVoice {
 
@@ -32,5 +31,8 @@ public class EdgeTTSVoice {
             }
         }
         return null;
+    }
+    public static JSONArray getVoices() {
+        return jsonArray;
     }
 }

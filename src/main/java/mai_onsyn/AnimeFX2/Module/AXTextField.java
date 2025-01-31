@@ -156,17 +156,19 @@ public class AXTextField extends AXBase implements LanguageSwitchable {
     }
 
     @Override
-    public void switchLanguage(String str) {}
+    public void switchLanguage(String str) {
+        setPromptText(str);
+    }
 
     @Override
-    public Map<String, LanguageSwitchable> getLanguageElements() {
+    public Map<LanguageSwitchable, String> getLanguageElements() {
         return Map.of(
-                "copy", copy,
-                "cut", cut,
-                "paste", paste,
-                "undo", undo,
-                "select_all", selectAll,
-                "clear", clear
+                copy,"copy",
+                cut,"cut",
+                paste,"paste",
+                undo,"undo",
+                selectAll,"selectAll",
+                clear, "clear"
         );
     }
 

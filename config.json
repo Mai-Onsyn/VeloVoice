@@ -1,3 +1,24 @@
 {
-	"TimeoutMillis":10000
+	"TimeoutMillis":10000,
+	"MaxRetries":3,
+	"AudioSaveFolder":"D:\\Users\\Desktop",
+	"PreviewText":"ko ni tchi wa, se ka yi",
+	"EdgeTTS":{
+		"SelectedLanguage":"zh",
+		"SelectedModel":"zh-CN-XiaoxiaoNeural",
+		"VoiceRate":1.5000000000000002,
+		"VoiceVolume":1.0,
+		"VoicePitch":1.0,
+		"ThreadCount":2
+	},
+	"Text":{
+		"SplitLength":512,
+		"ForceSplitChars":"\n",
+		"SplitChars":"。？！…， ",
+		"LoadSource":"LocalTXT",
+		"LoadUri":"D:\\Users\\Desktop\\Files\\文档\\Novel\\败北女角太多了！\\Series\\1. 第一卷\\3. 第一卷 Intermission 不，其实是个肚子饿了也不哭不闹的乖宝宝.txt"
+	},
+	"LocalTXT":{
+		"ParseHtmlCharacters":false
+	}
 }

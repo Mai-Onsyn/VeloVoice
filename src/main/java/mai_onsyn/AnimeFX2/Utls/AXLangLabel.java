@@ -36,7 +36,7 @@ public class AXLangLabel extends Label implements LanguageSwitchable, AutoUpdata
     }
 
     @Override
-    public Map<String, LanguageSwitchable> getLanguageElements() {
+    public Map<LanguageSwitchable, String> getLanguageElements() {
         return Map.of();
     }
 

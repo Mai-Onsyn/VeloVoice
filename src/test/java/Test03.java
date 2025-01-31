@@ -4,6 +4,7 @@ import mai_onsyn.VeloVoice2.NetWork.TTS.FixedEdgeTTSClient;
 import mai_onsyn.VeloVoice2.NetWork.TTSPool;
 import mai_onsyn.VeloVoice2.Text.Sentence;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class Test03 {
         TTSPool client = new TTSPool(TTSPool.ClientType.EDGE, 2);
         client.connect();
 
-        client.execute(List.of("a", "b", "c"), null, "");
+        client.execute(List.of("a", "b", "c"), new File("D:/Users/Desktop"), "example");
 
         client.close();
 //        Sentence sentence = client.process("你好，我是小智，很高兴为你服务。");

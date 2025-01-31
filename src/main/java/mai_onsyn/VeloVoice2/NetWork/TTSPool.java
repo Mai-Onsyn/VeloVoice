@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static mai_onsyn.VeloVoice2.App.Runtime.config;
+import static mai_onsyn.VeloVoice2.FrameFactory.LogFactory.logger;
 
 //多线程TTS处理
 public class TTSPool {
@@ -33,7 +34,8 @@ public class TTSPool {
         }
     }
 
-    public void connect() {
+    public void connect() throws InterruptedException {
+        logger.info("Connecting to TTS server by %d threads...", size);
         CountDownLatch countDownLatch = new CountDownLatch(size);
         for (TTSClient client : clients) {
             Thread.ofVirtual().start(() -> {
@@ -47,8 +49,10 @@ public class TTSPool {
         }
         try {
             countDownLatch.await(config.getInteger("TimeoutMillis"), TimeUnit.MILLISECONDS);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            logger.info("%d threads connected to TTS server.", size);
+        } catch (Exception e) {
+            logger.warn("Failed to connect because: %s", e.getMessage());
+            throw new InterruptedException();
         }
     }
 
@@ -56,6 +60,7 @@ public class TTSPool {
         for (TTSClient client : clients) {
             client.close();
         }
+        logger.info("All threads have been shut down");
     }
 
     public void execute(List<String> input, File outputFolder, String fileName) throws InterruptedException {
@@ -72,7 +77,8 @@ public class TTSPool {
                     int thisIndex;
                     synchronized (this) {
                         thisIndex = processIndex.getAndIncrement();
-                        text = input.get(thisIndex);
+                        if (thisIndex < input.size()) text = input.get(thisIndex);
+                        else break;
                     }
 
                     try {
@@ -92,25 +98,17 @@ public class TTSPool {
         for (Map.Entry<Integer, Sentence> entry : resultPool.entrySet()) {
             result.add(entry.getKey(), entry.getValue());
         }
-        result.forEach(System.out::println);
 
+        //after处理，保存
         AudioSaver.save(AfterEffects.process(result), outputFolder, fileName);
     }
-}
 
-class ClientFactory {
+    private record ClientFactory(ClientType type) {
 
-    private final TTSPool.ClientType type;
-
-    ClientFactory(TTSPool.ClientType type) {
-        this.type = type;
+        public TTSClient createClient() {
+            return switch (type) {
+                case EDGE -> new FixedEdgeTTSClient();
+            };
+        }
     }
-
-    public TTSClient createClient() {
-        return switch (type) {
-            case EDGE -> new FixedEdgeTTSClient();
-        };
-    }
-
-
 }

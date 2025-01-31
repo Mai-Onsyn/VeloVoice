@@ -19,8 +19,8 @@ public class AXButtonGroup implements AutoUpdatable {
     protected AXButtonStyle style = new DefaultAXButtonStyle();
     protected AXButtonStyle selectedStyle = new DefaultAXButtonGroupStyle();
 
-    private final List<AXButton> buttons = new ArrayList<>();
-    private final Map<AXButton, EventHandler<MouseEvent>> buttonHandlers = new HashMap<>();
+    protected final List<AXButton> buttons = new ArrayList<>();
+    protected final Map<AXButton, EventHandler<MouseEvent>> buttonHandlers = new HashMap<>();
 
     protected AXButton selectedButton;
     protected AXButton lastSelectedButton;
@@ -48,8 +48,14 @@ public class AXButtonGroup implements AutoUpdatable {
             buttons.remove(button);
             button.removeEventHandler(MouseEvent.MOUSE_CLICKED, buttonHandlers.get(button));
         }
-        if (button == selectedButton) selectedButton = null;
-        if (button == lastSelectedButton) lastSelectedButton = null;
+        if (button == selectedButton) {
+            selectedButton = null;
+            onSelectedChanged.changed(null, lastSelectedButton, null);
+        }
+        if (button == lastSelectedButton) {
+            lastSelectedButton = null;
+            onSelectedChanged.changed(null, null, selectedButton);
+        }
     }
 
     public void selectButton(AXButton button) {
@@ -86,6 +92,10 @@ public class AXButtonGroup implements AutoUpdatable {
 
     public AXButton getSelectedButton() {
         return selectedButton;
+    }
+
+    public List<AXButton> getButtonList() {
+        return buttons;
     }
 
     @Override

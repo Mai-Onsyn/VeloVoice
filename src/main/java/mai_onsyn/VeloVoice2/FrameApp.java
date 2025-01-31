@@ -8,6 +8,8 @@ import mai_onsyn.AnimeFX2.layout.AutoPane;
 import mai_onsyn.VeloVoice2.App.Runtime;
 import mai_onsyn.VeloVoice2.FrameFactory.MainFactory;
 
+import static mai_onsyn.VeloVoice2.FrameFactory.LogFactory.logger;
+
 public class FrameApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
@@ -25,5 +27,8 @@ public class FrameApp extends Application {
         stage.setTitle("VeloVoice");
         stage.setScene(scene);
         stage.show();
+
+        logger.info("Application started");
+        root.requestFocus();
     }
 }

@@ -21,6 +21,14 @@ public record Sentence(String text, List<byte[]> audio) {
         return text;
     }
 
+    public int countBytes() {
+        int count = 0;
+        for (byte[] audio : audio) {
+            count += audio.length;
+        }
+        return count;
+    }
+
     public List<byte[]> getAudioList() {
         return audio;
     }

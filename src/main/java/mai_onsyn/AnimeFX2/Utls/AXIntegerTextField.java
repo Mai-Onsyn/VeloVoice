@@ -18,7 +18,13 @@ public class AXIntegerTextField extends AXTextField {
 
         valueProperty = new SimpleIntegerProperty(value);
         TextField textField = super.textField();
-        valueProperty.addListener((e, ov, nv) -> System.out.println(nv.intValue()));
+        valueProperty.addListener((e, ov, nv) -> {
+            textChangeLock = true;
+
+            textField.setText(String.valueOf(nv.intValue()));
+
+            textChangeLock = false;
+        });
 
         textField.textProperty().addListener((e, ov, nv) -> {
             if (!textChangeLock) {

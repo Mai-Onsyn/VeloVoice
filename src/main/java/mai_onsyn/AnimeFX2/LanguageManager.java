@@ -5,12 +5,13 @@ import com.alibaba.fastjson.JSONObject;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
@@ -18,105 +19,112 @@ import java.util.zip.ZipInputStream;
 
 public class LanguageManager {
 
-    private final Map<String, LanguageSwitchable> nodes;
+    private final Map<LanguageSwitchable, String> nodes;
     private final JSONObject languages;
 
     public LanguageManager(String langURI) {
-        this.nodes = new HashMap<>();
+        this.nodes = new LinkedHashMap<>();
 
-        languages = new JSONObject();
+        Map<String, Object> map = new LinkedHashMap<>();
+        Map<String, String> jsonFiles = readJsonFiles(langURI);
+        jsonFiles.forEach((key, value) -> map.put(key, JSONObject.parseObject(value)));
+        languages = new JSONObject(map);
+    }
 
-        try {
-//            File[] langs = langFolder.listFiles((dir, name) -> name.endsWith(".json"));
-//            if (langs == null || langs.length == 0) throw new IOException("No language file found!");
-//            for (File file : langs) {
-//                languages.put(file.getName().replace(".json", ""), JSONObject.parseObject(new String(Files.readAllBytes(file.toPath()))));
-//            }
-
-            Map<String, String> jsonFiles = readJsonFiles(langURI);
-
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
+    public void register(LanguageSwitchable node, String key) {
+        this.nodes.put(node, key);
+        Map<LanguageSwitchable, String> children = node.getLanguageElements();
+        if (children == null || children.isEmpty()) return;
+        for (Map.Entry<LanguageSwitchable, String> entry : children.entrySet()) {
+            this.register(entry.getKey(), key + "." + entry.getValue());
         }
     }
 
-    public void register(String key, LanguageSwitchable node) {
-        this.nodes.put(key, node);
-        Map<String, LanguageSwitchable> children = node.getLanguageElements();
-        if (children == null || children.isEmpty()) return;
-        for (Map.Entry<String, LanguageSwitchable> entry : children.entrySet()) {
-            this.register(key + "." + entry.getKey(), entry.getValue());
+    public void register(Object... obj) {
+        if (obj.length % 2 != 0) throw new IllegalArgumentException("arguments count must be even");
+        for (int i = 0; i < obj.length; i += 2) {
+            this.register((LanguageSwitchable) obj[i], obj[i + 1].toString());
         }
     }
 
     public void switchLanguage(String lang) {
-        for (Map.Entry<String, LanguageSwitchable> entry : nodes.entrySet()) {
+        //Set<String> namespaceSet = new LinkedHashSet<>();
+        for (Map.Entry<LanguageSwitchable, String> entry : nodes.entrySet()) {
+            //namespaceSet.add(entry.getValue());
             try {
-                String text = languages.getJSONObject(lang).getString(entry.getKey());
+                String text = languages.getJSONObject(lang).getString(entry.getValue());
                 if (text == null || text.isEmpty()) throw new NullPointerException();
-                else entry.getValue().switchLanguage(text);
+                else entry.getKey().switchLanguage(text);
             } catch (NullPointerException e) {
-                entry.getValue().switchLanguage(entry.getKey());
+                entry.getKey().switchLanguage(entry.getValue());
             }
         }
+        //namespaceSet.forEach(e -> System.out.printf("\"%s\": \"\",\n", e));
     }
 
 
+    public static Map<String, String> readJsonFiles(String resourceDir) {
+        Map<String, String> resultMap = new HashMap<>();
+        try {
+            // 使用 ClassLoader 获取资源
+            ClassLoader classLoader = LanguageManager.class.getClassLoader();
+            Enumeration<java.net.URL> resources = classLoader.getResources(resourceDir);
 
-    /**
-     * 读取 resources 目录下所有 JSON 文件，并返回文件名和内容的映射
-     *
-     * @param resourceDir 资源目录（相对于 classpath）
-     * @return JSON 文件名到内容的映射
-     * @throws IOException 如果读取资源失败
-     */
-    private static Map<String, String> readJsonFiles(String resourceDir) throws IOException, URISyntaxException {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        Map<String, String> jsonFiles = new HashMap<>();
-
-        // 读取资源目录的 URL
-        URL resource = classLoader.getResource(resourceDir);
-        if (resource == null) {
-            throw new IOException("Resource directory not found: " + resourceDir);
-        }
-
-        if (resource.getProtocol().equals("file")) {
-            // 开发阶段：直接从文件系统读取
-            Path resourcePath = Paths.get(resource.toURI());
-            try (Stream<Path> paths = Files.walk(resourcePath)) {
-                paths.filter(Files::isRegularFile)
-                        .filter(f -> f.toString().endsWith(".json"))
-                        .forEach(file -> {
-                            String fileName = file.getFileName().toString();
-                            try {
-                                String content = Files.readString(file);
-                                jsonFiles.put(fileName, content);
-                            } catch (IOException e) {
-                                throw new RuntimeException("Failed to read file: " + fileName, e);
-                            }
-                        });
+            while (resources.hasMoreElements()) {
+                java.net.URL resourceURL = resources.nextElement();
+                if (resourceURL.getProtocol().equals("jar")) {
+                    // 处理 JAR 包内的资源
+                    loadFromJar(resourceURL, resourceDir, resultMap);
+                } else {
+                    // 处理开发环境文件夹中的资源
+                    loadFromDirectory(resourceURL, resultMap);
+                }
             }
-        } else if (resource.getProtocol().equals("jar")) {
-            // 打包后：从 JAR 文件中读取
-            String jarPath = resource.getPath().substring(5, resource.getPath().indexOf("!"));
-            try (ZipInputStream zip = new ZipInputStream(Files.newInputStream(Paths.get(jarPath)))) {
-                ZipEntry entry;
-                while ((entry = zip.getNextEntry()) != null) {
-                    String entryName = entry.getName();
-                    if (entryName.startsWith(resourceDir) && entryName.endsWith(".json")) {
-                        String fileName = entryName.substring(entryName.lastIndexOf("/") + 1);
-                        try (InputStream inputStream = classLoader.getResourceAsStream(entryName)) {
-                            if (inputStream == null) continue;
-                            String content = new BufferedReader(new InputStreamReader(inputStream))
-                                    .lines()
-                                    .collect(Collectors.joining("\n"));
-                            jsonFiles.put(fileName, content);
-                        }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to read JSON files from directory: " + resourceDir, e);
+        }
+        return resultMap;
+    }
+
+    private static void loadFromJar(java.net.URL resourceURL, String resourceDir, Map<String, String> resultMap) throws Exception {
+        String jarPath = resourceURL.getPath().substring(5, resourceURL.getPath().indexOf("!")); // 获取 JAR 文件路径
+        try (JarFile jarFile = new JarFile(jarPath)) {
+            Enumeration<JarEntry> entries = jarFile.entries();
+            while (entries.hasMoreElements()) {
+                JarEntry entry = entries.nextElement();
+                if (entry.getName().startsWith(resourceDir) && entry.getName().endsWith(".json")) {
+                    String fileName = entry.getName().replace(resourceDir + "/", "").replace(".json", ""); // 去掉目录和后缀
+                    try (InputStream inputStream = jarFile.getInputStream(entry)) {
+                        String content = readStream(inputStream);
+                        resultMap.put(fileName, content);
                     }
                 }
             }
         }
+    }
 
-        return jsonFiles;
+    private static void loadFromDirectory(java.net.URL resourceURL, Map<String, String> resultMap) throws Exception {
+        java.io.File directory = new java.io.File(resourceURL.toURI());
+        java.io.File[] files = directory.listFiles((dir, name) -> name.endsWith(".json"));
+        if (files != null) {
+            for (java.io.File file : files) {
+                String fileName = file.getName().replace(".json", ""); // 去掉后缀
+                try (InputStream inputStream = new java.io.FileInputStream(file)) {
+                    String content = readStream(inputStream);
+                    resultMap.put(fileName, content);
+                }
+            }
+        }
+    }
+
+    private static String readStream(InputStream inputStream) throws Exception {
+        StringBuilder content = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                content.append(line).append("\n");
+            }
+        }
+        return content.toString().trim(); // 去掉最后的换行
     }
 }

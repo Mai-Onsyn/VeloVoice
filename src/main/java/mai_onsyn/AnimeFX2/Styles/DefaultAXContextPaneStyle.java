@@ -10,7 +10,7 @@ public class DefaultAXContextPaneStyle extends DefaultAXBaseStyle implements AXC
     private double itemHeight = 25.0;
     private double bgInsets = 5.0;
     private double paneWidth = 192.0;
-    private double maxHeight = 350.0;
+    private double maxHeight = 500.0;
 
     @Override
     public Color getHoverShadow() {

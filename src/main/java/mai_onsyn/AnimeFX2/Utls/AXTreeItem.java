@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import mai_onsyn.AnimeFX2.AutoUpdatable;
 import mai_onsyn.AnimeFX2.Module.AXButton;
+import mai_onsyn.AnimeFX2.Module.AXTreeView;
 import mai_onsyn.AnimeFX2.Styles.AXTreeItemStyle;
 import mai_onsyn.AnimeFX2.Styles.DefaultAXTreeItemStyle;
 import mai_onsyn.AnimeFX2.layout.AutoPane;
@@ -30,6 +31,8 @@ public class AXTreeItem extends Pane implements AutoUpdatable {
 
     private Timeline expandTimeline = new Timeline();
     private boolean isExpanded = true;
+
+    private AXTreeView<?> attribution;
 
     public AXTreeItem(String name) {
         this.item = new AXButton(name);
@@ -60,7 +63,21 @@ public class AXTreeItem extends Pane implements AutoUpdatable {
     }
 
     public void add(AXTreeItem... item) {
+        if (attribution != null) {
+            attribution.add(this, item);
+            for (AXTreeItem treeItem : item) {
+                treeItem.setAttribution(attribution);
+            }
+        }
+        else childrenBox.getChildren().addAll(item);
+    }
+
+    public void addToChildrenBox(AXTreeItem... item) {
         childrenBox.getChildren().addAll(item);
+    }
+
+    public void setAttribution(AXTreeView<?> attribution) {
+        this.attribution = attribution;
     }
 
     public void remove(AXTreeItem item) {
@@ -73,6 +90,10 @@ public class AXTreeItem extends Pane implements AutoUpdatable {
                 return parent;
             } else return null;
         } else return null;
+    }
+
+    public AXTreeView<?> getAttribution() {
+        return attribution;
     }
 
     public void expand() {
@@ -108,7 +129,6 @@ public class AXTreeItem extends Pane implements AutoUpdatable {
             expandTimeline.play();
         }
     }
-
 
     @Override
     public void update() {
@@ -149,6 +169,10 @@ public class AXTreeItem extends Pane implements AutoUpdatable {
         return item;
     }
 
+    public String getHeadName() {
+        return item.getTextLabel().getText();
+    }
+
     public void rename(String name) {
         item.setText(name);
         this.update();
@@ -167,26 +191,6 @@ public class AXTreeItem extends Pane implements AutoUpdatable {
 
     public AXTreeItemStyle style() {
         return style;
-    }
-
-    public static AXTreeItem clone(AXTreeItem item) {
-
-        if (item == null) return null;
-
-        AXTreeItem clonedItem;
-        if (item instanceof AXDataTreeItem<?> dataItem) {
-            clonedItem = new AXDataTreeItem<>(dataItem.getButton().getTextLabel().getText(), dataItem.getData());
-        } else {
-            clonedItem = new AXTreeItem(item.getButton().getTextLabel().getText());
-        }
-        clonedItem.setTheme(item.style());
-        clonedItem.update();
-
-        for (AXTreeItem child : item.getChildrenAsItem()) {
-            clonedItem.add(clone(child));
-        }
-
-        return clonedItem;
     }
 
 }

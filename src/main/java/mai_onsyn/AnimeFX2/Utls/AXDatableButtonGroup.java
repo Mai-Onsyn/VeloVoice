@@ -1,6 +1,7 @@
 package mai_onsyn.AnimeFX2.Utls;
 
 import javafx.beans.value.ChangeListener;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
 import mai_onsyn.AnimeFX2.Module.AXButton;
 
@@ -18,6 +19,12 @@ public class AXDatableButtonGroup<T> extends AXButtonGroup{
         buttonMap.put(button, data);
     }
 
+    public AXDatableButtonGroup() {
+        super();
+    }
+
+
+
     public void register(AXButton button, T data) {
         super.register(button);
 
@@ -30,7 +37,18 @@ public class AXDatableButtonGroup<T> extends AXButtonGroup{
 
     @Override
     public void remove(AXButton button) {
-        super.remove(button);
+        if (buttons.contains(button)) {
+        buttons.remove(button);
+        button.removeEventHandler(MouseEvent.MOUSE_CLICKED, buttonHandlers.get(button));
+    }
+        if (button == selectedButton) {
+            selectedButton = null;
+            onSelectedChanged.changed(null, new Pair<>(lastSelectedButton, getData(lastSelectedButton)), null);
+        }
+        if (button == lastSelectedButton) {
+            lastSelectedButton = null;
+            onSelectedChanged.changed(null, null, new Pair<>(selectedButton, getData(selectedButton)));
+        }
 
         buttonMap.remove(button);
     }

@@ -12,6 +12,9 @@ public class Constants {
     public static final String ORIGIN = "chrome-extension://jdiccldimpdaibmpdkjnbmckianbfold";
     public static final String VOICES_LIST_URL = "https://speech.platform.bing.com/consumer/speech/synthesize/readaloud/voices/list?trustedclienttoken=6A5AA1D4EAFF4E9FB37E23D68491D6F4";
 
+    public static double UI_SPACING = 12.0;
+    public static double UI_HEIGHT = 27.0;
+
     private static String genSecMsGec() {
         long currentTime = System.currentTimeMillis();
         long ticks = (long) ((currentTime / 1000.0) + 11644473600L) * 10000000L;

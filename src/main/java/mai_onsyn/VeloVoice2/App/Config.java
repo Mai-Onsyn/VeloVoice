@@ -2,17 +2,27 @@ package mai_onsyn.VeloVoice2.App;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import mai_onsyn.AnimeFX2.Utls.Toolkit;
+import mai_onsyn.AnimeFX2.LanguageSwitchable;
+import mai_onsyn.AnimeFX2.Module.AXButton;
+import mai_onsyn.AnimeFX2.Module.AXChoiceBox;
+import mai_onsyn.AnimeFX2.Module.AXSlider;
+import mai_onsyn.AnimeFX2.Module.AXTextField;
+import mai_onsyn.AnimeFX2.Utls.*;
+import mai_onsyn.AnimeFX2.layout.AutoPane;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
+
+import static mai_onsyn.VeloVoice2.App.Runtime.*;
 
 public class Config extends JSONObject {
 
     private final Map<String, ConfigType> types = new HashMap<>();
-    private final Map<String, Config> subConfig = new HashMap<>();
+    private final Map<String, Config> subConfig = new LinkedHashMap<>();
 
     public enum ConfigType {
         STRING, INTEGER, DOUBLE, BOOLEAN, COLOR, MAP, CONFIG
@@ -123,6 +133,160 @@ public class Config extends JSONObject {
             linkedHashMap.put(entry.getKey(), (String) entry.getValue());
         }
         return linkedHashMap;
+    }
+
+
+    public ConfigItem genInputStringItem(String key, String promptNameSpace) {
+        AXTextField textField = new AXTextField();
+        textField.setText(getString(key));
+        textField.textField().textProperty().addListener((o, ov, nv) -> {
+            setString(key, nv);
+        });
+        languageManager.register(textField, promptNameSpace);
+        return new ConfigItem(key, textField, 0.4);
+    }
+
+    public ConfigItem genChooseStringItem(String key, List<String> options) {
+        AXChoiceBox choiceBox = new AXChoiceBox();
+        choiceBox.getTextLabel().setText(getString(key));
+        for (String option : options) {
+            AXButton item = choiceBox.createItem();
+            item.setUserData(option);
+            item.setText(option);
+            item.setOnMouseClicked(event -> {
+                setString(key, option);
+                choiceBox.getTextLabel().setText(option);
+            });
+        }
+
+        //choose default
+        AXButtonGroup group = choiceBox.getButtonGroup();
+        group.getButtonList().forEach(button -> {
+            if (Objects.equals(button.getUserData(), getString(key))) {
+                group.selectButton(button);
+            }
+        });
+
+
+        return new ConfigItem(key, choiceBox, 0.4);
+    }
+
+    public ConfigItem genFloatSlidItem(String key, double min, double max, double step) {
+        AutoPane box = new AutoPane();
+        AXSlider slider = new AXSlider(min, max, step, getDouble(key));
+        AXFloatTextField textField = new AXFloatTextField(min, max, getDouble(key));
+        textField.setText(String.format("%.2f", getDouble(key)));
+
+        textField.valueProperty().bindBidirectional(slider.valueProperty());
+        textField.valueProperty().addListener((o, ov, nv) -> setDouble(key, nv.doubleValue()));
+
+        box.getChildren().addAll(slider, textField);
+        box.setPosition(slider, false, 0, Constants.UI_HEIGHT * 2, 0, 0);
+        box.setPosition(textField, false, Constants.UI_HEIGHT * 1.4, 0, 0, 0);
+        box.flipRelativeMode(textField, AutoPane.Motion.LEFT);
+
+        return new ConfigItem(key, box, 0.4);
+    }
+
+    public ConfigItem genIntegerSlidItem(String key, int min, int max, int step) {
+        AutoPane box = new AutoPane();
+        AXSlider slider = new AXSlider(min, max, step, getDouble(key));
+        AXIntegerTextField textField = new AXIntegerTextField(min, max, getInteger(key));
+        textField.setText(String.valueOf(getInteger(key)));
+
+        textField.valueProperty().bindBidirectional(slider.valueProperty());
+        textField.valueProperty().addListener((o, ov, nv) -> setInteger(key, nv.intValue()));
+
+        box.getChildren().addAll(slider, textField);
+        box.setPosition(slider, false, 0, Constants.UI_HEIGHT * 2, 0, 0);
+        box.setPosition(textField, false, Constants.UI_HEIGHT * 1.4, 0, 0, 0);
+        box.flipRelativeMode(textField, AutoPane.Motion.LEFT);
+
+        return new ConfigItem(key, box, 0.4);
+    }
+
+//    public ConfigItem genChooseItem(String key, Map<String, String> options) {
+//        AXChoiceBox choiceBox = new AXChoiceBox();
+//
+//        for (Entry<String, String> entry : options.entrySet()) {
+//            AXButton item = choiceBox.createItem();
+//            item.getTextLabel().setText(entry.getValue());
+//        }
+//
+//    }
+
+    public static class ConfigItem extends AutoPane implements LanguageSwitchable {
+
+        private final Label label;
+        private final AutoPane innerItem;
+
+        public ConfigItem(String initName, AutoPane content, double rv) {
+            super();
+
+            label = new Label(initName);
+            innerItem = content;
+            super.getChildren().addAll(label, innerItem);
+            super.setPosition(label, true, 0, rv, 0, 0);
+            super.setPosition(innerItem, true, rv, 0, 0, 0);
+        }
+
+        public AutoPane getContent() {
+            return innerItem;
+        }
+
+        public Label getLabel() {
+            return label;
+        }
+
+        @Override
+        public void switchLanguage(String str) {
+            label.setText(str);
+        }
+
+        @Override
+        public Map<LanguageSwitchable, String> getLanguageElements() {
+            return Map.of();
+        }
+    }
+
+    public static class ConfigBox extends VBox {
+
+        private final double itemHeight;
+
+        public ConfigBox(double spacing, double height) {
+            this.itemHeight = height;
+            super.setSpacing(spacing);
+        }
+
+        public void addConfigItem(AutoPane... items) {
+            for (AutoPane item : items) {
+                item.setMaxHeight(itemHeight);
+                item.setMinHeight(itemHeight);
+                getChildren().add(item);
+            }
+        }
+
+        public AXLangLabel addTitle(String title) {
+            AutoPane titlePane = new AutoPane();
+            titlePane.setMaxHeight(itemHeight);
+            titlePane.setMinHeight(itemHeight);
+
+            AXLangLabel label = new AXLangLabel(title);
+            label.setAlignment(Pos.CENTER);
+            titlePane.getChildren().add(label);
+            titlePane.setPosition(label, false, 0, 0, 0, 0);
+
+            getChildren().add(titlePane);
+            return label;
+        }
+
+        public void lineBreak() {
+            Region region = new Region();
+            region.setMaxHeight(itemHeight);
+            region.setMinHeight(itemHeight);
+            getChildren().add(region);
+        }
+
     }
 
 

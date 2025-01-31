@@ -16,6 +16,7 @@ import mai_onsyn.AnimeFX2.Styles.DefaultAXTextAreaStyle;
 import mai_onsyn.AnimeFX2.layout.AXContextPane;
 import mai_onsyn.AnimeFX2.Utls.Toolkit;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class AXTextArea extends AXBase implements LanguageSwitchable {
@@ -127,14 +128,14 @@ public class AXTextArea extends AXBase implements LanguageSwitchable {
     public void switchLanguage(String str) {}
 
     @Override
-    public Map<String, LanguageSwitchable> getLanguageElements() {
+    public Map<LanguageSwitchable, String> getLanguageElements() {
         return Map.of(
-                "copy", copy,
-                "cut", cut,
-                "paste", paste,
-                "undo", undo,
-                "select_all", selectAll,
-                "clear", clear
+                copy,"copy",
+                cut,"cut",
+                paste,"paste",
+                undo,"undo",
+                selectAll,"selectAll",
+                clear, "clear"
         );
     }
 

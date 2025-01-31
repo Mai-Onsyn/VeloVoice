@@ -1,6 +1,5 @@
 package mai_onsyn.AnimeFX2.layout;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
@@ -68,7 +67,7 @@ public class AXTextInputPopup extends Popup implements AutoUpdatable {
     public void show(String label, Window parent) {
         this.label.setText(label);
         super.show(parent);
-        pane.flushSize();
+        pane.flush();
     }
 
     public void show(String label, String text, Window parent) {
@@ -83,7 +82,7 @@ public class AXTextInputPopup extends Popup implements AutoUpdatable {
 
         this.label.setText(label);
         textField.textField().selectAll();
-        pane.flushSize();
+        pane.flush();
     }
 
     public void showOnCenter(String label, String text, Window parent) {

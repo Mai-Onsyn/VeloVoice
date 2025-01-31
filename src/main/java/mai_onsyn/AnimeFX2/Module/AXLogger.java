@@ -23,11 +23,13 @@ public class AXLogger extends AXTextArea {
 
     private boolean firstLine = true;
     private void log(String s) {
+        String log = String.format("[%s] %s", format.format(new Date()), s);
         if (firstLine) {
-            Platform.runLater(() -> super.appendText("[" + format.format(new Date()) + "] " + s));
+            Platform.runLater(() -> super.appendText(log));
             firstLine = false;
         }
-        else Platform.runLater(() -> super.appendText("\n[" + format.format(new Date()) + "] " + s));
+        else Platform.runLater(() -> super.appendText("\n" + log));
+        System.out.println(log);
     }
 
     public void debug(String s) {
@@ -48,5 +50,21 @@ public class AXLogger extends AXTextArea {
 
     public void prompt(String s) {
         log(s);
+    }
+
+    public void debug(String s, Object... args) {
+        if (level >= 2) log(String.format(s, args));
+    }
+
+    public void warn(String s, Object... args) {
+        if (level >= 1) log(String.format(s, args));
+    }
+
+    public void error(String s, Object... args) {
+        log(String.format(s, args));
+    }
+
+    public void info(String s, Object... args) {
+        log(String.format(s, args));
     }
 }

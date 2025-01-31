@@ -120,7 +120,7 @@ public class FrameTest extends Application {
         }
 
         {
-            AXTreeView<String> treeView = new AXTreeView<>(null);
+            AXTreeView<String> treeView = new AXTreeView<>(null, null);
             manager.register(treeView);
             languageManager.register("test.treeview", treeView);
 

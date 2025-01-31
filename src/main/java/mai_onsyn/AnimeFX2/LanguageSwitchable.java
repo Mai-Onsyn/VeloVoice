@@ -6,5 +6,5 @@ public interface LanguageSwitchable {
 
     void switchLanguage(String str);
 
-    Map<String, LanguageSwitchable> getLanguageElements();
+    Map<LanguageSwitchable, String> getLanguageElements();
 }

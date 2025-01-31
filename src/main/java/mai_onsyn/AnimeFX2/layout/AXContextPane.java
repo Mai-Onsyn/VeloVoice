@@ -27,7 +27,10 @@ public class AXContextPane extends Popup implements AutoUpdatable {
     private AXContextPaneStyle style = new DefaultAXContextPaneStyle();
     private final AXBase root = new AXBase();
     private final VBox content = new VBox();
-    private final ScrollPane scrollPane = new ScrollPane();
+    private final ScrollPane scrollPane = new AXScrollPane();
+
+    private double vValue;
+    private boolean onScaling = false;
 
     public AXContextPane() {
         super();
@@ -35,8 +38,9 @@ public class AXContextPane extends Popup implements AutoUpdatable {
 
         scrollPane.setContent(content);
         scrollPane.setFitToWidth(true);
-        scrollPane.getStylesheets().add("style.css");
-        Toolkit.addSmoothScrolling(scrollPane);
+        scrollPane.vvalueProperty().addListener((o, ov, nv) -> {
+            if (!onScaling) vValue = nv.doubleValue();
+        });
 
         root.getChildren().add(scrollPane);
         root.setPosition(scrollPane, false, style.getBGInsets(), style.getBGInsets(), style.getBGInsets(), style.getBGInsets());
@@ -72,6 +76,15 @@ public class AXContextPane extends Popup implements AutoUpdatable {
         flushSize();
     }
 
+    public void showItem(AXButton item) {
+        content.getChildren().add(item);
+        flushSize();
+    }
+
+    public boolean containsItem(AXButton item) {
+        return content.getChildren().contains(item);
+    }
+
     private void flushSize() {
         double height = content.getChildren().size() * style.getItemHeight() + 2 * style.getBGInsets() + 2;
         height = Math.min(height, style.getMaxHeight());
@@ -95,6 +108,7 @@ public class AXContextPane extends Popup implements AutoUpdatable {
 
     @Override
     public void show(Window ownerWindow, double anchorX, double anchorY) {
+        onScaling = true;
         super.setOpacity(0);
 
         root.setMaxHeight(0);
@@ -102,6 +116,14 @@ public class AXContextPane extends Popup implements AutoUpdatable {
 
         content.setSpacing(-style.getItemHeight());
         double height = content.getChildren().size() * style.getItemHeight() + 2 * style.getBGInsets() + 2;
+
+        double targetV = vValue;
+        if (height <= style.getMaxHeight()) {
+            scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            targetV = 0;
+        }
+        else scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+
         height = Math.min(height, style.getMaxHeight());
 
         super.show(ownerWindow, anchorX, anchorY);
@@ -109,9 +131,11 @@ public class AXContextPane extends Popup implements AutoUpdatable {
                 new KeyValue(super.opacityProperty(), 1, Toolkit.SHARP_OUT),
                 new KeyValue(root.maxHeightProperty(), height, Toolkit.SHARP_OUT),
                 new KeyValue(root.minHeightProperty(), height, Toolkit.SHARP_OUT),
-                new KeyValue(content.spacingProperty(), 0, Toolkit.SHARP_OUT)
+                new KeyValue(content.spacingProperty(), 0, Toolkit.SHARP_OUT),
+                new KeyValue(scrollPane.vvalueProperty(), targetV, Toolkit.SHARP_OUT)
         ));
         timeline.play();
+        timeline.setOnFinished(f -> onScaling = false);
     }
 
     public AXContextPaneStyle getStyle() {

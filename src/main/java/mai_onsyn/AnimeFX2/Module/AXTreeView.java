@@ -14,6 +14,7 @@ import mai_onsyn.AnimeFX2.layout.AXContextPane;
 import mai_onsyn.AnimeFX2.layout.AXTextInputPopup;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static mai_onsyn.AnimeFX2.Utls.Toolkit.defaultToolkit;
@@ -22,19 +23,23 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
     private AXTreeViewStyle style = new DefaultAXTreeViewStyle();
     private final AXTreeItem root = new AXTreeItem("ROOT");
     private final AXDatableButtonGroup<AXTreeItem> group = new AXDatableButtonGroup<>(root.getButton(), root);
-    private final TreeItemClipBoard clipBoard = new TreeItemClipBoard();
+    private final TreeItemClipBoard clipBoard;
+
     private final AXTextInputPopup textInputPopup = new AXTextInputPopup();
 
     private final AXContextPane rootContextMenu = new AXContextPane();
     private final AXContextPane folderContextMenu = new AXContextPane();
     private final AXContextPane fileContextMenu = new AXContextPane();
 
-    private final Map<String, LanguageSwitchable> langMap = new HashMap<>();
+    private final Map<LanguageSwitchable, String> langMap = new LinkedHashMap<>();
     private final AXTreeItemDataCreator<T> dataCreator;
+    final AXDataTreeItem.AXTreeviewCopyRule<T> copyRule;
 
 
-    public AXTreeView(AXTreeItemDataCreator<T> dataCreator) {
+    public AXTreeView(AXTreeItemDataCreator<T> dataCreator, AXDataTreeItem.AXTreeviewCopyRule<T> copyRule) {
         this.dataCreator = dataCreator;
+        this.copyRule = copyRule;
+        clipBoard = new TreeItemClipBoard(copyRule);
         ScrollPane scrollPane = new ScrollPane(root);
         Toolkit.addSmoothScrolling(scrollPane);
         scrollPane.getStylesheets().add("style.css");
@@ -42,6 +47,7 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
         scrollPane.addEventFilter(MouseEvent.MOUSE_RELEASED, super::fireEvent);
         group.setFreeStyle(style.getRootItemStyle());
 
+        root.setAttribution(this);
         root.setTheme(style.getRootItemStyle());
         root.update();
 
@@ -71,12 +77,12 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
             AXContextPane.setupContextMenuItem(expandAll, ResourceManager.expand, "Expand All", "", itemHeight);
             AXContextPane.setupContextMenuItem(clear, ResourceManager.clear, "Clear", "", itemHeight);
 
-            langMap.put("root.new_file", newFile);
-            langMap.put("root.new_folder", newFolder);
-            langMap.put("root.paste", paste);
-            langMap.put("root.rename", rename);
-            langMap.put("root.expand_all", expandAll);
-            langMap.put("root.clear", clear);
+            langMap.put(newFile, "newFile");
+            langMap.put(newFolder, "newFolder");
+            langMap.put(paste, "paste");
+            langMap.put(rename, "rename");
+            langMap.put(expandAll, "expandAll");
+            langMap.put(clear, "clear");
 
             newFile.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> newFile());
             newFolder.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> newFolder());
@@ -120,18 +126,18 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
             AXContextPane.setupContextMenuItem(clear, ResourceManager.clear, "Clear", "", itemHeight);
             AXContextPane.setupContextMenuItem(delete, ResourceManager.delete, "Delete", "Ctrl+D", itemHeight);
 
-            langMap.put("folder.new_file", newFile);
-            langMap.put("folder.new_folder", newFolder);
-            langMap.put("folder.copy", copy);
-            langMap.put("folder.cut", cut);
-            langMap.put("folder.paste", paste);
-            langMap.put("folder.paste_append", pasteAppend);
-            langMap.put("folder.rename", rename);
-            langMap.put("folder.move_up", moveUp);
-            langMap.put("folder.move_down", moveDown);
-            langMap.put("folder.expand_all", expandAll);
-            langMap.put("folder.clear", clear);
-            langMap.put("folder.delete", delete);
+            langMap.put(newFile, "newFile");
+            langMap.put(newFolder, "newFolder");
+            langMap.put(copy, "copy");
+            langMap.put(cut, "cut");
+            langMap.put(paste, "paste");
+            langMap.put(pasteAppend, "pasteAppend");
+            langMap.put(rename, "rename");
+            langMap.put(moveUp, "moveUp");
+            langMap.put(moveDown, "moveDown");
+            langMap.put(expandAll, "expandAll");
+            langMap.put(clear, "clear");
+            langMap.put(delete, "delete");
 
             newFile.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> newFile());
             newFolder.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> newFolder());
@@ -165,13 +171,13 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
             AXContextPane.setupContextMenuItem(moveDown, ResourceManager.down, "Move Down", "Ctrl+↓", itemHeight);
             AXContextPane.setupContextMenuItem(delete, ResourceManager.delete, "Delete", "Ctrl+D", itemHeight);
 
-            langMap.put("file.copy", copy);
-            langMap.put("file.cut", cut);
-            langMap.put("file.paste_append", pasteAppend);
-            langMap.put("file.rename", rename);
-            langMap.put("file.move_up", moveUp);
-            langMap.put("file.move_down", moveDown);
-            langMap.put("file.delete", delete);
+            langMap.put(copy, "copy");
+            langMap.put(cut, "cut");
+            langMap.put(pasteAppend, "pasteAppend");
+            langMap.put(rename, "rename");
+            langMap.put(moveUp, "moveUp");
+            langMap.put(moveDown, "moveDown");
+            langMap.put(delete, "delete");
 
             copy.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> copy());
             cut.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> cut());
@@ -234,8 +240,8 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
         return root;
     }
 
-    public AXDataTreeItem<T> createFileItem(String name, T data) {
-        AXDataTreeItem<T> dataTreeItem = new AXDataTreeItem<>(name, data);
+    public AXDataTreeItem<T> createFileItem(String name, Object data) {
+        AXDataTreeItem<T> dataTreeItem = new AXDataTreeItem<>(name, (T) data, copyRule);
         dataTreeItem.setTheme(style.getFileItemStyle());
         dataTreeItem.update();
 
@@ -251,9 +257,10 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
     }
 
     public void add(AXTreeItem parent, AXTreeItem... item) {
-        parent.add(item);
+        parent.addToChildrenBox(item);
         for (AXTreeItem treeItem : item) {
             register(treeItem);
+            treeItem.setAttribution(this);
         }
     }
 
@@ -274,7 +281,7 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
         });
 
         for (AXTreeItem child : treeItem.getChildrenAsItem()) {
-            System.out.println(child);
+            //System.out.println(child);
             register(child);
         }
     }
@@ -298,24 +305,54 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
     public void switchLanguage(String str) {}
 
     @Override
-    public Map<String, LanguageSwitchable> getLanguageElements() {
+    public Map<LanguageSwitchable, String> getLanguageElements() {
         return langMap;
     }
 
     private static class TreeItemClipBoard {
         private AXTreeItem item;
+        private final AXDataTreeItem.AXTreeviewCopyRule copyRule;
+
+        private TreeItemClipBoard(AXDataTreeItem.AXTreeviewCopyRule copyRule) {
+            this.copyRule = copyRule;
+        }
 
         public void setCip(AXTreeItem item) {
             this.item = item;
         }
 
         public AXTreeItem getCip() {
-            return AXTreeItem.clone(item);
+            return clone(item);
+        }
+
+        private AXTreeItem clone(AXTreeItem item) {
+
+            if (item == null) return null;
+
+            AXTreeItem clonedItem;
+            if (item instanceof AXDataTreeItem<?> dataItem) {
+                clonedItem = new AXDataTreeItem<>(dataItem.getHeadName(), dataItem.getCopiedData(), copyRule);
+            } else {
+                clonedItem = new AXTreeItem(item.getHeadName());
+            }
+            clonedItem.setTheme(item.style());
+            clonedItem.update();
+
+            for (AXTreeItem child : item.getChildrenAsItem()) {
+                clonedItem.add(clone(child));
+            }
+
+            return clonedItem;
         }
     }
 
     public interface AXTreeItemDataCreator<T> {
         T create();
+    }
+
+
+    public AXTreeItemDataCreator<T> getDataCreator() {
+        return dataCreator;
     }
 
 
@@ -381,7 +418,7 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
     private void rename() {
         if (group.getSelectedButton() != null) {
             AXTreeItem item = group.getData(group.getSelectedButton());
-            textInputPopup.showOnCenter("Rename", item.getButton().getTextLabel().getText(), this.getScene().getWindow());
+            textInputPopup.showOnCenter("Rename", item.getHeadName(), this.getScene().getWindow());
             textInputPopup.setOnTextAvailable((o, ov, nv) -> {
                 item.rename(nv);
             });
@@ -437,6 +474,7 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
             AXTreeItem item = group.getData(group.getSelectedButton());
             AXTreeItem parentItem = item.getParentItem();
             if (parentItem != null) parentItem.remove(item);
+            group.remove(item.getButton());
         }
     }
 }

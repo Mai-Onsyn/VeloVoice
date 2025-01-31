@@ -20,6 +20,7 @@ import mai_onsyn.AnimeFX2.Utls.Toolkit;
 import mai_onsyn.AnimeFX2.layout.AXContextPane;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class AXChoiceBox extends AXButton {
@@ -82,6 +83,18 @@ public class AXChoiceBox extends AXButton {
         super.setTheme(style);
     }
 
+    public void removeItem(AXButton item) {
+        itemPane.removeItem(item);
+    }
+
+    public void showItem(AXButton item) {
+        itemPane.showItem(item);
+    }
+
+    public boolean containsItem(AXButton item) {
+        return itemPane.containsItem(item);
+    }
+
     @Override
     public void update() {
         signalView.setImage(style.getSignalImage());
@@ -96,6 +109,9 @@ public class AXChoiceBox extends AXButton {
         super.update();
     }
 
+    public AXButtonGroup getButtonGroup() {
+        return buttonGroup;
+    }
 
     @Override
     public void switchLanguage(String str) {
@@ -103,14 +119,14 @@ public class AXChoiceBox extends AXButton {
     }
 
     @Override
-    public Map<String, LanguageSwitchable> getLanguageElements() {
+    public Map<LanguageSwitchable, String> getLanguageElements() {
         return itemLang;
     }
 
-    private Map<String, LanguageSwitchable> itemLang = new HashMap<>();
+    private Map<LanguageSwitchable, String> itemLang = new LinkedHashMap<>();
 
-    public void registerItemLang(String nameSpace, LanguageSwitchable element) {
-        itemLang.put(nameSpace, element);
+    public void registerItemLang(LanguageSwitchable element, String nameSpace) {
+        itemLang.put(element, nameSpace);
     }
 
 

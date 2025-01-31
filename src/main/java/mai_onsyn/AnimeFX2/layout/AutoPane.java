@@ -50,7 +50,7 @@ public class AutoPane extends Region {
                 new Pair<>(tb, t),
                 new Pair<>(bb, b),
         });
-        flushSize();
+        flush();
     }
     public void setPosition(Node node, boolean e, double l, double r, double t, double b) {
         nodeAlignData.put(node, new Pair[]{
@@ -59,11 +59,11 @@ public class AutoPane extends Region {
                 new Pair<>(e, t),
                 new Pair<>(e, b),
         });
-        flushSize();
+        flush();
     }
     public void setPosition(Node node, AlignmentMode a, LocateMode l,  double px, double py) {
         rest.put(node, new Pair<>(new Pair<>(a, l), new Point2D(px, py)));
-        flushSize();
+        flush();
     }
     public void delete(Node node) {
         nodeAlignData.remove(node);
@@ -121,12 +121,12 @@ public class AutoPane extends Region {
         });
     }
 
-    public void flushSize() {
+    public void flush() {
         flushWidth(super.getLayoutBounds().getWidth());
         flushHeight(super.getLayoutBounds().getHeight());
     }
 
-    public void flushSize(double w, double h) {
+    public void flush(double w, double h) {
         flushWidth(w);
         flushHeight(h);
     }

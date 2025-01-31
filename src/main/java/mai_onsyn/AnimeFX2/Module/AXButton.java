@@ -116,7 +116,7 @@ public class AXButton extends AXBase implements LanguageSwitchable {
 
     public void setText(String text) {
         textLabel.setText(text);
-        Platform.runLater(super::flushSize);
+        Platform.runLater(super::flush);
     }
 
     public void setTheme(AXButtonStyle style) {
@@ -130,7 +130,7 @@ public class AXButton extends AXBase implements LanguageSwitchable {
     }
 
     @Override
-    public Map<String, LanguageSwitchable> getLanguageElements() {
+    public Map<LanguageSwitchable, String> getLanguageElements() {
         return null;
     }
 

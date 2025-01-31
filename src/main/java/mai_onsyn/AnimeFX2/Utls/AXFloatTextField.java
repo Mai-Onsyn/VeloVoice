@@ -13,11 +13,19 @@ public class AXFloatTextField extends AXTextField {
     public AXFloatTextField(double min, double max, double value) {
         super();
 
-        if (value < min || value > max) throw new IllegalArgumentException("value must be between min and max");
+        if (value < min || value > max) throw new IllegalArgumentException("value: " + value + " must be between min and max: " + min + " - " + max);
 
         valueProperty = new SimpleDoubleProperty(value);
         TextField textField = super.textField();
-        valueProperty.addListener((e, ov, nv) -> System.out.println(nv.doubleValue()));
+        valueProperty.addListener((e, ov, nv) -> {
+            if (!textChangeLock) {
+                textChangeLock = true;
+
+                textField.setText(String.format("%.2f", nv.doubleValue()));
+
+                textChangeLock = false;
+            }
+        });
 
         textField.textProperty().addListener((e, ov, nv) -> {
             if (!textChangeLock) {

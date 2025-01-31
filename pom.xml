@@ -6,7 +6,7 @@
 
     <groupId>mai_onsyn.VeloVoice</groupId>
     <artifactId>VeloVoice</artifactId>
-    <version>0.6.2</version>
+    <version>1.0-dev-1</version>
 
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
@@ -60,6 +60,14 @@
         </dependency>
 
         <dependency>
+            <groupId>com.jonathanedgecombe</groupId>
+            <artifactId>srt-library</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/srt-library.jar</systemPath>
+        </dependency>
+
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.8.0-beta4</version>
@@ -90,14 +98,17 @@
                     <archive>
                         <manifest>
                             <!--指定入口文件的位置-->
-                            <mainClass>mai_onsyn.VeloVoice.Main</mainClass>
+                            <mainClass>mai_onsyn.VeloVoice2.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
-                        <descriptorRef>
-                            jar-with-dependencies
-                        </descriptorRef>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+
+                    <descriptors>
+                        <descriptor>${project.basedir}/lib/assembly.xml</descriptor>
+                    </descriptors>
+
                 </configuration>
             </plugin>
         </plugins>

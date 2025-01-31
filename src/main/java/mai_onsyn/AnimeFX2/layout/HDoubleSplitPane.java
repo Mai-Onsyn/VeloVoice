@@ -33,7 +33,7 @@ public class HDoubleSplitPane extends AutoPane {
         super.setPosition(leftBox, true, 0, 1 - value, 0, 0);
         super.setPosition(rightBox, true, value, 0, 0, 0);
 
-        divider.setStyle("-fx-background-color: #0020ff40;");
+        //divider.setStyle("-fx-background-color: #0020ff40;");
 
         divider.setPrefWidth(dividerWidth);
         divider.prefHeightProperty().bind(super.heightProperty());
