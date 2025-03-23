@@ -19,7 +19,7 @@ public class AXProgressBar extends AXBase {
 
     private final SimpleDoubleProperty insets = new SimpleDoubleProperty(0);
     private Timeline progressTimeline = new Timeline();
-
+    private boolean setLocker = false;
 
     public AXProgressBar() {
         super();
@@ -36,9 +36,21 @@ public class AXProgressBar extends AXBase {
         progressBar.setStrokeWidth(style.getInnerBorderRadius());
         progressBar.setStroke(style.getInnerBorderColor());
 
-        progress.addListener((o, ov, nv) -> this.setProgress(nv.doubleValue()));
+        progress.addListener((o, ov, nv) -> {
+            if (!setLocker) {
+                setLocker = true;
+                this.setProgress(nv.doubleValue());
+                setLocker = false;
+            }
+        });
 
-        super.widthProperty().addListener((o, ov, nv) -> Platform.runLater(() -> this.setProgress(progress.get(), 1)));
+        super.widthProperty().addListener((o, ov, nv) -> Platform.runLater(() -> {
+            if (!setLocker) {
+                setLocker = true;
+                this.setProgress(progress.get(), 1);
+                setLocker = false;
+            }
+        }));
 
         super.getChildren().add(progressBar);
     }
@@ -48,7 +60,7 @@ public class AXProgressBar extends AXBase {
         setProgress(p, 200 * style.getAnimeRate());
     }
 
-    private void setProgress(double p, double duration) {
+    public void setProgress(double p, double duration) {
         p = Math.max(0, Math.min(1, p));
         double width = (super.getLayoutBounds().getWidth() - insets.get() * 2) * p;
 
@@ -58,6 +70,9 @@ public class AXProgressBar extends AXBase {
                 //new KeyValue(progress, p)
         ));
         progressTimeline.play();
+        setLocker = true;
+        progress.set(p);
+        setLocker = false;
     }
 
     public SimpleDoubleProperty progressProperty() {

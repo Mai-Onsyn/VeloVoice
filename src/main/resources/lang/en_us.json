@@ -21,7 +21,9 @@
   "frame.main.item.label.edgeTTS.threadCount": "TTS Thread Count",
   "frame.main.textField.audioFolder": "path to save mp3 file",
   "frame.main.item.label.audioFolder": "Audio Save Folder",
+
+  "frame.main.item.label.textProcess.load.title": "Load",
+  "frame.main.item.label.load.loadSource": "Load Source",
   "frame.main.textField.textLoadUri": "uri",
-  "frame.main.item.label.load.textLoadUri": "Load URI",
-  "frame.main.item.label.textProcess.load.title": "Load"
+  "frame.main.item.label.load.textLoadUri": "Load URI"
 }

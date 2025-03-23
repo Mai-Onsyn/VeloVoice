@@ -37,7 +37,7 @@ public class AudioSaver {
             throw new RuntimeException(e);
         }
 
-        saveSRT(sentences, file, name);
+        //saveSRT(sentences, file, name);
     }
 
     private static void saveSRT(List<Sentence> sentences, File file, String name) {

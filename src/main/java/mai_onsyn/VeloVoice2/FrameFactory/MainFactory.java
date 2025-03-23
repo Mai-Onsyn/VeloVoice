@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import mai_onsyn.AnimeFX2.LanguageSwitchable;
 import mai_onsyn.AnimeFX2.Module.*;
 import mai_onsyn.AnimeFX2.Utls.*;
@@ -108,7 +109,26 @@ public class MainFactory {
             AXTreeItem file1 = treeView.createFileItem("file1", new SimpleStringProperty("Content of file 1"));
             AXTreeItem file2 = treeView.createFileItem("file2", new SimpleStringProperty("Content of file 2"));
             AXTreeItem file3 = treeView.createFileItem("file3", new SimpleStringProperty("Content of file 3"));
-            AXTreeItem file4 = treeView.createFileItem("file4", new SimpleStringProperty("Content of file 4"));
+            AXTreeItem file4 = treeView.createFileItem("file4", new SimpleStringProperty(
+                    """
+                            晴朗的五月天空之下，我就这么仰躺在草原上，眼看着将要溺死。
+                                                        
+                                有个状似浮游生物的东西，以蓝天为背景生龙活虎地跳动着。记得曾在哪本书上看过，那其实是眼球里的白血球。微风轻拂过我仰面朝天的脸庞，风中夹带着一股类似鱼腥味的刺鼻气味。我不确定周围是否有鱼，因为打从我进入〈里侧〉以来，至今未曾见过任何一条鱼。
+                                                        
+                                我现在仰躺于长得又高又茂盛的草丛里。由于水已淹过草根，因此我的背部浸泡在水里，模样有如半身浴。不对，我说错了，不该这么形容，真要说来是更接近超级大众澡堂里的「躺浴」。但因为水深二十公分多，若是我没努力把脸探出水面，水便会直接灌进口鼻里。这世上哪会有这种躺浴，假如当真存在，根本就是某种水刑，如假包换的死亡躺浴。
+                                                        
+                                实际上，我的确是一步一步地朝死亡靠拢。不论是我身上的UNIQLO刷毛外套和迷彩裤，都因为吸满水而沉重无比。我身陷如此状况……已过了几分钟？由于目前我没办法确认手表，因此不知道经过了多少时间，但我快无法继续把脸探出水面了。总觉得脖子酸痛得快要抽筋了，腹肌从刚才起也不停痉挛。说到底身体根本使不上力。感觉类似在梦中想要往前跑，但双脚却软趴趴地使不上力。打从我瞥见那个<、、>之后，四肢就一直呈现麻痹的状态。
+                                                        
+                                没想到居然会陷入这种情况——我太大意了。当初因为发现了这个世界<、、、、>，兴高采烈地跑来这里探险，结果却碰上这种狠角色，导致自己就快要溺毙了。
+                                                        
+                                如果我死在这里会发生什么事？在表世界中会被当成二十岁女大学生神秘失踪事件而上新闻吗？呜哇～总觉得会被人乱写一些有的没的，感觉真讨厌。是我对不起你，妈妈。
+                                                        
+                                ……不对，就算我忽然失踪，老实说应该也没有谁会特别在意。毕竟我没有朋友，而会为此伤脑筋的人，大不了就是发现我还没缴学费的校方人员，以及注意到我没有准时缴纳助学贷款的金融单位罢了——
+                                                        
+                                一想到这里，总觉得心情越来越糟。
+                                                      
+                                """
+            ));
 
             treeView.add(treeView.getRoot(), folder1);
             treeView.add(treeView.getRoot(), folder2);
@@ -154,8 +174,10 @@ public class MainFactory {
             scrollPane.setContent(switchRoot);
             scrollPane.setFitToWidth(true);
 
+            //TTS配置面板
             Config.ConfigBox ttsArea = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
             {
+                //Edge TTS
                 Config.ConfigBox edgeTTSBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
                 {
                     List<String> voiceShortNameList = new ArrayList<>();
@@ -166,7 +188,7 @@ public class MainFactory {
                             voiceShortNameList.add(shortName);
                         }
                         voiceShortNameList.sort(String::compareTo);
-                        voiceShortNameList.forEach(shortName -> langNameSet.add(shortName.substring(0, 2)));
+                        voiceShortNameList.forEach(shortName -> langNameSet.add(LANG_HEADCODE_TO_NAME_MAPPING.get(shortName.substring(0, 2))));
                     }
 
                     Config.ConfigItem langItem = edgeTTSConfig.genChooseStringItem("SelectedLanguage", langNameSet.stream().toList());
@@ -245,12 +267,12 @@ public class MainFactory {
                             //根据语言显示模型
                             showEdgeTTSModel(modelChoiceBox, initLang);
                             langButtonGroup.setOnSelectedChanged((o, ov, nv) -> {
-                                showEdgeTTSModel(modelChoiceBox, nv.getTextLabel().getText());
+                                showEdgeTTSModel(modelChoiceBox, LANG_NAME_TO_HEADCODE_MAPPING.get(nv.getTextLabel().getText()));
                             });
                         }
                     }
 
-                    //EdgeTTS配置的应用
+                    //UI数据应用到EdgeTTS配置项
                     {
                         ((AXChoiceBox) modelItem.getContent()).getButtonGroup().setOnSelectedChanged((o, ov, nv) -> FixedEdgeTTSClient.setVoice(nv.getTextLabel().getText()));
 
@@ -265,7 +287,7 @@ public class MainFactory {
                 }
 
                 Config.ConfigItem audioFolderItem = config.genInputStringItem("AudioSaveFolder", "frame.main.textField.audioFolder");
-                //languageManager.register("frame.main.item.label.edgeTTS.audioFolder", audioFolderItem);
+                languageManager.register(audioFolderItem, "frame.main.item.label.audioFolder");
                 Map<LanguageSwitchable, String> languageElements = ((AXTextField) audioFolderItem.getContent()).getLanguageElements();
                 for (Map.Entry<LanguageSwitchable, String> entry : languageElements.entrySet()) {
                     languageManager.register(entry.getKey(), "frame.contextMenu." + entry.getValue());
@@ -276,6 +298,7 @@ public class MainFactory {
                 ttsArea.addConfigItem(audioFolderItem);
             }
 
+            //语音处理相关
             Config.ConfigBox afterProcessArea = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
             {
                 Config.ConfigItem afterProcessItem = new Config.ConfigItem("afterProcessItem", new AutoPane(), 0.4);
@@ -283,6 +306,7 @@ public class MainFactory {
                 afterProcessArea.addConfigItem(afterProcessItem);
             }
 
+            //文本处理相关
             Config.ConfigBox textProcessArea = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
             {
                 Config.ConfigBox loadBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
@@ -296,6 +320,7 @@ public class MainFactory {
                         }
                     }
                     Config.ConfigItem sourceItem = textConfig.genChooseStringItem("LoadSource", loadList);
+                    languageManager.register(sourceItem, "frame.main.item.label.load.loadSource");
 
                     Config.ConfigBox sourceConfigBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
                     {
@@ -374,6 +399,18 @@ public class MainFactory {
             logButton.setPosition(totalProgressBar, true, 0, 0, 0, 0.65);
             logButton.setPosition(currentProgressBar, true, 0, 0, 0.65, 0);
 
+            LogFactory.totalProgressBar.progressProperty().addListener((o, ov, nv) -> {
+                totalProgressBar.setProgress(nv.doubleValue());
+            });
+            LogFactory.currentProgressBar.progressProperty().addListener((o, ov, nv) -> {
+                currentProgressBar.setProgress(nv.doubleValue());
+            });
+
+            logButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+                LogFactory.logStage.show();
+                LogFactory.root.flush();
+            });
+
             AXButton startButton = new AXButton("Start");
 
             startButton.setOnMouseClicked(e -> {
@@ -419,6 +456,9 @@ public class MainFactory {
                     currentProgressBar.setVisible(false);
                     ctrlArea.setPosition(logButton, false, UI_SPACING + 140, UI_SPACING + 100, 0, 0);
                     ctrlArea.flipRelativeMode(logButton, AutoPane.Motion.LEFT, true);
+
+                    LogFactory.totalProgressBar.setProgress(0, 1);
+                    LogFactory.currentProgressBar.setProgress(0, 1);
                 }
                 ctrlArea.flush();
             });

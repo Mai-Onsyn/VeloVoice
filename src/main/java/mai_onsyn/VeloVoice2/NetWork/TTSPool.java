@@ -12,7 +12,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static mai_onsyn.VeloVoice2.App.Runtime.config;
+import static mai_onsyn.VeloVoice2.App.Runtime.*;
 import static mai_onsyn.VeloVoice2.FrameFactory.LogFactory.logger;
 
 //多线程TTS处理
@@ -84,6 +84,8 @@ public class TTSPool {
                     try {
                         Sentence sentence = client.process(text);
                         resultPool.put(thisIndex, sentence);
+                        currentFinished.set(currentFinished.get() + 1);
+                        totalFinished.set(totalFinished.get() + 1);
                         countDownLatch.countDown();
                     } catch (Exception e) {
                         throw new RuntimeException(e);

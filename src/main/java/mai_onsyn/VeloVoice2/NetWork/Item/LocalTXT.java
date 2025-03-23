@@ -2,6 +2,7 @@ package mai_onsyn.VeloVoice2.NetWork.Item;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
+import javafx.util.Pair;
 import mai_onsyn.AnimeFX2.Module.AXTreeView;
 import mai_onsyn.AnimeFX2.Utls.AXTreeItem;
 import mai_onsyn.VeloVoice2.Text.TextUtil;
@@ -9,6 +10,8 @@ import mai_onsyn.VeloVoice2.Text.TextUtil;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LocalTXT extends Source {
 
@@ -71,4 +74,16 @@ public class LocalTXT extends Source {
             }
         }
     }
+
+    public List<Header> parseLevelsIndex(String content, List<Pair<String, String>> items) {
+        List<Header> headers = new ArrayList<>();
+
+        int i = 0;
+        int level = 0;
+        while (i < content.length()) {
+            
+        }
+    }
+
+    private record Header(int level, int start, int end) {}
 }

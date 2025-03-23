@@ -46,7 +46,7 @@ public class AXSlider extends AutoPane implements AutoUpdatable {
 
         progressProperty.bind(valueProperty.subtract(minProperty).divide(maxProperty.subtract(minProperty)));
 
-        track.progressProperty().bind(progressProperty);
+        track.progressProperty().bindBidirectional(progressProperty);
         bindTrackAndThumbLayout();
         thumb.setCursor(Cursor.HAND);
         thumb.setOnMouseDragged(event -> {

@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import mai_onsyn.AnimeFX2.layout.AutoPane;
 import mai_onsyn.VeloVoice2.App.Runtime;
+import mai_onsyn.VeloVoice2.FrameFactory.LogFactory;
 import mai_onsyn.VeloVoice2.FrameFactory.MainFactory;
 
 import static mai_onsyn.VeloVoice2.FrameFactory.LogFactory.logger;
@@ -18,6 +19,7 @@ public class FrameApp extends Application {
         root.setOnMousePressed(_ -> root.requestFocus());
 
         MainFactory.drawMainFrame(root);
+        LogFactory.drawLogFrame();
         Runtime.languageManager.switchLanguage("en_us");
 
         Scene scene = new Scene(root, 1280, 720);

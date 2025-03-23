@@ -1,0 +1,18 @@
+{
+  "en_us": {
+    "name": "English (US)",
+    "local": "English"
+  },
+  "zh_cn": {
+    "name": "Chinese (Mainland)",
+    "local": "简体中文"
+  },
+  "zh_tw": {
+    "name": "Chinese (Taiwan)",
+    "local": "繁體中文"
+  },
+  "ja_jp": {
+    "name": "Japanese",
+    "local": "日本語"
+  }
+}
