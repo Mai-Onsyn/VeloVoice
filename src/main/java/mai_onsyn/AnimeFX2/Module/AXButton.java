@@ -41,6 +41,8 @@ public class AXButton extends AXBase implements LanguageSwitchable {
         textLabel.setTextFill(style.getTextColor());
         textLabel.setFont(style.getTextFont());
 
+        //textLabel.setStyle("-fx-background-color: #20ff2020;");
+
         super.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
             setCursor(Cursor.HAND);
             textTimeline.stop();
@@ -73,16 +75,6 @@ public class AXButton extends AXBase implements LanguageSwitchable {
                 bloom.setOnFinished(_ -> {
                     Timeline fade = new Timeline(new KeyFrame(Duration.millis(200 * style.getAnimeRate()), new KeyValue(circle.opacityProperty(), 0)));
                     fade.setOnFinished(_ -> super.getChildren().remove(circle));
-//                    Thread.ofVirtual().start(() -> {
-//                        while (isPressed) {
-//                            try {
-//                                Thread.sleep(10);
-//                            } catch (InterruptedException e) {
-//                                throw new RuntimeException(e);
-//                            }
-//                        }
-//
-//                    });
                     fade.play();
                 });
             }

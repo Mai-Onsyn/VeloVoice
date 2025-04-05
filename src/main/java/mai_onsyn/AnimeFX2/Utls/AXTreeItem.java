@@ -4,6 +4,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -49,9 +50,9 @@ public class AXTreeItem extends Pane implements AutoUpdatable {
             }
         });
 
-        item.getTextLabel().setAlignment(Pos.CENTER_LEFT);
         update();
         super.getChildren().addAll(item, childrenBox);
+        item.getTextLabel().setAlignment(Pos.CENTER_LEFT);
     }
 
     public List<AXTreeItem> getChildrenAsItem() {
@@ -70,6 +71,9 @@ public class AXTreeItem extends Pane implements AutoUpdatable {
             }
         }
         else childrenBox.getChildren().addAll(item);
+        for (AXTreeItem treeItem : item) {
+            this.update();
+        }
     }
 
     public void addToChildrenBox(AXTreeItem... item) {

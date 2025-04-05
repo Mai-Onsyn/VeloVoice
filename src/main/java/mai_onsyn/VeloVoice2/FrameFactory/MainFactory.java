@@ -1,14 +1,17 @@
 package mai_onsyn.VeloVoice2.FrameFactory;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import mai_onsyn.AnimeFX2.LanguageSwitchable;
 import mai_onsyn.AnimeFX2.Module.*;
 import mai_onsyn.AnimeFX2.Utls.*;
@@ -324,7 +327,31 @@ public class MainFactory {
 
                     Config.ConfigBox sourceConfigBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
                     {
+                        Config.ConfigBox localTXTBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
+                        {
+                            Config txtCFG = sources.get("LocalTXT").getConfig();
 
+                            Config.ConfigItem parseHtmlCharacters = txtCFG.genSwitchItem("ParseHtmlCharacters");
+                            Config.ConfigItem parseStructures = txtCFG.genSwitchItem("ParseStructures");
+                            Config.ConfigItem ignoreEmptyParsedFile = txtCFG.genSwitchItem("IgnoreEmptyParsedFile");
+
+                            AXButton editButton = new AXButton("Edit");
+                            Config.ConfigItem rulesEdit = new Config.ConfigItem("ParseRules", editButton, 0.4);
+                            localTXTBox.addConfigItem(parseHtmlCharacters, parseStructures, ignoreEmptyParsedFile, rulesEdit);
+
+
+                            Stage rulesCfgStage = new Stage();
+                            {
+                                rulesCfgStage.setTitle("Edit LocalTXT Parse Rules");
+                                LocalTXTHeadersEditor headerItemsEditor = new LocalTXTHeadersEditor(JSONArray.parseArray(txtCFG.getString("HeaderItems")));
+                                rulesCfgStage.setScene(new Scene(headerItemsEditor, 800, 600));
+                            }
+                            editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                                rulesCfgStage.show();
+                            });
+                        }
+
+                        sourceConfigBox.getChildren().add(localTXTBox);
                     }
 
                     Config.ConfigItem uriItem = textConfig.genInputStringItem("LoadUri", "frame.main.textField.textLoadUri");

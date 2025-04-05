@@ -18,7 +18,7 @@ public class DefaultAXSwitchStyle implements AXSwitchStyle{
     public AXBaseStyle getThumbStyle() {
         DefaultAXBaseStyle style = new DefaultAXBaseStyle();
         style.setBorderArcSize(borderArcSize);
-        style.setBGColor(Color.rgb(255, 0, 0, 0.5));
+        style.setBGColor(Color.rgb(25, 69, 94, 0.8));
         return style;
     }
 
@@ -26,7 +26,7 @@ public class DefaultAXSwitchStyle implements AXSwitchStyle{
     public AXBaseStyle getSwitchedThumbStyle() {
         DefaultAXBaseStyle style = new DefaultAXBaseStyle();
         style.setBorderArcSize(borderArcSize);
-        style.setBGColor(Color.rgb(0, 0, 255, 0.5));
+        style.setBGColor(Color.rgb(255, 255, 255, 0.8));
         return style;
     }
 
@@ -41,7 +41,7 @@ public class DefaultAXSwitchStyle implements AXSwitchStyle{
     public AXBaseStyle getSwitchedTrackStyle() {
         DefaultAXBaseStyle style = new DefaultAXBaseStyle();
         style.setBorderArcSize(borderArcSize);
-        style.setBGColor(Toolkit.adjustOpacity(Color.CORNFLOWERBLUE, 0.5));
+        style.setBGColor(Color.rgb(25, 69, 94, 0.5));
         return style;
     }
 

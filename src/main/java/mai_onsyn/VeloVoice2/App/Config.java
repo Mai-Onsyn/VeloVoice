@@ -8,10 +8,9 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import mai_onsyn.AnimeFX2.LanguageSwitchable;
-import mai_onsyn.AnimeFX2.Module.AXButton;
-import mai_onsyn.AnimeFX2.Module.AXChoiceBox;
-import mai_onsyn.AnimeFX2.Module.AXSlider;
-import mai_onsyn.AnimeFX2.Module.AXTextField;
+import mai_onsyn.AnimeFX2.Module.*;
+import mai_onsyn.AnimeFX2.Styles.AXBaseStyle;
+import mai_onsyn.AnimeFX2.Styles.DefaultAXBaseStyle;
 import mai_onsyn.AnimeFX2.Utls.*;
 import mai_onsyn.AnimeFX2.layout.AutoPane;
 
@@ -205,6 +204,17 @@ public class Config extends JSONObject {
         return new ConfigItem(key, box, 0.4);
     }
 
+    public ConfigItem genSwitchItem(String key) {
+        AutoPane box = new AutoPane();
+        AXSwitch switcher = new AXSwitch(getBoolean(key));
+        switcher.stateProperty().addListener((o, ov, nv) -> setBoolean(key, nv));
+
+        box.getChildren().add(switcher);
+        box.setPosition(switcher, false, 0, Constants.UI_HEIGHT * 2, 0, 0);
+        box.flipRelativeMode(switcher, AutoPane.Motion.RIGHT);
+        return new ConfigItem(key, box, 0.4);
+    }
+
 //    public ConfigItem genChooseItem(String key, Map<String, String> options) {
 //        AXChoiceBox choiceBox = new AXChoiceBox();
 //
@@ -215,19 +225,34 @@ public class Config extends JSONObject {
 //
 //    }
 
-    public static class ConfigItem extends AutoPane implements LanguageSwitchable {
+    public static class ConfigItem extends AXBase implements LanguageSwitchable {
 
         private final Label label;
         private final AutoPane innerItem;
+        private static final DefaultAXBaseStyle style = new DefaultAXBaseStyle();
+        static {
+            style.setBGColor(Color.TRANSPARENT);
+            style.setBorderColor(Color.TRANSPARENT);
+            Color shadow = Color.rgb(128, 128, 128, 0.2);
+            style.setHoverShadow(shadow);
+            style.setPressedShadow(shadow);
+            style.setAnimeRate(0.5);
+        }
 
         public ConfigItem(String initName, AutoPane content, double rv) {
+            this(initName, content, true, rv);
+        }
+
+        public ConfigItem(String initName, AutoPane content, boolean mode, double rv) {
             super();
+            super.setTheme(style);
+            super.update();
 
             label = new Label(initName);
             innerItem = content;
             super.getChildren().addAll(label, innerItem);
-            super.setPosition(label, true, 0, rv, 0, 0);
-            super.setPosition(innerItem, true, rv, 0, 0, 0);
+            super.setPosition(label, mode, 0, rv, 0, 0);
+            super.setPosition(innerItem, mode, rv, 0, 0, 0);
         }
 
         public AutoPane getContent() {
@@ -259,10 +284,15 @@ public class Config extends JSONObject {
         }
 
         public void addConfigItem(AutoPane... items) {
+            addConfigItem(getChildren().size(), items);
+        }
+
+        public void addConfigItem(int index, AutoPane... items) {
+            int i = index;
             for (AutoPane item : items) {
                 item.setMaxHeight(itemHeight);
                 item.setMinHeight(itemHeight);
-                getChildren().add(item);
+                getChildren().add(i++, item);
             }
         }
 
