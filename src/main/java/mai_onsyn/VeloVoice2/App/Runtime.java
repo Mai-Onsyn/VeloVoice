@@ -8,7 +8,9 @@ import mai_onsyn.VeloVoice2.NetWork.Item.LocalTXT;
 import mai_onsyn.VeloVoice2.NetWork.Item.Source;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Runtime {
@@ -67,5 +69,20 @@ public class Runtime {
     public static final SimpleIntegerProperty totalFinished = new SimpleIntegerProperty(0);
     public static final SimpleIntegerProperty currentFinished = new SimpleIntegerProperty(0);
 
+
+    public static final List<Runnable> cycleTasks = new ArrayList<>();
+    static {
+        Thread.ofVirtual().start(() -> {
+            try {
+                while (true) {
+                    for (Runnable task : cycleTasks) {
+                        task.run();
+                    }
+                    Thread.sleep(1000);
+                }
+            } catch (InterruptedException _) {
+            }
+        });
+    }
 
 }

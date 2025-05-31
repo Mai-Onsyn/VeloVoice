@@ -11,7 +11,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import mai_onsyn.AnimeFX2.LanguageSwitchable;
 import mai_onsyn.AnimeFX2.Module.*;
 import mai_onsyn.AnimeFX2.Utls.*;
@@ -32,6 +31,8 @@ import java.util.*;
 
 import static mai_onsyn.VeloVoice2.App.Constants.*;
 import static mai_onsyn.VeloVoice2.App.Runtime.*;
+import static mai_onsyn.VeloVoice2.FrameFactory.LocalTXTHeadersEditor.rulesCfgStage;
+import static mai_onsyn.VeloVoice2.FrameFactory.LogFactory.logStage;
 import static mai_onsyn.VeloVoice2.FrameFactory.LogFactory.logger;
 
 public class MainFactory {
@@ -269,7 +270,7 @@ public class MainFactory {
 
                             //根据语言显示模型
                             showEdgeTTSModel(modelChoiceBox, initLang);
-                            langButtonGroup.setOnSelectedChanged((o, ov, nv) -> {
+                            langButtonGroup.addOnSelectChangedListener((o, ov, nv) -> {
                                 showEdgeTTSModel(modelChoiceBox, LANG_NAME_TO_HEADCODE_MAPPING.get(nv.getTextLabel().getText()));
                             });
                         }
@@ -277,7 +278,7 @@ public class MainFactory {
 
                     //UI数据应用到EdgeTTS配置项
                     {
-                        ((AXChoiceBox) modelItem.getContent()).getButtonGroup().setOnSelectedChanged((o, ov, nv) -> FixedEdgeTTSClient.setVoice(nv.getTextLabel().getText()));
+                        ((AXChoiceBox) modelItem.getContent()).getButtonGroup().addOnSelectChangedListener((o, ov, nv) -> FixedEdgeTTSClient.setVoice(nv.getTextLabel().getText()));
 
                         ((AXFloatTextField) rateItem.getContent().getChildren().get(1)).valueProperty().addListener((o, ov, nv) -> FixedEdgeTTSClient.setVoiceRate(nv.doubleValue()));
 
@@ -340,14 +341,15 @@ public class MainFactory {
                             localTXTBox.addConfigItem(parseHtmlCharacters, parseStructures, ignoreEmptyParsedFile, rulesEdit);
 
 
-                            Stage rulesCfgStage = new Stage();
                             {
                                 rulesCfgStage.setTitle("Edit LocalTXT Parse Rules");
-                                LocalTXTHeadersEditor headerItemsEditor = new LocalTXTHeadersEditor(JSONArray.parseArray(txtCFG.getString("HeaderItems")));
+                                LocalTXTHeaderEditor2 headerItemsEditor = new LocalTXTHeaderEditor2(JSONArray.parseArray(txtCFG.getString("HeaderItems")));
                                 rulesCfgStage.setScene(new Scene(headerItemsEditor, 800, 600));
+                                headerItemsEditor.requestFocus();
                             }
                             editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                                rulesCfgStage.show();
+                                if (rulesCfgStage.isShowing()) rulesCfgStage.toFront();
+                                else rulesCfgStage.show();
                             });
                         }
 
@@ -434,7 +436,8 @@ public class MainFactory {
             });
 
             logButton.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-                LogFactory.logStage.show();
+                if (logStage.isShowing()) logStage.toFront();
+                else logStage.show();
                 LogFactory.root.flush();
             });
 

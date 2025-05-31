@@ -1,14 +1,18 @@
 package mai_onsyn.VeloVoice2;
 
+import com.alibaba.fastjson.JSONArray;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import mai_onsyn.AnimeFX2.layout.AutoPane;
+import mai_onsyn.VeloVoice2.App.Constants;
 import mai_onsyn.VeloVoice2.App.Runtime;
+import mai_onsyn.VeloVoice2.FrameFactory.LocalTXTHeaderEditor2;
 import mai_onsyn.VeloVoice2.FrameFactory.LogFactory;
 import mai_onsyn.VeloVoice2.FrameFactory.MainFactory;
 
+import static mai_onsyn.VeloVoice2.FrameFactory.LocalTXTHeadersEditor.rulesCfgStage;
 import static mai_onsyn.VeloVoice2.FrameFactory.LogFactory.logger;
 
 public class FrameApp extends Application {
@@ -28,9 +32,14 @@ public class FrameApp extends Application {
         stage.getIcons().add(new Image("textures/icon.png"));
         stage.setTitle("VeloVoice");
         stage.setScene(scene);
-        stage.show();
 
         logger.info("Application started");
         root.requestFocus();
+
+//        LocalTXTHeaderEditor2 headerItemsEditor = new LocalTXTHeaderEditor2(JSONArray.parseArray(Runtime.sources.get("LocalTXT").getConfig().getString("HeaderItems")));
+//        stage.setScene(new Scene(headerItemsEditor, 600, 450));
+//        headerItemsEditor.requestFocus();
+        stage.show();
+
     }
 }

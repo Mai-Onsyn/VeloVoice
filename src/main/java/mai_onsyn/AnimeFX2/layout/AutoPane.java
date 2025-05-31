@@ -276,4 +276,11 @@ public class AutoPane extends Region {
         }
     }
 
+    public static void lockSize(Region node, double width, double height) {
+        node.setMaxHeight(height);
+        node.setMinHeight(height);
+
+        node.setMaxWidth(width);
+        node.setMinWidth(width);
+    }
 }

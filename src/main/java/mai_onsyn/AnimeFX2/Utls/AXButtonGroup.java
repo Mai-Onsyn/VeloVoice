@@ -24,7 +24,7 @@ public class AXButtonGroup implements AutoUpdatable {
 
     protected AXButton selectedButton;
     protected AXButton lastSelectedButton;
-    protected ChangeListener<AXButton> onSelectedChanged;
+    protected List<ChangeListener<AXButton>> onSelectedChanged = new ArrayList<>();
 
     public AXButtonGroup(AXButton... buttons) {
         register(buttons);
@@ -50,11 +50,11 @@ public class AXButtonGroup implements AutoUpdatable {
         }
         if (button == selectedButton) {
             selectedButton = null;
-            onSelectedChanged.changed(null, lastSelectedButton, null);
+            onSelectedChanged.forEach(e -> e.changed(null, lastSelectedButton, null));
         }
         if (button == lastSelectedButton) {
             lastSelectedButton = null;
-            onSelectedChanged.changed(null, null, selectedButton);
+            onSelectedChanged.forEach(e -> e.changed(null, null, selectedButton));
         }
     }
 
@@ -64,7 +64,7 @@ public class AXButtonGroup implements AutoUpdatable {
             selectedButton = button;
 
             if (onSelectedChanged != null) {
-                onSelectedChanged.changed(null, lastSelectedButton, selectedButton);
+                onSelectedChanged.forEach(e -> e.changed(null, lastSelectedButton, selectedButton));
             }
 
             if (lastSelectedButton != null) {
@@ -86,8 +86,8 @@ public class AXButtonGroup implements AutoUpdatable {
         this.selectedStyle = style;
     }
 
-    public void setOnSelectedChanged(ChangeListener<AXButton> onSelectedChanged) {
-        this.onSelectedChanged = onSelectedChanged;
+    public void addOnSelectChangedListener(ChangeListener<AXButton> onSelectedChanged) {
+        this.onSelectedChanged.add(onSelectedChanged);
     }
 
     public AXButton getSelectedButton() {

@@ -5,9 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import mai_onsyn.AnimeFX2.Module.AXButton;
 import mai_onsyn.AnimeFX2.Module.AXTextField;
 import mai_onsyn.AnimeFX2.Utls.AXButtonGroup;
@@ -25,6 +26,10 @@ import static mai_onsyn.VeloVoice2.App.Runtime.sources;
 //[{"name":"test","content":[{"start":"\\n[^ ]a","end":"\n"}]},{"name":"node","content":[{"start":"testStart","end":"testEnd"},{"start":"tests","end":"fa"}]}]
 public class LocalTXTHeadersEditor extends HDoubleSplitPane {
 
+
+    public static final Stage rulesCfgStage = new Stage();
+
+
     private final JSONArray rules;
 
     private final Config.ConfigBox leftBox;
@@ -38,7 +43,7 @@ public class LocalTXTHeadersEditor extends HDoubleSplitPane {
     public LocalTXTHeadersEditor(JSONArray initialRules) {
         super(10, 0.3, 50, 50);
         rules = initialRules;
-        leftBox = new Config.ConfigBox(0, UI_HEIGHT);
+        leftBox = new Config.ConfigBox(0, UI_HEIGHT * 2);
 
         AutoPane left = super.getLeft();
         AutoPane right = super.getRight();
@@ -54,7 +59,7 @@ public class LocalTXTHeadersEditor extends HDoubleSplitPane {
         left.setPosition(lScroll, false, 0, 0, 0, 0);
         right.setPosition(rScroll, false, 0, 0, 0, 0);
 
-        buttonGroup.setOnSelectedChanged((o, ov, nv) -> {
+        buttonGroup.addOnSelectChangedListener((o, ov, nv) -> {
             if (nv != null) {
                 int index = -1;
 
@@ -76,15 +81,14 @@ public class LocalTXTHeadersEditor extends HDoubleSplitPane {
 
         buildRulesFrame();
 
-
         Thread.ofVirtual().start(() -> {
             while (true) {
                 try {
                     Thread.sleep(500);
                     buildRulesJson();
 
-//                    System.out.println(config.getString("HeaderItems"));
-//                    System.out.println(JSONObject.toJSONString(rules));
+                    System.out.println(config.getString("HeaderItems"));
+                    System.out.println(JSONObject.toJSONString(rules));
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -103,15 +107,12 @@ public class LocalTXTHeadersEditor extends HDoubleSplitPane {
             AXButton menuButton = new AXButton(name);
             leftBox.addConfigItem(mkMenuItemBox(menuButton));
 
-
-
             Config.ConfigBox rightBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
 
             for (int j = 0; j < items.size(); j++) {
                 JSONObject item = (JSONObject) items.get(j);
 
-                AutoPane content = mkSEBox(item);
-                Config.ConfigItem itemBox = new Config.ConfigItem(String.format("Level %d", j), content, false, 50);
+                Config.ConfigItem itemBox = mkSEBox(item, j);
                 rightBox.addConfigItem(itemBox);
             }
             rSuperBox.getChildren().add(rightBox);
@@ -146,7 +147,8 @@ public class LocalTXTHeadersEditor extends HDoubleSplitPane {
                     textInputPopup.showOnCenter("New", this.getScene().getWindow());
                     textInputPopup.setOnTextAvailable((o, ov, nv) -> {
                         AutoPane element = mkMenuItemBox(new AXButton(nv));
-                        leftBox.addConfigItem(leftBox.getChildren().indexOf(menuItemBox) + 1, element);
+                        int index = leftBox.getChildren().indexOf(menuItemBox) + 1;
+                        leftBox.addConfigItem(index, element);
 
                         JSONObject sampleObject = JSONObject.parseObject("""
                                 {
@@ -156,9 +158,9 @@ public class LocalTXTHeadersEditor extends HDoubleSplitPane {
                                 """);
 
                         Config.ConfigBox rightBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
-                        Config.ConfigItem configItem = new Config.ConfigItem(String.format("Level %d", 0), mkSEBox(sampleObject), false, 50);
+                        Config.ConfigItem configItem = mkSEBox(sampleObject, index);
                         rightBox.addConfigItem(configItem);
-                        rSuperBox.getChildren().add(leftBox.getChildren().indexOf(menuItemBox) + 1, rightBox);
+                        rSuperBox.getChildren().add(index, rightBox);
                         rSuperBox.setPosition(rightBox, false, 50, 50, 0, 0);
                     });
                 }
@@ -175,7 +177,7 @@ public class LocalTXTHeadersEditor extends HDoubleSplitPane {
         return menuItemBox;
     }
 
-    private AutoPane mkSEBox(JSONObject item) {
+    private Config.ConfigItem mkSEBox(JSONObject item, int level) {
         AutoPane seBox = new AutoPane();
 
         AXTextField st = new AXTextField();
@@ -184,14 +186,40 @@ public class LocalTXTHeadersEditor extends HDoubleSplitPane {
         st.setText(item.getString("start"));
         et.setText(item.getString("end"));
 
-        //System.out.println(Arrays.toString(st.getText().toCharArray()));
 
-        seBox.getChildren().addAll(st, et);
+        Config.ConfigItem configItem = new Config.ConfigItem(String.format("Level %d", level), seBox, false, 50);
 
-        seBox.setPosition(st, true, 0, 0.55, 0, 0);
-        seBox.setPosition(et, true, 0.55, 0, 0, 0);
 
-        return seBox;
+        AXButton deleteButton = new AXButton("-");
+        AXButton addButton = new AXButton("+");
+
+        deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                ((Pane) configItem.getParent()).getChildren().remove(configItem);
+            }
+        });
+        addButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+
+            }
+        });
+
+        AutoPane se = new AutoPane();
+        se.getChildren().addAll(st, et);
+
+        seBox.getChildren().addAll(se, addButton, deleteButton);
+
+        se.setPosition(st, true, 0, 0.55, 0, 0);
+        se.setPosition(et, true, 0.55, 0, 0, 0);
+
+        seBox.setPosition(se, false, 0, UI_HEIGHT * 2, 0, 0);
+
+        seBox.setPosition(addButton, false, UI_HEIGHT * 2, UI_HEIGHT, 0, 0);
+        seBox.setPosition(deleteButton, false, UI_HEIGHT, 0, 0, 0);
+        seBox.flipRelativeMode(deleteButton, Motion.LEFT);
+        seBox.flipRelativeMode(addButton, Motion.LEFT);
+
+        return configItem;
     }
 
     private void buildRulesJson() {
@@ -212,7 +240,7 @@ public class LocalTXTHeadersEditor extends HDoubleSplitPane {
             rules.add(item);
         }
 
-        config.setString("HeaderItems", JSONObject.toJSONString(rules));
+        //config.setString("HeaderItems", JSONObject.toJSONString(rules));
     }
 
     private static JSONArray parseObject(Config.ConfigBox rightBox) {
@@ -220,7 +248,7 @@ public class LocalTXTHeadersEditor extends HDoubleSplitPane {
 
         for (Node child : rightBox.getChildren()) {
             Config.ConfigItem configItem = (Config.ConfigItem) child;
-            AutoPane contentPane = (AutoPane) configItem.getChildren().getLast();
+            AutoPane contentPane = (AutoPane) ((AutoPane) configItem.getChildren().getLast()).getChildren().getFirst();
 
             AXTextField startField = (AXTextField) contentPane.getChildren().getFirst();
             AXTextField endField = (AXTextField) contentPane.getChildren().get(1);

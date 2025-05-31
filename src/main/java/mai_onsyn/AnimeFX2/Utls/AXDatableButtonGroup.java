@@ -60,7 +60,7 @@ public class AXDatableButtonGroup<T> extends AXButtonGroup{
             selectedButton = button;
 
             if (super.onSelectedChanged != null) {
-                super.onSelectedChanged.changed(null, lastSelectedButton, selectedButton);
+                super.onSelectedChanged.forEach(e -> e.changed(null, lastSelectedButton, selectedButton));
             }
             if (onSelectedChanged != null) {
                 onSelectedChanged.changed(null, new Pair<>(lastSelectedButton, buttonMap.get(lastSelectedButton)), new Pair<>(selectedButton, buttonMap.get(selectedButton)));

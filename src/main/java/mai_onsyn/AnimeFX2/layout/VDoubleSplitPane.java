@@ -32,7 +32,7 @@ public class VDoubleSplitPane extends AutoPane {
         super.setPosition(topBox, true, 0, 0, 0, 1 - value);
         super.setPosition(bottomBox, true, 0, 0, value, 0);
 
-        divider.setStyle("-fx-background-color: #0020ff40;");
+        //divider.setStyle("-fx-background-color: #0020ff40;");
 
         divider.setPrefHeight(dividerHeight);
         divider.prefWidthProperty().bind(super.widthProperty());
