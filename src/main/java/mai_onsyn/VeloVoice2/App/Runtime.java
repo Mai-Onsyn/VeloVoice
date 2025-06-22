@@ -2,7 +2,6 @@ package mai_onsyn.VeloVoice2.App;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import mai_onsyn.AnimeFX2.LanguageManager;
 import mai_onsyn.AnimeFX2.ThemeManager;
 import mai_onsyn.VeloVoice2.NetWork.Item.LocalTXT;
 import mai_onsyn.VeloVoice2.NetWork.Item.Source;
@@ -60,7 +59,6 @@ public class Runtime {
     }
 
     public static final ThemeManager themeManager = new ThemeManager();
-    public static final LanguageManager languageManager = new LanguageManager("lang");
 
     public static Thread EDGE_TTS_THREAD;
 

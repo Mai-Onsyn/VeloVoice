@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+@Deprecated
 public class LanguageManager {
 
     private final Map<LanguageSwitchable, String> nodes;

@@ -13,13 +13,14 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
-import mai_onsyn.AnimeFX2.LanguageSwitchable;
+import mai_onsyn.AnimeFX2.Localizable;
 import mai_onsyn.AnimeFX2.Styles.DefaultAXButtonStyle;
 import mai_onsyn.AnimeFX2.Styles.AXButtonStyle;
 
+import java.util.List;
 import java.util.Map;
 
-public class AXButton extends AXBase implements LanguageSwitchable {
+public class AXButton extends AXBase implements Localizable {
     private AXButtonStyle style = new DefaultAXButtonStyle();
 
     private final Label textLabel = new Label();
@@ -116,21 +117,42 @@ public class AXButton extends AXBase implements LanguageSwitchable {
         super.setTheme(style);
     }
 
-    @Override
-    public void switchLanguage(String str) {
-        setText(str);
-    }
-
-    @Override
-    public Map<LanguageSwitchable, String> getLanguageElements() {
-        return null;
-    }
-
     public Label getTextLabel() {
         return textLabel;
     }
 
     public AXButtonStyle style() {
         return style;
+    }
+
+
+
+
+
+    private String langKey = "";
+
+    @Override
+    public String getI18NKey() {
+        return langKey;
+    }
+
+    @Override
+    public List<Localizable> getChildrenLocalizable() {
+        return List.of();
+    }
+
+    @Override
+    public void setI18NKey(String key) {
+        langKey = key;
+    }
+
+    @Override
+    public void setChildrenI18NKeys(Map<String, String> keyMap) {
+
+    }
+
+    @Override
+    public void localize(String str) {
+        setText(str);
     }
 }

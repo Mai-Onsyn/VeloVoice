@@ -1,14 +1,11 @@
 package mai_onsyn.VeloVoice2;
 
-import com.alibaba.fastjson.JSONArray;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import mai_onsyn.AnimeFX2.I18N;
 import mai_onsyn.AnimeFX2.layout.AutoPane;
-import mai_onsyn.VeloVoice2.App.Constants;
-import mai_onsyn.VeloVoice2.App.Runtime;
-import mai_onsyn.VeloVoice2.FrameFactory.LocalTXTHeaderEditor2;
 import mai_onsyn.VeloVoice2.FrameFactory.LogFactory;
 import mai_onsyn.VeloVoice2.FrameFactory.MainFactory;
 
@@ -24,7 +21,7 @@ public class FrameApp extends Application {
 
         MainFactory.drawMainFrame(root);
         LogFactory.drawLogFrame();
-        Runtime.languageManager.switchLanguage("en_us");
+        I18N.setLanguage("zh_cn");
 
         Scene scene = new Scene(root, 1280, 720);
         stage.setMinWidth(960);

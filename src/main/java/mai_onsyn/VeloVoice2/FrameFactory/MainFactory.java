@@ -1,17 +1,16 @@
 package mai_onsyn.VeloVoice2.FrameFactory;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import mai_onsyn.AnimeFX2.LanguageSwitchable;
+import mai_onsyn.AnimeFX2.I18N;
 import mai_onsyn.AnimeFX2.Module.*;
 import mai_onsyn.AnimeFX2.Utls.*;
 import mai_onsyn.AnimeFX2.layout.AXScrollPane;
@@ -31,7 +30,6 @@ import java.util.*;
 
 import static mai_onsyn.VeloVoice2.App.Constants.*;
 import static mai_onsyn.VeloVoice2.App.Runtime.*;
-import static mai_onsyn.VeloVoice2.FrameFactory.LocalTXTHeadersEditor.rulesCfgStage;
 import static mai_onsyn.VeloVoice2.FrameFactory.LogFactory.logStage;
 import static mai_onsyn.VeloVoice2.FrameFactory.LogFactory.logger;
 
@@ -60,14 +58,9 @@ public class MainFactory {
 
 
         themeManager.register(treeView, textArea);
-        Map<LanguageSwitchable, String> treeViewLanguageElements = treeView.getLanguageElements();
-        for (Map.Entry<LanguageSwitchable, String> entry : treeViewLanguageElements.entrySet()) {
-            languageManager.register(entry.getKey(), "frame.contextMenu." + entry.getValue());
-        }
-        Map<LanguageSwitchable, String> textAreaLanguageElements = textArea.getLanguageElements();
-        for (Map.Entry<LanguageSwitchable, String> entry : textAreaLanguageElements.entrySet()) {
-            languageManager.register(entry.getKey(), "frame.contextMenu." + entry.getValue());
-        }
+        treeView.setChildrenI18NKeys(I18nKeyMaps.CONTEXT_MENU);
+        textArea.setChildrenI18NKeys(I18nKeyMaps.CONTEXT_MENU);
+        I18N.registerComponents(treeView, textArea);
 
 
         textAreaInfo.setAlignment(Pos.CENTER);
@@ -202,14 +195,14 @@ public class MainFactory {
                     Config.ConfigItem pitchItem = edgeTTSConfig.genFloatSlidItem("VoicePitch", 0.05, 1.5, 0.05);
                     Config.ConfigItem threadItem = edgeTTSConfig.genIntegerSlidItem("ThreadCount", 1, 4, 1);
 
-                    languageManager.register(
-                            langItem, "frame.main.item.label.edgeTTS.lang",
-                            modelItem, "frame.main.item.label.edgeTTS.model",
-                            rateItem, "frame.main.item.label.edgeTTS.rate",
-                            volumeItem, "frame.main.item.label.edgeTTS.volume",
-                            pitchItem, "frame.main.item.label.edgeTTS.pitch",
-                            threadItem, "frame.main.item.label.edgeTTS.threadCount"
-                    );
+                    langItem.setI18NKey("frame.main.item.label.edge_tts.lang");
+                    modelItem.setI18NKey("frame.main.item.label.edge_tts.model");
+                    rateItem.setI18NKey("frame.main.item.label.edge_tts.rate");
+                    volumeItem.setI18NKey("frame.main.item.label.edge_tts.volume");
+                    pitchItem.setI18NKey("frame.main.item.label.edge_tts.pitch");
+                    threadItem.setI18NKey("frame.main.item.label.edge_tts.thread_count");
+
+                    I18N.registerComponents(langItem, modelItem, rateItem, volumeItem, pitchItem, threadItem);
 
                     //modelItem配置
                     {
@@ -290,12 +283,10 @@ public class MainFactory {
                     edgeTTSBox.addConfigItem(langItem, modelItem, rateItem, volumeItem, pitchItem, threadItem);
                 }
 
-                Config.ConfigItem audioFolderItem = config.genInputStringItem("AudioSaveFolder", "frame.main.textField.audioFolder");
-                languageManager.register(audioFolderItem, "frame.main.item.label.audioFolder");
-                Map<LanguageSwitchable, String> languageElements = ((AXTextField) audioFolderItem.getContent()).getLanguageElements();
-                for (Map.Entry<LanguageSwitchable, String> entry : languageElements.entrySet()) {
-                    languageManager.register(entry.getKey(), "frame.contextMenu." + entry.getValue());
-                }
+                Config.ConfigItem audioFolderItem = config.genInputStringItem("AudioSaveFolder", "frame.main.text_field.audio_folder");
+                audioFolderItem.setI18NKey("frame.main.item.label.audio_folder");
+                ((AXTextField) audioFolderItem.getContent()).setChildrenI18NKeys(I18nKeyMaps.CONTEXT_MENU);
+                I18N.registerComponent(audioFolderItem);
 
                 ttsArea.getChildren().addAll(edgeTTSBox);
 
@@ -324,44 +315,31 @@ public class MainFactory {
                         }
                     }
                     Config.ConfigItem sourceItem = textConfig.genChooseStringItem("LoadSource", loadList);
-                    languageManager.register(sourceItem, "frame.main.item.label.load.loadSource");
+                    sourceItem.setI18NKey("frame.main.item.label.load.load_source");
+                    I18N.registerComponent(sourceItem);
 
                     Config.ConfigBox sourceConfigBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
                     {
-                        Config.ConfigBox localTXTBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
-                        {
-                            Config txtCFG = sources.get("LocalTXT").getConfig();
-
-                            Config.ConfigItem parseHtmlCharacters = txtCFG.genSwitchItem("ParseHtmlCharacters");
-                            Config.ConfigItem parseStructures = txtCFG.genSwitchItem("ParseStructures");
-                            Config.ConfigItem ignoreEmptyParsedFile = txtCFG.genSwitchItem("IgnoreEmptyParsedFile");
-
-                            AXButton editButton = new AXButton("Edit");
-                            Config.ConfigItem rulesEdit = new Config.ConfigItem("ParseRules", editButton, 0.4);
-                            localTXTBox.addConfigItem(parseHtmlCharacters, parseStructures, ignoreEmptyParsedFile, rulesEdit);
-
-
-                            {
-                                rulesCfgStage.setTitle("Edit LocalTXT Parse Rules");
-                                LocalTXTHeaderEditor2 headerItemsEditor = new LocalTXTHeaderEditor2(JSONArray.parseArray(txtCFG.getString("HeaderItems")));
-                                rulesCfgStage.setScene(new Scene(headerItemsEditor, 800, 600));
-                                headerItemsEditor.requestFocus();
-                            }
-                            editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                                if (rulesCfgStage.isShowing()) rulesCfgStage.toFront();
-                                else rulesCfgStage.show();
-                            });
+                        for (Map.Entry<String, Source> sourceEntry : sources.entrySet()) {
+                            Source source = sourceEntry.getValue();
+                            Config.ConfigBox configBox = source.mkConfigFrame();
+                            configBox.setUserData(sourceEntry.getKey());
+                            sourceConfigBox.getChildren().add(configBox);
                         }
 
-                        sourceConfigBox.getChildren().add(localTXTBox);
+                        AXChoiceBox choiceBox = (AXChoiceBox) sourceItem.getChildren().getLast();
+                        choiceBox.getButtonGroup().addOnSelectChangedListener((o, ov, nv) -> {
+                            String rule = nv.getUserData().toString();
+                            for (Node node : sourceConfigBox.getChildren()) {
+                                node.setVisible(node.getUserData().toString().equals(rule));
+                            }
+                        });
                     }
 
-                    Config.ConfigItem uriItem = textConfig.genInputStringItem("LoadUri", "frame.main.textField.textLoadUri");
-                    languageManager.register(uriItem, "frame.main.item.label.load.textLoadUri");
-                    Map<LanguageSwitchable, String> languageElements = ((AXTextField) uriItem.getContent()).getLanguageElements();
-                    for (Map.Entry<LanguageSwitchable, String> entry : languageElements.entrySet()) {
-                        languageManager.register(entry.getKey(), "frame.contextMenu." + entry.getValue());
-                    }
+                    Config.ConfigItem uriItem = textConfig.genInputStringItem("LoadUri", "frame.main.text_field.text_load_uri");
+                    uriItem.setI18NKey("frame.main.item.label.load.text_load_uri");
+                    ((AXTextField) uriItem.getContent()).setChildrenI18NKeys(I18nKeyMaps.CONTEXT_MENU);
+                    I18N.registerComponent(uriItem);
 
                     AXButton startButton = new AXButton("Load");
                     startButton.setMaxSize(100, UI_SPACING + UI_HEIGHT);
@@ -375,7 +353,8 @@ public class MainFactory {
                         }
                     });
 
-                    languageManager.register(title, "frame.main.item.label.textProcess.load.title");
+                    title.setI18NKey("frame.main.item.label.text_process.load.title");
+                    I18N.registerComponent(title);
                     loadBox.addConfigItem(sourceItem, uriItem);
                     loadBox.getChildren().addAll(sourceConfigBox, startButton);
                 }

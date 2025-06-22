@@ -56,7 +56,7 @@ public class Voice {
 
                     return -shortName1.compareTo(shortName2);
                 });
-                System.out.println(JSONObject.toJSONString(jsonArray, true));
+                //System.out.println(JSONObject.toJSONString(jsonArray, true));
             }
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);

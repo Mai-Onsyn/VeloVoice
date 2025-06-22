@@ -7,13 +7,14 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 import mai_onsyn.AnimeFX2.AutoUpdatable;
-import mai_onsyn.AnimeFX2.LanguageSwitchable;
+import mai_onsyn.AnimeFX2.Localizable;
 import mai_onsyn.AnimeFX2.Styles.DefaultAXLangLabelStyle;
 import mai_onsyn.AnimeFX2.Styles.AXLangLabelStyle;
 
+import java.util.List;
 import java.util.Map;
 
-public class AXLangLabel extends Label implements LanguageSwitchable, AutoUpdatable {
+public class AXLangLabel extends Label implements Localizable, AutoUpdatable {
 
     private AXLangLabelStyle style = new DefaultAXLangLabelStyle();
     private Timeline timeline = new Timeline();
@@ -30,15 +31,6 @@ public class AXLangLabel extends Label implements LanguageSwitchable, AutoUpdata
         super.setAlignment(Pos.CENTER_LEFT);
     }
 
-    @Override
-    public void switchLanguage(String str) {
-        setText(str);
-    }
-
-    @Override
-    public Map<LanguageSwitchable, String> getLanguageElements() {
-        return Map.of();
-    }
 
     @Override
     public void update() {
@@ -47,5 +39,33 @@ public class AXLangLabel extends Label implements LanguageSwitchable, AutoUpdata
                 new KeyValue(this.textFillProperty(), style.getFill())
         ));
         timeline.play();
+    }
+
+
+    private String langKey = "";
+
+    @Override
+    public String getI18NKey() {
+        return langKey;
+    }
+
+    @Override
+    public List<Localizable> getChildrenLocalizable() {
+        return List.of();
+    }
+
+    @Override
+    public void setI18NKey(String key) {
+        langKey = key;
+    }
+
+    @Override
+    public void setChildrenI18NKeys(Map<String, String> keyMap) {
+
+    }
+
+    @Override
+    public void localize(String text) {
+        setText(text);
     }
 }

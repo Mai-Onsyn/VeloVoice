@@ -10,18 +10,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.util.Duration;
-import mai_onsyn.AnimeFX2.LanguageSwitchable;
+import mai_onsyn.AnimeFX2.Localizable;
 import mai_onsyn.AnimeFX2.Styles.AXChoiceBoxStyle;
 import mai_onsyn.AnimeFX2.Styles.DefaultAXChoiceBoxStyle;
 import mai_onsyn.AnimeFX2.Utls.AXButtonGroup;
 import mai_onsyn.AnimeFX2.Utls.Toolkit;
 import mai_onsyn.AnimeFX2.layout.AXContextPane;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class AXChoiceBox extends AXButton {
 
@@ -77,7 +75,6 @@ public class AXChoiceBox extends AXButton {
         return item;
     }
 
-
     public void setTheme(AXChoiceBoxStyle style) {
         this.style = style;
         super.setTheme(style);
@@ -113,23 +110,6 @@ public class AXChoiceBox extends AXButton {
         return buttonGroup;
     }
 
-    @Override
-    public void switchLanguage(String str) {
-        super.switchLanguage(str);
-    }
-
-    @Override
-    public Map<LanguageSwitchable, String> getLanguageElements() {
-        return itemLang;
-    }
-
-    private Map<LanguageSwitchable, String> itemLang = new LinkedHashMap<>();
-
-    public void registerItemLang(LanguageSwitchable element, String nameSpace) {
-        itemLang.put(element, nameSpace);
-    }
-
-
     private static Point2D getInScreenPosition(Node node) {
         if (node == null || node.getScene() == null) {
             return null;
@@ -152,5 +132,30 @@ public class AXChoiceBox extends AXButton {
         double screenY = stageY + sceneY + sceneYInStage + windowDecorationHeight;
 
         return new Point2D(screenX, screenY);
+    }
+
+
+
+
+
+    @Override
+    public List<Localizable> getChildrenLocalizable() {
+        return buttonGroup.getButtonList().stream()
+                .collect(Collectors.toUnmodifiableList());
+    }
+
+    @Override
+    public void setChildrenI18NKeys(Map<String, String> keyMap) {
+        buttonGroup.getButtonList().forEach(b -> {
+            if (b.getUserData() instanceof String buttonKey) {
+
+                keyMap.forEach((k, v) -> {
+                    if (k.equals(buttonKey)) {
+                        b.setI18NKey(v);
+                    }
+                });
+
+            }
+        });
     }
 }

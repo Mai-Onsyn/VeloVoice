@@ -1,3 +1,29 @@
 {
-  "A": "你好"
+  "frame.context_menu.new_file": "新建文件",
+  "frame.context_menu.new_folder": "新建文件夹",
+  "frame.context_menu.paste": "粘贴",
+  "frame.context_menu.rename": "重命名",
+  "frame.context_menu.expand_all": "全部展开",
+  "frame.context_menu.clear": "清空",
+  "frame.context_menu.copy": "复制",
+  "frame.context_menu.cut": "剪切",
+  "frame.context_menu.paste_append": "粘贴(追加)",
+  "frame.context_menu.move_up": "上移",
+  "frame.context_menu.move_down": "下移",
+  "frame.context_menu.delete": "删除",
+  "frame.context_menu.undo": "撤销",
+  "frame.context_menu.select_all": "全选",
+  "frame.main.item.label.edge_tts.lang": "语言",
+  "frame.main.item.label.edge_tts.model": "语音模型",
+  "frame.main.item.label.edge_tts.rate": "语速",
+  "frame.main.item.label.edge_tts.volume": "音量",
+  "frame.main.item.label.edge_tts.pitch": "音高",
+  "frame.main.item.label.edge_tts.thread_count": "TTS线程数",
+  "frame.main.text_field.audio_folder": "mp3文件保存路径",
+  "frame.main.item.label.audio_folder": "音频保存文件夹",
+
+  "frame.main.item.label.text_process.load.title": "加载",
+  "frame.main.item.label.load.load_source": "加载源",
+  "frame.main.text_field.text_load_uri": "资源地址",
+  "frame.main.item.label.load.text_load_uri": "加载URI"
 }

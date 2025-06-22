@@ -23,6 +23,8 @@ public abstract class Source {
 
     public abstract void process(String uri, AXTreeItem root);
 
+    public abstract Config.ConfigBox mkConfigFrame();
+
     public AXButton getItemButton() {
         return null;
     }

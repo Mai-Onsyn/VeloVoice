@@ -5,7 +5,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import mai_onsyn.AnimeFX2.LanguageSwitchable;
+import mai_onsyn.AnimeFX2.Localizable;
 import mai_onsyn.AnimeFX2.ResourceManager;
 import mai_onsyn.AnimeFX2.Styles.AXTreeViewStyle;
 import mai_onsyn.AnimeFX2.Styles.DefaultAXTreeViewStyle;
@@ -13,13 +13,11 @@ import mai_onsyn.AnimeFX2.Utls.*;
 import mai_onsyn.AnimeFX2.layout.AXContextPane;
 import mai_onsyn.AnimeFX2.layout.AXTextInputPopup;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 import static mai_onsyn.AnimeFX2.Utls.Toolkit.defaultToolkit;
 
-public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
+public class AXTreeView<T> extends AXBase implements Localizable {
     private AXTreeViewStyle style = new DefaultAXTreeViewStyle();
     private final AXTreeItem root = new AXTreeItem("ROOT");
     private final AXDatableButtonGroup<AXTreeItem> group = new AXDatableButtonGroup<>(root.getButton(), root);
@@ -31,7 +29,7 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
     private final AXContextPane folderContextMenu = new AXContextPane();
     private final AXContextPane fileContextMenu = new AXContextPane();
 
-    private final Map<LanguageSwitchable, String> langMap = new LinkedHashMap<>();
+    private final List<Localizable> langList = new ArrayList<>();
     private final AXTreeItemDataCreator<T> dataCreator;
     final AXDataTreeItem.AXTreeviewCopyRule<T> copyRule;
 
@@ -77,12 +75,7 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
             AXContextPane.setupContextMenuItem(expandAll, ResourceManager.expand, "Expand All", "", itemHeight);
             AXContextPane.setupContextMenuItem(clear, ResourceManager.clear, "Clear", "", itemHeight);
 
-            langMap.put(newFile, "newFile");
-            langMap.put(newFolder, "newFolder");
-            langMap.put(paste, "paste");
-            langMap.put(rename, "rename");
-            langMap.put(expandAll, "expandAll");
-            langMap.put(clear, "clear");
+            langList.addAll(List.of(newFile, newFolder, paste, rename, expandAll, clear));
 
             newFile.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> newFile());
             newFolder.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> newFolder());
@@ -126,18 +119,7 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
             AXContextPane.setupContextMenuItem(clear, ResourceManager.clear, "Clear", "", itemHeight);
             AXContextPane.setupContextMenuItem(delete, ResourceManager.delete, "Delete", "Ctrl+D", itemHeight);
 
-            langMap.put(newFile, "newFile");
-            langMap.put(newFolder, "newFolder");
-            langMap.put(copy, "copy");
-            langMap.put(cut, "cut");
-            langMap.put(paste, "paste");
-            langMap.put(pasteAppend, "pasteAppend");
-            langMap.put(rename, "rename");
-            langMap.put(moveUp, "moveUp");
-            langMap.put(moveDown, "moveDown");
-            langMap.put(expandAll, "expandAll");
-            langMap.put(clear, "clear");
-            langMap.put(delete, "delete");
+            langList.addAll(List.of(newFile, newFolder, copy, cut, paste, pasteAppend, rename, moveUp, moveDown, expandAll, clear, delete));
 
             newFile.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> newFile());
             newFolder.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> newFolder());
@@ -171,13 +153,7 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
             AXContextPane.setupContextMenuItem(moveDown, ResourceManager.down, "Move Down", "Ctrl+↓", itemHeight);
             AXContextPane.setupContextMenuItem(delete, ResourceManager.delete, "Delete", "Ctrl+D", itemHeight);
 
-            langMap.put(copy, "copy");
-            langMap.put(cut, "cut");
-            langMap.put(pasteAppend, "pasteAppend");
-            langMap.put(rename, "rename");
-            langMap.put(moveUp, "moveUp");
-            langMap.put(moveDown, "moveDown");
-            langMap.put(delete, "delete");
+            langList.addAll(List.of(copy, cut, pasteAppend, rename, moveUp, moveDown, delete));
 
             copy.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> copy());
             cut.addEventHandler(MouseEvent.MOUSE_CLICKED, _ -> cut());
@@ -302,12 +278,49 @@ public class AXTreeView<T> extends AXBase implements LanguageSwitchable {
     }
 
     @Override
-    public void switchLanguage(String str) {}
+    public String getI18NKey() {
+        return "";
+    }
 
     @Override
-    public Map<LanguageSwitchable, String> getLanguageElements() {
-        return langMap;
+    public List<Localizable> getChildrenLocalizable() {
+        return langList;
     }
+
+    @Override
+    public void setI18NKey(String key) {}
+
+    @Override
+    public void setChildrenI18NKeys(Map<String, String> keyMap) {
+        langList.get(0).setI18NKey(keyMap.get("new file"));
+        langList.get(1).setI18NKey(keyMap.get("new folder"));
+        langList.get(2).setI18NKey(keyMap.get("paste"));
+        langList.get(3).setI18NKey(keyMap.get("rename"));
+        langList.get(4).setI18NKey(keyMap.get("expand all"));
+        langList.get(5).setI18NKey(keyMap.get("clear"));
+        langList.get(6).setI18NKey(keyMap.get("new file"));
+        langList.get(7).setI18NKey(keyMap.get("new folder"));
+        langList.get(8).setI18NKey(keyMap.get("copy"));
+        langList.get(9).setI18NKey(keyMap.get("cut"));
+        langList.get(10).setI18NKey(keyMap.get("paste"));
+        langList.get(11).setI18NKey(keyMap.get("paste append"));
+        langList.get(12).setI18NKey(keyMap.get("rename"));
+        langList.get(13).setI18NKey(keyMap.get("move up"));
+        langList.get(14).setI18NKey(keyMap.get("move down"));
+        langList.get(15).setI18NKey(keyMap.get("expand all"));
+        langList.get(16).setI18NKey(keyMap.get("clear"));
+        langList.get(17).setI18NKey(keyMap.get("delete"));
+        langList.get(18).setI18NKey(keyMap.get("copy"));
+        langList.get(19).setI18NKey(keyMap.get("cut"));
+        langList.get(20).setI18NKey(keyMap.get("paste append"));
+        langList.get(21).setI18NKey(keyMap.get("rename"));
+        langList.get(22).setI18NKey(keyMap.get("move up"));
+        langList.get(23).setI18NKey(keyMap.get("move down"));
+        langList.get(24).setI18NKey(keyMap.get("delete"));
+    }
+
+    @Override
+    public void localize(String str) {}
 
     private static class TreeItemClipBoard {
         private AXTreeItem item;

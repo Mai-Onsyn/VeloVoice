@@ -56,7 +56,7 @@ public class Constants {
             try {
                 HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-                System.out.println(response.body());
+                //System.out.println(response.body());
                 JSONObject responseJson = JSONObject.parseObject(response.body());
 
                 SEC_MS_GEC = responseJson.getString("Sec-MS-GEC");

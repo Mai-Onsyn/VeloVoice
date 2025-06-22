@@ -12,16 +12,17 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Line;
 import javafx.util.Duration;
-import mai_onsyn.AnimeFX2.LanguageSwitchable;
+import mai_onsyn.AnimeFX2.Localizable;
 import mai_onsyn.AnimeFX2.ResourceManager;
 import mai_onsyn.AnimeFX2.Styles.AXTextFieldStyle;
 import mai_onsyn.AnimeFX2.Styles.DefaultAXTextFieldStyle;
 import mai_onsyn.AnimeFX2.layout.AXContextPane;
 import mai_onsyn.AnimeFX2.Utls.Toolkit;
 
+import java.util.List;
 import java.util.Map;
 
-public class AXTextField extends AXBase implements LanguageSwitchable {
+public class AXTextField extends AXBase implements Localizable {
 
     private AXTextFieldStyle style = new DefaultAXTextFieldStyle();
 
@@ -155,21 +156,36 @@ public class AXTextField extends AXBase implements LanguageSwitchable {
         super.setTheme(style);
     }
 
+    private String promptI18NKey = "";
+
     @Override
-    public void switchLanguage(String str) {
-        setPromptText(str);
+    public String getI18NKey() {
+        return promptI18NKey;
     }
 
     @Override
-    public Map<LanguageSwitchable, String> getLanguageElements() {
-        return Map.of(
-                copy,"copy",
-                cut,"cut",
-                paste,"paste",
-                undo,"undo",
-                selectAll,"selectAll",
-                clear, "clear"
-        );
+    public void setI18NKey(String key) {
+        promptI18NKey = key;
+    }
+
+    @Override
+    public void localize(String str) {
+        textField.setPromptText(str);
+    }
+
+    @Override
+    public List<Localizable> getChildrenLocalizable() {
+        return List.of(copy, cut, paste, undo, selectAll, clear);
+    }
+
+    @Override
+    public void setChildrenI18NKeys(Map<String, String> keyMap) {
+        copy.setI18NKey(keyMap.get("copy"));
+        cut.setI18NKey(keyMap.get("cut"));
+        paste.setI18NKey(keyMap.get("paste"));
+        undo.setI18NKey(keyMap.get("undo"));
+        selectAll.setI18NKey(keyMap.get("select all"));
+        clear.setI18NKey(keyMap.get("clear"));
     }
 
 

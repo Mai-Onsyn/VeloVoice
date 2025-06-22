@@ -9,17 +9,17 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import mai_onsyn.AnimeFX2.LanguageSwitchable;
+import mai_onsyn.AnimeFX2.Localizable;
 import mai_onsyn.AnimeFX2.ResourceManager;
 import mai_onsyn.AnimeFX2.Styles.AXTextAreaStyle;
 import mai_onsyn.AnimeFX2.Styles.DefaultAXTextAreaStyle;
 import mai_onsyn.AnimeFX2.layout.AXContextPane;
 import mai_onsyn.AnimeFX2.Utls.Toolkit;
 
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
-public class AXTextArea extends AXBase implements LanguageSwitchable {
+public class AXTextArea extends AXBase implements Localizable {
 
     private AXTextAreaStyle style = new DefaultAXTextAreaStyle();
 
@@ -124,20 +124,49 @@ public class AXTextArea extends AXBase implements LanguageSwitchable {
         super.setTheme(style);
     }
 
-    @Override
-    public void switchLanguage(String str) {}
+    private String promptI18NKey = "";
 
     @Override
-    public Map<LanguageSwitchable, String> getLanguageElements() {
-        return Map.of(
-                copy,"copy",
-                cut,"cut",
-                paste,"paste",
-                undo,"undo",
-                selectAll,"selectAll",
-                clear, "clear"
-        );
+    public String getI18NKey() {
+        return promptI18NKey;
     }
+
+    @Override
+    public void setI18NKey(String key) {
+        promptI18NKey = key;
+    }
+
+    @Override
+    public void localize(String str) {
+        textArea.setPromptText(str);
+    }
+
+    @Override
+    public List<Localizable> getChildrenLocalizable() {
+        return List.of(copy, cut, paste, undo, selectAll, clear);
+    }
+
+    @Override
+    public void setChildrenI18NKeys(Map<String, String> keyMap) {
+        copy.setI18NKey(keyMap.get("copy"));
+        cut.setI18NKey(keyMap.get("cut"));
+        paste.setI18NKey(keyMap.get("paste"));
+        undo.setI18NKey(keyMap.get("undo"));
+        selectAll.setI18NKey(keyMap.get("select all"));
+        clear.setI18NKey(keyMap.get("clear"));
+    }
+
+//    @Override
+//    public Map<LanguageSwitchable, String> getLanguageElements() {
+//        return Map.of(
+//                copy,"copy",
+//                cut,"cut",
+//                paste,"paste",
+//                undo,"undo",
+//                selectAll,"selectAll",
+//                clear, "clear"
+//        );
+//    }
 
 
     public void appendText(String s) {

@@ -7,16 +7,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import mai_onsyn.AnimeFX2.LanguageSwitchable;
+import mai_onsyn.AnimeFX2.I18N;
+import mai_onsyn.AnimeFX2.Localizable;
 import mai_onsyn.AnimeFX2.Module.*;
-import mai_onsyn.AnimeFX2.Styles.AXBaseStyle;
 import mai_onsyn.AnimeFX2.Styles.DefaultAXBaseStyle;
 import mai_onsyn.AnimeFX2.Utls.*;
 import mai_onsyn.AnimeFX2.layout.AutoPane;
 
 import java.util.*;
-
-import static mai_onsyn.VeloVoice2.App.Runtime.*;
 
 public class Config extends JSONObject {
 
@@ -141,7 +139,8 @@ public class Config extends JSONObject {
         textField.textField().textProperty().addListener((o, ov, nv) -> {
             setString(key, nv);
         });
-        languageManager.register(textField, promptNameSpace);
+        textField.setI18NKey(promptNameSpace);
+        I18N.registerComponent(textField);
         return new ConfigItem(key, textField, 0.4);
     }
 
@@ -163,6 +162,13 @@ public class Config extends JSONObject {
         group.getButtonList().forEach(button -> {
             if (Objects.equals(button.getUserData(), getString(key))) {
                 group.selectButton(button);
+            }
+        });
+        group.addOnSelectChangedListener((o, ov, nv) -> {
+            if (nv == null) {
+                this.setString(key, "null");
+            } else {
+                this.setString(key, nv.getUserData().toString());
             }
         });
 
@@ -225,7 +231,7 @@ public class Config extends JSONObject {
 //
 //    }
 
-    public static class ConfigItem extends AXBase implements LanguageSwitchable {
+    public static class ConfigItem extends AXBase implements Localizable {
 
         private final Label label;
         private final AutoPane innerItem;
@@ -263,14 +269,35 @@ public class Config extends JSONObject {
             return label;
         }
 
+        private String langKey = "";
+
         @Override
-        public void switchLanguage(String str) {
-            label.setText(str);
+        public String getI18NKey() {
+            return langKey;
         }
 
         @Override
-        public Map<LanguageSwitchable, String> getLanguageElements() {
-            return Map.of();
+        public List<Localizable> getChildrenLocalizable() {
+            if (innerItem instanceof Localizable localizable) {
+                return localizable.getChildrenLocalizable();
+            } else return List.of();
+        }
+
+        @Override
+        public void setI18NKey(String key) {
+            langKey = key;
+        }
+
+        @Override
+        public void setChildrenI18NKeys(Map<String, String> keyMap) {
+            if (innerItem instanceof Localizable localizable) {
+                localizable.setChildrenI18NKeys(keyMap);
+            }
+        }
+
+        @Override
+        public void localize(String text) {
+            label.setText(text);
         }
     }
 

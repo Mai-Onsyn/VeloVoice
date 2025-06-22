@@ -15,7 +15,8 @@ public class DefaultAXTreeViewStyle extends DefaultAXBaseStyle implements AXTree
     }
 
     @Override
-    public AXTreeItemStyle getFolderItemStyle() {DefaultAXTreeItemStyle style = new DefaultAXTreeItemStyle();
+    public AXTreeItemStyle getFolderItemStyle() {
+        DefaultAXTreeItemStyle style = new DefaultAXTreeItemStyle();
         style.setIcon(ResourceManager.folder);
         style.setBorderRadius(0);
         style.setBorderColor(Color.TRANSPARENT);
@@ -24,7 +25,8 @@ public class DefaultAXTreeViewStyle extends DefaultAXBaseStyle implements AXTree
     }
 
     @Override
-    public AXTreeItemStyle getFileItemStyle() {DefaultAXTreeItemStyle style = new DefaultAXTreeItemStyle();
+    public AXTreeItemStyle getFileItemStyle() {
+        DefaultAXTreeItemStyle style = new DefaultAXTreeItemStyle();
         style.setIcon(ResourceManager.file);
         style.setBorderRadius(0);
         style.setBorderColor(Color.TRANSPARENT);

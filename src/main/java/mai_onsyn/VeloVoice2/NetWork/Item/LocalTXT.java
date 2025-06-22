@@ -2,15 +2,18 @@ package mai_onsyn.VeloVoice2.NetWork.Item;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import javafx.util.Pair;
+import mai_onsyn.AnimeFX2.Module.AXButton;
 import mai_onsyn.AnimeFX2.Module.AXTreeView;
 import mai_onsyn.AnimeFX2.Utls.AXDataTreeItem;
 import mai_onsyn.AnimeFX2.Utls.AXTreeItem;
+import mai_onsyn.VeloVoice2.App.Config;
+import mai_onsyn.VeloVoice2.FrameFactory.LocalTXTHeaderEditor2;
 import mai_onsyn.VeloVoice2.Text.TextUtil;
 
 import java.io.File;
@@ -20,10 +23,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static mai_onsyn.VeloVoice2.App.Constants.UI_HEIGHT;
+import static mai_onsyn.VeloVoice2.App.Constants.UI_SPACING;
+
 public class LocalTXT extends Source {
 
     private final List<Pair<String, String>> identifiers = new ArrayList<>();
 
+    private Stage headerStage;
 
     public LocalTXT() {
         super();
@@ -79,6 +86,35 @@ public class LocalTXT extends Source {
         updateRegexes();
 
         addToTree(folder, root, attribution);
+    }
+
+    @Override
+    public Config.ConfigBox mkConfigFrame() {
+        Config.ConfigBox localTXTBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
+
+        headerStage = new Stage();
+
+        Config.ConfigItem parseHtmlCharacters = config.genSwitchItem("ParseHtmlCharacters");
+        Config.ConfigItem parseStructures = config.genSwitchItem("ParseStructures");
+        Config.ConfigItem ignoreEmptyParsedFile = config.genSwitchItem("IgnoreEmptyParsedFile");
+
+        AXButton editButton = new AXButton("Edit");
+        Config.ConfigItem rulesEdit = new Config.ConfigItem("ParseRules", editButton, 0.4);
+        localTXTBox.addConfigItem(parseHtmlCharacters, parseStructures, ignoreEmptyParsedFile, rulesEdit);
+
+
+        {
+            headerStage.setTitle("Edit LocalTXT Parse Rules");
+            LocalTXTHeaderEditor2 headerItemsEditor = new LocalTXTHeaderEditor2(JSONArray.parseArray(config.getString("HeaderItems")));
+            headerStage.setScene(new Scene(headerItemsEditor, 800, 600));
+            headerItemsEditor.requestFocus();
+        }
+        editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (headerStage.isShowing()) headerStage.toFront();
+            else headerStage.show();
+        });
+
+        return localTXTBox;
     }
 
     private void addToTree(File fileOrFolder, AXTreeItem parent, AXTreeView<?> attribution) {
