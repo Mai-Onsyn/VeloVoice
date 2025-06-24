@@ -14,7 +14,7 @@
   "frame.context_menu.undo": "撤销",
   "frame.context_menu.select_all": "全选",
   "frame.main.item.label.edge_tts.lang": "语言",
-  "frame.main.item.label.edge_tts.model": "语音模型",
+  "frame.main.item.label.edge_tts.model": "模型",
   "frame.main.item.label.edge_tts.rate": "语速",
   "frame.main.item.label.edge_tts.volume": "音量",
   "frame.main.item.label.edge_tts.pitch": "音高",

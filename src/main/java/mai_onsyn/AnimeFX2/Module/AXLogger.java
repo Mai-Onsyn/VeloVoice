@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Deprecated
 public class AXLogger extends AXTextArea {
     /**
      * 0 - error

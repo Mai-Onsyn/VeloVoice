@@ -5,6 +5,8 @@ import mai_onsyn.VeloVoice2.Audio.AudioSaver;
 import mai_onsyn.VeloVoice2.NetWork.TTS.FixedEdgeTTSClient;
 import mai_onsyn.VeloVoice2.NetWork.TTS.TTSClient;
 import mai_onsyn.VeloVoice2.Text.Sentence;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.util.*;
@@ -17,6 +19,8 @@ import static mai_onsyn.VeloVoice2.FrameFactory.LogFactory.logger;
 
 //多线程TTS处理
 public class TTSPool {
+    private static final Logger log = LogManager.getLogger(TTSPool.class);
+
     public enum ClientType {
         EDGE
     }
@@ -35,7 +39,7 @@ public class TTSPool {
     }
 
     public void connect() throws InterruptedException {
-        logger.info("Connecting to TTS server by %d threads...", size);
+        log.info(String.format("Connecting to TTS server by %d threads...", size));
         CountDownLatch countDownLatch = new CountDownLatch(size);
         for (TTSClient client : clients) {
             Thread.ofVirtual().start(() -> {
@@ -49,9 +53,9 @@ public class TTSPool {
         }
         try {
             countDownLatch.await(config.getInteger("TimeoutMillis"), TimeUnit.MILLISECONDS);
-            logger.info("%d threads connected to TTS server.", size);
+            log.info(String.format("%d threads connected to TTS server.", size));
         } catch (Exception e) {
-            logger.warn("Failed to connect because: %s", e.getMessage());
+            log.warn("Failed to connect because: %s" + e.getMessage());
             throw new InterruptedException();
         }
     }
@@ -60,7 +64,7 @@ public class TTSPool {
         for (TTSClient client : clients) {
             client.close();
         }
-        logger.info("All threads have been shut down");
+        log.info("All threads have been shut down");
     }
 
     public void execute(List<String> input, File outputFolder, String fileName) throws InterruptedException {

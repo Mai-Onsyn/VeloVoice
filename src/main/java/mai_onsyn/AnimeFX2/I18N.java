@@ -1,6 +1,8 @@
 package mai_onsyn.AnimeFX2;
 
 import com.alibaba.fastjson.JSONObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -12,6 +14,7 @@ public class I18N {
 
     private static final Map<String, Map<String, String>> languageMap = new HashMap<>();
     private static final List<Localizable> registeredComponents = new ArrayList<>();
+    private static final Logger log = LogManager.getLogger(I18N.class);
 
     private I18N() {}
 
@@ -55,7 +58,7 @@ public class I18N {
                                 e -> (String) e.getValue()
                         )));
             } catch (NullPointerException e) {
-                System.err.println("Language file not found: " + key);
+                log.warn("Language file not found: " + key);
             }
         }
     }

@@ -4,12 +4,12 @@ import javafx.scene.paint.Color;
 
 public class DefaultAXSliderStyle implements AXSliderStyle {
 
-    private double thumbWidth = 30;
-    private double thumbHeight = 30;
+    private double thumbWidth = 25;
+    private double thumbHeight = 25;
     private double trackHeight = 7.5;
-    private double hoveredScale = 1.4;
+    private double hoveredScale = 1.2;
     private double clickedScale = 0.9;
-    private double pressedScale = 1.2;
+    private double pressedScale = 1.1;
     private double animeRate = 1.0;
 
 

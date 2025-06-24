@@ -13,7 +13,7 @@ import mai_onsyn.AnimeFX2.Module.AXTreeView;
 import mai_onsyn.AnimeFX2.Utls.AXDataTreeItem;
 import mai_onsyn.AnimeFX2.Utls.AXTreeItem;
 import mai_onsyn.VeloVoice2.App.Config;
-import mai_onsyn.VeloVoice2.FrameFactory.LocalTXTHeaderEditor2;
+import mai_onsyn.VeloVoice2.FrameFactory.LocalTXTHeaderEditor;
 import mai_onsyn.VeloVoice2.Text.TextUtil;
 
 import java.io.File;
@@ -105,7 +105,7 @@ public class LocalTXT extends Source {
 
         {
             headerStage.setTitle("Edit LocalTXT Parse Rules");
-            LocalTXTHeaderEditor2 headerItemsEditor = new LocalTXTHeaderEditor2(JSONArray.parseArray(config.getString("HeaderItems")));
+            LocalTXTHeaderEditor headerItemsEditor = new LocalTXTHeaderEditor(JSONArray.parseArray(config.getString("HeaderItems")));
             headerStage.setScene(new Scene(headerItemsEditor, 800, 600));
             headerItemsEditor.requestFocus();
         }

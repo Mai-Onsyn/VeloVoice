@@ -137,11 +137,11 @@ public class AXChoiceBox extends AXButton {
 
 
 
+    private final List<Localizable> registeredChildren = new ArrayList<>();
 
     @Override
     public List<Localizable> getChildrenLocalizable() {
-        return buttonGroup.getButtonList().stream()
-                .collect(Collectors.toUnmodifiableList());
+        return registeredChildren;
     }
 
     @Override
@@ -152,6 +152,7 @@ public class AXChoiceBox extends AXButton {
                 keyMap.forEach((k, v) -> {
                     if (k.equals(buttonKey)) {
                         b.setI18NKey(v);
+                        registeredChildren.add(b);
                     }
                 });
 

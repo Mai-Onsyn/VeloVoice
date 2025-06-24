@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <!-- 定义日志文件名格式（时间戳） -->
+        <Property name="LOG_FILENAME">logs/${date:yyyy-MM-dd HH-mm-ss}.log</Property>
+        <!-- 控制台日志格式（带颜色） -->
+        <Property name="CONSOLE_PATTERN">
+            %blue{[%d{MM-dd HH:mm:ss}]} %yellow{[%t]} %highlight{[%level]}{ERROR=Bright
+            RED, WARN=Bright Yellow, INFO=Bright Green, DEBUG=Bright Cyan, TRACE=Bright White} %msg%n
+        </Property>
+        <!-- 文件日志格式（不带颜色） -->
+        <Property name="FILE_PATTERN">
+            [%d{MM-dd HH:mm:ss}] [%t] [%level] %msg%n
+        </Property>
+    </Properties>
+
+    <Appenders>
+        <!-- 控制台输出（带颜色） -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${CONSOLE_PATTERN}"/>
+        </Console>
+
+        <!-- 文件输出（按时间戳命名，每次运行生成一个新文件） -->
+        <File name="File" fileName="${LOG_FILENAME}">
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+        </File>
+
+        <!-- 自定义 Appender -->
+        <AXAppender name="JavaFX">
+            <PatternLayout pattern=""/>
+        </AXAppender>
+
+    </Appenders>
+
+    <Loggers>
+        <Root level="debug">
+            <!-- 同时输出到控制台和文件 -->
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+            <AppenderRef ref="JavaFX"/> <!-- 同时输出到 JavaFX -->
+        </Root>
+    </Loggers>
+</Configuration>

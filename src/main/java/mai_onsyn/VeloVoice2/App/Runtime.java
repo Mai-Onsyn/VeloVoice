@@ -32,7 +32,7 @@ public class Runtime {
 
         config.registerConfig("EdgeTTS", edgeTTSConfig);
         {
-            edgeTTSConfig.registerString("SelectedLanguage", "中文");
+            edgeTTSConfig.registerString("SelectedLanguage", "zh");
             edgeTTSConfig.registerString("SelectedModel", "zh-CN-XiaoxiaoNeural");
             edgeTTSConfig.registerDouble("VoiceRate", 1.0);
             edgeTTSConfig.registerDouble("VoiceVolume", 1.0);

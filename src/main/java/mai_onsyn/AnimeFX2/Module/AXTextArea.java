@@ -156,18 +156,6 @@ public class AXTextArea extends AXBase implements Localizable {
         clear.setI18NKey(keyMap.get("clear"));
     }
 
-//    @Override
-//    public Map<LanguageSwitchable, String> getLanguageElements() {
-//        return Map.of(
-//                copy,"copy",
-//                cut,"cut",
-//                paste,"paste",
-//                undo,"undo",
-//                selectAll,"selectAll",
-//                clear, "clear"
-//        );
-//    }
-
 
     public void appendText(String s) {
         textArea.appendText(s);

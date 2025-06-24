@@ -4,6 +4,8 @@ import javafx.beans.property.SimpleStringProperty;
 import mai_onsyn.AnimeFX2.Utls.AXDataTreeItem;
 import mai_onsyn.AnimeFX2.Utls.AXTreeItem;
 import mai_onsyn.VeloVoice2.NetWork.TTSPool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import static mai_onsyn.VeloVoice2.FrameFactory.LogFactory.totalProgressBar;
 
 public class TTS {
 
+    private static final Logger log = LogManager.getLogger(TTS.class);
     public static TTSPool pool;
 
     private static final List<ExecuteItem> executeItems = new ArrayList<>();
@@ -56,9 +59,9 @@ public class TTS {
             currentFinished.set(0);
             currentTotalCount = e.texts.size();
 
-            logger.debug("Start file: %s", e.name);
+            log.debug(String.format("Start file: %s", e.name));
             pool.execute(e.texts, e.folder, e.name);
-            logger.debug("Complected file: %s", e.name);
+            log.debug(String.format("Complected file: %s", e.name));
         }
     }
 

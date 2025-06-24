@@ -67,6 +67,31 @@
             <systemPath>${project.basedir}/lib/srt-library.jar</systemPath>
         </dependency>
 
+        <dependency>
+            <groupId>org.fxmisc.richtext</groupId>
+            <artifactId>richtextfx</artifactId>
+            <version>0.11.5</version>
+        </dependency>
+
+        <!-- Log4j2 dependencies -->
+        <!-- log4j2 门面API -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.17.1</version>
+        </dependency>
+        <!-- log4j2的日志实现 -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.17.1</version>
+        </dependency>
+        <!-- 为slf4j绑定日志实现 log4j2的适配器 -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.13.3</version>
+        </dependency>
 
     </dependencies>
 

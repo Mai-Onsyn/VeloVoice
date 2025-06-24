@@ -79,18 +79,10 @@
     -fx-padding: 0;
 }
 
-/* 设置滚动条滑块样式 */
 .text-area .scroll-bar .thumb {
     -fx-background-color: #88888880;
     -fx-background-radius: 5px;
 }
-
-
-
-
-
-
-
 
 .text-field {
     -fx-background-color: transparent;
@@ -100,3 +92,30 @@
     -fx-padding: 0;
     -fx-border-color: transparent;
 }
+
+
+
+.styled-text-area {
+    -fx-background-color: transparent;
+ }
+
+
+virtualized-scroll-pane .scroll-bar {
+     -fx-background-color: transparent;
+     -fx-background: transparent;
+     -fx-pref-width: 8px;
+ }
+
+virtualized-scroll-pane .scroll-bar:horizontal .increment-button,
+virtualized-scroll-pane .scroll-bar:horizontal .decrement-button,
+virtualized-scroll-pane .scroll-bar:vertical .increment-button,
+virtualized-scroll-pane .scroll-bar:vertical .decrement-button {
+     -fx-background-color: transparent;
+     -fx-background-radius: 0;
+     -fx-padding: 0;
+ }
+
+virtualized-scroll-pane .scroll-bar .thumb {
+     -fx-background-color: #88888880;
+     -fx-background-radius: 5px;
+ }

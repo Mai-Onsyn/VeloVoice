@@ -24,6 +24,7 @@ import static mai_onsyn.VeloVoice2.App.Constants.*;
 import static mai_onsyn.VeloVoice2.App.Runtime.sources;
 
 //[{"name":"test","content":[{"start":"\\n[^ ]a","end":"\n"}]},{"name":"node","content":[{"start":"testStart","end":"testEnd"},{"start":"tests","end":"fa"}]}]
+@Deprecated
 public class LocalTXTHeadersEditor extends HDoubleSplitPane {
 
 

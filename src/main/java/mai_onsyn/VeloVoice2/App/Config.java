@@ -253,6 +253,7 @@ public class Config extends JSONObject {
             super();
             super.setTheme(style);
             super.update();
+            super.setClip(null);
 
             label = new Label(initName);
             innerItem = content;

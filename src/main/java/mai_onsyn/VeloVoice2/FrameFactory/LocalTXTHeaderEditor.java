@@ -28,7 +28,7 @@ import mai_onsyn.VeloVoice2.App.Runtime;
 
 import static mai_onsyn.VeloVoice2.App.Constants.*;
 
-public class LocalTXTHeaderEditor2 extends HDoubleSplitPane {
+public class LocalTXTHeaderEditor extends HDoubleSplitPane {
 
     private final JSONArray root;
     private final Config config = Runtime.sources.get("LocalTXT").getConfig();
@@ -43,7 +43,7 @@ public class LocalTXTHeaderEditor2 extends HDoubleSplitPane {
 
     private static final AXTextInputPopup inputPopup = new AXTextInputPopup();
 
-    public LocalTXTHeaderEditor2(JSONArray initialArray) {
+    public LocalTXTHeaderEditor(JSONArray initialArray) {
         super(10, 0.15, 50, 50);
         root = initialArray;
 

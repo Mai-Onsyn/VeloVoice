@@ -24,6 +24,8 @@ import mai_onsyn.VeloVoice2.NetWork.TTS.EdgeTTSVoice;
 import mai_onsyn.VeloVoice2.NetWork.TTS.FixedEdgeTTSClient;
 import mai_onsyn.VeloVoice2.Text.Sentence;
 import mai_onsyn.VeloVoice2.Text.TTS;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.util.*;
@@ -31,13 +33,13 @@ import java.util.*;
 import static mai_onsyn.VeloVoice2.App.Constants.*;
 import static mai_onsyn.VeloVoice2.App.Runtime.*;
 import static mai_onsyn.VeloVoice2.FrameFactory.LogFactory.logStage;
-import static mai_onsyn.VeloVoice2.FrameFactory.LogFactory.logger;
 
 public class MainFactory {
 
     private static final Label textAreaInfo = new Label();
     private static final AXTreeView<SimpleStringProperty> treeView = new AXTreeView<>(SimpleStringProperty::new, src -> new SimpleStringProperty(src.get()));
     private static final AXTextArea textArea = new AXTextArea();
+    private static final Logger log = LogManager.getLogger(MainFactory.class);
 
     public static void drawMainFrame(AutoPane root) {
         HDoubleSplitPane textEditArea = getTextEditArea();
@@ -221,15 +223,15 @@ public class MainFactory {
                                     Thread.ofVirtual().name("Preview-Thread").start(() -> {
                                         FixedEdgeTTSClient client = new FixedEdgeTTSClient();
                                         try {
-                                            logger.info("Loading preview text...");
+                                            log.info("Loading preview text...");
                                             client.connect();
                                             Sentence sentence = client.process(config.getString("PreviewText"));
                                             client.close();
 
-                                            logger.info("Playing preview text...");
+                                            log.info("Playing preview text...");
                                             AudioPlayer.play(sentence.getAudio());
                                         } catch (Exception ex) {
-                                            logger.error("Error while loading preview text: ", ex.toString());
+                                            log.error("Error while loading preview text: " + ex.toString());
                                             throw new RuntimeException(ex);
                                         }
                                     });
@@ -262,7 +264,7 @@ public class MainFactory {
 
 
                             //根据语言显示模型
-                            showEdgeTTSModel(modelChoiceBox, initLang);
+                            showEdgeTTSModel(modelChoiceBox, LANG_NAME_TO_HEADCODE_MAPPING.get(initLang));
                             langButtonGroup.addOnSelectChangedListener((o, ov, nv) -> {
                                 showEdgeTTSModel(modelChoiceBox, LANG_NAME_TO_HEADCODE_MAPPING.get(nv.getTextLabel().getText()));
                             });
@@ -435,10 +437,10 @@ public class MainFactory {
                         try {
                             TTS.start(treeView.getRoot(), new File(config.getString("AudioSaveFolder")));
 
-                            logger.info("All tasks have been completed");
+                            log.info("All tasks have been completed");
 
                         } catch (InterruptedException ex) {
-                            logger.info("Task interrupted by user");
+                            log.info("Task interrupted by user");
                         } finally {
                             Platform.runLater(() -> isRunning.set(false));
                         }
