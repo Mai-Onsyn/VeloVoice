@@ -34,7 +34,7 @@ public class LocalTXTHeaderEditor extends HDoubleSplitPane {
     private final Config config = Runtime.sources.get("LocalTXT").getConfig();
     private final Config.ConfigBox itemBox = new Config.ConfigBox(0, UI_HEIGHT * 1.5);
     private final AXTextArea descriptionArea = new AXTextArea();
-    private final Label titleLabel = new Label("Test");
+    private final Label titleLabel = new Label();
     private final AXButtonGroup group = new AXButtonGroup();
     private final AXScrollPane rightScrollRoot = new AXScrollPane();
 
@@ -46,6 +46,7 @@ public class LocalTXTHeaderEditor extends HDoubleSplitPane {
     public LocalTXTHeaderEditor(JSONArray initialArray) {
         super(10, 0.15, 50, 50);
         root = initialArray;
+        rightScrollRoot.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
 //        Item rootTest = new Item("RootTest");
 //        Item rootTest2 = new Item("RootTest2");
@@ -121,7 +122,7 @@ public class LocalTXTHeaderEditor extends HDoubleSplitPane {
             bottomRoot.setPosition(descriptionArea, false, 20, 20, 0, 20);
 
 
-            rightScrollRoot.setContent(selectedItem.getContent());
+            rightScrollRoot.setContent(selectedItem == null ? null : selectedItem.getContent());
             rightScrollRoot.setFitToWidth(true);
 
             titleLabel.setFont(new Font(20));
@@ -189,6 +190,15 @@ public class LocalTXTHeaderEditor extends HDoubleSplitPane {
                 }
             });
 
+            //initialize
+            if (itemBox.getChildren().isEmpty()) {
+                group.selectButton(null);
+                rightScrollRoot.setContent(null);
+                titleLabel.setText("Null");
+                renameButton.setVisible(false);
+                deleteButton.setVisible(false);
+            }
+
 
             topRoot.getChildren().addAll(titleBox, rightScrollRoot);
             topRoot.setPosition(titleBox, false, 20, 20, 20, 60);
@@ -201,7 +211,6 @@ public class LocalTXTHeaderEditor extends HDoubleSplitPane {
 //        selectedItem.getContent().getChildren().add(selectedItem.getContent().getChildren().size() - 1, new ItemPane("sub-2", "\\n+", "\\n"));
 //        selectedItem.add(new ItemPane("sub-1", "\\n+", "\\n"));
 //        selectedItem.add(new ItemPane("sub-2", "\\n+", "\\n"));
-
 
         Runtime.cycleTasks.add(() -> {
             mkJson();

@@ -117,6 +117,10 @@ public class AXButton extends AXBase implements Localizable {
         super.setTheme(style);
     }
 
+    public String getText() {
+        return textLabel.getText();
+    }
+
     public Label getTextLabel() {
         return textLabel;
     }

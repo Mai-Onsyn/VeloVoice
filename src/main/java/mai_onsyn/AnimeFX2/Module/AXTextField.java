@@ -101,7 +101,7 @@ public class AXTextField extends AXBase implements Localizable {
                         new KeyValue(line.startXProperty(), super.getLayoutBounds().getWidth() / 2),
                         new KeyValue(line.endXProperty(), super.getLayoutBounds().getWidth() / 2)
                 ));
-                lineAnimation.setOnFinished(_ -> line.setVisible(true));
+                lineAnimation.setOnFinished(_ -> line.setVisible(false));
                 lineAnimation.play();
 
                 super.fireEvent(new MouseEvent(MouseEvent.MOUSE_EXITED, 0, 0, 0, 0, MouseButton.PRIMARY, 1, false, false, false, false, false, false, false, false, false, false, null));
@@ -120,6 +120,7 @@ public class AXTextField extends AXBase implements Localizable {
         });
         line.startYProperty().bind(Bindings.subtract(super.heightProperty(), lineInsetProperty));
         line.endYProperty().bind(Bindings.subtract(super.heightProperty(), lineInsetProperty));
+        line.setVisible(false);
 
         super.getChildren().addAll(textField, line);
         this.update();

@@ -13,8 +13,11 @@ import mai_onsyn.AnimeFX2.Module.*;
 import mai_onsyn.AnimeFX2.Styles.DefaultAXBaseStyle;
 import mai_onsyn.AnimeFX2.Utls.*;
 import mai_onsyn.AnimeFX2.layout.AutoPane;
+import mai_onsyn.VeloVoice2.FrameFactory.FrameThemes;
 
 import java.util.*;
+
+import static mai_onsyn.VeloVoice2.App.Runtime.themeManager;
 
 public class Config extends JSONObject {
 
@@ -153,7 +156,7 @@ public class Config extends JSONObject {
             item.setText(option);
             item.setOnMouseClicked(event -> {
                 setString(key, option);
-                choiceBox.getTextLabel().setText(option);
+                choiceBox.getTextLabel().setText(item.getText());
             });
         }
 
@@ -181,6 +184,8 @@ public class Config extends JSONObject {
         AXSlider slider = new AXSlider(min, max, step, getDouble(key));
         AXFloatTextField textField = new AXFloatTextField(min, max, getDouble(key));
         textField.setText(String.format("%.2f", getDouble(key)));
+        textField.setTheme(FrameThemes.TRANSPARENT_TEXT_FIELD);
+        themeManager.register(textField);
 
         textField.valueProperty().bindBidirectional(slider.valueProperty());
         textField.valueProperty().addListener((o, ov, nv) -> setDouble(key, nv.doubleValue()));
@@ -198,6 +203,8 @@ public class Config extends JSONObject {
         AXSlider slider = new AXSlider(min, max, step, getDouble(key));
         AXIntegerTextField textField = new AXIntegerTextField(min, max, getInteger(key));
         textField.setText(String.valueOf(getInteger(key)));
+        textField.setTheme(FrameThemes.TRANSPARENT_TEXT_FIELD);
+        themeManager.register(textField);
 
         textField.valueProperty().bindBidirectional(slider.valueProperty());
         textField.valueProperty().addListener((o, ov, nv) -> setInteger(key, nv.intValue()));
@@ -324,19 +331,19 @@ public class Config extends JSONObject {
             }
         }
 
-        public AXLangLabel addTitle(String title) {
-            AutoPane titlePane = new AutoPane();
-            titlePane.setMaxHeight(itemHeight);
-            titlePane.setMinHeight(itemHeight);
-
-            AXLangLabel label = new AXLangLabel(title);
-            label.setAlignment(Pos.CENTER);
-            titlePane.getChildren().add(label);
-            titlePane.setPosition(label, false, 0, 0, 0, 0);
-
-            getChildren().add(titlePane);
-            return label;
-        }
+//        public AXLangLabel addTitle(String title) {
+//            AutoPane titlePane = new AutoPane();
+//            titlePane.setMaxHeight(itemHeight);
+//            titlePane.setMinHeight(itemHeight);
+//
+//            AXLangLabel label = new AXLangLabel(title);
+//            label.setAlignment(Pos.CENTER);
+//            titlePane.getChildren().add(label);
+//            titlePane.setPosition(label, false, 0, 0, 0, 0);
+//
+//            getChildren().add(titlePane);
+//            return label;
+//        }
 
         public void lineBreak() {
             Region region = new Region();

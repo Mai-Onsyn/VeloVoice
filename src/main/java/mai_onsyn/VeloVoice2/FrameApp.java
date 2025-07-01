@@ -11,6 +11,8 @@ import mai_onsyn.VeloVoice2.FrameFactory.MainFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static mai_onsyn.VeloVoice2.App.Runtime.themeManager;
+
 public class FrameApp extends Application {
     private static final Logger log = LogManager.getLogger(FrameApp.class);
 
@@ -23,10 +25,11 @@ public class FrameApp extends Application {
         MainFactory.drawMainFrame(root);
         LogFactory.drawLogFrame();
         I18N.setLanguage("en_us");
+        themeManager.flushAll();
 
         Scene scene = new Scene(root, 1280, 720);
-        stage.setMinWidth(960);
-        stage.setMinHeight(540);
+        stage.setMinWidth(900);
+        stage.setMinHeight(500);
         stage.getIcons().add(new Image("textures/icon.png"));
         stage.setTitle("VeloVoice");
         stage.setScene(scene);
@@ -34,22 +37,20 @@ public class FrameApp extends Application {
         log.info("Application started");
         root.requestFocus();
 
-        Thread.ofVirtual().name("Test").start(() -> {
-
-            try {
-
-                for (int i = 0; i < 16; i++) {
-                    Thread.sleep(5);
-
-                    log.debug("test " + i);
-                }
-
-
-
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
+//        Thread.ofVirtual().name("Test").start(() -> {
+//
+//            try {
+//
+//                for (int i = 0; i < 16; i++) {
+//                    Thread.sleep(5);
+//
+//                    log.debug("test " + i);
+//                }
+//
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
 
 //        LocalTXTHeaderEditor2 headerItemsEditor = new LocalTXTHeaderEditor2(JSONArray.parseArray(Runtime.sources.get("LocalTXT").getConfig().getString("HeaderItems")));
 //        stage.setScene(new Scene(headerItemsEditor, 600, 450));

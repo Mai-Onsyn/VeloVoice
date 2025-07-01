@@ -22,8 +22,25 @@
   "frame.main.text_field.audio_folder": "path to save mp3 file",
   "frame.main.item.label.audio_folder": "Audio Save Folder",
 
-  "frame.main.item.label.text_process.load.title": "Load",
+  "frame.main.item.label.text_process.title.load": "Load",
+  "frame.main.item.label.text_process.title.save": "Save",
+  "frame.main.item.label.text_process.title.ordinal": "Ordinal",
+
   "frame.main.item.label.load.load_source": "Load Source",
-  "frame.main.text_field.text_load_uri": "uri",
-  "frame.main.item.label.load.text_load_uri": "Load URI"
+  "frame.main.item.label.load.save_method": "Save Method",
+  "frame.main.item.label.load.text_load_uri": "Load URI",
+  "frame.main.text_field.text_load_uri": "uri to load",
+
+  "frame.main.choose_box.save_method.txt_tree": "Text Tree",
+  "frame.main.choose_box.save_method.epub": "Epub",
+
+  "frame.main.text_field.ordinal_format": "enter string format",
+  "frame.main.item.label.text_process.ordinal.run": "Run",
+
+  "frame.main.item.label.after_process.title.srt": "SubRip Text",
+  "frame.main.item.label.after_process.srt.switch": "Enable",
+
+  "frame.main.item.label.after_process.title.shift": "Shift",
+  "frame.main.item.label.after_process.shift.rate": "Voice Rate",
+  "frame.main.item.label.after_process.shift.pitch": "Voice Pitch"
 }

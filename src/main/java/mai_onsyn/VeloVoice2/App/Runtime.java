@@ -7,6 +7,8 @@ import mai_onsyn.VeloVoice2.NetWork.Item.LocalTXT;
 import mai_onsyn.VeloVoice2.NetWork.Item.Source;
 
 import java.io.File;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -23,16 +25,17 @@ public class Runtime {
     public static final Config config = new Config();
     public static final Config edgeTTSConfig = new Config();
     public static final Config textConfig = new Config();
+    public static final Config voiceConfig = new Config();
 
     static {
         config.registerInteger("TimeoutMillis", 10000);
         config.registerInteger("MaxRetries", 3);
-        config.registerString("AudioSaveFolder", "");
+        config.registerString("AudioSaveFolder", "C:/Users/Administrator/Desktop/");
         config.registerString("PreviewText", "Hello, World!");
 
         config.registerConfig("EdgeTTS", edgeTTSConfig);
         {
-            edgeTTSConfig.registerString("SelectedLanguage", "zh");
+            edgeTTSConfig.registerString("SelectedLanguage", "中文");
             edgeTTSConfig.registerString("SelectedModel", "zh-CN-XiaoxiaoNeural");
             edgeTTSConfig.registerDouble("VoiceRate", 1.0);
             edgeTTSConfig.registerDouble("VoiceVolume", 1.0);
@@ -46,7 +49,19 @@ public class Runtime {
             textConfig.registerString("ForceSplitChars", "\n");
             textConfig.registerString("SplitChars", "。？！…， ");
             textConfig.registerString("LoadSource", "LocalTXT");
-            textConfig.registerString("LoadUri", "");
+            textConfig.registerString("LoadUri", "C:/Users/Administrator/Desktop/");
+            textConfig.registerString("SaveMethod", "TXTTree");
+            textConfig.registerString("SaveUri", "C:/Users/Administrator/Desktop/");
+            textConfig.registerString("TXTSaveEncoding", "UTF-8");
+            textConfig.registerString("OrdinalFormat", "%02d. %s");
+            textConfig.registerBoolean("OrdinalStartByZero", false);
+        }
+
+        config.registerConfig("Voice", voiceConfig);
+        {
+            voiceConfig.registerBoolean("SaveSRT", false);
+            voiceConfig.registerDouble("VoiceRate", 1.0);
+            voiceConfig.registerDouble("VoicePitch", 1.0);
         }
 
         for (Map.Entry<String, Source> entry : sources.entrySet()) {
@@ -81,6 +96,13 @@ public class Runtime {
             } catch (InterruptedException _) {
             }
         });
+    }
+
+    public static String stackTraceToString(Throwable e) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        e.printStackTrace(pw);
+        return sw.toString();
     }
 
 }

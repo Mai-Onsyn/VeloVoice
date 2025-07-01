@@ -6,7 +6,7 @@
 
     <groupId>mai_onsyn.VeloVoice</groupId>
     <artifactId>VeloVoice</artifactId>
-    <version>1.0-dev-1</version>
+    <version>1.0-dev-2</version>
 
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
@@ -44,6 +44,13 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>22.0.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.github.axet/TarsosDSP -->
+        <dependency>
+            <groupId>com.github.axet</groupId>
+            <artifactId>TarsosDSP</artifactId>
+            <version>2.4-1</version>
         </dependency>
 
         <dependency>

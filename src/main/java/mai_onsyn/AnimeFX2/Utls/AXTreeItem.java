@@ -139,7 +139,7 @@ public class AXTreeItem extends Pane implements AutoUpdatable {
         childrenBox.setLayoutX(style.getChildrenInsets());
         childrenBox.setLayoutY(style.getItemHeight());
 
-        double width = style.getItemHeight() + parseTextSize(item.getTextLabel().getText(), item.style().getTextFont()) + style.getTextLeftInsets() + style.getTextRightInsets();
+        double width = style.getItemHeight() + parseTextSize(item.getText(), item.style().getTextFont()) + style.getTextLeftInsets() + style.getTextRightInsets();
         item.setMaxWidth(width);
         item.setMinWidth(width);
 
@@ -174,7 +174,7 @@ public class AXTreeItem extends Pane implements AutoUpdatable {
     }
 
     public String getHeadName() {
-        return item.getTextLabel().getText();
+        return item.getText();
     }
 
     public void rename(String name) {

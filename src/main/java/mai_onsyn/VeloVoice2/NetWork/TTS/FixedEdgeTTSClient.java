@@ -1,11 +1,16 @@
 package mai_onsyn.VeloVoice2.NetWork.TTS;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import mai_onsyn.VeloVoice2.App.Constants;
+import mai_onsyn.VeloVoice2.Audio.AudioEncodeUtils;
 import mai_onsyn.VeloVoice2.Text.Sentence;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
+import java.io.IOException;
 import java.net.URI;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
@@ -57,7 +62,7 @@ public class FixedEdgeTTSClient implements TTSClient {
     }
 
     @Override
-    public Sentence process(String s) throws Exception {
+    public Sentence process(String s) throws IOException {
         int retry = -1;
         while (retry++ < config.getInteger("MaxRetries")) {
             try {
@@ -71,6 +76,8 @@ public class FixedEdgeTTSClient implements TTSClient {
 class EdgeTTSClient extends WebSocketClient {
 
     private static final Map<String, String> HEADERS = new HashMap<>();
+    private static final Logger log = LogManager.getLogger(EdgeTTSClient.class);
+
     static {
         HEADERS.put("Origin", ORIGIN);
         HEADERS.put("Pragma", "no-cache");
@@ -101,7 +108,8 @@ class EdgeTTSClient extends WebSocketClient {
     }
 
     private CompletableFuture<String> locker;
-    private final List<byte[]> bytesTemp = new ArrayList<>();
+    private final List<byte[]> audioBytesTemp = new ArrayList<>();
+    private final List<Sentence.Word> wordsTemp = new ArrayList<>();
 
     public void connectWithRetries() throws Exception {
         super.connect();
@@ -133,7 +141,17 @@ class EdgeTTSClient extends WebSocketClient {
     @Override
     public void onMessage(String s) {
         if (s.contains("Path:turn.end")) locker.complete("finished");
-        //System.out.println(s);
+        else if (s.contains("Path:audio.metadata")) {
+            String jsonStr = s.substring(s.indexOf("{"));
+            JSONArray metadata = JSONObject.parseObject(jsonStr).getJSONArray("Metadata");
+            JSONObject data = metadata.getJSONObject(0).getJSONObject("Data");
+            JSONObject text = data.getJSONObject("text");
+
+            long start = data.getLong("Offset") / 1667;
+            Sentence.Word word = new Sentence.Word(text.getString("Text"), (int) start, (int) (start + data.getLong("Duration") / 1667));
+            wordsTemp.add(word);
+        }
+        log.trace(s);
     }
 
     private static final byte[] HEADER = {0x50, 0x61, 0x74, 0x68, 0x3a, 0x61, 0x75, 0x64, 0x69, 0x6f, 0x0d, 0x0a};
@@ -142,6 +160,7 @@ class EdgeTTSClient extends WebSocketClient {
         byte[] originalData = byteBuffer.array();
         int headerLength = HEADER.length;
         int dataLength = originalData.length;
+        log.trace("Data length: " + dataLength);
 
         int headerIndex = -1;
         for (int i = 0; i <= dataLength - headerLength; i++) {
@@ -160,7 +179,7 @@ class EdgeTTSClient extends WebSocketClient {
 
         if (headerIndex != -1) {
             byte[] audioData = Arrays.copyOfRange(originalData, headerIndex + headerLength, dataLength);
-            this.bytesTemp.add(audioData);
+            this.audioBytesTemp.add(audioData);
         }
     }
 
@@ -202,14 +221,17 @@ class EdgeTTSClient extends WebSocketClient {
         locker = new CompletableFuture<>();
         String res = locker.get(config.getInteger("TimeoutMillis"), TimeUnit.MILLISECONDS);
         if (res.equals("error")) throw new EdgeTTSException("Server not response");
-        Sentence sentence = new Sentence(s, List.copyOf(bytesTemp));
-        bytesTemp.clear();
+        Sentence sentence = new Sentence(s, Sentence.mergeAudio(audioBytesTemp), List.copyOf(wordsTemp), AudioEncodeUtils.AudioFormat.MP3);
+        //log.debug(sentence.toString());
+
+        audioBytesTemp.clear();
+        wordsTemp.clear();
 
         return sentence;
     }
 }
 
-class EdgeTTSException extends Exception {
+class EdgeTTSException extends IOException {
     public EdgeTTSException(String message) {
         super(message);
     }

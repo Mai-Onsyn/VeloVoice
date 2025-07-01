@@ -57,26 +57,28 @@ public class Toolkit {
         final double[] scroll = new double[2];
         final Timeline[] anime = new Timeline[2];
         scrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
-            if (event.isShiftDown()) {
-                event.consume();
-                double width = scrollPane.getContent().getBoundsInLocal().getWidth() - scrollPane.getViewportBounds().getWidth();
-                scroll[0] -= event.getDeltaX() * 2 / width;
-                scroll[0] = Math.min(scroll[0], 1);
-                scroll[0] = Math.max(scroll[0], 0);
+            if (scrollPane.getContent() != null) {
+                if (event.isShiftDown()) {
+                    event.consume();
+                    double width = scrollPane.getContent().getBoundsInLocal().getWidth() - scrollPane.getViewportBounds().getWidth();
+                    scroll[0] -= event.getDeltaX() * 2 / width;
+                    scroll[0] = Math.min(scroll[0], 1);
+                    scroll[0] = Math.max(scroll[0], 0);
 
-                if (anime[0] != null) anime[0].stop();
-                anime[0] = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(scrollPane.hvalueProperty(), scroll[0])));
-                anime[0].play();
-            } else {
-                event.consume();
-                double height = scrollPane.getContent().getBoundsInLocal().getHeight() - scrollPane.getViewportBounds().getHeight();
-                scroll[1] -= event.getDeltaY() * 2 / height;
-                scroll[1] = Math.min(scroll[1], 1);
-                scroll[1] = Math.max(scroll[1], 0);
+                    if (anime[0] != null) anime[0].stop();
+                    anime[0] = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(scrollPane.hvalueProperty(), scroll[0])));
+                    anime[0].play();
+                } else {
+                    event.consume();
+                    double height = scrollPane.getContent().getBoundsInLocal().getHeight() - scrollPane.getViewportBounds().getHeight();
+                    scroll[1] -= event.getDeltaY() * 2 / height;
+                    scroll[1] = Math.min(scroll[1], 1);
+                    scroll[1] = Math.max(scroll[1], 0);
 
-                if (anime[1] != null) anime[1].stop();
-                anime[1] = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(scrollPane.vvalueProperty(), scroll[1])));
-                anime[1].play();
+                    if (anime[1] != null) anime[1].stop();
+                    anime[1] = new Timeline(new KeyFrame(Duration.millis(200), new KeyValue(scrollPane.vvalueProperty(), scroll[1])));
+                    anime[1].play();
+                }
             }
         });
         boolean[] isDragging = new boolean[1];

@@ -31,6 +31,11 @@ public class DefaultAXChoiceBoxStyle extends DefaultAXBaseStyle implements AXCho
         return signalImage;
     }
 
+    @Override
+    public AXContextPaneStyle getContextPaneStyle() {
+        return new DefaultAXContextPaneStyle();
+    }
+
 
     public void setSignalRelateX(double signalRelateX) {
         this.signalRelateX = signalRelateX;

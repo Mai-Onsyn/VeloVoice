@@ -19,7 +19,6 @@ import mai_onsyn.AnimeFX2.Utls.Toolkit;
 import mai_onsyn.AnimeFX2.layout.AXContextPane;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class AXChoiceBox extends AXButton {
 
@@ -32,6 +31,7 @@ public class AXChoiceBox extends AXButton {
 
     public AXChoiceBox() {
         super.setTheme(style);
+        this.itemPane.setTheme(style.getContextPaneStyle());
 
         super.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
@@ -78,6 +78,7 @@ public class AXChoiceBox extends AXButton {
     public void setTheme(AXChoiceBoxStyle style) {
         this.style = style;
         super.setTheme(style);
+        this.itemPane.setTheme(style.getContextPaneStyle());
     }
 
     public void removeItem(AXButton item) {
@@ -134,6 +135,9 @@ public class AXChoiceBox extends AXButton {
         return new Point2D(screenX, screenY);
     }
 
+    public void flushChosenButton() {
+        super.setText(buttonGroup.getSelectedButton().getText());
+    }
 
 
 

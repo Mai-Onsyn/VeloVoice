@@ -67,7 +67,7 @@ public class TTSPool {
         log.info("All threads have been shut down");
     }
 
-    public void execute(List<String> input, File outputFolder, String fileName) throws InterruptedException {
+    public void execute(List<String> input, File outputFolder, String fileName) throws Exception {
         Map<Integer, Sentence> resultPool = new HashMap<>();
 
         AtomicInteger processIndex = new AtomicInteger();
@@ -88,11 +88,12 @@ public class TTSPool {
                     try {
                         Sentence sentence = client.process(text);
                         resultPool.put(thisIndex, sentence);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    } finally {
                         currentFinished.set(currentFinished.get() + 1);
                         totalFinished.set(totalFinished.get() + 1);
                         countDownLatch.countDown();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
                     }
                 }
             });

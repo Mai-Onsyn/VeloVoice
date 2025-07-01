@@ -1,17 +1,26 @@
 package mai_onsyn.VeloVoice2.Text;
 
+import mai_onsyn.AnimeFX2.Utls.AXTreeItem;
+import mai_onsyn.VeloVoice2.App.Runtime;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jsoup.parser.Parser;
 import org.mozilla.universalchardet.UniversalDetector;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-import static mai_onsyn.VeloVoice2.App.Runtime.textConfig;
+import static mai_onsyn.VeloVoice2.App.Runtime.*;
 
 public class TextUtil {
+
+    private static final Logger log = LogManager.getLogger(TextUtil.class);
 
     public static List<String> splitText(String text) {
 
@@ -48,10 +57,52 @@ public class TextUtil {
             detector.handleData(fileContent, 0, fileContent.length);
             detector.dataEnd();
 
-            return decodeHtmlEntities(new String(fileContent, Charset.forName(detector.getDetectedCharset())));
+            String detectedCharset = detector.getDetectedCharset();
+            String result;
+            if (detectedCharset == null) {
+                log.warn(String.format("The encoding format of the file \"%s\" cannot be parsed and will be parsed using the default UTF-8", file.getAbsolutePath()));
+                result = new String(fileContent, StandardCharsets.UTF_8);
+            }
+            else result = new String(fileContent, Charset.forName(detectedCharset));
+            if (sources.get("LocalTXT").getConfig().getBoolean("ParseHtmlCharacters")) return decodeHtmlEntities(result);
+            else return result;
         } catch (Exception e) {
+            log.error(e.toString());
             throw new RuntimeException(e);
         }
+    }
+
+    public static void save(AXTreeItem root, File folder) {
+        List<ExecuteItem> files = ExecuteItem.parseStructure(root, folder);
+
+        for (ExecuteItem target : files) {
+            File file = new File(target.folder(), target.name() + ".txt");
+
+
+            if (!file.exists()) {
+                try {
+                    file.getParentFile().mkdirs();
+                    if (!file.createNewFile()) {
+                        throw new IOException("Could not create file: " + file.getAbsolutePath());
+                    }
+                } catch (IOException e) {
+                    log.error(e.getMessage());
+                    throw new RuntimeException(e);
+                }
+            }
+
+            try (FileOutputStream fos = new FileOutputStream(file)) {
+
+                fos.write(target.text().getBytes(Charset.forName(textConfig.getString("TXTSaveEncoding"))));
+
+                log.debug("Saved File: " + file);
+
+            } catch (IOException e) {
+                log.error(e.getMessage());
+                throw new RuntimeException(e);
+            }
+        }
+        log.info("Save task has been finished");
     }
 
 

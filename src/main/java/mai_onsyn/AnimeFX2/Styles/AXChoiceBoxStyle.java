@@ -9,6 +9,8 @@ public interface AXChoiceBoxStyle extends AXBaseStyle {
     RelativePosition getSignalRelate();
     Image getSignalImage();
 
+    AXContextPaneStyle getContextPaneStyle();
+
 
     enum RelativePosition {
         LEFT, RIGHT

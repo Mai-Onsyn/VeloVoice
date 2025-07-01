@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import mai_onsyn.AnimeFX2.Module.AXButton;
+import mai_onsyn.AnimeFX2.Module.AXSwitch;
 import mai_onsyn.AnimeFX2.Module.AXTreeView;
 import mai_onsyn.AnimeFX2.Utls.AXDataTreeItem;
 import mai_onsyn.AnimeFX2.Utls.AXTreeItem;
@@ -38,17 +39,7 @@ public class LocalTXT extends Source {
         super.config.registerBoolean("ParseStructures", false);
 
         JSONArray jsonArray = new JSONArray();
-        jsonArray.add(JSONObject.parseObject("""
-                {
-                    "name": "test",
-                    "content": [
-                        {
-                            "start": "\\n[^ ]",
-                            "end": "\\n"
-                        }
-                    ]
-                }
-                """));
+        jsonArray.add(JSONObject.parseObject("{\"name\":\"Wenku8\",\"description\":\"用于解析轻小说文库下载的全集txt文件\",\"content\":[{\"name\":\"Chapter\",\"start\":\"\\\\n[^ ]\",\"end\":\"\\\\n\"}]}"));
         super.config.registerString("HeaderItems", JSONObject.toJSONString(jsonArray));
         super.config.registerString("SelectedHeaderItem", "test");
         super.config.registerBoolean("IgnoreEmptyParsedFile", true);
@@ -102,7 +93,6 @@ public class LocalTXT extends Source {
         Config.ConfigItem rulesEdit = new Config.ConfigItem("ParseRules", editButton, 0.4);
         localTXTBox.addConfigItem(parseHtmlCharacters, parseStructures, ignoreEmptyParsedFile, rulesEdit);
 
-
         {
             headerStage.setTitle("Edit LocalTXT Parse Rules");
             LocalTXTHeaderEditor headerItemsEditor = new LocalTXTHeaderEditor(JSONArray.parseArray(config.getString("HeaderItems")));
@@ -113,6 +103,21 @@ public class LocalTXT extends Source {
             if (headerStage.isShowing()) headerStage.toFront();
             else headerStage.show();
         });
+
+        ((AXSwitch) parseStructures.getContent().getChildren().getFirst()).stateProperty().addListener((o, ov, nv) -> {
+            if (nv) {
+                ignoreEmptyParsedFile.setDisable(false);
+                rulesEdit.setDisable(false);
+            }
+            else {
+                ignoreEmptyParsedFile.setDisable(true);
+                rulesEdit.setDisable(true);
+            }
+        });
+        if (!config.getBoolean("ParseStructures")) {
+            ignoreEmptyParsedFile.setDisable(true);
+            rulesEdit.setDisable(true);
+        }
 
         return localTXTBox;
     }

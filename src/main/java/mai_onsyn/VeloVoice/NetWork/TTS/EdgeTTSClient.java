@@ -18,7 +18,7 @@ import static mai_onsyn.VeloVoice.App.Runtime.logger;
 public class EdgeTTSClient extends WebSocketClient implements TTSClient {
 
 
-    private static final String mp3Format = "audio-24khz-48kbitrate-mono-mp3";
+    private static final String mp3Format = "audioByteArray-24khz-48kbitrate-mono-mp3";
     private static final String webmFormat = "webm-24khz-16bit-mono-opus";
 
 
@@ -118,7 +118,7 @@ public class EdgeTTSClient extends WebSocketClient implements TTSClient {
                 Content-Type:application/json; charset=utf-8\r
                 Path:speech.config\r
                 \r
-                {"context":{"synthesis":{"audio":{"metadataoptions":{"sentenceBoundaryEnabled":"false","wordBoundaryEnabled":"true"},"outputFormat":"%s"}}}}
+                {"context":{"synthesis":{"audioByteArray":{"metadataoptions":{"sentenceBoundaryEnabled":"false","wordBoundaryEnabled":"true"},"outputFormat":"%s"}}}}
                 """,
                 dateStr,
                 mp3Format

@@ -75,7 +75,7 @@ public class LocalTXTHeadersEditor extends HDoubleSplitPane {
                     rSuperBox.getChildren().get(i).setVisible(i == index);
                 }
 
-                config.setString("SelectedHeaderItem", nv.getTextLabel().getText());
+                config.setString("SelectedHeaderItem", nv.getText());
                 selectedIndex = index;
             }
         });
@@ -229,7 +229,7 @@ public class LocalTXTHeadersEditor extends HDoubleSplitPane {
         rules.clear();
 
         for (int i = 0; i < leftBox.getChildren().size(); i++) {
-            String name = ((AXButton) ((AutoPane) leftBox.getChildren().get(i)).getChildren().getFirst()).getTextLabel().getText();
+            String name = ((AXButton) ((AutoPane) leftBox.getChildren().get(i)).getChildren().getFirst()).getText();
             Config.ConfigBox rightBox = (Config.ConfigBox) rSuperBox.getChildren().get(i);
 
             JSONObject item = new JSONObject();

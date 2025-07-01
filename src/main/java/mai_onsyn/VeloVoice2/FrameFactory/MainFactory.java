@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
@@ -19,7 +18,6 @@ import mai_onsyn.AnimeFX2.layout.HDoubleSplitPane;
 import mai_onsyn.VeloVoice2.App.Config;
 import mai_onsyn.VeloVoice2.App.Resource;
 import mai_onsyn.VeloVoice2.Audio.AudioPlayer;
-import mai_onsyn.VeloVoice2.NetWork.Item.Source;
 import mai_onsyn.VeloVoice2.NetWork.TTS.EdgeTTSVoice;
 import mai_onsyn.VeloVoice2.NetWork.TTS.FixedEdgeTTSClient;
 import mai_onsyn.VeloVoice2.Text.Sentence;
@@ -36,9 +34,10 @@ import static mai_onsyn.VeloVoice2.FrameFactory.LogFactory.logStage;
 
 public class MainFactory {
 
-    private static final Label textAreaInfo = new Label();
-    private static final AXTreeView<SimpleStringProperty> treeView = new AXTreeView<>(SimpleStringProperty::new, src -> new SimpleStringProperty(src.get()));
-    private static final AXTextArea textArea = new AXTextArea();
+    static final Label textAreaInfo = new Label();
+    static final AXTreeView<SimpleStringProperty> treeView = new AXTreeView<>(SimpleStringProperty::new, src -> new SimpleStringProperty(src.get()));
+    static final AXTextArea textArea = new AXTextArea();
+
     private static final Logger log = LogManager.getLogger(MainFactory.class);
 
     public static void drawMainFrame(AutoPane root) {
@@ -229,7 +228,7 @@ public class MainFactory {
                                             client.close();
 
                                             log.info("Playing preview text...");
-                                            AudioPlayer.play(sentence.getAudio());
+                                            AudioPlayer.play(sentence.audioByteArray());
                                         } catch (Exception ex) {
                                             log.error("Error while loading preview text: " + ex.toString());
                                             throw new RuntimeException(ex);
@@ -250,14 +249,14 @@ public class MainFactory {
                             String initLang = edgeTTSConfig.getString("SelectedLanguage");
                             AXButtonGroup langButtonGroup = langChoiceBox.getButtonGroup();
 //                            langButtonGroup.getButtonList().forEach(button -> {
-//                                if (Objects.equals(button.getTextLabel().getText().substring(0, 2), initLang)) {
+//                                if (Objects.equals(button.getText().substring(0, 2), initLang)) {
 //                                    langButtonGroup.selectButton(button);
 //                                }
 //                            });
 //
 //                            AXButtonGroup modelButtonGroup = modelChoiceBox.getButtonGroup();
 //                            modelButtonGroup.getButtonList().forEach(button -> {
-//                                if (Objects.equals(button.getTextLabel().getText(), edgeTTSConfig.getString("SelectedModel"))) {
+//                                if (Objects.equals(button.getText(), edgeTTSConfig.getString("SelectedModel"))) {
 //                                    modelButtonGroup.selectButton(button);
 //                                }
 //                            });
@@ -266,14 +265,14 @@ public class MainFactory {
                             //根据语言显示模型
                             showEdgeTTSModel(modelChoiceBox, LANG_NAME_TO_HEADCODE_MAPPING.get(initLang));
                             langButtonGroup.addOnSelectChangedListener((o, ov, nv) -> {
-                                showEdgeTTSModel(modelChoiceBox, LANG_NAME_TO_HEADCODE_MAPPING.get(nv.getTextLabel().getText()));
+                                showEdgeTTSModel(modelChoiceBox, LANG_NAME_TO_HEADCODE_MAPPING.get(nv.getText()));
                             });
                         }
                     }
 
                     //UI数据应用到EdgeTTS配置项
                     {
-                        ((AXChoiceBox) modelItem.getContent()).getButtonGroup().addOnSelectChangedListener((o, ov, nv) -> FixedEdgeTTSClient.setVoice(nv.getTextLabel().getText()));
+                        ((AXChoiceBox) modelItem.getContent()).getButtonGroup().addOnSelectChangedListener((o, ov, nv) -> FixedEdgeTTSClient.setVoice(nv.getText()));
 
                         ((AXFloatTextField) rateItem.getContent().getChildren().get(1)).valueProperty().addListener((o, ov, nv) -> FixedEdgeTTSClient.setVoiceRate(nv.doubleValue()));
 
@@ -296,100 +295,39 @@ public class MainFactory {
             }
 
             //语音处理相关
-            Config.ConfigBox afterProcessArea = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
-            {
-                Config.ConfigItem afterProcessItem = new Config.ConfigItem("afterProcessItem", new AutoPane(), 0.4);
-
-                afterProcessArea.addConfigItem(afterProcessItem);
-            }
+            Config.ConfigBox afterProcessArea = AfterProcessFactory.mkAfterProcessArea();
+//            {
+//                Config.ConfigItem afterProcessItem = new Config.ConfigItem("afterProcessItem", new AutoPane(), 0.4);
+//
+//                afterProcessArea.addConfigItem(afterProcessItem);
+//            }
 
             //文本处理相关
-            Config.ConfigBox textProcessArea = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
-            {
-                Config.ConfigBox loadBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
-                {
-                    AXLangLabel title = loadBox.addTitle("Load");
-
-                    List<String> loadList = new ArrayList<>();
-                    {
-                        for (Map.Entry<String, Source> entry : sources.entrySet()) {
-                            loadList.add(entry.getKey());
-                        }
-                    }
-                    Config.ConfigItem sourceItem = textConfig.genChooseStringItem("LoadSource", loadList);
-                    sourceItem.setI18NKey("frame.main.item.label.load.load_source");
-                    I18N.registerComponent(sourceItem);
-
-                    Config.ConfigBox sourceConfigBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
-                    {
-                        for (Map.Entry<String, Source> sourceEntry : sources.entrySet()) {
-                            Source source = sourceEntry.getValue();
-                            Config.ConfigBox configBox = source.mkConfigFrame();
-                            configBox.setUserData(sourceEntry.getKey());
-                            sourceConfigBox.getChildren().add(configBox);
-                        }
-
-                        AXChoiceBox choiceBox = (AXChoiceBox) sourceItem.getChildren().getLast();
-                        choiceBox.getButtonGroup().addOnSelectChangedListener((o, ov, nv) -> {
-                            String rule = nv.getUserData().toString();
-                            for (Node node : sourceConfigBox.getChildren()) {
-                                node.setVisible(node.getUserData().toString().equals(rule));
-                            }
-                        });
-                    }
-
-                    Config.ConfigItem uriItem = textConfig.genInputStringItem("LoadUri", "frame.main.text_field.text_load_uri");
-                    uriItem.setI18NKey("frame.main.item.label.load.text_load_uri");
-                    ((AXTextField) uriItem.getContent()).setChildrenI18NKeys(I18nKeyMaps.CONTEXT_MENU);
-                    I18N.registerComponent(uriItem);
-
-                    AXButton startButton = new AXButton("Load");
-                    startButton.setMaxSize(100, UI_SPACING + UI_HEIGHT);
-                    startButton.setMinSize(100, UI_SPACING + UI_HEIGHT);
-                    loadBox.setAlignment(Pos.TOP_RIGHT);
-
-                    startButton.setOnMouseClicked(e -> {
-                        if (e.getButton() == MouseButton.PRIMARY) {
-                            Source source = sources.get(textConfig.getString("LoadSource"));
-                            source.process(textConfig.getString("LoadUri"), treeView.getRoot());
-                        }
-                    });
-
-                    title.setI18NKey("frame.main.item.label.text_process.load.title");
-                    I18N.registerComponent(title);
-                    loadBox.addConfigItem(sourceItem, uriItem);
-                    loadBox.getChildren().addAll(sourceConfigBox, startButton);
-                }
-
-                textProcessArea.getChildren().add(loadBox);
-            }
+            Config.ConfigBox textProcessArea = TextProcessFactory.mkTextProcessArea();
 
             switchGroup.setOnSelectedChangedDatable((o, ov, nv) -> {
                 switch (nv.getValue()) {
                     case "TTS" -> {
-                        ttsArea.setVisible(true);
-                        afterProcessArea.setVisible(false);
-                        textProcessArea.setVisible(false);
+                        switchRoot.getChildren().removeLast();
+                        switchRoot.getChildren().add(ttsArea);
                     }
                     case "AfterProcess" -> {
-                        ttsArea.setVisible(false);
-                        afterProcessArea.setVisible(true);
-                        textProcessArea.setVisible(false);
+                        switchRoot.getChildren().removeLast();
+                        switchRoot.getChildren().add(afterProcessArea);
                     }
                     case "TextProcess" -> {
-                        ttsArea.setVisible(false);
-                        afterProcessArea.setVisible(false);
-                        textProcessArea.setVisible(true);
+                        switchRoot.getChildren().removeLast();
+                        switchRoot.getChildren().add(textProcessArea);
                     }
                 }
             });
-            afterProcessArea.setVisible(false);
-            textProcessArea.setVisible(false);
 
-            switchRoot.getChildren().addAll(ttsArea, afterProcessArea, textProcessArea);
-            switchRoot.setPosition(ttsArea, false, 0, 0, 0, 0);
-            switchRoot.setPosition(afterProcessArea, false, 0, 0, 0, 0);
-            switchRoot.setPosition(textProcessArea, false, 0, 0, 0, 0);
+            switchRoot.getChildren().add(ttsArea);
+            switchRoot.widthProperty().addListener((o, ov, nv) -> {
+                ttsArea.setPrefWidth(nv.doubleValue());
+                afterProcessArea.setPrefWidth(nv.doubleValue());
+                textProcessArea.setPrefWidth(nv.doubleValue());
+            });
         }
 
 
@@ -397,6 +335,7 @@ public class MainFactory {
         AutoPane ctrlArea = new AutoPane();
         {
             AXButton logButton = new AXButton("Log");
+            logButton.setTheme(FrameThemes.NORMAL_BUTTON);
             Label logTextLabel = logButton.getTextLabel();
             logTextLabel.setWrapText(true);
 
@@ -441,13 +380,15 @@ public class MainFactory {
 
                         } catch (InterruptedException ex) {
                             log.info("Task interrupted by user");
-                        } finally {
+                        } catch (Exception er) {
+                            log.error("An error occurred while executing the task: " + er.getMessage());
+                        }
+                        finally {
                             Platform.runLater(() -> isRunning.set(false));
                         }
                     });
                 }
             });
-
 
             isRunning.addListener((o, ov, nv) -> {
                 if (nv) {
@@ -458,6 +399,9 @@ public class MainFactory {
                     currentProgressBar.setVisible(true);
                     ctrlArea.setPosition(logButton, false, 0, UI_SPACING + 100, 0, 0);
                     ctrlArea.flipRelativeMode(logButton, AutoPane.Motion.LEFT, false);
+
+                    logButton.setTheme(FrameThemes.TRANSPARENT_BUTTON);
+                    logButton.update();
                 }
                 else {
                     startButton.setText("Start");
@@ -470,6 +414,9 @@ public class MainFactory {
 
                     LogFactory.totalProgressBar.setProgress(0, 1);
                     LogFactory.currentProgressBar.setProgress(0, 1);
+
+                    logButton.setTheme(FrameThemes.NORMAL_BUTTON);
+                    logButton.update();
                 }
                 ctrlArea.flush();
             });
@@ -520,7 +467,7 @@ public class MainFactory {
     }
     private static void showEdgeTTSModel(AXChoiceBox box, String lang) {
         box.getButtonGroup().getButtonList().forEach(button -> {
-            String name = button.getTextLabel().getText();
+            String name = button.getText();
             if (name.startsWith(lang) && !box.containsItem(button)) box.showItem(button);
             else if (!name.startsWith(lang)) box.removeItem(button);
         });

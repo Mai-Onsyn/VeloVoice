@@ -2,7 +2,6 @@ package mai_onsyn.AnimeFX2.Module;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleObjectProperty;
 import org.apache.logging.log4j.core.Filter;
 import org.apache.logging.log4j.core.Layout;
 import org.apache.logging.log4j.core.LogEvent;
@@ -22,7 +21,7 @@ import java.util.List;
 
 public class AXLog4j2 extends AXInlineTextArea {
 
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
     //private static final SimpleObjectProperty<LogEventSnapshot> staticLogMonitor = new SimpleObjectProperty<>(null);
     private static final List<AXLog4j2> logListeners = new ArrayList<>();
     private static final List<LogEventSnapshot> logTemps = new ArrayList<>(256);
