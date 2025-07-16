@@ -37,8 +37,8 @@ public class AfterProcessFactory {
         shiftBox.getChildren().add(mkTitleBar("main.audio.shift.title"));
 
         Config.ConfigItem switchItem = voiceConfig.genSwitchItem("EnableVoiceShift");
-        Config.ConfigItem rateItem = voiceConfig.genFloatSlidItem("VoiceRate", 0.1, 4.0, 0.1);
-        Config.ConfigItem pitchItem = voiceConfig.genFloatSlidItem("VoicePitch", 0.1, 4.0, 0.1);
+        Config.ConfigItem rateItem = voiceConfig.genFloatSlidItem("VoiceRate", 0.1, 4.0, 0.05);
+        Config.ConfigItem pitchItem = voiceConfig.genFloatSlidItem("VoicePitch", 0.1, 4.0, 0.05);
         switchItem.setI18NKey("main.audio.general.switch");
         rateItem.setI18NKey("main.audio.shift.label.rate");
         pitchItem.setI18NKey("main.audio.shift.label.pitch");

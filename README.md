@@ -6,6 +6,9 @@
 
 此为正式版内容，若你需要查看测试版的内容，请访问[历史标签](<https://github.com/Mai-Onsyn/VeloVoice/tree/Test-v0.6.2>)
 
+- Although Chinese is used here, the software still supports English
+- ここでは中国語が使われていますが、ソフトウェアは依然として日本語をサポートしています
+
 ## 特点
 
 - **多线程TTS文本转语音**：由于微软搞事情,目前的最大线程数仅开放4，对于40万字的小说一个半小时就能完成
@@ -16,6 +19,7 @@
 
 程序使用JDK22开发（使用了未命名变量），因此至少需要JDK22运行   
 zip压缩包中自带运行环境，可直接使用
+- [软件教程](https://github.com/Mai-Onsyn/VeloVoice/wiki)
 
 ## 注意事项
 
