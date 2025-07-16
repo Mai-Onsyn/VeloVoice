@@ -1,14 +1,9 @@
 package mai_onsyn.VeloVoice.NetWork.TTS;
 
-import java.util.List;
-import java.util.UUID;
+import mai_onsyn.VeloVoice.Text.Sentence;
 
 public interface TTSClient {
-    void connect();
-
-    boolean isOpen();
-
+    void connect() throws Exception;
     void close();
-
-    List<byte[]> sendText(UUID uuid, String text) throws InterruptedException;
+    Sentence process(String s) throws Exception;
 }

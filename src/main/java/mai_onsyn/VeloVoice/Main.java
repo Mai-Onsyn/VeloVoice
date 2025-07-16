@@ -1,41 +1,32 @@
 package mai_onsyn.VeloVoice;
 
 import javafx.application.Application;
-import mai_onsyn.VeloVoice.App.ConfigListener;
-import mai_onsyn.VeloVoice.App.Runtime;
-import mai_onsyn.VeloVoice.App.Theme;
+import mai_onsyn.VeloVoice.NetWork.TTS.FixedEdgeTTSClient;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.config.Configurator;
 
-import java.util.Objects;
-
-import static mai_onsyn.VeloVoice.App.AppConfig.isWindowSupport;
+import static mai_onsyn.VeloVoice.App.Runtime.*;
 
 public class Main {
 
-    static {
-        Thread configSaveThread = ConfigListener.CONFIG_SAVE_THREAD;    //加载ConfigListener类的静态代码块
-        configSaveThread.start();
-        try {
-            if (isWindowSupport) System.loadLibrary("javafxblur"); //Blur.loadBlurLibrary();
-        } catch (UnsatisfiedLinkError e) {
-            Runtime.systemSupportButLibraryNotExist = true;
-            isWindowSupport = false;
-            Theme.enableWinUI = false;
-        }
-    }
+
+    private static final Logger log = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
-
-        if (args.length != 0) {
-            if (Objects.equals(args[0], "no-gui")) {
-                Runtime.consoleMode = true;
-                ConsoleApp.main(args);
-                return;
-            }
-        }
-        //System.out.println(Arrays.toString(args));
-
+        init();
         Application.launch(FrameApp.class);
+    }
 
+
+    private static void init() {
+        FixedEdgeTTSClient.setVoice(edgeTTSConfig.getString("SelectedModel"));
+        FixedEdgeTTSClient.setVoicePitch(edgeTTSConfig.getDouble("VoicePitch"));
+        FixedEdgeTTSClient.setVoiceRate(edgeTTSConfig.getDouble("VoiceRate"));
+        FixedEdgeTTSClient.setVoiceVolume(edgeTTSConfig.getDouble("VoiceVolume"));
+
+        Configurator.setRootLevel(Level.toLevel(config.getString("LogLevel"), Level.INFO));
     }
 
 }

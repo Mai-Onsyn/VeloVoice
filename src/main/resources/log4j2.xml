@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN" packages="mai_onsyn.AnimeFX2.Module">
+<Configuration status="WARN" packages="mai_onsyn.AnimeFX.Module">
     <Properties>
         <!-- 定义日志文件名格式（时间戳） -->
         <Property name="LOG_FILENAME">logs/${date:yyyy-MM-dd HH-mm-ss}.log</Property>
@@ -25,7 +25,7 @@
             <PatternLayout pattern="${FILE_PATTERN}"/>
         </File>
 
-        <!-- 自定义 Appender -->
+        <!-- 日志窗口 -->
         <AXAppender name="JavaFX">
             <PatternLayout pattern="%msg%n"/>
         </AXAppender>
@@ -33,11 +33,10 @@
     </Appenders>
 
     <Loggers>
-        <Root level="debug">
-            <!-- 同时输出到控制台和文件 -->
+        <Root level="INFO">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="File"/>
-            <AppenderRef ref="JavaFX"/> <!-- 同时输出到 JavaFX -->
+            <AppenderRef ref="JavaFX"/> <!-- 输出到 JavaFX -->
         </Root>
     </Loggers>
 </Configuration>

@@ -1,82 +1,63 @@
 package mai_onsyn.VeloVoice.Text;
 
-import mai_onsyn.VeloVoice.App.AppConfig;
-import mai_onsyn.VeloVoice.NetWork.TTSExecutor;
-import mai_onsyn.VeloVoice.Utils.Structure;
-import mai_onsyn.VeloVoice.Utils.Util;
+import mai_onsyn.AnimeFX.I18N;
+import mai_onsyn.AnimeFX.Utls.AXTreeItem;
+import mai_onsyn.VeloVoice.NetWork.TTSPool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
-import static mai_onsyn.VeloVoice.App.AppConfig.*;
 import static mai_onsyn.VeloVoice.App.Runtime.*;
 
 public class TTS {
 
-    public static TTSExecutor executor;
+    private static final Logger log = LogManager.getLogger(TTS.class);
+    public static TTSPool pool;
 
-    public static void startNewTask(Structure<List<String>> tree, File structureRoot) {
-        currentFile = "";
-        totalCount = countStructure(tree, 0);
-        totalProgress.setValue(0);
-        executor = new TTSExecutor(AppConfig.connectThread);
-        if (!executor.connect()) {
-            return;
-        }
-        try {
-            if (tree.getChildren().size() == 1) runTask(tree.getChildren().getFirst(), structureRoot, false, 0, 1);
-            else for (int i = 0; i < tree.getChildren().size(); i++) {
-                runTask(tree.getChildren().get(i), structureRoot, isAppendOrdinal, i + 1, tree.getChildren().size());
-            }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-        executor.shutdown();
-        currentFile = "";
+
+    public static void start(AXTreeItem root, File outputFolder) throws InterruptedException, IOException {
+
+        pool = new TTSPool(TTSPool.ClientType.EDGE, edgeTTSConfig.getInteger("ThreadCount"));
+        pool.connect();
+
+        List<ExecuteItem> executeItems = ExecuteItem.parseStructure(root, outputFolder);
+        totalFinished.set(0);
+        totalCount = countPieces(executeItems);
+        totalStartTime = System.currentTimeMillis();
+        startItem(executeItems);
+
+        pool.close();
     }
 
-    private static void runTask(Structure<List<String>> tree, File structureRoot, boolean ordinal, int counter, int rootSize) throws InterruptedException {
-        //System.out.println(Thread.currentThread().isInterrupted());
-        if (Thread.currentThread().isInterrupted()) {
-            //logger.debug("TTS exit");
-            return; //终止信号
-        }
-        if (tree.getData() == null) {
-            structureRoot = new File(structureRoot, ordinal ? String.format("%s. %s", Util.padZero(counter, rootSize), tree.getName()) : tree.getName());
-            if (!structureRoot.exists()) if (!structureRoot.mkdirs()) {
-                if (logger != null) logger.error("无法创建音频输出文件夹 - " + structureRoot.getAbsolutePath());
-                else System.out.println("无法创建音频输出文件夹 - " + structureRoot.getAbsolutePath());
-                return;
-            }
+    private static void startItem(List<ExecuteItem> executeItems) throws IOException, InterruptedException {
+        for (int i = 0; i < executeItems.size(); i++) {
+            ExecuteItem e = executeItems.get(i);
+            List<String> pieces = TextUtil.splitText(e.text());
 
-            if (tree.getChildren().size() == 1) runTask(tree.getChildren().getFirst(), structureRoot, false, 0, 1);
-            else for (int i = 0; i < tree.getChildren().size(); i++) {
-                runTask(tree.getChildren().get(i), structureRoot, isAppendOrdinal, i + 1, tree.getChildren().size());
-            }
-        }
-        else {
-            currentFile = tree.getName();
-            if (logger != null) logger.info("当前 - \"" + currentFile + "\"");
-            executor.execute2(tree.getData(), structureRoot, ordinal ? String.format("%s. %s", Util.padZero(counter, rootSize), tree.getName()) : tree.getName());
+            currentFinished.set(0);
+            currentTotalCount = pieces.size();
+            currentFileName = e.name();
+            currentStartTime = System.currentTimeMillis();
+
+            log.debug("Current file: {}", e.name());
+            pool.execute(pieces, e.folder(), e.name());
+            //log.debug(String.format("Complected file: %s", e.name()));
+
+            currentFileName = I18N.getCurrentValue("log.progress.initializing");
         }
     }
 
-    private static int countStructure(Structure<List<String>> structure, int count) {
-        // 检查当前Structure是否包含数据（即List<String>）
-        if (structure.getData() != null) {
-            // 将当前Structure的数据（List<String>）的大小加到总数上
-            count += structure.getData().size();
+    private static int countPieces(List<ExecuteItem> executeItems) {
+        int count = 0;
+        for (ExecuteItem e : executeItems) {
+            List<String> pieces = TextUtil.splitText(e.text());
+            count += pieces.size();
         }
-
-        // 检查当前Structure是否有子节点
-        if (structure.getChildren() != null) {
-            // 遍历所有子节点，并递归调用countStructure方法
-            for (Structure<List<String>> child : structure.getChildren()) {
-                count = countStructure(child, count);
-            }
-        }
-
-        // 返回更新后的总数
         return count;
     }
+
+
 }
