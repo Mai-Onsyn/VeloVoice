@@ -263,7 +263,6 @@ public class Config extends JSONObject {
         static {
             style.setBGColor(Color.TRANSPARENT);
             style.setBorderColor(Color.TRANSPARENT);
-            //Color shadow = Color.rgb(128, 128, 128, 0.2);
             style.setHoverShadow(Color.TRANSPARENT);
             style.setPressedShadow(Color.TRANSPARENT);
             style.setAnimeRate(0.5);

@@ -386,12 +386,14 @@ public class MainFactory {
                         } catch (InterruptedException ex) {
                             log.info(I18N.getCurrentValue("log.main_factory.info.tts_interrupted"));
                         } catch (Exception er) {
-                            log.error(I18N.getCurrentValue("log.main_factory.error.tts_execute_failed"), er.getMessage());
+                            log.error(I18N.getCurrentValue("log.main_factory.error.tts_execute_failed"), er.getMessage(), er);
                         }
                         finally {
-                            Platform.runLater(() -> isRunning.set(false));
-                            LogFactory.totalInfo.setText(I18N.getCurrentValue("log.progress.total") + ": 0% [0/0]");
-                            LogFactory.currentInfo.setText(I18N.getCurrentValue("log.progress.current") + ": 0% [0/0] (" + I18N.getCurrentValue("log.progress.initializing") + ")");
+                            Platform.runLater(() -> {
+                                isRunning.set(false);
+                                LogFactory.totalInfo.setText(I18N.getCurrentValue("log.progress.total") + ": 0% [0/0]");
+                                LogFactory.currentInfo.setText(I18N.getCurrentValue("log.progress.current") + ": 0% [0/0] (" + I18N.getCurrentValue("log.progress.initializing") + ")");
+                            });
                             currentFileName = I18N.getCurrentValue("log.progress.initializing");
                         }
                     });

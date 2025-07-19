@@ -13,7 +13,7 @@ public class AXFloatTextField extends AXTextField {
     public AXFloatTextField(double min, double max, double value) {
         super();
 
-        if (value < min || value > max) throw new IllegalArgumentException("value: " + value + " must be between min and max: " + min + " - " + max);
+        if (value < min || value > max) throw new IllegalArgumentException(String.format("Value %.2f must be between min(%.2f) and max(%.2f)", value, min, max));
 
         valueProperty = new SimpleDoubleProperty(value);
         TextField textField = super.textField();

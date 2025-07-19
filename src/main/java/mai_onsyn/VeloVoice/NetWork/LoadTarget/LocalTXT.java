@@ -172,14 +172,15 @@ public class LocalTXT extends Source {
             SimpleStringProperty data = (SimpleStringProperty) attribution.getDataCreator().create();
             String content = TextUtil.load(fileOrFolder);
             AXTreeItem fileItem;
+            String itemName = name.substring(0, name.length() - 4);
             if (super.config.getBoolean("ParseStructures")) {
-                fileItem = attribution.createFolderItem(name.substring(0, name.length() - 4));
+                fileItem = attribution.createFolderItem(itemName);
                 String s = clearString(content);
                 parseLevels(s, fileItem, parseLevelsIndex(s), attribution);
             }
             else {
                 data.set(content);
-                fileItem = attribution.createFileItem(name, data);
+                fileItem = attribution.createFileItem(itemName, data);
             }
             Platform.runLater(() -> parent.add(fileItem));
 

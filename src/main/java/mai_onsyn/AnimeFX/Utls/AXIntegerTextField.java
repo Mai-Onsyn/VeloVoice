@@ -14,7 +14,7 @@ public class AXIntegerTextField extends AXTextField {
     public AXIntegerTextField(int min, int max, int value) {
         super();
 
-        if (value < min || value > max) throw new IllegalArgumentException("value must be between min and max");
+        if (value < min || value > max) throw new IllegalArgumentException(String.format("Value %d must be between min(%d) and max(%d)", value, min, max));
 
         valueProperty = new SimpleIntegerProperty(value);
         TextField textField = super.textField();

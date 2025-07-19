@@ -28,7 +28,7 @@ public class TextUtil {
         List<String> lines = new ArrayList<>();
         char[] forceSplitChars = unescape(textConfig.getString("ForceSplitChars")).toCharArray();
         int lastIndex = 0;
-        for (int i = 0; i < text.toCharArray().length; i++) {
+        for (int i = 0; i < text.length(); i++) {
             for (char forceSplitChar : forceSplitChars) {
                 if (text.charAt(i) == forceSplitChar) {
                     String line = text.substring(lastIndex, i + 1).trim();

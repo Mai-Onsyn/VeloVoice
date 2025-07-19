@@ -28,7 +28,7 @@ public record ExecuteItem(String text, File folder, String name) {
             if (d.getData() instanceof SimpleStringProperty s) {
                 String content = s.get();
 
-                target.add(new ExecuteItem(content, folder, String.format("%s", name)));
+                target.add(new ExecuteItem(content, folder, name));
             }
         }
         else {

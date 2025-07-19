@@ -40,7 +40,7 @@ public class Runtime {
 
     static {
         config.registerString("LogLevel", "INFO");
-        config.registerInteger("TimeoutSeconds", 10);
+        config.registerInteger("TimeoutSeconds", 30);
         config.registerInteger("MaxRetries", 5);
         config.registerString("AudioSaveFolder", "C:/Users/Administrator/Desktop/");
         config.registerString("PreviewText", "Hello, World!");

@@ -85,10 +85,13 @@ public class AXLog4j2 extends AXInlineTextArea {
             appendText(formattedLog);
 
             String cssStyle = getStyleForLevel(logEvent.level);
+            int messageEndPos = levelStartPos + logEvent.level.length() + 3 + logEvent.message.length();
 
-            textArea().setStyle(timeStartPos, threadStartPos, "-fx-fill: #3993d4;");
-            textArea().setStyle(threadStartPos, levelStartPos, "-fx-fill: #90890e;");
-            textArea().setStyle(levelStartPos, levelStartPos + formattedLog.length(), cssStyle);
+            Platform.runLater(() -> {
+                textArea().setStyle(timeStartPos, threadStartPos, "-fx-fill: #3993d4;");
+                textArea().setStyle(threadStartPos, levelStartPos, "-fx-fill: #90890e;");
+                textArea().setStyle(levelStartPos, messageEndPos, cssStyle);
+            });
 
             virtualizedScrollPane.scrollYBy(2147483647);
 

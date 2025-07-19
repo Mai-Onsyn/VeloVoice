@@ -48,13 +48,15 @@ public class FixedEdgeTTSClient implements TTSClient {
 
     @Override
     public void connect() throws EdgeTTSException {
-        int retry = -1;
-        while (retry++ < config.getInteger("MaxRetries")) {
+        int retry = 0;
+        int maxRetries = config.getInteger("MaxRetries");
+        while (retry++ <= maxRetries) {
             try {
                 client.connectWithRetries();
                 return;
             } catch (Exception e) {
-                log.debug("Failed to connect to EdgeTTS, retrying...", e);
+                //if (retry == maxRetries) break;
+                log.debug("Failed to connect to EdgeTTS, retrying({})...", retry, e);
             }
         }
         throw new EdgeTTSException("Out of retries: " + retry);
@@ -67,13 +69,15 @@ public class FixedEdgeTTSClient implements TTSClient {
 
     @Override
     public Sentence process(String s) throws IOException {
-        int retry = -1;
-        while (retry++ < config.getInteger("MaxRetries")) {
+        int retry = 0;
+        int maxRetries = config.getInteger("MaxRetries");
+        while (retry++ <= maxRetries) {
             try {
                 if (!client.isOpen()) client.connectWithRetries();
                 return client.process(s);
             } catch (Exception e) {
-                log.debug("Failed to processing, retrying...", e);
+                //if (retry == maxRetries) break;
+                log.debug("Failed to processing, retrying({})...", retry, e);
                 if (client.isOpen()) client.close();
                 client = new EdgeTTSClient();
             }

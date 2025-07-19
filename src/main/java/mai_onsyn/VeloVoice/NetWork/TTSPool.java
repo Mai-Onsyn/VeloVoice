@@ -16,6 +16,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static mai_onsyn.VeloVoice.App.Runtime.*;
 
@@ -78,11 +79,13 @@ public class TTSPool {
         AtomicInteger processIndex = new AtomicInteger();
         CountDownLatch countDownLatch = new CountDownLatch(input.size());
 
+        AtomicInteger aliveThreads = new AtomicInteger(clients.length);
         AtomicBoolean isInterrupted = new AtomicBoolean(false);
+        AtomicReference<IOException> exception = new AtomicReference<>();
         try {
             for (int i = 0; i < clients.length; i++) {
                 TTSClient client = clients[i];
-                Thread.ofVirtual().name("TaskThread-" + i).start(() -> {
+                Thread thread = Thread.ofVirtual().name("TaskThread-" + i).start(() -> {
                     while (processIndex.get() < input.size()) {
                         String text;
                         int thisIndex;
@@ -101,7 +104,20 @@ public class TTSPool {
                             Sentence sentence = client.process(text);
                             resultPool.put(thisIndex, sentence);
                         } catch (Exception e) {
-                            throw new RuntimeException(e);
+                            log.warn(I18N.getCurrentValue("log.tts_pool.warn.thread_failed"), text, e);
+
+                            log.warn(I18N.getCurrentValue("log.tts_pool.warn.thread_shutdown"), e.getMessage(), e);
+
+                            aliveThreads.getAndDecrement();
+                            if (aliveThreads.get() == 0) {
+                                log.error(I18N.getCurrentValue("log.tts_pool.error.all_failed"));
+                                while (countDownLatch.getCount() > 0) {
+                                    countDownLatch.countDown();
+                                    exception.set(new IOException("All threads exited with exception"));
+                                }
+                            }
+
+                            return;
                         } finally {
                             currentFinished.set(currentFinished.get() + 1);
                             totalFinished.set(totalFinished.get() + 1);
@@ -111,7 +127,10 @@ public class TTSPool {
                 });
             }
             countDownLatch.await();
-        } catch (InterruptedException e) {
+            if (exception.get() != null) {
+                throw exception.get();
+            }
+        } catch (InterruptedException | IOException e) {
             isInterrupted.set(true);
             throw e;
         }
