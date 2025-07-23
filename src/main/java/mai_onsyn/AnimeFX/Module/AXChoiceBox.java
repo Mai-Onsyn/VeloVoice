@@ -62,7 +62,7 @@ public class AXChoiceBox extends AXButton {
         signalView.setFitHeight(style.getSignalScale());
 
         super.heightProperty().addListener((o, ov, nv) -> {
-            super.setPosition(signalView, style.getSignalRelate() == AXChoiceBoxStyle.RelativePosition.LEFT ? AlignmentMode.LEFT_CENTER : AlignmentMode.RIGHT_CENTER, LocateMode.ABSOLUTE, style.getSignalRelate() == AXChoiceBoxStyle.RelativePosition.LEFT ? style.getSignalRelateX() : -style.getSignalRelateX(), nv.doubleValue() / 2);
+            super.setPosition(signalView, style.getSignalRelate() == AXChoiceBoxStyle.RelativePosition.LEFT ? AlignmentMode.LEFT_CENTER : AlignmentMode.RIGHT_CENTER, LocateMode.ABSOLUTE, style.getSignalRelateX(), nv.doubleValue() / 2);
         });
 
         itemPane.getRoot().maxWidthProperty().bind(super.widthProperty());
@@ -101,7 +101,7 @@ public class AXChoiceBox extends AXButton {
     @Override
     public void update() {
         signalView.setImage(style.getSignalImage());
-        super.setPosition(signalView, style.getSignalRelate() == AXChoiceBoxStyle.RelativePosition.LEFT ? AlignmentMode.LEFT_CENTER : AlignmentMode.RIGHT_CENTER, LocateMode.ABSOLUTE, style.getSignalRelate() == AXChoiceBoxStyle.RelativePosition.LEFT ? style.getSignalRelateX() : -style.getSignalRelateX(), super.getLayoutBounds().getHeight() / 2);
+        super.setPosition(signalView, style.getSignalRelate() == AXChoiceBoxStyle.RelativePosition.LEFT ? AlignmentMode.LEFT_CENTER : AlignmentMode.RIGHT_CENTER, LocateMode.ABSOLUTE, style.getSignalRelateX(), super.getLayoutBounds().getHeight() / 2);
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200 * style.getAnimeRate()),
                 new KeyValue(signalView.fitWidthProperty(), style.getSignalScale()),
@@ -112,6 +112,7 @@ public class AXChoiceBox extends AXButton {
         super.update();
         itemPane.update();
         buttonGroup.update();
+        super.flush();
     }
 
     public AXButtonGroup getButtonGroup() {

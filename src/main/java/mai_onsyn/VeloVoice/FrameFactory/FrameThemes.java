@@ -1044,7 +1044,62 @@ public class FrameThemes {
 
         @Override
         public AXButtonStyle getSelectedItemStyle() {
-            return TRANSPARENT_SELECTED_BUTTON;
+            return new AXButtonStyle() {
+                @Override
+                public Color getTextColor() {
+                    return Toolkit.getInverseColor(THEME_COLOR);
+                }
+
+                @Override
+                public Color getTextHoverColor() {
+                    return Toolkit.getInverseColor(MAIN_TEXT_HOVER_COLOR);
+                }
+
+                @Override
+                public Color getFillColor() {
+                    return Toolkit.getInverseColor(BUTTON_FILL_COLOR);
+                }
+
+                @Override
+                public Font getTextFont() {
+                    return SMALLER_FONT;
+                }
+
+                @Override
+                public Color getBGColor() {
+                    return THEME_COLOR;
+                }
+
+                @Override
+                public Color getHoverShadow() {
+                    return BUTTON_HOVER_COLOR;
+                }
+
+                @Override
+                public Color getPressedShadow() {
+                    return BUTTON_PRESSED_COLOR;
+                }
+
+                @Override
+                public Color getBorderColor() {
+                    return Color.TRANSPARENT;
+                }
+
+                @Override
+                public double getAnimeRate() {
+                    return ANIME_RATE;
+                }
+
+                @Override
+                public double getBorderRadius() {
+                    return BORDER_RADIUS;
+                }
+
+                @Override
+                public double getBorderArcSize() {
+                    return BORDER_ARC_SIZE;
+                }
+            };
         }
 
         @Override

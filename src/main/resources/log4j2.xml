@@ -5,8 +5,7 @@
         <Property name="LOG_FILENAME">logs/${date:yyyy-MM-dd HH-mm-ss}.log</Property>
         <!-- 控制台日志格式（带颜色） -->
         <Property name="CONSOLE_PATTERN">
-            %blue{[%d{MM-dd HH:mm:ss}]} %yellow{[%t]} %highlight{[%level]}{ERROR=Bright
-            RED, WARN=Bright Yellow, INFO=Bright Green, DEBUG=Bright Cyan, TRACE=Bright White} %msg%n
+            %blue{[%d{MM-dd HH:mm:ss}]} %yellow{[%t]} %highlight{[%level]}{ERROR=red, WARN=yellow, INFO=green, DEBUG=cyan, TRACE=white} %msg%n
         </Property>
         <!-- 文件日志格式（不带颜色） -->
         <Property name="FILE_PATTERN">

@@ -180,6 +180,6 @@ public class AXContextPane extends Popup implements AutoUpdatable {
         Toolkit.adjustImageColor(icon, button.style().getTextColor());  // 调整图标颜色
 
         button.setPosition(name, false, itemHeight * 1.2, 0, 0, 0);
-        button.setPosition(prompt, AutoPane.AlignmentMode.RIGHT_CENTER, AutoPane.LocateMode.ABSOLUTE, -itemHeight * 0.1, itemHeight / 2);
+        button.setPosition(prompt, AutoPane.AlignmentMode.RIGHT_CENTER, AutoPane.LocateMode.ABSOLUTE, itemHeight * 0.1, itemHeight / 2);
     }
 }

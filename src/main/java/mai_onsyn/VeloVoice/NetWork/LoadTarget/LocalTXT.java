@@ -41,7 +41,6 @@ import static mai_onsyn.VeloVoice.FrameFactory.FrameThemes.BUTTON;
 public class LocalTXT extends Source {
 
     private static final Logger log = LogManager.getLogger(LocalTXT.class);
-    private final List<Pair<String, String>> identifiers = new ArrayList<>();
 
     private Stage headerStage;
 
@@ -70,29 +69,13 @@ public class LocalTXT extends Source {
     }
 
     @Override
-    protected String getNameSpace() {
-        return "source.localTXT";
+    public String getNameSpace() {
+        return "source.local_txt.name";
     }
 
     @Override
     protected Image getIcon() {
-        return null;
-    }
-
-    @Override
-    public void process(String uri, AXTreeItem root) {
-        AXTreeView<?> attribution = root.getAttribution();
-        File folder = new File(uri);
-
-        if (!folder.exists()) {
-            log.error(I18N.getCurrentValue("log.local_txt.error.folder_not_exist"), uri);
-            return;
-        }
-
-        updateRegexes();
-
-        addToTree(folder, root, attribution);
-        log.info(I18N.getCurrentValue("log.local_txt.info.processed"), uri);
+        return Resource.pc;
     }
 
     @Override
@@ -119,11 +102,11 @@ public class LocalTXT extends Source {
 
         Config.ConfigItem rulesEdit = new Config.ConfigItem("ParseRules", editButton, true, 0.4, 0.475);
 
-        parseHtmlCharacters.setI18NKey("custom.local_txt.label.html_char");
-        parseStructures.setI18NKey("custom.local_txt.label.parse_structures");
-        ignoreEmptyParsedFile.setI18NKey("custom.local_txt.label.ignore_empty_unit");
-        markTitle.setI18NKey("custom.local_txt.label.mark_title");
-        rulesEdit.setI18NKey("custom.local_txt.label.parse_rules");
+        parseHtmlCharacters.setI18NKey("source.local_txt.label.html_char");
+        parseStructures.setI18NKey("source.local_txt.label.parse_structures");
+        ignoreEmptyParsedFile.setI18NKey("source.local_txt.label.ignore_empty_unit");
+        markTitle.setI18NKey("source.local_txt.label.mark_title");
+        rulesEdit.setI18NKey("source.local_txt.label.parse_rules");
         I18N.registerComponents(parseHtmlCharacters, parseStructures, ignoreEmptyParsedFile, markTitle, rulesEdit);
 
         localTXTBox.addConfigItem(parseHtmlCharacters, parseStructures, ignoreEmptyParsedFile, markTitle, rulesEdit);
@@ -165,41 +148,79 @@ public class LocalTXT extends Source {
         return localTXTBox;
     }
 
-    private void addToTree(File fileOrFolder, AXTreeItem parent, AXTreeView<?> attribution) {
+    @Override
+    public void process(String uri, AXTreeItem root) {
+        AXTreeView<?> attribution = root.getAttribution();
+        File folder = new File(uri);
+
+        if (!folder.exists()) {
+            log.error(I18N.getCurrentValue("log.local_txt.error.folder_not_exist"), uri);
+            return;
+        }
+
+        JSONArray jsonArray = JSONArray.parseArray(super.config.getString("HeaderItems"));
+        String selectedItem = super.config.getString("SelectedHeaderItem");
+        JSONArray items = null;
+        for (Object o : jsonArray) {
+            if (((JSONObject) o).getString("name").equals(selectedItem)) {
+                items = ((JSONObject) o).getJSONArray("content");
+                break;
+            }
+        }
+        if (items == null) {
+            log.error("No parse rule selected!");
+            return;
+        }
+
+        // 提取配置项
+        boolean parseStructures = super.config.getBoolean("ParseStructures");
+        boolean ignoreEmptyParsedFile = super.config.getBoolean("IgnoreEmptyParsedFile");
+        boolean markTitle = super.config.getBoolean("MarkTitle");
+
+        List<Pair<String, String>> regexIdentifiers = buildRegexIdentifiers(items);
+
+        // 传递参数
+        addToTree(folder, root, attribution, parseStructures, ignoreEmptyParsedFile, markTitle, regexIdentifiers);
+
+        log.info(I18N.getCurrentValue("log.local_txt.info.processed"), uri);
+    }
+
+
+    void addToTree(File fileOrFolder, AXTreeItem parent, AXTreeView<?> attribution,
+                           boolean parseStructures, boolean ignoreEmptyParsedFile,
+                           boolean markTitle, List<Pair<String, String>> identifiers) {
         String name = fileOrFolder.getName();
         if (fileOrFolder.isFile() && name.endsWith(".txt")) {
-            // 如果是文件且为 .txt 文件，直接添加到树
             SimpleStringProperty data = (SimpleStringProperty) attribution.getDataCreator().create();
             String content = TextUtil.load(fileOrFolder);
             AXTreeItem fileItem;
             String itemName = name.substring(0, name.length() - 4);
-            if (super.config.getBoolean("ParseStructures")) {
+            if (parseStructures) {
                 fileItem = attribution.createFolderItem(itemName);
                 String s = clearString(content);
-                parseLevels(s, fileItem, parseLevelsIndex(s), attribution);
-            }
-            else {
+                List<Header> headers = parseLevelsIndex(s, identifiers);
+                if (!checkLevels(headers)) return;
+                mergeLevelsTree(s, fileItem, headers, 0, 0, identifiers.size(), attribution, ignoreEmptyParsedFile, markTitle);
+            } else {
                 data.set(content);
                 fileItem = attribution.createFileItem(itemName, data);
             }
             Platform.runLater(() -> parent.add(fileItem));
-
-            // 设置文件内容
         } else if (fileOrFolder.isDirectory()) {
-            // 如果是文件夹，添加到树并递归处理子文件/文件夹
             AXTreeItem folderItem = attribution.createFolderItem(name);
             Platform.runLater(() -> parent.add(folderItem));
 
             File[] files = fileOrFolder.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    addToTree(file, folderItem, attribution);
+                    addToTree(file, folderItem, attribution, parseStructures, ignoreEmptyParsedFile, markTitle, identifiers);
                 }
             }
         }
     }
 
-    private String clearString(String content) {
+
+    String clearString(String content) {
         String[] lines = content.split("\n");
         StringBuilder sb = new StringBuilder("\n");
         for (String line : lines) {
@@ -210,22 +231,16 @@ public class LocalTXT extends Source {
         return sb.toString();
     }
 
-    private void parseLevels(String content, AXTreeItem root, List<Header> headers, AXTreeView<?> attribution) {
-        if (!checkLevels(headers)) {
-            return;
-        }
-
-        mergeLevelsTree(content, root, headers, 0, 0, identifiers.size(), attribution);
-    }
-
-    private int mergeLevelsTree(String s, AXTreeItem parent, List<Header> headers, int index, int level, int textLevel, AXTreeView<?> attribution) {
+    int mergeLevelsTree(String s, AXTreeItem parent, List<Header> headers,
+                                int index, int level, int textLevel, AXTreeView<?> attribution,
+                                boolean ignoreEmptyParsedFile, boolean markTitle) {
         int i = index;
         while (i < headers.size()) {
             Header header = headers.get(i);
 
             String name = s.substring(header.start, header.end).trim();
             if (header.level == textLevel) {
-                String fileContent = null;
+                String fileContent;
                 if (++i == headers.size()) {
                     fileContent = s.substring(header.end);
                 } else {
@@ -233,9 +248,9 @@ public class LocalTXT extends Source {
                     int end = headers.get(i).start;
                     fileContent = s.substring(Math.min(start, end), Math.max(start, end));
                 }
-                if (fileContent.trim().isEmpty() && super.config.getBoolean("IgnoreEmptyParsedFile")) continue;
+                if (fileContent.trim().isEmpty() && ignoreEmptyParsedFile) continue;
                 AXDataTreeItem<?> fileItem = attribution.createFileItem(name, new SimpleStringProperty(
-                        super.config.getBoolean("MarkTitle") ? name + "\n" + fileContent : fileContent));
+                        markTitle ? name + "\n" + fileContent : fileContent));
                 parent.add(fileItem);
                 continue;
             }
@@ -243,7 +258,7 @@ public class LocalTXT extends Source {
             if (header.level > level) {
                 AXTreeItem child = attribution.createFolderItem(name);
                 parent.add(child);
-                i = mergeLevelsTree(s, child, headers, ++i, header.level, textLevel, attribution);
+                i = mergeLevelsTree(s, child, headers, ++i, header.level, textLevel, attribution, ignoreEmptyParsedFile, markTitle);
             } else {
                 i++;
                 break;
@@ -252,20 +267,8 @@ public class LocalTXT extends Source {
         return i;
     }
 
-    private boolean checkLevels(List<Header> headers) {
-        int lastLevel = 0;
-        for (Header header : headers) {
-            if (header.level > lastLevel + 1) {
-                throw new IllegalArgumentException("Level jumped at " + header.start);
-            }
-            lastLevel = header.level;
-        }
-        return true;
-    }
-
-    private List<Header> parseLevelsIndex(String content) {
+    List<Header> parseLevelsIndex(String content, List<Pair<String, String>> identifiers) {
         List<Header> result = new ArrayList<>();
-
         int level = 1;
 
         for (Pair<String, String> item : identifiers) {
@@ -285,28 +288,28 @@ public class LocalTXT extends Source {
         }
 
         result.sort(Comparator.comparingInt(a -> a.start));
-
         return result;
     }
 
-    public void updateRegexes() {
-        identifiers.clear();
-
-        JSONArray jsonArray = JSONArray.parseArray(super.config.getString("HeaderItems"));
-        JSONArray items = null;
-        for (Object o : jsonArray) {
-            if (((JSONObject) o).getString("name").equals(config.getString("SelectedHeaderItem"))) {
-                items = ((JSONObject) o).getJSONArray("content");
-                break;
+    boolean checkLevels(List<Header> headers) {
+        int lastLevel = 0;
+        for (Header header : headers) {
+            if (header.level > lastLevel + 1) {
+                log.error("Level jumped at {}", header.start);
+                return false;
             }
+            lastLevel = header.level;
         }
-        if (items == null) return;
+        return true;
+    }
 
+    private List<Pair<String, String>> buildRegexIdentifiers(JSONArray items) {
+        List<Pair<String, String>> list = new ArrayList<>();
         for (Object o : items) {
             JSONObject item = (JSONObject) o;
-            identifiers.add(new Pair<>(item.getString("start"), item.getString("end")));
+            list.add(new Pair<>(item.getString("start"), item.getString("end")));
         }
-
+        return list;
     }
 
     public record Header(int level, int start, int end) {

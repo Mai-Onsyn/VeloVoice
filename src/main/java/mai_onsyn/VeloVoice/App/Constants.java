@@ -2,6 +2,7 @@ package mai_onsyn.VeloVoice.App;
 
 import mai_onsyn.VeloVoice.NetWork.LoadTarget.LocalTXT;
 import mai_onsyn.VeloVoice.NetWork.LoadTarget.Source;
+import mai_onsyn.VeloVoice.NetWork.LoadTarget.Wenku8;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -24,6 +25,7 @@ public class Constants {
     public static final Map<String, Source> sources = new LinkedHashMap<>();
     static {    //在这里添加自定义的加载源
         sources.put("LocalTXT", new LocalTXT());
+        sources.put(("Wenku8"), new Wenku8());
     }
 
 
@@ -155,6 +157,7 @@ public class Constants {
 
     public static class I18nKeyMaps {
         public static final Map<String, String> CONTEXT = new HashMap<>();
+        public static final Map<String, String> SOURCES = new HashMap<>();
 
         static {
             CONTEXT.put("new file", "context.menu.new_file");
@@ -175,6 +178,9 @@ public class Constants {
             CONTEXT.put("file popup", "context.menu.new_file");
             CONTEXT.put("folder popup", "context.menu.new_folder");
             CONTEXT.put("rename popup", "context.menu.rename");
+
+
+            sources.forEach((key, source) -> SOURCES.put(key, source.getNameSpace()));
         }
     }
 }

@@ -59,7 +59,7 @@ public class LogFactory {
         }));
 
         I18N.addOnChangedAction(() -> {
-            if (!isRunning.get()) Platform.runLater(() -> {
+            if (!isTTSRunning.get()) Platform.runLater(() -> {
                 totalInfo.setText(I18N.getCurrentValue("log.progress.total") + ": 0% [0/0]");
                 currentInfo.setText(I18N.getCurrentValue("log.progress.current") + ": 0% [0/0] (" + I18N.getCurrentValue("log.progress.initializing") + ")");
                 currentFileName = I18N.getCurrentValue("log.progress.initializing");
@@ -114,7 +114,7 @@ public class LogFactory {
         themeManager.register(totalInfo, currentInfo, totalTime, currentTime);
 
 
-        isRunning.addListener((o, ov, nv) -> {
+        isTTSRunning.addListener((o, ov, nv) -> {
             if (nv) {
                 infoPane.setVisible(true);
                 root.setPosition(logger, false, 20, 20, 20, 80);

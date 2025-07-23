@@ -369,13 +369,13 @@ public class MainFactory {
             I18N.registerComponent(startButton);
 
             startButton.setOnMouseClicked(e -> {
-                if (isRunning.get()) {
-                    isRunning.set(false);
+                if (isTTSRunning.get()) {
+                    isTTSRunning.set(false);
 
                     EDGE_TTS_THREAD.interrupt();
                 }
                 else {
-                    isRunning.set(true);
+                    isTTSRunning.set(true);
 
                     EDGE_TTS_THREAD = Thread.ofVirtual().name("EdgeTTS-Main").start(() -> {
                         try {
@@ -390,7 +390,7 @@ public class MainFactory {
                         }
                         finally {
                             Platform.runLater(() -> {
-                                isRunning.set(false);
+                                isTTSRunning.set(false);
                                 LogFactory.totalInfo.setText(I18N.getCurrentValue("log.progress.total") + ": 0% [0/0]");
                                 LogFactory.currentInfo.setText(I18N.getCurrentValue("log.progress.current") + ": 0% [0/0] (" + I18N.getCurrentValue("log.progress.initializing") + ")");
                             });
@@ -400,7 +400,7 @@ public class MainFactory {
                 }
             });
 
-            isRunning.addListener((o, ov, nv) -> {
+            isTTSRunning.addListener((o, ov, nv) -> {
                 if (nv) {
                     startButton.setText(I18N.getCurrentValue("main.general.button.stop"));
                     logIcon.setVisible(false);

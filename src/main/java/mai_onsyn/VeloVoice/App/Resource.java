@@ -21,6 +21,9 @@ public class Resource {
     public static final WritableImage setting;
     public static final WritableImage edit;
     public static final WritableImage list;
+    public static final WritableImage pc;
+    public static final Image error;
+    public static final Image icon_wenku8;
     private static final Logger log = LogManager.getLogger(Resource.class);
 
 
@@ -30,11 +33,14 @@ public class Resource {
             setting = new WritableImage(Toolkit.loadImage("textures/icons/app/setting.png").getPixelReader(), 512, 512);
             edit = new WritableImage(Toolkit.loadImage("textures/icons/app/edit.png").getPixelReader(), 512, 512);
             list = new WritableImage(Toolkit.loadImage("textures/icons/app/log.png").getPixelReader(), 512, 512);
+            pc = new WritableImage(Toolkit.loadImage("textures/icons/app/pc.png").getPixelReader(), 512, 512);
+            error = new WritableImage(Toolkit.loadImage("textures/icons/app/error.png").getPixelReader(), 512, 512);
 
 
             icon = new Image("textures/icons/app/icon.png");
+            icon_wenku8 = new Image("textures/icons/app/icon_wenku8.png");
 
-            grayResources.addAll(List.of(horn, setting, edit, list));
+            grayResources.addAll(List.of(horn, setting, edit, list, pc));
 
             log.debug("Resources loaded");
         } catch (IOException e) {

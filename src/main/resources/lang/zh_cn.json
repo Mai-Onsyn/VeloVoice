@@ -82,15 +82,20 @@
   "stage.log.title": "日志",
   "stage.local_txt.title": "编辑本地TXT文本解析规则",
 
-  "custom.local_txt.label.html_char": "解析HTML实体编码",
-  "custom.local_txt.label.parse_structures": "解析结构",
-  "custom.local_txt.label.ignore_empty_unit": "忽略空单元文件",
-  "custom.local_txt.label.mark_title": "添加标题",
-  "custom.local_txt.label.parse_rules": "解析规则",
-  "custom.local_txt.window.button.add": "+添加",
-  "custom.local_txt.window.popup.title": "添加规则",
-  "custom.local_txt.window.label.value": "值",
-  "custom.local_txt.window.label.description": "描述",
+  "source.local_txt.name": "本地文本文件",
+  "source.local_txt.label.html_char": "解析HTML实体编码",
+  "source.local_txt.label.parse_structures": "解析结构",
+  "source.local_txt.label.ignore_empty_unit": "忽略空单元文件",
+  "source.local_txt.label.mark_title": "添加标题",
+  "source.local_txt.label.parse_rules": "解析规则",
+  "source.local_txt.window.button.add": "+添加",
+  "source.local_txt.window.popup.title": "添加规则",
+  "source.local_txt.window.label.value": "值",
+  "source.local_txt.window.label.description": "描述",
+
+  "source.wenku8.name": "轻小说文库",
+  "source.wenku8.label.mark_volume": "添加卷名",
+  "source.wenku8.label.mark_chapter": "添加章节名",
 
   "log.progress.initializing": "正在初始化...",
   "log.progress.total": "总计",
@@ -126,5 +131,5 @@
   "log.main_factory.info.load_preview": "正在加载预览语音...",
   "log.main_factory.info.tts_all_finished": "所有任务已在 {} 内完成",
   "log.main_factory.info.tts_interrupted": "任务已被用户中断",
-  "log.runtime.warn.color_parse_failed": "无法解析主题色\"{}\"，请检查是否正确？"
+  "log.runtime.warn.color_parse_failed": "无法解析主题色\"{}\"，请检查是否正确"
 }

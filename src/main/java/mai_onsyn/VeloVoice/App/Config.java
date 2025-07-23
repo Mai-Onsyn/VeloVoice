@@ -246,7 +246,7 @@ public class Config extends JSONObject {
         switcher.stateProperty().addListener((o, ov, nv) -> setBoolean(key, nv));
 
         box.getChildren().add(switcher);
-        box.setPosition(switcher, false, 0, Constants.UI_HEIGHT * 2, 0, 0);
+        box.setPosition(switcher, false, 0, Constants.UI_HEIGHT * 1.8, 0.2, 0.2);
         box.flipRelativeMode(switcher, AutoPane.Motion.RIGHT);
 
         switcher.setTheme(SWITCH);

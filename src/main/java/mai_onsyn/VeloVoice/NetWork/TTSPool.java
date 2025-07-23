@@ -136,8 +136,22 @@ public class TTSPool {
         }
 
         List<Sentence> result = new ArrayList<>(resultPool.size());
+        // 找到最大的索引（key）
+        int maxIndex = resultPool.keySet().stream()
+                .max(Integer::compareTo)
+                .orElse(0);
+
+        // 初始化 List，填充 null 直到 maxIndex
+        for (int i = 0; i <= maxIndex; i++) {
+            result.add(null);
+        }
+
+        // 遍历 Map，按索引放入 Sentence
         for (Map.Entry<Integer, Sentence> entry : resultPool.entrySet()) {
-            result.add(entry.getKey(), entry.getValue());
+            int index = entry.getKey();
+            if (index >= 0 && index <= maxIndex) {
+                result.set(index, entry.getValue());
+            }
         }
 
         //after处理，保存

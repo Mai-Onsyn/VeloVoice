@@ -128,29 +128,41 @@ public class TextProcessFactory {
         }
         Config.ConfigItem sourceItem = textConfig.genChooseStringItem("LoadSource", loadList);
         sourceItem.setI18NKey("main.text.load.label.source");
+        sourceItem.setChildrenI18NKeys(I18nKeyMaps.SOURCES);
         I18N.registerComponent(sourceItem);
 
         Config.ConfigBox sourceConfigBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
         {
+            List<Config.ConfigBox> configFrames = new ArrayList<>();
             for (Map.Entry<String, Source> sourceEntry : sources.entrySet()) {
                 Source source = sourceEntry.getValue();
                 Config.ConfigBox configBox = source.mkConfigFrame();
                 configBox.setUserData(sourceEntry.getKey());
-                sourceConfigBox.getChildren().add(configBox);
+                configFrames.add(configBox);
+                if (sourceEntry.getKey().equals(textConfig.getString("LoadSource"))) sourceConfigBox.getChildren().add(configBox);
             }
 
             AXChoiceBox choiceBox = (AXChoiceBox) sourceItem.getChildren().getLast();
             choiceBox.getButtonGroup().addOnSelectChangedListener((o, ov, nv) -> {
                 String rule = nv.getUserData().toString();
-                for (Node node : sourceConfigBox.getChildren()) {
-                    node.setVisible(node.getUserData().toString().equals(rule));
+                sourceConfigBox.getChildren().clear();
+                for (Node node : configFrames) {
+                    //node.setVisible(node.getUserData().toString().equals(rule));
+                    if (node.getUserData().toString().equals(rule)) {
+                        sourceConfigBox.getChildren().add(node);
+                        break;
+                    }
                 }
+            });
+
+            choiceBox.getButtonGroup().getButtonList().forEach(button -> {
+                sources.get(button.getUserData().toString()).drawItemButton(button);
             });
         }
 
         Config.ConfigItem uriItem = textConfig.genInputStringItem("LoadUri", "main.text.load.input.uri");
         uriItem.setI18NKey("main.text.load.label.uri");
-        ((AXTextField) uriItem.getContent()).setChildrenI18NKeys(Constants.I18nKeyMaps.CONTEXT);
+        ((AXTextField) uriItem.getContent()).setChildrenI18NKeys(I18nKeyMaps.CONTEXT);
         I18N.registerComponent(uriItem);
 
         AXButton startButton = new AXButton("Load");
@@ -161,14 +173,42 @@ public class TextProcessFactory {
         startButton.setI18NKey("main.text.load.title");
         I18N.registerComponent(startButton);
 
+        isTextLoadRunning.addListener((o, ov, nv) -> Platform.runLater(() -> {
+            if (nv) {
+                startButton.setText(I18N.getCurrentValue("main.general.button.stop"));
+                startButton.setI18NKey("main.general.button.stop");
+            } else {
+                startButton.setText(I18N.getCurrentValue("main.text.load.title"));
+                startButton.setI18NKey("main.text.load.title");
+            }
+        }));
+
+        AtomicReference<Thread> textLoadThread = new AtomicReference<>();
         startButton.setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.PRIMARY) {
-                Source source = sources.get(textConfig.getString("LoadSource"));
-                AXDatableButtonGroup<AXTreeItem> group = treeView.getGroup();
-                if (group.getSelectedButton() != null)
-                    Thread.ofVirtual().name("Text-Load-Thread").start(() -> source.process(textConfig.getString("LoadUri"), group.getData(group.getSelectedButton())));
-                else
-                    Thread.ofVirtual().name("Text-Load-Thread").start(() -> source.process(textConfig.getString("LoadUri"), treeView.getRoot()));
+                if (isTextLoadRunning.get()) {
+                    textLoadThread.get().interrupt();
+                    isTextLoadRunning.set(false);
+                } else {
+                    isTextLoadRunning.set(true);
+
+                    Source source = sources.get(textConfig.getString("LoadSource"));
+                    AXDatableButtonGroup<AXTreeItem> group = treeView.getGroup();
+
+                    AXTreeItem target = group.getSelectedButton() == null ? treeView.getRoot() : group.getData(group.getSelectedButton());
+
+                    textLoadThread.set(Thread.ofVirtual().name("Text-Load-Thread").start(() -> {
+                        try {
+                            source.process(textConfig.getString("LoadUri"), target);
+                        } catch (InterruptedException ie) {
+                            log.info("Text load interrupted");
+                        } catch (Exception ex) {
+                            log.error("Text load failed: {}", ex.getMessage());
+                        } finally {
+                            isTextLoadRunning.set(false);
+                        }
+                    }));
+                }
             }
         });
 

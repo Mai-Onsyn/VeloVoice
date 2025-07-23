@@ -228,6 +228,7 @@ public class AXTreeView<T> extends AXBase implements Localizable {
         AXDataTreeItem<T> dataTreeItem = new AXDataTreeItem<>(name, (T) data, copyRule);
         dataTreeItem.setTheme(style.getFileItemStyle());
         Platform.runLater(dataTreeItem::update);
+        dataTreeItem.setAttribution(this);
 
         return dataTreeItem;
     }
@@ -236,6 +237,7 @@ public class AXTreeView<T> extends AXBase implements Localizable {
         AXTreeItem treeItem = new AXTreeItem(name);
         treeItem.setTheme(style.getFolderItemStyle());
         Platform.runLater(treeItem::update);
+        treeItem.setAttribution(this);
 
         return treeItem;
     }

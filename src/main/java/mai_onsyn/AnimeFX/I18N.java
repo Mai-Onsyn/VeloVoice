@@ -39,7 +39,8 @@ public class I18N {
         }
         else {
             for (Localizable component : registeredComponents) {
-                component.localize(keyMap.getOrDefault(component.getI18NKey(), component.getI18NKey()));
+                String defaultName = languageMap.get("en_us").getOrDefault(component.getI18NKey(), component.getI18NKey());
+                component.localize(keyMap.getOrDefault(component.getI18NKey(), defaultName));
             }
         }
 

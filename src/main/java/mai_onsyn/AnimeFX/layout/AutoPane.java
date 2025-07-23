@@ -21,6 +21,8 @@ public class AutoPane extends Region {
         LEFT_CENTER,
         RIGHT_CENTER,
         CENTER,
+        BOTTOM_LEFT,
+        BOTTOM_RIGHT
     }
     public enum Motion {
         LEFT,
@@ -169,8 +171,8 @@ public class AutoPane extends Region {
             };
 
             switch (entry.getValue().getKey().getKey()) {
-                case TOP_LEFT, LEFT_CENTER -> node.setLayoutX(xValue);
-                case TOP_RIGHT, RIGHT_CENTER -> node.setLayoutX(xValue - getWidth(node) + width);
+                case TOP_LEFT, LEFT_CENTER, BOTTOM_LEFT -> node.setLayoutX(xValue);
+                case TOP_RIGHT, RIGHT_CENTER, BOTTOM_RIGHT -> node.setLayoutX(- xValue - getWidth(node) + width);
                 case CENTER -> node.setLayoutX(xValue - getWidth(node) / 2);
             }
         }
@@ -215,6 +217,7 @@ public class AutoPane extends Region {
             switch (entry.getValue().getKey().getKey()) {
                 case TOP_LEFT, TOP_RIGHT -> node.setLayoutY(yValue);
                 case CENTER, LEFT_CENTER, RIGHT_CENTER -> node.setLayoutY(yValue - getHeight(node) / 2);
+                case BOTTOM_LEFT, BOTTOM_RIGHT -> node.setLayoutY(height - yValue - getHeight(node));
             }
         }
     }
@@ -236,10 +239,9 @@ public class AutoPane extends Region {
     private double getHeight(Node node) {
         return switch (node) {
             case Label label -> {
-//                Text text = new Text(label.getText());
-//                text.setFont(label.getFont());
-//                yield text.getLayoutBounds().getHeight();
-                yield label.getLayoutBounds().getHeight();
+                Text text = new Text(label.getText());
+                text.setFont(label.getFont());
+                yield text.getLayoutBounds().getHeight();
             }
             case Region region -> region.getLayoutBounds().getHeight();
             case Rectangle rectangle -> rectangle.getHeight();

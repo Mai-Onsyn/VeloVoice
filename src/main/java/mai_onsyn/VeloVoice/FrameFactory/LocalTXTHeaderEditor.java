@@ -86,7 +86,7 @@ public class LocalTXTHeaderEditor extends HDoubleSplitPane {
             AXButton addButton = new AXButton("");
             addButton.setTheme(BUTTON);
             themeManager.register(addButton);
-            addButton.setI18NKey("custom.local_txt.window.button.add");
+            addButton.setI18NKey("source.local_txt.window.button.add");
             I18N.registerComponent(addButton);
 
             leftRoot.getChildren().add(add_item);
@@ -102,7 +102,7 @@ public class LocalTXTHeaderEditor extends HDoubleSplitPane {
 
             addButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                 if (e.getButton() == MouseButton.PRIMARY) {
-                    inputPopup.showOnCenter(I18N.getCurrentValue("custom.local_txt.window.popup.title"), this.getScene().getWindow());
+                    inputPopup.showOnCenter(I18N.getCurrentValue("source.local_txt.window.popup.title"), this.getScene().getWindow());
                     inputPopup.setOnTextAvailable((o, ov, nv) -> {
                         Item item = new Item(nv);
                         itemBox.addConfigItem(item);
@@ -131,7 +131,7 @@ public class LocalTXTHeaderEditor extends HDoubleSplitPane {
             bottomRoot.getChildren().addAll(descriptionLabel, descriptionArea);
             bottomRoot.setPosition(descriptionLabel, AlignmentMode.TOP_LEFT, LocateMode.ABSOLUTE, 20, -20);
             bottomRoot.setPosition(descriptionArea, false, 20, 20, 0, 20);
-            descriptionLabel.setI18NKey("custom.local_txt.window.label.description");
+            descriptionLabel.setI18NKey("source.local_txt.window.label.description");
             I18N.registerComponent(descriptionLabel);
 
 
@@ -245,18 +245,18 @@ public class LocalTXTHeaderEditor extends HDoubleSplitPane {
             addButtonPane.setMinHeight(UI_HEIGHT);
             addButtonPane.setMaxHeight(UI_HEIGHT);
 
-            AXButton addButton = new AXButton(I18N.getCurrentValue("custom.local_txt.window.button.add"));
+            AXButton addButton = new AXButton(I18N.getCurrentValue("source.local_txt.window.button.add"));
             AutoPane.lockSize(addButton, UI_HEIGHT * 2, UI_HEIGHT);
             addButtonPane.getChildren().add(addButton);
             addButtonPane.setPosition(addButton, AlignmentMode.TOP_LEFT, LocateMode.RELATIVE, 0, 0);
             addButton.setTheme(BUTTON);
             addButton.update();
             themeManager.register(addButton);
-            addButton.setI18NKey("custom.local_txt.window.button.add");
+            addButton.setI18NKey("source.local_txt.window.button.add");
             I18N.registerComponent(addButton);
 
             addButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                inputPopup.showOnCenter(I18N.getCurrentValue("custom.local_txt.window.popup.title"), this.getScene().getWindow());
+                inputPopup.showOnCenter(I18N.getCurrentValue("source.local_txt.window.popup.title"), this.getScene().getWindow());
                 inputPopup.setOnTextAvailable((o, ov, nv) -> {
                     content.getChildren().add(content.getChildren().size() - 1, new ItemPane(nv));
                 });
@@ -326,7 +326,7 @@ public class LocalTXTHeaderEditor extends HDoubleSplitPane {
             editField.getLeft().setPosition(startField, false, 0, 0, 0, 0);
             editField.getRight().setPosition(endField, false, 0, 0, 0, 0);
             AXLangLabel valueLabel = new AXLangLabel("Value");
-            valueLabel.setI18NKey("custom.local_txt.window.label.value");
+            valueLabel.setI18NKey("source.local_txt.window.label.value");
             I18N.registerComponent(valueLabel);
             startField.setTheme(TEXT_FIELD);
             endField.setTheme(TEXT_FIELD);

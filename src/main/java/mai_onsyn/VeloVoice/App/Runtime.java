@@ -26,7 +26,8 @@ import static mai_onsyn.VeloVoice.App.Constants.*;
 
 public class Runtime {
 
-    public static final SimpleBooleanProperty isRunning = new SimpleBooleanProperty(false);
+    public static final SimpleBooleanProperty isTTSRunning = new SimpleBooleanProperty(false);
+    public static final SimpleBooleanProperty isTextLoadRunning = new SimpleBooleanProperty(false);
     public static boolean firstLaunch = false;
 
     public static final  ConfigManager configManager;
