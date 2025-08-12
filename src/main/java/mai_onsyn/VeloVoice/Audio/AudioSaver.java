@@ -5,7 +5,7 @@ import com.jonathanedgecombe.srt.Subtitle;
 import com.jonathanedgecombe.srt.SubtitleFile;
 import com.jonathanedgecombe.srt.Timestamp;
 import mai_onsyn.AnimeFX.I18N;
-import mai_onsyn.VeloVoice.NetWork.TTS.FixedEdgeTTSClient;
+import mai_onsyn.VeloVoice.NetWork.TTS.ResumableTTSClient;
 import mai_onsyn.VeloVoice.Text.Sentence;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,7 +29,7 @@ public class AudioSaver {
     public static void save(List<Sentence> sentences, File folder, String name) throws IOException {
         AudioEncodeUtils.AudioFormat audioFormat = sentences.getFirst().audioFormat();
 
-        final int sectionByteLength = voiceConfig.getInteger("SectionLength") * 60000 * (audioFormat == AudioEncodeUtils.AudioFormat.MP3 ? MP3_UNIT_DURATION : WAV_UNIT_DURATION);
+        final int sectionByteLength = voiceConfig.getInteger("SectionLength") * 60000 * (audioFormat == AudioEncodeUtils.AudioFormat.MP3_24KHZ_16BIT ? MP3_UNIT_DURATION : WAV_UNIT_DURATION);
 
         if (voiceConfig.getBoolean("SaveInSections") && countLength(sentences) > sectionByteLength) {
             log.debug("Save in sections");
@@ -46,12 +46,16 @@ public class AudioSaver {
 
                     //if enabled, every section will read the first sentence of the file
                     if (voiceConfig.getBoolean("SectionReadHead")) {
-                        FixedEdgeTTSClient fixedEdgeTTSClient = new FixedEdgeTTSClient();
-                        fixedEdgeTTSClient.connect();
-                        Sentence head = fixedEdgeTTSClient.process(String.format(sentences.getFirst().text() + voiceConfig.getString("SectionUnitPattern"), ++i));
-                        byteLength += head.audioByteArray().length;
-                        saveTemp.add(head);
-                        fixedEdgeTTSClient.close();
+                        try {
+                            ResumableTTSClient fixedEdgeTTSClient = new ResumableTTSClient();
+                            fixedEdgeTTSClient.establish();
+                            Sentence head = fixedEdgeTTSClient.process(String.format(sentences.getFirst().text() + voiceConfig.getString("SectionUnitPattern"), ++i));
+                            byteLength += head.audioByteArray().length;
+                            saveTemp.add(head);
+                            fixedEdgeTTSClient.terminate();
+                        } catch (Exception e) {
+                            log.warn("Can't read the first sentence because {}, In file {} will be ignored", e.getMessage(), name);
+                        }
                     }
                 }
 
@@ -78,7 +82,8 @@ public class AudioSaver {
 
         try (FileOutputStream fos = new FileOutputStream(audioFile)) {
 
-            if (audioFormat == AudioEncodeUtils.AudioFormat.WAV) fos.write(AudioEncodeUtils.genWavHeader(countLength(sentences), 24000, 1));
+            if (audioFormat == AudioEncodeUtils.AudioFormat.WAV_24KHZ_16BIT) fos.write(AudioEncodeUtils.genWavHeader(countLength(sentences), 24000, 1));
+            else if (audioFormat == AudioEncodeUtils.AudioFormat.WAV_22KHZ_16BIT) fos.write(AudioEncodeUtils.genWavHeader(countLength(sentences), 22000, 1));
 
             for (Sentence sentence : sentences) {
                 fos.write(sentence.audioByteArray());
@@ -96,7 +101,7 @@ public class AudioSaver {
         try {
 
             for (Sentence sentence : sentences) {
-                boolean isMP3 = sentence.audioFormat() == AudioEncodeUtils.AudioFormat.MP3;
+                boolean isMP3 = sentence.audioFormat() == AudioEncodeUtils.AudioFormat.MP3_24KHZ_16BIT;
                 Subtitle subtitle = new Subtitle(new Timestamp(formatDuration(tick / (isMP3 ? MP3_UNIT_DURATION : WAV_UNIT_DURATION))), new Timestamp(formatDuration((tick+=sentence.audioByteArray().length) / (isMP3 ? MP3_UNIT_DURATION : WAV_UNIT_DURATION))));
 
                 subtitle.addLine(sentence.text());
@@ -124,7 +129,7 @@ public class AudioSaver {
         return String.format("%02d:%02d:%02d,%03d", h, m, s, S);
     }
 
-    private static int countLength(List<Sentence> s) {
+    static int countLength(List<Sentence> s) {
         return s.stream().mapToInt(sentence -> sentence.audioByteArray().length).sum();
     }
 

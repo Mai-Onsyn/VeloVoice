@@ -1,0 +1,6 @@
+This software uses jacob-project (LGPL 2.1), which depends on jacob-1.21-x64.dll.
+The DLL is licensed under LGPL 2.1 and can be obtained from: https://github.com/freemansoft/jacob-project.
+
+For the executable version (EXE with bundled JRE), you have the right to:
+1. Replace the bundled DLL with a modified version.
+2. Obtain the source code of the DLL (linked from the above repository).

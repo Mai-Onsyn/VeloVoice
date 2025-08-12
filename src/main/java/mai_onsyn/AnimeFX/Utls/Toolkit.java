@@ -19,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.IntBuffer;
 
 public class Toolkit {
 
@@ -107,6 +108,46 @@ public class Toolkit {
     }
 
     public static void adjustImageColor(WritableImage image, Color newColor) {
+        int width = (int) image.getWidth();
+        int height = (int) image.getHeight();
+
+        PixelReader pixelReader = image.getPixelReader();
+        PixelBuffer<IntBuffer> pixelBuffer = new PixelBuffer<>(
+                width, height,
+                IntBuffer.allocate(width * height),
+                PixelFormat.getIntArgbPreInstance()
+        );
+
+        // 一次性读取所有像素
+        pixelReader.getPixels(0, 0, width, height,
+                PixelFormat.getIntArgbPreInstance(),
+                pixelBuffer.getBuffer(),
+                width);
+
+        IntBuffer buffer = pixelBuffer.getBuffer();
+        int newRgb = (int) (newColor.getRed() * 255) << 16 |
+                (int) (newColor.getGreen() * 255) << 8 |
+                (int) (newColor.getBlue() * 255) |
+                (255 << 24); // 默认不透明
+
+        // 批量处理像素
+        for (int i = 0; i < buffer.capacity(); i++) {
+            int argb = buffer.get(i);
+            int alpha = (argb >> 24) & 0xFF;
+            if (alpha > 0) {
+                buffer.put(i, (alpha << 24) | (newRgb & 0x00FFFFFF));
+            }
+        }
+
+        // 一次性写入所有像素
+        image.getPixelWriter().setPixels(0, 0, width, height,
+                pixelBuffer.getPixelFormat(),
+                pixelBuffer.getBuffer(),
+                width);
+    }
+
+    @Deprecated
+    public static void adjustImageColor(WritableImage image, Color newColor, Object o) {
         int width = (int) image.getWidth();
         int height = (int) image.getHeight();
 

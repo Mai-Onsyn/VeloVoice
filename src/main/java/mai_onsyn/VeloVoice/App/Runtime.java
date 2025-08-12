@@ -8,6 +8,7 @@ import mai_onsyn.AnimeFX.ThemeManager;
 import mai_onsyn.AnimeFX.Utls.Toolkit;
 import mai_onsyn.VeloVoice.FrameFactory.FrameThemes;
 import mai_onsyn.VeloVoice.NetWork.LoadTarget.Source;
+import mai_onsyn.VeloVoice.NetWork.TTS.ResumableTTSClient;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,6 +35,7 @@ public class Runtime {
 
     public static final Config config = new Config();
     public static final Config edgeTTSConfig = new Config();
+    public static final Config naturalTTSConfig = new Config();
     public static final Config textConfig = new Config();
     public static final Config voiceConfig = new Config();
     public static final Config windowConfig = new Config();
@@ -44,7 +46,8 @@ public class Runtime {
         config.registerInteger("TimeoutSeconds", 30);
         config.registerInteger("MaxRetries", 5);
         config.registerString("AudioSaveFolder", "C:/Users/Administrator/Desktop/");
-        config.registerString("PreviewText", "Hello, World!");
+        config.registerString("PreviewText", "In the distance, the sound of waves crashing against the shore brought a sense of calm.");
+        config.registerString("TTSEngine", "Edge TTS");
 
         config.registerConfig("EdgeTTS", edgeTTSConfig);
         {
@@ -54,6 +57,14 @@ public class Runtime {
             edgeTTSConfig.registerDouble("VoiceVolume", 1.0);
             edgeTTSConfig.registerDouble("VoicePitch", 1.0);
             edgeTTSConfig.registerInteger("ThreadCount", 2);
+        }
+
+        config.registerConfig("NaturalTTS", naturalTTSConfig);
+        {
+            naturalTTSConfig.registerString("SelectedModel", "Microsoft Huihui Desktop");
+            naturalTTSConfig.registerInteger("VoiceRate", 0);
+            naturalTTSConfig.registerDouble("VoiceVolume", 1.0);
+            naturalTTSConfig.registerInteger("ThreadCount", 16);
         }
         
         config.registerConfig("Text", textConfig);
@@ -140,7 +151,8 @@ public class Runtime {
 
     public static final ThemeManager themeManager = new ThemeManager();
 
-    public static Thread EDGE_TTS_THREAD;
+    public static Thread TTS_THREAD;
+    public static ResumableTTSClient.ClientType CLIENT_TYPE;
 
     public static int currentTotalCount = 0;
     public static int totalCount = 0;
@@ -163,6 +175,9 @@ public class Runtime {
             }
         });
     }
+
+    //switched:
+    public static boolean disableNaturalTTS = false;
 
     public static String stackTraceToString(Throwable e) {
         StringWriter sw = new StringWriter();

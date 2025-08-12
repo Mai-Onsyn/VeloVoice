@@ -67,9 +67,9 @@ public class Wenku8 extends Source {
         markVolume.setI18NKey("source.wenku8.label.mark_volume");
         I18N.registerComponents(markChapter, markVolume);
 
-        Runtime.configManager.addOnChangedListener("Wenku8.MarkChapter", () -> {
-            markVolume.setDisable(!super.config.getBoolean("MarkChapter"));
-        });
+//        Runtime.configManager.addOnChangedListener("Wenku8.MarkChapter", () -> {
+//            markVolume.setDisable(!super.config.getBoolean("MarkChapter"));
+//        });
 
         configBox.addConfigItem(markChapter, markVolume);
 

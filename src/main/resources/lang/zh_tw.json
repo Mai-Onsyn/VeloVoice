@@ -25,6 +25,12 @@
   "main.tts.edge.label.volume": "音量",
   "main.tts.edge.label.pitch": "音調",
   "main.tts.edge.label.thread_count": "TTS執行緒數",
+  "main.tts.natural.label.model": "模型",
+  "main.tts.natural.label.rate": "語速",
+  "main.tts.natural.label.volume": "音量",
+  "main.tts.natural.label.thread_count": "TTS執行緒數",
+  "main.tts.natural.label.disabled": "你必須安裝jacob-1.21-x64.dll才能使用此功能",
+  "main.tts.general.label.tts_engine": "TTS引擎",
   "main.tts.general.label.audio_folder": "音訊儲存目錄",
   "main.tts.general.input.audio_folder": "輸入音訊檔案儲存路徑",
   "main.text.load.title": "載入",
@@ -82,6 +88,7 @@
   "stage.log.title": "日誌",
   "stage.local_txt.title": "編輯本地TXT文字解析規則",
 
+  "source.local_txt.name": "本機文字檔",
   "source.local_txt.label.html_char": "解析HTML實體編碼",
   "source.local_txt.label.parse_structures": "解析結構",
   "source.local_txt.label.ignore_empty_unit": "忽略空單元檔案",
@@ -92,24 +99,29 @@
   "source.local_txt.window.label.value": "值",
   "source.local_txt.window.label.description": "描述",
 
+  "source.wenku8.name": "Wen ku 8",
+  "source.wenku8.label.mark_volume": "新增標題",
+  "source.wenku8.label.mark_chapter": "新增章節",
+
   "log.progress.initializing": "正在初始化...",
   "log.progress.total": "總計",
   "log.progress.current": "目前進度",
+
 
   "log.config_manager.error.load_failed": "設定載入失敗，已重設為預設值",
   "log.config_manager.error.save_failed": "無法儲存設定檔",
   "log.config_manager.warn.config_not_found": "找不到設定檔，正在建立新檔案",
   "log.resource.error.load_failed": "資源載入失敗",
-  "log.after_effects.info.skip_shift": "跳過音訊調整",
+  "log.after_effects.debug.skip_shift": "跳過音訊調整",
   "log.audio_player.error.failed": "音訊播放失敗",
   "log.audio_player.info.playing": "正在播放...",
   "log.audio_saver.error.srt_save_failed": "無法儲存SRT字幕檔案",
   "log.local_txt.error.folder_not_exist": "資料夾不存在: {}",
   "log.local_txt.info.processed": "成功從\"{}\"載入檔案",
   "log.edge_tts_voice.error_load_json": "EdgeTTS語音清單載入失敗",
-  "log.tts_pool.info.connecting": "正在透過{}個執行緒連接EdgeTTS",
+  "log.tts_pool.info.connecting": "正在透過{}個執行緒連接TTS",
   "log.tts_pool.info.connected": "已連接{}個執行緒",
-  "log.tts_pool.error.connect_failed": "EdgeTTS連接失敗",
+  "log.tts_pool.error.connect_failed": "TTS連接失敗",
   "log.tts_pool.info.closed": "所有執行緒已關閉",
   "log.tts_pool.warn.thread_failed": "執行TTS時該線程發生錯誤，當前文本 \"{}\" 將被忽略！",
   "log.tts_pool.warn.thread_shutdown": "此線程因異常終止：{}",
@@ -125,5 +137,8 @@
   "log.main_factory.info.load_preview": "正在載入預覽語音...",
   "log.main_factory.info.tts_all_finished": "所有任務已在 {} 內完成",
   "log.main_factory.info.tts_interrupted": "任務已被使用者中斷",
-  "log.runtime.warn.color_parse_failed": "無法解析主題色\"{}\"，請檢查是否正確？"
+  "log.runtime.warn.color_parse_failed": "無法解析主題色\"{}\"，請檢查是否正確？",
+  "log.tts.warn.natural_tts_online": "看起來你正在使用一個線上的Natural TTS模型，而且你開了太多執行緒，微軟的伺服器頂不住啦！為了可持續地薅羊毛，執行緒數量別開太多，這次任務的執行緒數已經幫你調到4囉！😊",
+  "log.main_factory.error.natural_tts_disabled": "Natural TTS已被關閉。要開啟此功能，你必須確保使用了正確的作業系統並且安裝了jacob-1.21-x64.dll",
+  "log.main.warn.natural_tts_dll_not_loadable": "找不到Jacob所需的DLL，在你安裝它並重啟軟體之前，你將無法使用Natural TTS SAPI"
 }

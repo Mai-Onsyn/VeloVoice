@@ -6,7 +6,7 @@
 
     <groupId>mai_onsyn.VeloVoice</groupId>
     <artifactId>VeloVoice</artifactId>
-    <version>1.0.2</version>
+    <version>1.1</version>
 
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
@@ -109,9 +109,23 @@
         </dependency>
 
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.36</version> <!-- 确保与 log4j-slf4j-impl 兼容 -->
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>2.13.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jacob</groupId>
+            <artifactId>jacob</artifactId>
+            <version>1.21</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/jacob-1.21/jacob.jar</systemPath>
         </dependency>
 
     </dependencies>
@@ -125,7 +139,6 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <!--指定入口文件的位置-->
                             <mainClass>mai_onsyn.VeloVoice.Main</mainClass>
                         </manifest>
                     </archive>
@@ -140,6 +153,21 @@
                 </configuration>
             </plugin>
         </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+
+            <resource>
+                <directory>${project.basedir}</directory>
+                <includes>
+                    <include>LICENSE</include>
+                    <include>NOTICE</include>
+                    <include>README.md</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
 

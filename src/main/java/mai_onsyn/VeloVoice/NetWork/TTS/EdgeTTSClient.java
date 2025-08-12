@@ -10,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
-import java.io.IOException;
 import java.net.URI;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
@@ -23,70 +22,7 @@ import java.util.concurrent.TimeoutException;
 import static mai_onsyn.VeloVoice.App.Constants.*;
 import static mai_onsyn.VeloVoice.App.Runtime.config;
 
-public class FixedEdgeTTSClient implements TTSClient {
-
-    private static final Logger log = LogManager.getLogger(FixedEdgeTTSClient.class);
-
-    public static void setVoiceVolume(double v) {
-        EdgeTTSClient.setVoiceVolume(v);
-    }
-    public static void setVoiceRate(double v) {
-        EdgeTTSClient.setVoiceRate(v);
-    }
-    public static void setVoicePitch(double v) {
-        EdgeTTSClient.setVoicePitch(v);
-    }
-    public static void setVoice(String name) {
-        EdgeTTSClient.setVoice(name);
-    }
-
-    private EdgeTTSClient client;
-
-    public FixedEdgeTTSClient() {
-        client = new EdgeTTSClient();
-    }
-
-    @Override
-    public void connect() throws EdgeTTSException {
-        int retry = 0;
-        int maxRetries = config.getInteger("MaxRetries");
-        while (retry++ <= maxRetries) {
-            try {
-                client.connectWithRetries();
-                return;
-            } catch (Exception e) {
-                //if (retry == maxRetries) break;
-                log.debug("Failed to connect to EdgeTTS, retrying({})...", retry, e);
-            }
-        }
-        throw new EdgeTTSException("Out of retries: " + retry);
-    }
-
-    @Override
-    public void close() {
-        client.close();
-    }
-
-    @Override
-    public Sentence process(String s) throws IOException {
-        int retry = 0;
-        int maxRetries = config.getInteger("MaxRetries");
-        while (retry++ <= maxRetries) {
-            try {
-                if (!client.isOpen()) client.connectWithRetries();
-                return client.process(s);
-            } catch (Exception e) {
-                //if (retry == maxRetries) break;
-                log.debug("Failed to processing, retrying({})...", retry, e);
-                if (client.isOpen()) client.close();
-                client = new EdgeTTSClient();
-            }
-        }
-        throw new EdgeTTSException("Out of retries: " + retry);
-    }
-}
-
-class EdgeTTSClient extends WebSocketClient {
+public class EdgeTTSClient extends WebSocketClient implements TTSClient {
 
     private static final Map<String, String> HEADERS = new HashMap<>();
     private static final Logger log = LogManager.getLogger(EdgeTTSClient.class);
@@ -124,13 +60,19 @@ class EdgeTTSClient extends WebSocketClient {
     private final List<byte[]> audioBytesTemp = new ArrayList<>();
     private final List<Sentence.Word> wordsTemp = new ArrayList<>();
 
-    public void connectWithRetries() throws EdgeTTSException, ExecutionException, InterruptedException, TimeoutException {
+    @Override
+    public void establish() throws TTSException, ExecutionException, InterruptedException, TimeoutException {
         super.connect();
         locker = new CompletableFuture<>();
         String res = locker.get(config.getInteger("TimeoutSeconds"), TimeUnit.SECONDS);
         if (res.equals("error")) {
-            throw new EdgeTTSException("Server connect error");
+            throw new TTSException("Server connect error");
         }
+    }
+
+    @Override
+    public void terminate() {
+        super.close();
     }
 
     @Override
@@ -206,6 +148,7 @@ class EdgeTTSClient extends WebSocketClient {
         locker.complete("error");
     }
 
+    @Override
     public Sentence process(String s) throws Exception {
         String dateStr = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z (zzzz)").format(new Date());
         String message = String.format(
@@ -233,13 +176,18 @@ class EdgeTTSClient extends WebSocketClient {
 
         locker = new CompletableFuture<>();
         String res = locker.get(config.getInteger("TimeoutSeconds"), TimeUnit.SECONDS);
-        if (res.equals("error")) throw new EdgeTTSException("Server not response");
-        Sentence sentence = new Sentence(s, Sentence.mergeAudio(audioBytesTemp), List.copyOf(wordsTemp), AudioEncodeUtils.AudioFormat.MP3);
+        if (res.equals("error")) throw new TTSException("Server not response");
+        Sentence sentence = new Sentence(s, Sentence.mergeAudio(audioBytesTemp), List.copyOf(wordsTemp), AudioEncodeUtils.AudioFormat.MP3_24KHZ_16BIT);
         //log.debug(sentence.toString());
 
         audioBytesTemp.clear();
         wordsTemp.clear();
 
         return sentence;
+    }
+
+    @Override
+    public boolean isActive() {
+        return super.isOpen();
     }
 }

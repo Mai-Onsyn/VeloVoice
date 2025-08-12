@@ -10,7 +10,7 @@ import static mai_onsyn.VeloVoice.FrameFactory.MainFactory.mkTitleBar;
 public class AfterProcessFactory {
 
 
-    public static Config.ConfigBox mkAfterProcessArea() {
+    static Config.ConfigBox mkAfterProcessArea() {
         Config.ConfigBox configBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
 
         configBox.getChildren().addAll(getSRTBox(), getShiftBox(), getSectionBox());

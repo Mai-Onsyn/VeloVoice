@@ -2,6 +2,8 @@ package mai_onsyn.VeloVoice.Text;
 
 import mai_onsyn.AnimeFX.I18N;
 import mai_onsyn.AnimeFX.Utls.AXTreeItem;
+import mai_onsyn.VeloVoice.NetWork.TTS.NaturalTTSClient;
+import mai_onsyn.VeloVoice.NetWork.TTS.ResumableTTSClient;
 import mai_onsyn.VeloVoice.NetWork.TTSPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,7 +22,21 @@ public class TTS {
 
     public static void start(AXTreeItem root, File outputFolder) throws InterruptedException, IOException {
 
-        pool = new TTSPool(TTSPool.ClientType.EDGE, edgeTTSConfig.getInteger("ThreadCount"));
+        int threadCount = switch (CLIENT_TYPE) {
+            case EDGE -> edgeTTSConfig.getInteger("ThreadCount");
+            case NATURAL -> {
+                if (NaturalTTSClient.getVoice().contains("Online") && naturalTTSConfig.getInteger("ThreadCount") > 4) {
+                    log.warn(I18N.getCurrentValue("log.tts.warn.natural_tts_online"));
+                    yield edgeTTSConfig.getInteger("ThreadCount");
+                }
+                else {
+                    yield naturalTTSConfig.getInteger("ThreadCount");
+                }
+            }
+            default -> 1;
+        };
+
+        pool = new TTSPool(threadCount);
         pool.connect();
 
         List<ExecuteItem> executeItems = ExecuteItem.parseStructure(root, outputFolder);

@@ -3,7 +3,7 @@ package mai_onsyn.VeloVoice.NetWork;
 import mai_onsyn.AnimeFX.I18N;
 import mai_onsyn.VeloVoice.Audio.AfterEffects;
 import mai_onsyn.VeloVoice.Audio.AudioSaver;
-import mai_onsyn.VeloVoice.NetWork.TTS.FixedEdgeTTSClient;
+import mai_onsyn.VeloVoice.NetWork.TTS.ResumableTTSClient;
 import mai_onsyn.VeloVoice.NetWork.TTS.TTSClient;
 import mai_onsyn.VeloVoice.Text.Sentence;
 import org.apache.logging.log4j.LogManager;
@@ -24,20 +24,16 @@ import static mai_onsyn.VeloVoice.App.Runtime.*;
 public class TTSPool {
     private static final Logger log = LogManager.getLogger(TTSPool.class);
 
-    public enum ClientType {
-        EDGE
-    }
+
 
     private final int size;
-    private final ClientFactory clientFactory;
     private final TTSClient[] clients;
 
-    public TTSPool(ClientType type, int size) {
-        clientFactory = new ClientFactory(type);
+    public TTSPool( int size) {
         this.size = size;
         clients = new TTSClient[size];
         for (int i = 0; i < size; i++) {
-            clients[i] = clientFactory.createClient();
+            clients[i] = new ResumableTTSClient();
         }
     }
 
@@ -47,7 +43,7 @@ public class TTSPool {
         for (TTSClient client : clients) {
             Thread.ofVirtual().start(() -> {
                 try {
-                    client.connect();
+                    client.establish();
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -65,7 +61,7 @@ public class TTSPool {
 
     public void close() {
         for (TTSClient client : clients) {
-            client.close();
+            client.terminate();
         }
         log.info(I18N.getCurrentValue("log.tts_pool.info.closed"));
     }
@@ -154,16 +150,13 @@ public class TTSPool {
             }
         }
 
+        result.removeIf(Objects::isNull);
+        int missed = input.size() - result.size();
+        if (missed > 0) {
+            log.warn("Missed {} sentences", missed);
+        }
+
         //after处理，保存
         AudioSaver.save(AfterEffects.process(result), outputFolder, fileName);
-    }
-
-    private record ClientFactory(ClientType type) {
-
-        public TTSClient createClient() {
-            return switch (type) {
-                case EDGE -> new FixedEdgeTTSClient();
-            };
-        }
     }
 }

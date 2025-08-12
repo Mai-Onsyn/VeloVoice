@@ -1,34 +1,38 @@
-## 简介
+# VeloVoice
+[中文版](README.zh.md)
 
-这是一个用于将txt格式小说按章节目录形式拆解为文件目录结构，或从网络上爬取小说存储为文件目录结构(未实装)，并通过EdgeTTS（Edge浏览器的大声朗读功能）将章节文本转为mp3或wav语音文件。
+## Introduction
+
+A tool for splitting novel text files into chapter-based directory structures, or scraping novels from the web, and converting chapter texts into mp3/wav audio files using TTS Engine.
 - <https://www.bilibili.com/video/BV15ketemETA>
 - <https://www.bilibili.com/video/BV159tbeqEDA>
 
-此为正式版内容，若你需要查看测试版的内容，请访问[历史标签](<https://github.com/Mai-Onsyn/VeloVoice/tree/Test-v0.6.2>)
+This is the stable release. If you need to check the test version, please visit [Historical Tags](<https://github.com/Mai-Onsyn/VeloVoice/tree/Test-v0.6.2>)
 
-- Although Chinese is used here, the software still supports English
-- ここでは中国語が使われていますが、ソフトウェアは依然として日本語をサポートしています
+## Features
 
-## 特点
+- **Multithreaded TTS Conversion**: Due to Microsoft's restrictions, the maximum thread count of Edge TTS is currently limited to 4, but this still allows converting a 400,000-word novel in about 1.5 hours. However, the local Natural TTS can use up to 64 threads
+- **One-click Loading**: Specify novel sources to automatically build text structure trees with customizable parsing rules
+- **High Versatility**: Manual text structure tree operations make it suitable not just for novel narration but also other text-to-speech needs
 
-- **多线程TTS文本转语音**：由于微软搞事情，目前的最大线程数仅开放4，对于40万字的小说一个半小时就能完成
-- **一键加载**：指定小说源，自动构建文本结构树，并且可自定义你的文件要如何解析！
-- **泛用性高**：可手动操作的文本结构树，不仅是小说朗读，还可轻松用于其他文字转语音的相关需求
+## Usage
 
-## 使用
+The program requires JDK22 to run (uses unnamed variables)  
+The zip package includes runtime environment and necessary libraries for immediate use
 
-程序使用JDK22开发（使用了未命名变量），因此至少需要JDK22运行   
-zip压缩包中自带运行环境，可直接使用
-- [软件教程](https://github.com/Mai-Onsyn/VeloVoice/wiki)
+To use local SAPI (Natural TTS), place jacob-1.21-x64.dll in either your JRE's bin directory or C:/Windows/System32/, then restart the software
+- [Tutorial](https://github.com/Mai-Onsyn/VeloVoice/wiki)
+- [jacob download](https://github.com/freemansoft/jacob-project/releases/tag/Root_B-1_21)
 
-## 注意事项
+## Notes
 
-- **禁止发布或传播任何修改了最大可调TTS线程数的源码及打包，或是分享此功能的修改教程！！！这样做只能换取一时的速度，却会害了所有使用EdgeTTS的服务或人，不仅限于本软件的使用者！！！**
-- 若是遇到Bug，请尽可能提供反馈，这是我独立开发的软件，缺乏测试，Bug肯定很多。你可以在这里提Issue，或是在B站[私信作者](https://space.bilibili.com/544189344)
-- 本工具的设计初衷是优化小说分卷及目录结构管理，不推荐仅用于单文件转换。若强行以非预期方式使用（如处理超大单文件导致内存溢出），开发者不会针对此类场景进行适配或优化。请合理规划文件结构，以获得最佳体验
+- **DO NOT distribute or share modified versions that increase the TTS thread limit, or tutorials about such modifications!!! This may provide temporary speed gains but will harm all EdgeTTS services and users beyond just this software!!!**
+- Please report any bugs you encounter. As an independently developed project, thorough testing hasn't been possible. You can create Issues here or [contact the author on Bilibili](https://space.bilibili.com/544189344)
+- This tool was designed for optimizing novel volume and directory structure management, not recommended for single-file conversion. Memory overflow may occur when processing overly large single files against intended use cases
+- ⚠ Always save your project before using SAPI (Natural TTS)! **This TTS engine tends to crash when running on CPUs with weak single-core performance!**
 
-## 下载
+## Download
 
 [Releases](https://github.com/Mai-Onsyn/VeloVoice/releases)  
-蓝奏：<https://wwpz.lanzouv.com/b0ukj384f> 密码：14ix  
-如果你心情很好或者有钞能力也可以选择去这里下载：<https://pan.baidu.com/s/1uAGJ3xO1p4pJuM41pKftfQ?pwd=jvav>
+LanZou: <https://wwpz.lanzouv.com/b0ukj384f> Password: 14ix  
+If you're feeling generous: <https://pan.baidu.com/s/1uAGJ3xO1p4pJuM41pKftfQ?pwd=jvav>

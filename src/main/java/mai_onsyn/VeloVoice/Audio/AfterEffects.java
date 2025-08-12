@@ -17,7 +17,7 @@ public class AfterEffects {
     public static List<Sentence> process(List<Sentence> sentences) {
         if (voiceConfig.getBoolean("EnableVoiceShift")) return adjustAudio(sentences);
         else {
-            log.debug(I18N.getCurrentValue("log.after_effects.info.skip_shift"));
+            log.debug(I18N.getCurrentValue("log.after_effects.debug.skip_shift"));
             return sentences;
         }
     }
@@ -46,7 +46,7 @@ public class AfterEffects {
                 newWords.add(new Sentence.Word(word.word(), (int) (word.start() * ratio), (int) (word.end() * ratio)));
             });
 
-            result.add(new Sentence(sentence.text(), shiftedPCM, newWords, AudioEncodeUtils.AudioFormat.WAV));
+            result.add(new Sentence(sentence.text(), shiftedPCM, newWords, AudioEncodeUtils.AudioFormat.WAV_24KHZ_16BIT));
         });
 
         return result;

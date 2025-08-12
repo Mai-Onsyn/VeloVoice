@@ -19,8 +19,9 @@ import mai_onsyn.AnimeFX.layout.HDoubleSplitPane;
 import mai_onsyn.VeloVoice.App.Config;
 import mai_onsyn.VeloVoice.App.Resource;
 import mai_onsyn.VeloVoice.Audio.AudioPlayer;
+import mai_onsyn.VeloVoice.NetWork.TTS.EdgeTTSClient;
 import mai_onsyn.VeloVoice.NetWork.TTS.EdgeTTSVoice;
-import mai_onsyn.VeloVoice.NetWork.TTS.FixedEdgeTTSClient;
+import mai_onsyn.VeloVoice.NetWork.TTS.ResumableTTSClient;
 import mai_onsyn.VeloVoice.Text.Sentence;
 import mai_onsyn.VeloVoice.Text.TTS;
 import mai_onsyn.VeloVoice.Text.TextUtil;
@@ -169,127 +170,8 @@ public class MainFactory {
             scrollPane.setFitToWidth(true);
 
             //TTS配置面板
-            Config.ConfigBox ttsArea = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
-            {
-                //Edge TTS
-                Config.ConfigBox edgeTTSBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
-                {
-                    List<String> voiceShortNameList = new ArrayList<>();
-                    Set<String> langNameSet = new LinkedHashSet<>();
-                    {
-                        for (Object voice : EdgeTTSVoice.getVoices()) {
-                            String shortName = ((JSONObject) voice).getString("ShortName");
-                            voiceShortNameList.add(shortName);
-                        }
-                        voiceShortNameList.sort(String::compareTo);
-                        voiceShortNameList.forEach(shortName -> langNameSet.add(LANG_HEADCODE_TO_NAME_MAPPING.get(shortName.substring(0, 2))));
-                    }
+            Config.ConfigBox ttsArea = TTSFactory.mkTextProcessArea();
 
-                    Config.ConfigItem langItem = edgeTTSConfig.genChooseStringItem("SelectedLanguage", langNameSet.stream().toList());
-                    Config.ConfigItem modelItem = edgeTTSConfig.genChooseStringItem("SelectedModel", voiceShortNameList);
-                    Config.ConfigItem rateItem = edgeTTSConfig.genFloatSlidItem("VoiceRate", 0.05, 2.0, 0.05);
-                    Config.ConfigItem volumeItem = edgeTTSConfig.genFloatSlidItem("VoiceVolume", 0.05, 2.0, 0.05);
-                    Config.ConfigItem pitchItem = edgeTTSConfig.genFloatSlidItem("VoicePitch", 0.05, 1.5, 0.05);
-                    Config.ConfigItem threadItem = edgeTTSConfig.genIntegerSlidItem("ThreadCount", 1, 4, 1);
-
-                    langItem.setI18NKey("main.tts.edge.label.lang");
-                    modelItem.setI18NKey("main.tts.edge.label.model");
-                    rateItem.setI18NKey("main.tts.edge.label.rate");
-                    volumeItem.setI18NKey("main.tts.edge.label.volume");
-                    pitchItem.setI18NKey("main.tts.edge.label.pitch");
-                    threadItem.setI18NKey("main.tts.edge.label.thread_count");
-
-                    I18N.registerComponents(langItem, modelItem, rateItem, volumeItem, pitchItem, threadItem);
-
-                    //modelItem配置
-                    {
-                        AXChoiceBox modelChoiceBox = (AXChoiceBox) modelItem.getContent();
-                        AXChoiceBox langChoiceBox = (AXChoiceBox) langItem.getContent();
-                        AXButton previewButton = new AXButton();
-                        {
-                            ImageView horn = new ImageView(Resource.horn);
-                            previewButton.getChildren().add(horn);
-                            previewButton.setPosition(horn, AutoPane.AlignmentMode.CENTER, AutoPane.LocateMode.RELATIVE, 0.5, 0.5);
-                            horn.setFitWidth(UI_HEIGHT * 0.8);
-                            horn.setFitHeight(UI_HEIGHT * 0.8);
-                            previewButton.setTheme(BUTTON);
-                            themeManager.register(previewButton);
-
-                            previewButton.setOnMouseClicked(e -> {
-                                if (e.getButton() == MouseButton.PRIMARY) {
-                                    Thread.ofVirtual().name("Preview-Thread").start(() -> {
-                                        FixedEdgeTTSClient client = new FixedEdgeTTSClient();
-                                        try {
-                                            log.info(I18N.getCurrentValue("log.main_factory.info.load_preview"));
-                                            client.connect();
-                                            Sentence sentence = client.process(config.getString("PreviewText"));
-                                            client.close();
-
-                                            AudioPlayer.play(sentence.audioByteArray());
-                                        } catch (Exception ex) {
-                                            log.error(I18N.getCurrentValue("log.main_factory.error.load_preview_failed"), ex.toString());
-                                            throw new RuntimeException(ex);
-                                        }
-                                    });
-                                }
-                            });
-
-                            modelItem.setPosition(modelChoiceBox, true, false, false, false, 0.4, UI_HEIGHT * 2, 0, 0);
-
-                            modelItem.getChildren().add(previewButton);
-                            modelItem.setPosition(previewButton, false, UI_HEIGHT * 1.4, 0, 0, 0);
-                            modelItem.flipRelativeMode(previewButton, AutoPane.Motion.LEFT);
-                        }
-
-                        //手动选择当前设置的模型
-                        {
-                            String initLang = edgeTTSConfig.getString("SelectedLanguage");
-                            AXButtonGroup langButtonGroup = langChoiceBox.getButtonGroup();
-//                            langButtonGroup.getButtonList().forEach(button -> {
-//                                if (Objects.equals(button.getText().substring(0, 2), initLang)) {
-//                                    langButtonGroup.selectButton(button);
-//                                }
-//                            });
-//
-//                            AXButtonGroup modelButtonGroup = modelChoiceBox.getButtonGroup();
-//                            modelButtonGroup.getButtonList().forEach(button -> {
-//                                if (Objects.equals(button.getText(), edgeTTSConfig.getString("SelectedModel"))) {
-//                                    modelButtonGroup.selectButton(button);
-//                                }
-//                            });
-
-
-                            //根据语言显示模型
-                            showEdgeTTSModel(modelChoiceBox, LANG_NAME_TO_HEADCODE_MAPPING.get(initLang));
-                            langButtonGroup.addOnSelectChangedListener((o, ov, nv) -> {
-                                showEdgeTTSModel(modelChoiceBox, LANG_NAME_TO_HEADCODE_MAPPING.get(nv.getText()));
-                            });
-                        }
-                    }
-
-                    //UI数据应用到EdgeTTS配置项
-                    {
-                        ((AXChoiceBox) modelItem.getContent()).getButtonGroup().addOnSelectChangedListener((o, ov, nv) -> FixedEdgeTTSClient.setVoice(nv.getText()));
-
-                        ((AXFloatTextField) rateItem.getContent().getChildren().get(1)).valueProperty().addListener((o, ov, nv) -> FixedEdgeTTSClient.setVoiceRate(nv.doubleValue()));
-
-                        ((AXFloatTextField) volumeItem.getContent().getChildren().get(1)).valueProperty().addListener((o, ov, nv) -> FixedEdgeTTSClient.setVoiceVolume(nv.doubleValue()));
-
-                        ((AXFloatTextField) pitchItem.getContent().getChildren().get(1)).valueProperty().addListener((o, ov, nv) -> FixedEdgeTTSClient.setVoicePitch(nv.doubleValue()));
-                    }
-
-                    edgeTTSBox.addConfigItem(langItem, modelItem, rateItem, volumeItem, pitchItem, threadItem);
-                }
-
-                Config.ConfigItem audioFolderItem = config.genInputStringItem("AudioSaveFolder", "main.tts.general.input.audio_folder");
-                audioFolderItem.setI18NKey("main.tts.general.label.audio_folder");
-                ((AXTextField) audioFolderItem.getContent()).setChildrenI18NKeys(I18nKeyMaps.CONTEXT);
-                I18N.registerComponent(audioFolderItem);
-
-                ttsArea.getChildren().addAll(edgeTTSBox);
-
-                ttsArea.addConfigItem(audioFolderItem);
-            }
 
             //语音处理相关
             Config.ConfigBox afterProcessArea = AfterProcessFactory.mkAfterProcessArea();
@@ -372,13 +254,18 @@ public class MainFactory {
                 if (isTTSRunning.get()) {
                     isTTSRunning.set(false);
 
-                    EDGE_TTS_THREAD.interrupt();
+                    TTS_THREAD.interrupt();
                 }
                 else {
                     isTTSRunning.set(true);
 
-                    EDGE_TTS_THREAD = Thread.ofVirtual().name("EdgeTTS-Main").start(() -> {
+                    TTS_THREAD = Thread.ofVirtual().name("TTS-Main").start(() -> {
                         try {
+                            if (disableNaturalTTS) {
+                                log.error(I18N.getCurrentValue("log.main_factory.error.natural_tts_disabled"));
+                                return;
+                            }
+
                             TTS.start(treeView.getRoot(), new File(config.getString("AudioSaveFolder")));
 
                             log.info(I18N.getCurrentValue("log.main_factory.info.tts_all_finished"), TextUtil.formatMillisToTime(System.currentTimeMillis() - totalStartTime));
@@ -508,23 +395,17 @@ public class MainFactory {
         });
         return treeViewGroup;
     }
+
     private static void disableTextArea(String reason) {
         textArea.setDisable(true);
         textAreaInfo.setText(reason);
         textAreaInfo.setVisible(true);
     }
+
     private static void enableTextArea() {
         textArea.setDisable(false);
         textAreaInfo.setVisible(false);
     }
-    private static void showEdgeTTSModel(AXChoiceBox box, String lang) {
-        box.getButtonGroup().getButtonList().forEach(button -> {
-            String name = button.getText();
-            if (name.startsWith(lang) && !box.containsItem(button)) box.showItem(button);
-            else if (!name.startsWith(lang)) box.removeItem(button);
-        });
-    }
-
 
     public static AutoPane mkTitleBar(String namespace) {
         AXLangLabel langLabel = new AXLangLabel();

@@ -13,6 +13,7 @@ import mai_onsyn.AnimeFX.Module.AXButton;
 import mai_onsyn.AnimeFX.Module.AXChoiceBox;
 import mai_onsyn.AnimeFX.Module.AXTextField;
 import mai_onsyn.AnimeFX.Utls.AXButtonGroup;
+import mai_onsyn.AnimeFX.Utls.AXDataTreeItem;
 import mai_onsyn.AnimeFX.Utls.AXDatableButtonGroup;
 import mai_onsyn.AnimeFX.Utls.AXTreeItem;
 import mai_onsyn.AnimeFX.layout.AXContextPane;
@@ -195,7 +196,7 @@ public class TextProcessFactory {
                     Source source = sources.get(textConfig.getString("LoadSource"));
                     AXDatableButtonGroup<AXTreeItem> group = treeView.getGroup();
 
-                    AXTreeItem target = group.getSelectedButton() == null ? treeView.getRoot() : group.getData(group.getSelectedButton());
+                    AXTreeItem target = (group.getSelectedButton() == null || group.getData(group.getSelectedButton()) instanceof AXDataTreeItem<?>) ? treeView.getRoot() : group.getData(group.getSelectedButton());
 
                     textLoadThread.set(Thread.ofVirtual().name("Text-Load-Thread").start(() -> {
                         try {

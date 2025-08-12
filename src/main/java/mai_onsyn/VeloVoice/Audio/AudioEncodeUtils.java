@@ -19,8 +19,9 @@ import java.io.InputStream;
 public class AudioEncodeUtils {
 
     public enum AudioFormat {
-        MP3("mp3"),
-        WAV("wav");;
+        MP3_24KHZ_16BIT("mp3"),
+        WAV_24KHZ_16BIT("wav"),
+        WAV_22KHZ_16BIT("wav");
 
         private final String format;
 

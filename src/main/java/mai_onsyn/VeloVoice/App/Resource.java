@@ -37,8 +37,8 @@ public class Resource {
             error = new WritableImage(Toolkit.loadImage("textures/icons/app/error.png").getPixelReader(), 512, 512);
 
 
-            icon = new Image("textures/icons/app/icon.png");
-            icon_wenku8 = new Image("textures/icons/app/icon_wenku8.png");
+            icon = Toolkit.loadImage("textures/icons/app/icon.png");
+            icon_wenku8 = Toolkit.loadImage("textures/icons/app/icon_wenku8.png");
 
             grayResources.addAll(List.of(horn, setting, edit, list, pc));
 

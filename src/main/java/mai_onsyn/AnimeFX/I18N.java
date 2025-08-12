@@ -8,6 +8,8 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,7 +28,7 @@ public class I18N {
 
     static {
         langInfos = JSONObject.parseObject(readJsonFile("lang/lang_info.json"), Feature.OrderedField);
-        readLanguages(langInfos);
+        readLanguages();
     }
 
     public static void setLanguage(String language) {
@@ -71,14 +73,20 @@ public class I18N {
     }
 
     public static String getCurrentValue(String key) {
-        if (!languageMap.containsKey(currentLanguage)) return key;
-        return languageMap.get(currentLanguage).getOrDefault(key, key);
+        Map<String, String> keyMap = languageMap.get(currentLanguage);
+        if (keyMap == null) {
+            return key;
+        }
+        else {
+            String defaultName = languageMap.get("en_us").getOrDefault(key, key);
+            return keyMap.getOrDefault(key, defaultName);
+        }
     }
 
-    private static void readLanguages(JSONObject lang_infos) {
-        log.debug("Lang Infos: \n" + JSONObject.toJSONString(lang_infos, true));
+    private static void readLanguages() {
+        log.debug("Lang Infos: \n{}", JSONObject.toJSONString(I18N.langInfos, true));
 
-        for (String key : lang_infos.keySet()) {
+        for (String key : I18N.langInfos.keySet()) {
             try {
                 languageMap.put(key, JSONObject.parseObject(readJsonFile("lang/" + key + ".json")).getInnerMap().entrySet()
                         .stream()
@@ -94,8 +102,8 @@ public class I18N {
 
     private static String readJsonFile(String resourceDir) {
         try (
-                InputStream stream = I18N.class.getClassLoader().getResourceAsStream(resourceDir);
-                BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+                InputStream stream = I18N.class.getModule().getResourceAsStream(resourceDir);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(stream))
         ) {
             StringBuilder sb = new StringBuilder();
             while (reader.ready()) {
@@ -104,7 +112,7 @@ public class I18N {
             return sb.toString();
 
         } catch (Exception e) {
-            return null;
+            throw new RuntimeException(e);
         }
     }
 }
