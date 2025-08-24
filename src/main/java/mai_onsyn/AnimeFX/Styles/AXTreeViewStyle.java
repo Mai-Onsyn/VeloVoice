@@ -5,7 +5,7 @@ public interface AXTreeViewStyle extends AXBaseStyle {
     AXTreeItemStyle getFolderItemStyle();
     AXTreeItemStyle getFileItemStyle();
 
-    AXButtonStyle getSelectedItemStyle();
+    AXButtonStyle getSelectedButtonStyle();
 
     AXContextPaneStyle getContextMenuStyle();
     AXTextInputPopupStyle getTextInputPopupStyle();

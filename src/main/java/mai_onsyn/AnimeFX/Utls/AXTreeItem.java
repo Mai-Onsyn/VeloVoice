@@ -48,7 +48,7 @@ public class AXTreeItem extends Pane implements AutoUpdatable {
             }
         });
 
-        update();
+        update(1);
         super.getChildren().addAll(item, childrenBox);
         item.getTextLabel().setAlignment(Pos.CENTER_LEFT);
     }
@@ -68,10 +68,10 @@ public class AXTreeItem extends Pane implements AutoUpdatable {
                 treeItem.setAttribution(attribution);
             }
         }
-        else childrenBox.getChildren().addAll(item);
+        else addToChildrenBox(item);
         //this.update();
         for (AXTreeItem treeItem : item) {
-            treeItem.update();
+            treeItem.update(1);
         }
     }
 
@@ -135,6 +135,10 @@ public class AXTreeItem extends Pane implements AutoUpdatable {
 
     @Override
     public void update() {
+        update(200);
+    }
+
+    public void update(long millis) {
         childrenBox.setLayoutX(style.getChildrenInsets());
         childrenBox.setLayoutY(style.getItemHeight());
 
@@ -154,7 +158,7 @@ public class AXTreeItem extends Pane implements AutoUpdatable {
 
         item.setPosition(item.getTextLabel(), false, style.getItemHeight() + style.getTextLeftInsets(), 0, 0, 0);
 
-        item.update();
+        item.update(millis);
     }
 
     public void setTheme(AXTreeItemStyle style) {
@@ -178,7 +182,7 @@ public class AXTreeItem extends Pane implements AutoUpdatable {
 
     public void rename(String name) {
         item.setText(name);
-        this.update();
+        this.update(1);
     }
 
     public void clear() {

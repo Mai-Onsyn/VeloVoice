@@ -1,144 +1,347 @@
 {
-  "context.menu.new_file": "新增檔案",
-  "context.menu.new_folder": "新增資料夾",
-  "context.menu.paste": "貼上",
-  "context.menu.rename": "重新命名",
-  "context.menu.expand_all": "全部展開",
-  "context.menu.clear": "清空",
-  "context.menu.copy": "複製",
-  "context.menu.cut": "剪下",
-  "context.menu.paste_append": "貼上(追加)",
-  "context.menu.move_up": "上移",
-  "context.menu.move_down": "下移",
-  "context.menu.delete": "刪除",
-  "context.menu.undo": "復原",
-  "context.menu.select_all": "全選",
-
-  "main.general.button.start": "開始",
-  "main.general.button.stop": "停止",
-  "main.general.label.tts": "TTS",
-  "main.general.label.after_process": "音訊處理",
-  "main.general.label.text_process": "文字處理",
-  "main.tts.edge.label.lang": "語言",
-  "main.tts.edge.label.model": "模型",
-  "main.tts.edge.label.rate": "語速",
-  "main.tts.edge.label.volume": "音量",
-  "main.tts.edge.label.pitch": "音調",
-  "main.tts.edge.label.thread_count": "TTS執行緒數",
-  "main.tts.natural.label.model": "模型",
-  "main.tts.natural.label.rate": "語速",
-  "main.tts.natural.label.volume": "音量",
-  "main.tts.natural.label.thread_count": "TTS執行緒數",
-  "main.tts.natural.label.disabled": "你必須安裝jacob-1.21-x64.dll才能使用此功能",
-  "main.tts.general.label.tts_engine": "TTS引擎",
-  "main.tts.general.label.audio_folder": "音訊儲存目錄",
-  "main.tts.general.input.audio_folder": "輸入音訊檔案儲存路徑",
-  "main.text.load.title": "載入",
-  "main.text.load.label.source": "來源",
-  "main.text.load.label.uri": "載入網址",
-  "main.text.load.input.uri": "輸入要載入的URI",
-  "main.text.save.title": "儲存",
-  "main.text.save.label.method": "儲存方式",
-  "main.text.save.choice.method.text_tree": "文字結構樹",
-  "main.text.save.choice.method.epub": "Epub",
-  "main.text.save.text_tree.label.encoding": "文字編碼方式",
-  "main.text.ordinal.title": "編號",
-  "main.text.ordinal.input.format": "輸入編號格式",
-  "main.text.ordinal.label.format": "編號格式",
-  "main.text.ordinal.label.start_by_zero": "從零開始",
-  "main.text.ordinal.button.run": "執行",
-  "main.audio.general.switch": "啟用",
-  "main.audio.srt.title": "字幕",
-  "main.audio.shift.title": "音訊調整",
-  "main.audio.shift.label.rate": "語速",
-  "main.audio.shift.label.pitch": "音調",
-  "main.audio.section.title": "分段儲存",
-  "main.audio.section.label.duration": "分段時長",
-  "main.audio.section.label.read_head": "朗讀第一句",
-  "main.audio.section.label.unit_pattern": "分段後綴樣式",
-  "main.audio.section.input.unit_pattern": "輸入後綴格式",
-  "main.prompt.text_area.no_selected": "請選擇要編輯的檔案",
-  "main.prompt.text_area.directory_selected": "無法編輯目錄",
-
-  "settings.window.title": "視窗",
-  "settings.window.label.dark_mode": "暗色模式",
-  "settings.window.label.theme_color": "主題色",
-  "settings.window.input.theme_color": "輸入以\"#\"開頭的色碼",
-  "settings.window.label.background_image": "背景圖片",
-  "settings.window.input.background_image": "輸入圖片網址",
-  "settings.window.label.background_opacity": "背景透明度",
-  "settings.window.label.background_blur": "背景模糊度",
-  "settings.window.label.background_scale": "背景縮放",
-  "settings.window.label.lang": "語言",
-  "settings.net.title": "網路",
-  "settings.net.label.timeout": "逾時時間(秒)",
-  "settings.net.label.max_retries": "最大重試次數",
-  "settings.misc.title": "雜項",
-  "settings.misc.label.log_level": "日誌等級",
-  "settings.misc.label.preview_text": "預覽文字",
-  "settings.misc.input.preview_text": "在此輸入預覽文字",
-  "settings.misc.label.split_thresholds": "切片閾值",
-  "settings.misc.label.split_force": "強制切片字元",
-  "settings.misc.input.split_force": "輸入強制切片字元序列",
-  "settings.misc.label.split": "切片字元",
-  "settings.misc.input.split": "輸入切片字元序列",
-
-  "stage.main.title": "VeloVoice",
-  "stage.settings.title": "設定",
-  "stage.log.title": "日誌",
-  "stage.local_txt.title": "編輯本地TXT文字解析規則",
-
-  "source.local_txt.name": "本機文字檔",
-  "source.local_txt.label.html_char": "解析HTML實體編碼",
-  "source.local_txt.label.parse_structures": "解析結構",
-  "source.local_txt.label.ignore_empty_unit": "忽略空單元檔案",
-  "source.local_txt.label.mark_title": "新增標題",
-  "source.local_txt.label.parse_rules": "解析規則",
-  "source.local_txt.window.button.add": "+新增",
-  "source.local_txt.window.popup.title": "新增規則",
-  "source.local_txt.window.label.value": "值",
-  "source.local_txt.window.label.description": "描述",
-
-  "source.wenku8.name": "Wen ku 8",
-  "source.wenku8.label.mark_volume": "新增標題",
-  "source.wenku8.label.mark_chapter": "新增章節",
-
-  "log.progress.initializing": "正在初始化...",
-  "log.progress.total": "總計",
-  "log.progress.current": "目前進度",
-
-
-  "log.config_manager.error.load_failed": "設定載入失敗，已重設為預設值",
-  "log.config_manager.error.save_failed": "無法儲存設定檔",
-  "log.config_manager.warn.config_not_found": "找不到設定檔，正在建立新檔案",
-  "log.resource.error.load_failed": "資源載入失敗",
-  "log.after_effects.debug.skip_shift": "跳過音訊調整",
-  "log.audio_player.error.failed": "音訊播放失敗",
-  "log.audio_player.info.playing": "正在播放...",
-  "log.audio_saver.error.srt_save_failed": "無法儲存SRT字幕檔案",
-  "log.local_txt.error.folder_not_exist": "資料夾不存在: {}",
-  "log.local_txt.info.processed": "成功從\"{}\"載入檔案",
-  "log.edge_tts_voice.error_load_json": "EdgeTTS語音清單載入失敗",
-  "log.tts_pool.info.connecting": "正在透過{}個執行緒連接TTS",
-  "log.tts_pool.info.connected": "已連接{}個執行緒",
-  "log.tts_pool.error.connect_failed": "TTS連接失敗",
-  "log.tts_pool.info.closed": "所有執行緒已關閉",
-  "log.tts_pool.warn.thread_failed": "執行TTS時該線程發生錯誤，當前文本 \"{}\" 將被忽略！",
-  "log.tts_pool.warn.thread_shutdown": "此線程因異常終止：{}",
-  "log.tts_pool.error.all_failed": "所有執行緒均因異常而關閉，TTS 任務將被終止！",
-  "log.text_process_factory.error.no_select": "未選擇目標",
-  "log.text_util.error.load_error": "無法載入檔案: {}",
-  "log.text_util.error.save_failed": "儲存檔案時發生錯誤: {}",
-  "log.text_util.error.create_file_failed": "無法建立檔案: {}",
-  "log.text_util.info.save_success": "所有儲存任務已完成",
-  "log.text_util.warn.charset_not_found": "檔案\"{}\"的編碼格式無法解析，將使用預設UTF-8格式解析",
-  "log.main_factory.error.load_preview_failed": "載入預覽語音時出錯: {}",
-  "log.main_factory.error.tts_execute_failed": "執行任務時發生錯誤: {}",
-  "log.main_factory.info.load_preview": "正在載入預覽語音...",
-  "log.main_factory.info.tts_all_finished": "所有任務已在 {} 內完成",
-  "log.main_factory.info.tts_interrupted": "任務已被使用者中斷",
-  "log.runtime.warn.color_parse_failed": "無法解析主題色\"{}\"，請檢查是否正確？",
-  "log.tts.warn.natural_tts_online": "看起來你正在使用一個線上的Natural TTS模型，而且你開了太多執行緒，微軟的伺服器頂不住啦！為了可持續地薅羊毛，執行緒數量別開太多，這次任務的執行緒數已經幫你調到4囉！😊",
-  "log.main_factory.error.natural_tts_disabled": "Natural TTS已被關閉。要開啟此功能，你必須確保使用了正確的作業系統並且安裝了jacob-1.21-x64.dll",
-  "log.main.warn.natural_tts_dll_not_loadable": "找不到Jacob所需的DLL，在你安裝它並重啟軟體之前，你將無法使用Natural TTS SAPI"
+	"context":{
+		"menu":{
+			"new_file":"新增檔案",
+			"new_folder":"新增資料夾",
+			"paste":"貼上",
+			"rename":"重新命名",
+			"expand_all":"全部展開",
+			"clear":"清空",
+			"copy":"複製",
+			"cut":"剪下",
+			"paste_append":"貼上(追加)",
+			"move_up":"上移",
+			"move_down":"下移",
+			"delete":"刪除",
+			"undo":"復原",
+			"select_all":"全選"
+		}
+	},
+	"main":{
+		"general":{
+			"button":{
+				"start":"開始",
+				"stop":"停止"
+			},
+			"label":{
+				"tts":"TTS",
+				"after_process":"音訊處理",
+				"text_process":"文字處理"
+			}
+		},
+		"tts":{
+			"edge":{
+				"label":{
+					"lang":"語言",
+					"model":"模型",
+					"rate":"語速",
+					"volume":"音量",
+					"pitch":"音調",
+					"thread_count":"TTS執行緒數"
+				}
+			},
+			"natural":{
+				"label":{
+					"model":"模型",
+					"rate":"語速",
+					"volume":"音量",
+					"thread_count":"TTS執行緒數",
+					"disabled":"你必須安裝jacob-1.21-x64.dll才能使用此功能"
+				}
+			},
+			"general":{
+				"label":{
+					"tts_engine":"TTS引擎",
+					"audio_folder":"音訊儲存目錄"
+				},
+				"input":{
+					"audio_folder":"輸入音訊檔案儲存路徑"
+				}
+			}
+		},
+		"text":{
+			"load":{
+				"title":"載入",
+				"label":{
+					"source":"來源",
+					"uri":"載入網址"
+				},
+				"input":{
+					"uri":"輸入要載入的URI"
+				}
+			},
+			"save":{
+				"title":"儲存",
+				"label":{
+					"method":"儲存方式"
+				},
+				"choice":{
+					"method":{
+						"text_tree":"文字結構樹",
+						"epub":"Epub"
+					}
+				},
+				"text_tree":{
+					"label":{
+						"encoding":"文字編碼方式"
+					}
+				}
+			},
+			"ordinal":{
+				"title":"編號",
+				"input":{
+					"format":"輸入編號格式"
+				},
+				"label":{
+					"format":"編號格式",
+					"start_by_zero":"從零開始"
+				},
+				"button":{
+					"run":"執行"
+				}
+			}
+		},
+		"audio":{
+			"general":{
+				"switch":"啟用"
+			},
+			"srt":{
+				"title":"字幕"
+			},
+			"shift":{
+				"title":"音訊調整",
+				"label":{
+					"rate":"語速",
+					"pitch":"音調"
+				}
+			},
+			"section":{
+				"title":"分段儲存",
+				"label":{
+					"duration":"分段時長",
+					"read_head":"朗讀第一句",
+					"unit_pattern":"分段後綴樣式"
+				},
+				"input":{
+					"unit_pattern":"輸入後綴格式"
+				}
+			}
+		},
+		"prompt":{
+			"text_area":{
+				"no_selected":"請選擇要編輯的檔案",
+				"directory_selected":"無法編輯目錄"
+			}
+		}
+	},
+	"settings":{
+		"window":{
+			"title":"視窗",
+			"label":{
+				"dark_mode":"暗色模式",
+				"theme_color":"主題色",
+				"background_image":"背景圖片",
+				"background_opacity":"背景透明度",
+				"background_blur":"背景模糊度",
+				"background_scale":"背景縮放",
+				"lang":"語言"
+			},
+			"input":{
+				"theme_color":"輸入以\"#\"開頭的色碼",
+				"background_image":"輸入圖片網址"
+			}
+		},
+		"net":{
+			"title":"網路",
+			"label":{
+				"timeout":"逾時時間(秒)",
+				"max_retries":"最大重試次數"
+			}
+		},
+		"misc":{
+			"title":"雜項",
+			"label":{
+				"log_level":"日誌等級",
+				"preview_text":"預覽文字",
+				"split_thresholds":"切片閾值",
+				"split_force":"強制切片字元",
+				"split":"切片字元"
+			},
+			"input":{
+				"preview_text":"在此輸入預覽文字",
+				"split_force":"輸入強制切片字元序列",
+				"split":"輸入切片字元序列"
+			}
+		}
+	},
+	"stage":{
+		"main":{
+			"title":"VeloVoice"
+		},
+		"settings":{
+			"title":"設定"
+		},
+		"log":{
+			"title":"日誌"
+		},
+		"local_txt":{
+			"title":"編輯本地TXT文字解析規則"
+		}
+	},
+	"source":{
+		"local_txt":{
+			"name":"本機文字檔",
+			"label":{
+				"html_char":"解析HTML實體編碼",
+				"parse_structures":"解析結構",
+				"ignore_empty_unit":"忽略空單元檔案",
+				"mark_title":"新增標題",
+				"parse_rules":"解析規則"
+			},
+			"window":{
+				"button":{
+					"add":"+新增"
+				},
+				"popup":{
+					"title":{
+						"add":"新增規則",
+						"rename":"重新命名規則"
+					}
+				},
+				"label":{
+					"value":"值",
+					"description":"描述"
+				}
+			}
+		},
+		"wenku8":{
+			"name":"Wen ku 8",
+			"label":{
+				"mark_volume":"新增標題",
+				"mark_chapter":"新增章節"
+			}
+		},
+		"epub":{
+			"name":"本地Epub檔案",
+			"label":{
+				"parse_method":"解析方法"
+			}
+		}
+	},
+	"log":{
+		"progress":{
+			"initializing":"正在初始化...",
+			"total":"總計",
+			"current":"目前進度"
+		},
+		"config_manager":{
+			"error":{
+				"load_failed":"設定載入失敗，已重設為預設值",
+				"save_failed":"無法儲存設定檔"
+			},
+			"warn":{
+				"config_not_found":"找不到設定檔，正在建立新檔案"
+			}
+		},
+		"resource":{
+			"error":{
+				"load_failed":"資源載入失敗"
+			}
+		},
+		"audio_player":{
+			"error":{
+				"failed":"音訊播放失敗"
+			},
+			"info":{
+				"playing":"正在播放..."
+			}
+		},
+		"audio_saver":{
+			"error":{
+				"srt_save_failed":"無法儲存SRT字幕檔案"
+			}
+		},
+		"local_txt":{
+			"error":{
+				"folder_not_exist":"資料夾不存在: {}"
+			},
+			"info":{
+				"processed":"成功從\"{}\"載入檔案"
+			}
+		},
+		"edge_tts_voice":{
+			"error_load_json":"EdgeTTS語音清單載入失敗"
+		},
+		"tts_pool":{
+			"info":{
+				"connecting":"正在透過{}個執行緒連接TTS",
+				"connected":"已連接{}個執行緒",
+				"closed":"所有執行緒已關閉"
+			},
+			"error":{
+				"connect_failed":"TTS連接失敗",
+				"all_failed":"所有執行緒均因異常而關閉，TTS 任務將被終止！"
+			},
+			"warn":{
+				"thread_failed":"執行TTS時該線程發生錯誤，當前文本 \"{}\" 將被忽略！",
+				"thread_shutdown":"此線程因異常終止：{}"
+			}
+		},
+		"text_process_factory":{
+			"error":{
+				"no_select":"未選擇目標",
+				"load_failed":"從 \"{}\" 載入文本失敗: {}",
+				"no_such_file_or_directory": "找不到文件或目錄: {}"
+			},
+			"info":{
+				"load_success":"成功從 \"{}\" 載入文本",
+				"load_interrupted":"文本載入被用戶中斷"
+			}
+		},
+		"text_util":{
+			"error":{
+				"load_error":"無法載入檔案: {}",
+				"save_failed":"儲存檔案時發生錯誤: {}",
+				"create_file_failed":"無法建立檔案: {}"
+			},
+			"info":{
+				"save_success":"所有儲存任務已完成"
+			},
+			"warn":{
+				"charset_not_found":"檔案\"{}\"的編碼格式無法解析，將使用預設UTF-8格式解析"
+			}
+		},
+		"main_factory":{
+			"error":{
+				"load_preview_failed":"載入預覽語音時出錯: {}",
+				"tts_execute_failed":"執行任務時發生錯誤: {}",
+				"natural_tts_disabled":"Natural TTS已被關閉。要開啟此功能，你必須確保使用了正確的作業系統並且安裝了jacob-1.21-x64.dll"
+			},
+			"info":{
+				"load_preview":"正在載入預覽語音...",
+				"tts_all_finished":"所有任務已在 {} 內完成",
+				"tts_interrupted":"任務已被使用者中斷"
+			}
+		},
+		"runtime":{
+			"warn":{
+				"color_parse_failed":"無法解析主題色\"{}\"，請檢查是否正確？"
+			}
+		},
+		"tts":{
+			"warn":{
+				"natural_tts_online":"看起來你正在使用一個線上的Natural TTS模型，而且你開了太多執行緒，微軟的伺服器頂不住啦！為了可持續地薅羊毛，執行緒數量別開太多，這次任務的執行緒數已經幫你調到4囉！😊"
+			}
+		},
+		"main":{
+			"warn":{
+				"natural_tts_dll_not_loadable":"找不到Jacob所需的DLL，在你安裝它並重啟軟體之前，你將無法使用Natural TTS SAPI"
+			}
+		},
+		"epub":{
+			"info":{
+				"not_a_epub_file":"\"{}\" 並非EPUB檔案"
+			}
+		}
+	}
 }

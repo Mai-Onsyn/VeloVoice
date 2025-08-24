@@ -17,14 +17,12 @@ import static mai_onsyn.VeloVoice.App.Runtime.*;
 
 public class Main {
 
-
     private static final Logger log = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
         init();
         Application.launch(FrameApp.class);
     }
-
 
     private static void init() {
         I18N.setLanguage(windowConfig.getString("Language"));

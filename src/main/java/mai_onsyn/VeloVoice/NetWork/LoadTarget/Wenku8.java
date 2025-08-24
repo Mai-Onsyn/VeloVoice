@@ -110,7 +110,9 @@ public class Wenku8 extends Source {
                     sb.append("  ").append(line).append("\n\n");
                 }
 
-                AXDataTreeItem<?> chapter = attribution.createFileItem(chapterName, new SimpleStringProperty(sb.toString()));
+                String content = sb.toString();
+
+                AXDataTreeItem<?> chapter = attribution.createFileItem(chapterName, new SimpleStringProperty(content));
                 Platform.runLater(() -> volume.add(chapter));
             }
         }

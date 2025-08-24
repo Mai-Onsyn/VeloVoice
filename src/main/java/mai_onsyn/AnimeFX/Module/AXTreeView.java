@@ -14,15 +14,12 @@ import mai_onsyn.AnimeFX.Styles.DefaultAXTreeViewStyle;
 import mai_onsyn.AnimeFX.Utls.*;
 import mai_onsyn.AnimeFX.layout.AXContextPane;
 import mai_onsyn.AnimeFX.layout.AXTextInputPopup;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 
 import static mai_onsyn.AnimeFX.Utls.Toolkit.defaultToolkit;
 
 public class AXTreeView<T> extends AXBase implements Localizable {
-    private static final Logger log = LogManager.getLogger(AXTreeView.class);
     private AXTreeViewStyle style = new DefaultAXTreeViewStyle();
     private final AXTreeItem root = new AXTreeItem("ROOT");
     private final AXDatableButtonGroup<AXTreeItem> group = new AXDatableButtonGroup<>(root.getButton(), root);
@@ -38,10 +35,6 @@ public class AXTreeView<T> extends AXBase implements Localizable {
     private final AXTreeItemDataCreator<T> dataCreator;
     final AXDataTreeItem.AXTreeviewCopyRule<T> copyRule;
 
-    private String newFilePopupKey = "";
-    private String newFolderPopupKey = "";
-    private String renamePopupKey = "";
-
 
     public AXTreeView(AXTreeItemDataCreator<T> dataCreator, AXDataTreeItem.AXTreeviewCopyRule<T> copyRule) {
         this.dataCreator = dataCreator;
@@ -55,7 +48,7 @@ public class AXTreeView<T> extends AXBase implements Localizable {
 
         root.setAttribution(this);
         root.setTheme(style.getRootItemStyle());
-        root.update();
+        root.update(1);
 
         rootContextMenu.setTheme(style.getContextMenuStyle());
         folderContextMenu.setTheme(style.getContextMenuStyle());
@@ -200,14 +193,14 @@ public class AXTreeView<T> extends AXBase implements Localizable {
                             case D -> delete();
                         }
                     } else {
-                        if (event.isShiftDown() && event.getCode() == KeyCode.V) pasteAppend();
-                        else switch (event.getCode()) {
+                        switch (event.getCode()) {
                             case C -> copy();
                             case X -> cut();
                             case UP -> moveUp();
                             case DOWN -> moveDown();
                             case D -> delete();
-                            case N, F, V -> defaultToolkit.beep();
+                            case V -> pasteAppend();
+                            case N, F -> defaultToolkit.beep();
                         }
                     }
                 }
@@ -227,7 +220,7 @@ public class AXTreeView<T> extends AXBase implements Localizable {
     public AXDataTreeItem<T> createFileItem(String name, Object data) {
         AXDataTreeItem<T> dataTreeItem = new AXDataTreeItem<>(name, (T) data, copyRule);
         dataTreeItem.setTheme(style.getFileItemStyle());
-        Platform.runLater(dataTreeItem::update);
+        Platform.runLater(() -> dataTreeItem.update(1));
         dataTreeItem.setAttribution(this);
 
         return dataTreeItem;
@@ -236,7 +229,7 @@ public class AXTreeView<T> extends AXBase implements Localizable {
     public AXTreeItem createFolderItem(String name) {
         AXTreeItem treeItem = new AXTreeItem(name);
         treeItem.setTheme(style.getFolderItemStyle());
-        Platform.runLater(treeItem::update);
+        Platform.runLater(() -> treeItem.update(1));
         treeItem.setAttribution(this);
 
         return treeItem;
@@ -276,7 +269,7 @@ public class AXTreeView<T> extends AXBase implements Localizable {
         this.style = style;
         super.setTheme(style);
         group.setFreeStyle(style.getRootItemStyle());
-        group.setSelectedStyle(style.getSelectedItemStyle());
+        group.setSelectedStyle(style.getSelectedButtonStyle());
 
         rootContextMenu.setTheme(style.getContextMenuStyle());
         folderContextMenu.setTheme(style.getContextMenuStyle());
@@ -342,9 +335,6 @@ public class AXTreeView<T> extends AXBase implements Localizable {
         langList.get(22).setI18NKey(keyMap.get("move up"));
         langList.get(23).setI18NKey(keyMap.get("move down"));
         langList.get(24).setI18NKey(keyMap.get("delete"));
-        newFilePopupKey = keyMap.getOrDefault("file popup", "");
-        newFolderPopupKey = keyMap.getOrDefault("folder popup", "");
-        renamePopupKey = keyMap.getOrDefault("rename popup", "");
     }
 
     @Override
@@ -377,7 +367,7 @@ public class AXTreeView<T> extends AXBase implements Localizable {
                 clonedItem = new AXTreeItem(item.getHeadName());
             }
             clonedItem.setTheme(item.style());
-            clonedItem.update();
+            clonedItem.update(1);
 
             for (AXTreeItem child : item.getChildrenAsItem()) {
                 clonedItem.add(clone(child));

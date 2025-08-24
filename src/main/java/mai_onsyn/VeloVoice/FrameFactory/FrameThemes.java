@@ -41,6 +41,8 @@ public class FrameThemes {
     public static final double BORDER_RADIUS = 1.0;
     public static final double BORDER_ARC_SIZE = 10.0;
 
+    public static final double TREEVIEW_RETRACTION = 22;
+
     public static void setDarkMode(boolean darkMode) {
         MAIN_TEXT_COLOR = darkMode ? Color.WHITE : Color.BLACK;
 
@@ -797,7 +799,7 @@ public class FrameThemes {
 
                 @Override
                 public double getChildrenInsets() {
-                    return 30;
+                    return TREEVIEW_RETRACTION;
                 }
 
                 @Override
@@ -887,7 +889,7 @@ public class FrameThemes {
 
                 @Override
                 public double getChildrenInsets() {
-                    return 30;
+                    return TREEVIEW_RETRACTION;
                 }
 
                 @Override
@@ -977,7 +979,7 @@ public class FrameThemes {
 
                 @Override
                 public double getChildrenInsets() {
-                    return 30;
+                    return TREEVIEW_RETRACTION;
                 }
 
                 @Override
@@ -1043,7 +1045,7 @@ public class FrameThemes {
         }
 
         @Override
-        public AXButtonStyle getSelectedItemStyle() {
+        public AXButtonStyle getSelectedButtonStyle() {
             return new AXButtonStyle() {
                 @Override
                 public Color getTextColor() {

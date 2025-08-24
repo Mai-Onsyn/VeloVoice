@@ -1,144 +1,347 @@
 {
-  "context.menu.new_file": "新規ファイル",
-  "context.menu.new_folder": "新規フォルダ",
-  "context.menu.paste": "貼り付け",
-  "context.menu.rename": "名前変更",
-  "context.menu.expand_all": "すべて展開",
-  "context.menu.clear": "クリア",
-  "context.menu.copy": "コピー",
-  "context.menu.cut": "切り取り",
-  "context.menu.paste_append": "貼り付け(追加)",
-  "context.menu.move_up": "上へ移動",
-  "context.menu.move_down": "下へ移動",
-  "context.menu.delete": "削除",
-  "context.menu.undo": "元に戻す",
-  "context.menu.select_all": "すべて選択",
-
-  "main.general.button.start": "開始",
-  "main.general.button.stop": "停止",
-  "main.general.label.tts": "TTS",
-  "main.general.label.after_process": "音声処理",
-  "main.general.label.text_process": "テキスト処理",
-  "main.tts.edge.label.lang": "言語",
-  "main.tts.edge.label.model": "モデル",
-  "main.tts.edge.label.rate": "話速",
-  "main.tts.edge.label.volume": "音量",
-  "main.tts.edge.label.pitch": "音程",
-  "main.tts.edge.label.thread_count": "TTSスレッド数",
-  "main.tts.natural.label.model": "モデル",
-  "main.tts.natural.label.rate": "話速",
-  "main.tts.natural.label.volume": "音量",
-  "main.tts.natural.label.thread_count": "TTSスレッド数",
-  "main.tts.natural.label.disabled": "この機能を使用するにはjacob-1.21-x64.dllをインストールする必要があります",
-  "main.tts.general.label.tts_engine": "TTSエンジン",
-  "main.tts.general.label.audio_folder": "音声保存フォルダ",
-  "main.tts.general.input.audio_folder": "音声ファイル保存パス",
-  "main.text.load.title": "読み込み",
-  "main.text.load.label.source": "ソース",
-  "main.text.load.label.uri": "読み込みURI",
-  "main.text.load.input.uri": "読み込むURIを入力",
-  "main.text.save.title": "保存",
-  "main.text.save.label.method": "保存方法",
-  "main.text.save.choice.method.text_tree": "テキストツリー",
-  "main.text.save.choice.method.epub": "Epub",
-  "main.text.save.text_tree.label.encoding": "テキストエンコーディング",
-  "main.text.ordinal.title": "連番",
-  "main.text.ordinal.input.format": "連番フォーマットを入力",
-  "main.text.ordinal.label.format": "連番フォーマット",
-  "main.text.ordinal.label.start_by_zero": "0から開始",
-  "main.text.ordinal.button.run": "実行",
-  "main.audio.general.switch": "有効",
-  "main.audio.srt.title": "字幕",
-  "main.audio.shift.title": "音声調整",
-  "main.audio.shift.label.rate": "話速",
-  "main.audio.shift.label.pitch": "音程",
-  "main.audio.section.title": "セクション",
-  "main.audio.section.label.duration": "セクション時間",
-  "main.audio.section.label.read_head": "最初の文を読み上げ",
-  "main.audio.section.label.unit_pattern": "セクション接尾辞スタイル",
-  "main.audio.section.input.unit_pattern": "接尾辞フォーマットを入力",
-  "main.prompt.text_area.no_selected": "編集するファイルを選択してください",
-  "main.prompt.text_area.directory_selected": "ディレクトリは編集できません",
-
-  "settings.window.title": "ウィンドウ",
-  "settings.window.label.dark_mode": "ダークモード",
-  "settings.window.label.theme_color": "テーマカラー",
-  "settings.window.input.theme_color": "#で始まるカラーコードを入力",
-  "settings.window.label.background_image": "背景画像",
-  "settings.window.input.background_image": "画像URLを入力",
-  "settings.window.label.background_opacity": "背景透明度",
-  "settings.window.label.background_blur": "背景ぼかし",
-  "settings.window.label.background_scale": "背景スケール",
-  "settings.window.label.lang": "言語",
-  "settings.net.title": "ネットワーク",
-  "settings.net.label.timeout": "タイムアウト(秒)",
-  "settings.net.label.max_retries": "最大リトライ回数",
-  "settings.misc.title": "その他",
-  "settings.misc.label.log_level": "ログレベル",
-  "settings.misc.label.preview_text": "プレビューテキスト",
-  "settings.misc.input.preview_text": "プレビューテキストを入力",
-  "settings.misc.label.split_thresholds": "分割閾値",
-  "settings.misc.label.split_force": "強制分割文字",
-  "settings.misc.input.split_force": "強制分割文字列を入力",
-  "settings.misc.label.split": "分割文字",
-  "settings.misc.input.split": "分割文字列を入力",
-
-  "stage.main.title": "VeloVoice",
-  "stage.settings.title": "設定",
-  "stage.log.title": "ログ",
-  "stage.local_txt.title": "ローカルTXT解析ルール編集",
-
-  "source.local_txt.name": "ローカルテキストファイル",
-  "source.local_txt.label.html_char": "HTML文字解析",
-  "source.local_txt.label.parse_structures": "構造解析",
-  "source.local_txt.label.ignore_empty_unit": "空ユニットを無視",
-  "source.local_txt.label.mark_title": "タイトルをマーク",
-  "source.local_txt.label.parse_rules": "解析ルール",
-  "source.local_txt.window.button.add": "+追加",
-  "source.local_txt.window.popup.title": "ルール追加",
-  "source.local_txt.window.label.value": "値",
-  "source.local_txt.window.label.description": "説明",
-
-  "source.wenku8.name": "Wen ku 8",
-  "source.wenku8.label.mark_volume": "タイトルをマーク",
-  "source.wenku8.label.mark_chapter": "章をマーク",
-
-  "log.progress.initializing": "初期化中...",
-  "log.progress.total": "合計",
-  "log.progress.current": "現在の進捗",
-
-
-  "log.config_manager.error.load_failed": "設定の読み込みに失敗、デフォルトにリセットされました",
-  "log.config_manager.error.save_failed": "設定ファイルを保存できません",
-  "log.config_manager.warn.config_not_found": "設定ファイルが見つかりません、新規作成します",
-  "log.resource.error.load_failed": "リソースの読み込みに失敗",
-  "log.after_effects.debug.skip_shift": "音声調整をスキップ",
-  "log.audio_player.error.failed": "音声再生に失敗",
-  "log.audio_player.info.playing": "再生中...",
-  "log.audio_saver.error.srt_save_failed": "SRT字幕ファイルを保存できません",
-  "log.local_txt.error.folder_not_exist": "フォルダが存在しません: {}",
-  "log.local_txt.info.processed": "\"{}\"からファイルを正常に読み込みました",
-  "log.edge_tts_voice.error_load_json": "Edge TTS音声リストの読み込みに失敗",
-  "log.tts_pool.info.connecting": "{}スレッドでTTSに接続中",
-  "log.tts_pool.info.connected": "{}スレッド接続済み",
-  "log.tts_pool.error.connect_failed": "TTSへの接続に失敗",
-  "log.tts_pool.info.closed": "すべてのスレッドがシャットダウンされました",
-  "log.tts_pool.warn.thread_failed": "TTS実行中にスレッドでエラーが発生しました。現在のテキスト \"{}\" は無視されます！",
-  "log.tts_pool.warn.thread_shutdown": "このスレッドは例外により終了しました：{}",
-  "log.tts_pool.error.all_failed": "すべてのスレッドが例外により終了し、TTSタスクは中止されます！",
-  "log.text_process_factory.error.no_select": "ターゲットが選択されていません",
-  "log.text_util.error.load_error": "ファイルを読み込めません: {}",
-  "log.text_util.error.save_failed": "ファイル保存時にエラーが発生しました: {}",
-  "log.text_util.error.create_file_failed": "ファイルを作成できません: {}",
-  "log.text_util.info.save_success": "すべての保存タスクが完了しました",
-  "log.text_util.warn.charset_not_found": "ファイル\"{}\"のエンコーディング形式を解析できず、デフォルトのUTF-8で解析します",
-  "log.main_factory.error.load_preview_failed": "プレビュー音声の読み込み中にエラー: {}",
-  "log.main_factory.error.tts_execute_failed": "タスク実行中にエラーが発生しました: {}",
-  "log.main_factory.info.load_preview": "プレビュー音声を読み込み中...",
-  "log.main_factory.info.tts_all_finished": "すべてのタスクは {} で完了しました",
-  "log.main_factory.info.tts_interrupted": "タスクはユーザーによって中断されました",
-  "log.runtime.warn.color_parse_failed": "テーマカラー\"{}\"を解析できません、正しいか確認してください",
-  "log.tts.warn.natural_tts_online": "オンラインのNatural TTSモデルを使ってるみたいだけど、スレッド数を上げすぎてマイクロソフトのサーバーがパンクしそう！無料利用を持続可能にするために、スレッド数はほどほどにね。今回のタスクではスレッド数を4に調整しといたよ～\uD83D\uDE0A",
-  "log.main_factory.error.natural_tts_disabled": "Natural TTSは無効になっています。この機能を有効にするには、正しいOSを使用していることとjacob-1.21-x64.dllがインストールされていることを確認する必要があります",
-  "log.main.warn.natural_tts_dll_not_loadable": "JacobのDLLが見つかりません。それをインストールしてアプリケーションを再起動するまで、Natural TTS SAPIは使用できません"
+	"context":{
+		"menu":{
+			"new_file":"新規ファイル",
+			"new_folder":"新規フォルダ",
+			"paste":"貼り付け",
+			"rename":"名前変更",
+			"expand_all":"すべて展開",
+			"clear":"クリア",
+			"copy":"コピー",
+			"cut":"切り取り",
+			"paste_append":"貼り付け(追加)",
+			"move_up":"上へ移動",
+			"move_down":"下へ移動",
+			"delete":"削除",
+			"undo":"元に戻す",
+			"select_all":"すべて選択"
+		}
+	},
+	"main":{
+		"general":{
+			"button":{
+				"start":"開始",
+				"stop":"停止"
+			},
+			"label":{
+				"tts":"TTS",
+				"after_process":"音声処理",
+				"text_process":"テキスト処理"
+			}
+		},
+		"tts":{
+			"edge":{
+				"label":{
+					"lang":"言語",
+					"model":"モデル",
+					"rate":"話速",
+					"volume":"音量",
+					"pitch":"音程",
+					"thread_count":"TTSスレッド数"
+				}
+			},
+			"natural":{
+				"label":{
+					"model":"モデル",
+					"rate":"話速",
+					"volume":"音量",
+					"thread_count":"TTSスレッド数",
+					"disabled":"この機能を使用するにはjacob-1.21-x64.dllをインストールする必要があります"
+				}
+			},
+			"general":{
+				"label":{
+					"tts_engine":"TTSエンジン",
+					"audio_folder":"音声保存フォルダ"
+				},
+				"input":{
+					"audio_folder":"音声ファイル保存パス"
+				}
+			}
+		},
+		"text":{
+			"load":{
+				"title":"読み込み",
+				"label":{
+					"source":"ソース",
+					"uri":"読み込みURI"
+				},
+				"input":{
+					"uri":"読み込むURIを入力"
+				}
+			},
+			"save":{
+				"title":"保存",
+				"label":{
+					"method":"保存方法"
+				},
+				"choice":{
+					"method":{
+						"text_tree":"テキストツリー",
+						"epub":"Epub"
+					}
+				},
+				"text_tree":{
+					"label":{
+						"encoding":"テキストエンコーディング"
+					}
+				}
+			},
+			"ordinal":{
+				"title":"連番",
+				"input":{
+					"format":"連番フォーマットを入力"
+				},
+				"label":{
+					"format":"連番フォーマット",
+					"start_by_zero":"0から開始"
+				},
+				"button":{
+					"run":"実行"
+				}
+			}
+		},
+		"audio":{
+			"general":{
+				"switch":"有効"
+			},
+			"srt":{
+				"title":"字幕"
+			},
+			"shift":{
+				"title":"音声調整",
+				"label":{
+					"rate":"話速",
+					"pitch":"音程"
+				}
+			},
+			"section":{
+				"title":"セクション",
+				"label":{
+					"duration":"セクション時間",
+					"read_head":"最初の文を読み上げ",
+					"unit_pattern":"セクション接尾辞スタイル"
+				},
+				"input":{
+					"unit_pattern":"接尾辞フォーマットを入力"
+				}
+			}
+		},
+		"prompt":{
+			"text_area":{
+				"no_selected":"編集するファイルを選択してください",
+				"directory_selected":"ディレクトリは編集できません"
+			}
+		}
+	},
+	"settings":{
+		"window":{
+			"title":"ウィンドウ",
+			"label":{
+				"dark_mode":"ダークモード",
+				"theme_color":"テーマカラー",
+				"background_image":"背景画像",
+				"background_opacity":"背景透明度",
+				"background_blur":"背景ぼかし",
+				"background_scale":"背景スケール",
+				"lang":"言語"
+			},
+			"input":{
+				"theme_color":"#で始まるカラーコードを入力",
+				"background_image":"画像URLを入力"
+			}
+		},
+		"net":{
+			"title":"ネットワーク",
+			"label":{
+				"timeout":"タイムアウト(秒)",
+				"max_retries":"最大リトライ回数"
+			}
+		},
+		"misc":{
+			"title":"その他",
+			"label":{
+				"log_level":"ログレベル",
+				"preview_text":"プレビューテキスト",
+				"split_thresholds":"分割閾値",
+				"split_force":"強制分割文字",
+				"split":"分割文字"
+			},
+			"input":{
+				"preview_text":"プレビューテキストを入力",
+				"split_force":"強制分割文字列を入力",
+				"split":"分割文字列を入力"
+			}
+		}
+	},
+	"stage":{
+		"main":{
+			"title":"VeloVoice"
+		},
+		"settings":{
+			"title":"設定"
+		},
+		"log":{
+			"title":"ログ"
+		},
+		"local_txt":{
+			"title":"ローカルTXT解析ルール編集"
+		}
+	},
+	"source":{
+		"local_txt":{
+			"name":"ローカルテキストファイル",
+			"label":{
+				"html_char":"HTML文字解析",
+				"parse_structures":"構造解析",
+				"ignore_empty_unit":"空ユニットを無視",
+				"mark_title":"タイトルをマーク",
+				"parse_rules":"解析ルール"
+			},
+			"window":{
+				"button":{
+					"add":"+追加"
+				},
+				"popup":{
+					"title":{
+						"add":"ルール追加",
+						"rename":"ルール名変更"
+					}
+				},
+				"label":{
+					"value":"値",
+					"description":"説明"
+				}
+			}
+		},
+		"wenku8":{
+			"name":"Wen ku 8",
+			"label":{
+				"mark_volume":"タイトルをマーク",
+				"mark_chapter":"章をマーク"
+			}
+		},
+		"epub":{
+			"name":"ローカルEpubファイル",
+			"label":{
+				"parse_method":"解析方法"
+			}
+		}
+	},
+	"log":{
+		"progress":{
+			"initializing":"初期化中...",
+			"total":"合計",
+			"current":"現在の進捗"
+		},
+		"config_manager":{
+			"error":{
+				"load_failed":"設定の読み込みに失敗、デフォルトにリセットされました",
+				"save_failed":"設定ファイルを保存できません"
+			},
+			"warn":{
+				"config_not_found":"設定ファイルが見つかりません、新規作成します"
+			}
+		},
+		"resource":{
+			"error":{
+				"load_failed":"リソースの読み込みに失敗"
+			}
+		},
+		"audio_player":{
+			"error":{
+				"failed":"音声再生に失敗"
+			},
+			"info":{
+				"playing":"再生中..."
+			}
+		},
+		"audio_saver":{
+			"error":{
+				"srt_save_failed":"SRT字幕ファイルを保存できません"
+			}
+		},
+		"local_txt":{
+			"error":{
+				"folder_not_exist":"フォルダが存在しません: {}"
+			},
+			"info":{
+				"processed":"\"{}\"からファイルを正常に読み込みました"
+			}
+		},
+		"edge_tts_voice":{
+			"error_load_json":"Edge TTS音声リストの読み込みに失敗"
+		},
+		"tts_pool":{
+			"info":{
+				"connecting":"{}スレッドでTTSに接続中",
+				"connected":"{}スレッド接続済み",
+				"closed":"すべてのスレッドがシャットダウンされました"
+			},
+			"error":{
+				"connect_failed":"TTSへの接続に失敗",
+				"all_failed":"すべてのスレッドが例外により終了し、TTSタスクは中止されます！"
+			},
+			"warn":{
+				"thread_failed":"TTS実行中にスレッドでエラーが発生しました。現在のテキスト \"{}\" は無視されます！",
+				"thread_shutdown":"このスレッドは例外により終了しました：{}"
+			}
+		},
+		"text_process_factory":{
+			"error":{
+				"no_select":"ターゲットが選択されていません",
+				"load_failed":"\"{}\" からテキストの読み込みに失敗しました: {}",
+				"no_such_file_or_directory": "\"{}\"が見つかりません"
+			},
+			"info":{
+				"load_success":"{} からテキストを正常に読み込みました",
+				"load_interrupted":"テキストの読み込みが中断されました"
+			}
+		},
+		"text_util":{
+			"error":{
+				"load_error":"ファイルを読み込めません: {}",
+				"save_failed":"ファイル保存時にエラーが発生しました: {}",
+				"create_file_failed":"ファイルを作成できません: {}"
+			},
+			"info":{
+				"save_success":"すべての保存タスクが完了しました"
+			},
+			"warn":{
+				"charset_not_found":"ファイル\"{}\"のエンコーディング形式を解析できず、デフォルトのUTF-8で解析します"
+			}
+		},
+		"main_factory":{
+			"error":{
+				"load_preview_failed":"プレビュー音声の読み込み中にエラー: {}",
+				"tts_execute_failed":"タスク実行中にエラーが発生しました: {}",
+				"natural_tts_disabled":"Natural TTSは無効になっています。この機能を有効にするには、正しいOSを使用していることとjacob-1.21-x64.dllがインストールされていることを確認する必要があります"
+			},
+			"info":{
+				"load_preview":"プレビュー音声を読み込み中...",
+				"tts_all_finished":"すべてのタスクは {} で完了しました",
+				"tts_interrupted":"タスクはユーザーによって中断されました"
+			}
+		},
+		"runtime":{
+			"warn":{
+				"color_parse_failed":"テーマカラー\"{}\"を解析できません、正しいか確認してください"
+			}
+		},
+		"tts":{
+			"warn":{
+				"natural_tts_online":"オンラインのNatural TTSモデルを使ってるみたいだけど、スレッド数を上げすぎてマイクロソフトのサーバーがパンクしそう！無料利用を持続可能にするために、スレッド数はほどほどにね。今回のタスクではスレッド数を4に調整しといたよ～😊"
+			}
+		},
+		"main":{
+			"warn":{
+				"natural_tts_dll_not_loadable":"JacobのDLLが見つかりません。それをインストールしてアプリケーションを再起動するまで、Natural TTS SAPIは使用できません"
+			}
+		},
+		"epub":{
+			"info":{
+				"not_a_epub_file":"\"{}\"はEPUBファイルではありません"
+			}
+		}
+	}
 }

@@ -17,6 +17,7 @@ module mai_onsyn {
     requires jacob;
     requires org.java_websocket;
     requires srt.library;
+    requires epublib.core;
 
     opens mai_onsyn.AnimeFX.Module to org.apache.logging.log4j.core;
     opens mai_onsyn.AnimeFX;

@@ -12,21 +12,21 @@ public class JsonAnalyzer {
         String folderPath = "D:\\Users\\Desktop\\Files\\Projects\\Java\\VeloVoice\\src\\main\\resources\\lang";
         Set<String> excludeFiles = new HashSet<>(List.of("lang_info.json"));
 
-        // 1. 解析文件夹内所有JSON文件（排除指定文件）
-        Map<String, JSONObject> jsonDataMap = parseJsonFiles(folderPath, excludeFiles);
+        // 1. 解析文件夹内所有JSON文件（排除指定文件，并展开为扁平 key）
+        Map<String, Map<String, String>> flatDataMap = parseJsonFiles(folderPath, excludeFiles);
 
-        // 2. 收集所有第一层key并去重
-        Set<String> globalKeys = collectGlobalKeys(jsonDataMap);
+        // 2. 收集所有 key 并去重
+        Set<String> globalKeys = collectGlobalKeys(flatDataMap);
         System.out.println("全局Key集合 (" + globalKeys.size() + " 个):");
         printKeysVertically(globalKeys);
 
         // 3. 检查每个文件的key缺失情况
-        checkMissingKeys(jsonDataMap, globalKeys);
+        checkMissingKeys(flatDataMap, globalKeys);
     }
 
-    // 解析JSON文件并排除指定文件
-    private static Map<String, JSONObject> parseJsonFiles(String folderPath, Set<String> excludeFiles) {
-        Map<String, JSONObject> result = new HashMap<>();
+    // 解析JSON文件 -> 扁平化 Map
+    private static Map<String, Map<String, String>> parseJsonFiles(String folderPath, Set<String> excludeFiles) {
+        Map<String, Map<String, String>> result = new HashMap<>();
         File folder = new File(folderPath);
 
         if (!folder.isDirectory()) {
@@ -43,7 +43,12 @@ public class JsonAnalyzer {
             try {
                 String content = new String(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
                 JSONObject jsonObj = JSONObject.parseObject(content);
-                result.put(file.getName(), jsonObj);
+
+                // 扁平化
+                Map<String, String> flatMap = new LinkedHashMap<>();
+                flattenJson("", jsonObj, flatMap);
+
+                result.put(file.getName(), flatMap);
                 System.out.println("已解析: " + file.getName());
             } catch (IOException e) {
                 System.err.println("读取文件失败: " + file.getName() + " - " + e.getMessage());
@@ -54,11 +59,25 @@ public class JsonAnalyzer {
         return result;
     }
 
-    // 收集所有JSON文件的第一层key（去重）
-    private static Set<String> collectGlobalKeys(Map<String, JSONObject> jsonDataMap) {
-        Set<String> keys = new TreeSet<>(String.CASE_INSENSITIVE_ORDER); // 不区分大小写排序
-        for (JSONObject json : jsonDataMap.values()) {
-            keys.addAll(json.keySet());
+    // 递归展开 JSON 为扁平化 key
+    private static void flattenJson(String prefix, JSONObject json, Map<String, String> flatMap) {
+        for (String key : json.keySet()) {
+            Object value = json.get(key);
+            String newKey = prefix.isEmpty() ? key : prefix + "." + key;
+
+            if (value instanceof JSONObject obj) {
+                flattenJson(newKey, obj, flatMap);
+            } else {
+                flatMap.put(newKey, String.valueOf(value));
+            }
+        }
+    }
+
+    // 收集所有文件的全局 key
+    private static Set<String> collectGlobalKeys(Map<String, Map<String, String>> dataMap) {
+        Set<String> keys = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+        for (Map<String, String> flatMap : dataMap.values()) {
+            keys.addAll(flatMap.keySet());
         }
         return keys;
     }
@@ -68,21 +87,19 @@ public class JsonAnalyzer {
         for (String key : keys) {
             System.out.println("  - " + key);
         }
-        System.out.println(); // 空行分隔
+        System.out.println();
     }
 
-    // 检查每个文件中缺失的全局key（纵向输出）
-    private static void checkMissingKeys(Map<String, JSONObject> jsonDataMap, Set<String> globalKeys) {
+    // 检查每个文件中缺失的 key
+    private static void checkMissingKeys(Map<String, Map<String, String>> dataMap, Set<String> globalKeys) {
         System.out.println("缺失Key检查结果:");
         boolean foundMissing = false;
 
-        for (Map.Entry<String, JSONObject> entry : jsonDataMap.entrySet()) {
+        for (Map.Entry<String, Map<String, String>> entry : dataMap.entrySet()) {
             String filename = entry.getKey();
-            JSONObject json = entry.getValue();
-            Set<String> fileKeys = json.keySet();
+            Set<String> fileKeys = entry.getValue().keySet();
             Set<String> missingKeys = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
 
-            // 找出缺失的key
             for (String globalKey : globalKeys) {
                 if (!fileKeys.contains(globalKey)) {
                     missingKeys.add(globalKey);

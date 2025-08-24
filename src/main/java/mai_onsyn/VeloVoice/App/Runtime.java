@@ -71,7 +71,7 @@ public class Runtime {
         {
             textConfig.registerInteger("SplitThresholds", 512);
             textConfig.registerString("ForceSplitChars", "\\n");
-            textConfig.registerString("SplitChars", "。？！…， ");
+            textConfig.registerString("SplitChars", "。？！…，.?!|/\\~) ");
             textConfig.registerString("LoadSource", "LocalTXT");
             textConfig.registerString("LoadUri", "C:/Users/Administrator/Desktop/");
             textConfig.registerString("SaveMethod", "TXTTree");

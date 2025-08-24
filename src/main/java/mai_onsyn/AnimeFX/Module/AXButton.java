@@ -98,13 +98,17 @@ public class AXButton extends AXBase implements Localizable {
 
     @Override
     public void update() {
+        update(200);
+    }
+
+    public void update(long millis) {
         textLabel.setFont(style.getTextFont());
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200 * style.getAnimeRate()),
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(millis * style.getAnimeRate()),
                 new KeyValue(textLabel.textFillProperty(), isHover() ? style.getTextColor() : isPressed ? style.getTextHoverColor() : style.getTextColor())
         ));
         timeline.play();
 
-        super.update();
+        super.update(millis);
     }
 
     public void setText(String text) {

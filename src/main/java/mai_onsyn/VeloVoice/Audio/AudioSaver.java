@@ -21,15 +21,20 @@ import static mai_onsyn.VeloVoice.App.Runtime.voiceConfig;
 
 public class AudioSaver {
 
-    private static final int MP3_UNIT_DURATION = 6;   //mp3 byte length of 1 millisecond
-    private static final int WAV_UNIT_DURATION = 48;   //pcm byte length of 1 millisecond
+    private static final int MP3_24KHZ_16BIT_UNIT_DURATION = 6;   //mp3 byte length of 1 millisecond
+    private static final int WAV_24KHZ_16BIT_UNIT_DURATION = 48;
+    private static final int WAV_22KHZ_16BIT_UNIT_DURATION = 44;
+    private static final String illegalChars = "[\\\\/:*?\"<>|]";
 
     private static final Logger log = LogManager.getLogger(AudioSaver.class);
 
-    public static void save(List<Sentence> sentences, File folder, String name) throws IOException {
+    public static void save(List<Sentence> sentences, File folder, String filename) throws IOException {
         AudioEncodeUtils.AudioFormat audioFormat = sentences.getFirst().audioFormat();
 
-        final int sectionByteLength = voiceConfig.getInteger("SectionLength") * 60000 * (audioFormat == AudioEncodeUtils.AudioFormat.MP3_24KHZ_16BIT ? MP3_UNIT_DURATION : WAV_UNIT_DURATION);
+        String name = filename.replaceAll(illegalChars, "_");
+
+        final int unitDuration = getUnitDuration(audioFormat);
+        final int sectionByteLength = voiceConfig.getInteger("SectionLength") * 60000 * unitDuration;
 
         if (voiceConfig.getBoolean("SaveInSections") && countLength(sentences) > sectionByteLength) {
             log.debug("Save in sections");
@@ -101,8 +106,8 @@ public class AudioSaver {
         try {
 
             for (Sentence sentence : sentences) {
-                boolean isMP3 = sentence.audioFormat() == AudioEncodeUtils.AudioFormat.MP3_24KHZ_16BIT;
-                Subtitle subtitle = new Subtitle(new Timestamp(formatDuration(tick / (isMP3 ? MP3_UNIT_DURATION : WAV_UNIT_DURATION))), new Timestamp(formatDuration((tick+=sentence.audioByteArray().length) / (isMP3 ? MP3_UNIT_DURATION : WAV_UNIT_DURATION))));
+                final int unitDuration = getUnitDuration(sentence.audioFormat());
+                Subtitle subtitle = new Subtitle(new Timestamp(formatDuration(tick / unitDuration)), new Timestamp(formatDuration((tick+=sentence.audioByteArray().length) / unitDuration)));
 
                 subtitle.addLine(sentence.text());
 
@@ -117,6 +122,14 @@ public class AudioSaver {
             log.error(I18N.getCurrentValue("log.audio_saver.error.srt_save_failed"), e);
             throw new RuntimeException(e);
         }
+    }
+
+    private static int getUnitDuration(AudioEncodeUtils.AudioFormat sentence) {
+        return switch (sentence) {
+            case MP3_24KHZ_16BIT -> MP3_24KHZ_16BIT_UNIT_DURATION;
+            case WAV_24KHZ_16BIT -> WAV_24KHZ_16BIT_UNIT_DURATION;
+            case WAV_22KHZ_16BIT -> WAV_22KHZ_16BIT_UNIT_DURATION;
+        };
     }
 
     private static String formatDuration(long milliseconds) {

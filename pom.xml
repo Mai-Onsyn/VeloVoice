@@ -6,7 +6,7 @@
 
     <groupId>mai_onsyn.VeloVoice</groupId>
     <artifactId>VeloVoice</artifactId>
-    <version>1.1</version>
+    <version>1.1.1</version>
 
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
@@ -111,7 +111,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.36</version> <!-- 确保与 log4j-slf4j-impl 兼容 -->
+            <version>1.7.36</version>
         </dependency>
 
         <dependency>
@@ -140,11 +140,10 @@
                     <archive>
                         <manifest>
                             <mainClass>mai_onsyn.VeloVoice.Main</mainClass>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
                         </manifest>
                     </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
 
                     <descriptors>
                         <descriptor>${project.basedir}/lib/assembly.xml</descriptor>
@@ -162,8 +161,6 @@
             <resource>
                 <directory>${project.basedir}</directory>
                 <includes>
-                    <include>LICENSE</include>
-                    <include>NOTICE</include>
                     <include>README.md</include>
                 </includes>
             </resource>

@@ -76,7 +76,11 @@ public class AXBase extends AutoPane implements AutoUpdatable {
 
     @Override
     public void update() {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(200 * style.getAnimeRate()),
+        update(200);
+    }
+
+    public void update(long millis) {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(millis * style.getAnimeRate()),
                 new KeyValue(border.fillProperty(), style.getBGColor()),
                 new KeyValue(border.strokeProperty(), style.getBorderColor()),
                 new KeyValue(border.strokeWidthProperty(), style.getBorderRadius()),

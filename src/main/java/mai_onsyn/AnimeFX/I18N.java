@@ -8,8 +8,6 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -88,17 +86,35 @@ public class I18N {
 
         for (String key : I18N.langInfos.keySet()) {
             try {
-                languageMap.put(key, JSONObject.parseObject(readJsonFile("lang/" + key + ".json")).getInnerMap().entrySet()
-                        .stream()
-                        .collect(Collectors.toMap(
-                                Map.Entry::getKey,
-                                e -> (String) e.getValue()
-                        )));
+                JSONObject json = JSONObject.parseObject(readJsonFile("lang/" + key + ".json"));
+                Map<String, String> flatMap = new HashMap<>();
+                flattenJson("", json, flatMap);
+                languageMap.put(key, flatMap);
             } catch (NullPointerException e) {
                 log.warn("Language file not found: {}", key);
             }
         }
     }
+
+    /**
+     * 递归展开 JSON 为扁平化的 key
+     * @param prefix 当前 key 前缀
+     * @param json   当前层的 JSON
+     * @param flatMap 扁平化结果存储
+     */
+    private static void flattenJson(String prefix, JSONObject json, Map<String, String> flatMap) {
+        for (String key : json.keySet()) {
+            Object value = json.get(key);
+            String newKey = prefix.isEmpty() ? key : prefix + "." + key;
+
+            if (value instanceof JSONObject obj) {
+                flattenJson(newKey, obj, flatMap);
+            } else {
+                flatMap.put(newKey, String.valueOf(value));
+            }
+        }
+    }
+
 
     private static String readJsonFile(String resourceDir) {
         try (

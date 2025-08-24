@@ -17,7 +17,7 @@ public class AfterEffects {
     public static List<Sentence> process(List<Sentence> sentences) {
         if (voiceConfig.getBoolean("EnableVoiceShift")) return adjustAudio(sentences);
         else {
-            log.debug(I18N.getCurrentValue("log.after_effects.debug.skip_shift"));
+            log.debug("Skip audio adjust");
             return sentences;
         }
     }

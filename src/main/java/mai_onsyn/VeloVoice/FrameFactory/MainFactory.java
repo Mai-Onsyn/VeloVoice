@@ -1,6 +1,5 @@
 package mai_onsyn.VeloVoice.FrameFactory;
 
-import com.alibaba.fastjson.JSONObject;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
@@ -18,18 +17,12 @@ import mai_onsyn.AnimeFX.layout.AutoPane;
 import mai_onsyn.AnimeFX.layout.HDoubleSplitPane;
 import mai_onsyn.VeloVoice.App.Config;
 import mai_onsyn.VeloVoice.App.Resource;
-import mai_onsyn.VeloVoice.Audio.AudioPlayer;
-import mai_onsyn.VeloVoice.NetWork.TTS.EdgeTTSClient;
-import mai_onsyn.VeloVoice.NetWork.TTS.EdgeTTSVoice;
-import mai_onsyn.VeloVoice.NetWork.TTS.ResumableTTSClient;
-import mai_onsyn.VeloVoice.Text.Sentence;
 import mai_onsyn.VeloVoice.Text.TTS;
 import mai_onsyn.VeloVoice.Text.TextUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
-import java.util.*;
 
 import static mai_onsyn.VeloVoice.App.Constants.*;
 import static mai_onsyn.VeloVoice.App.Runtime.*;

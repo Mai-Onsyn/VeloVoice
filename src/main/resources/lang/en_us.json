@@ -1,144 +1,347 @@
 {
-  "context.menu.new_file": "New File",
-  "context.menu.new_folder": "New Folder",
-  "context.menu.paste": "Paste",
-  "context.menu.rename": "Rename",
-  "context.menu.expand_all": "Expand All",
-  "context.menu.clear": "Clear",
-  "context.menu.copy": "Copy",
-  "context.menu.cut": "Cut",
-  "context.menu.paste_append": "Paste(Append)",
-  "context.menu.move_up": "Move Up",
-  "context.menu.move_down": "Move Down",
-  "context.menu.delete": "Delete",
-  "context.menu.undo": "Undo",
-  "context.menu.select_all": "Select All",
-
-  "main.general.button.start": "Start",
-  "main.general.button.stop": "Stop",
-  "main.general.label.tts": "Text To Speech",
-  "main.general.label.after_process": "After Process",
-  "main.general.label.text_process": "Text Process",
-  "main.tts.edge.label.lang": "Language",
-  "main.tts.edge.label.model": "Model",
-  "main.tts.edge.label.rate": "Voice Rate",
-  "main.tts.edge.label.volume": "Voice Volume",
-  "main.tts.edge.label.pitch": "Voice Pith",
-  "main.tts.edge.label.thread_count": "TTS Thread Count",
-  "main.tts.natural.label.model": "Model",
-  "main.tts.natural.label.rate": "Voice Rate",
-  "main.tts.natural.label.volume": "Voice Volume",
-  "main.tts.natural.label.thread_count": "TTS Thread Count",
-  "main.tts.natural.label.disabled": "You must install jacob-1.21-x64.dll to use this feature",
-  "main.tts.general.label.tts_engine": "TTS Engine",
-  "main.tts.general.label.audio_folder": "Audio Save Folder",
-  "main.tts.general.input.audio_folder": "path to save audio file",
-  "main.text.load.title": "Load",
-  "main.text.load.label.source": "Load Source",
-  "main.text.load.label.uri": "Load URI",
-  "main.text.load.input.uri": "uri to load",
-  "main.text.save.title": "Save",
-  "main.text.save.label.method": "Save Method",
-  "main.text.save.choice.method.text_tree": "Text Tree",
-  "main.text.save.choice.method.epub": "Epub",
-  "main.text.save.text_tree.label.encoding": "Text Encoding",
-  "main.text.ordinal.title": "Ordinal",
-  "main.text.ordinal.input.format": "enter string format",
-  "main.text.ordinal.label.format": "Ordinal Format",
-  "main.text.ordinal.label.start_by_zero": "Start by zero",
-  "main.text.ordinal.button.run": "Run",
-  "main.audio.general.switch": "Enable",
-  "main.audio.srt.title": "SubRip Text",
-  "main.audio.shift.title": "Shift",
-  "main.audio.shift.label.rate": "Voice Rate",
-  "main.audio.shift.label.pitch": "Voice Pitch",
-  "main.audio.section.title": "Section",
-  "main.audio.section.label.duration": "Section Duration",
-  "main.audio.section.label.read_head": "Read Start",
-  "main.audio.section.label.unit_pattern": "Unit Pattern",
-  "main.audio.section.input.unit_pattern": "string format",
-  "main.prompt.text_area.no_selected": "Choose a file to edit",
-  "main.prompt.text_area.directory_selected": "Unable to edit a directory",
-
-  "settings.window.title": "Window",
-  "settings.window.label.dark_mode": "Dark Mode",
-  "settings.window.label.theme_color": "Theme Color",
-  "settings.window.input.theme_color": "color hex start with \"#\"",
-  "settings.window.label.background_image": "Background Image",
-  "settings.window.input.background_image": "url or file directory",
-  "settings.window.label.background_opacity": "Background Opacity",
-  "settings.window.label.background_blur": "Background Blur",
-  "settings.window.label.background_scale": "Background Scale",
-  "settings.window.label.lang": "Language",
-  "settings.net.title": "Network",
-  "settings.net.label.timeout": "Timeout Seconds",
-  "settings.net.label.max_retries": "Max Retries",
-  "settings.misc.title": "Misc",
-  "settings.misc.label.log_level": "Log Level",
-  "settings.misc.label.preview_text": "Preview Text",
-  "settings.misc.input.preview_text": "enter text to preview here",
-  "settings.misc.label.split_thresholds": "Split Thresholds",
-  "settings.misc.label.split_force": "Force Split Chars",
-  "settings.misc.input.split_force": "enter char sequence",
-  "settings.misc.label.split": "Split Chars",
-  "settings.misc.input.split": "enter char sequence",
-
-  "stage.main.title": "VeloVoice",
-  "stage.settings.title": "Settings",
-  "stage.log.title": "Logs",
-  "stage.local_txt.title": "Edit Local TXT File Parse Rules",
-
-  "source.local_txt.name": "Local Text File",
-  "source.local_txt.label.html_char": "Parse HTML Chars",
-  "source.local_txt.label.parse_structures": "Parse Structures",
-  "source.local_txt.label.ignore_empty_unit": "Ignore Empty Unit",
-  "source.local_txt.label.mark_title": "Mark Title",
-  "source.local_txt.label.parse_rules": "Parsing Rules",
-  "source.local_txt.window.button.add": "+Add",
-  "source.local_txt.window.popup.title": "Add",
-  "source.local_txt.window.label.value": "Value",
-  "source.local_txt.window.label.description": "Description",
-
-  "source.wenku8.name": "Wen ku 8",
-  "source.wenku8.label.mark_volume": "Mark Volume",
-  "source.wenku8.label.mark_chapter": "Mark Chapter",
-
-  "log.progress.initializing": "Initializing...",
-  "log.progress.total": "Total",
-  "log.progress.current": "Current",
-
-
-  "log.config_manager.error.load_failed": "Failed to load config, overwrite as default",
-  "log.config_manager.error.save_failed": "Can't save config file",
-  "log.config_manager.warn.config_not_found": "Config file not found, creating a new one",
-  "log.resource.error.load_failed": "Resources load failed",
-  "log.after_effects.debug.skip_shift": "Skip voice shift",
-  "log.audio_player.error.failed": "Failed to play audio",
-  "log.audio_player.info.playing": "Playing...",
-  "log.audio_saver.error.srt_save_failed": "Can't save SRT file",
-  "log.local_txt.error.folder_not_exist": "Folder not exist: {}",
-  "log.local_txt.info.processed": "Successfully load files from {}",
-  "log.edge_tts_voice.error_load_json": "Failed to load Edge TTS voice list",
-  "log.tts_pool.info.connecting": "Connecting to TTS by {} threads",
-  "log.tts_pool.info.connected": "{} threads connected",
-  "log.tts_pool.error.connect_failed": "Failed to connect to TTS",
-  "log.tts_pool.info.closed": "All threads have been shut down",
-  "log.tts_pool.warn.thread_failed": "An error occurred in this thread while executing tts, the current text \"{}\" will be ignored!",
-  "log.tts_pool.warn.thread_shutdown": "This thread terminated with exception: {}",
-  "log.tts_pool.error.all_failed": "All threads were terminated due to exceptions, and the TTS task will be aborted!",
-  "log.text_process_factory.error.no_select": "No target selected",
-  "log.text_util.error.load_error": "Can't load file: {}",
-  "log.text_util.error.save_failed": "An error occurred while saving file: ",
-  "log.text_util.error.create_file_failed": "Can't create file: {}",
-  "log.text_util.info.save_success": "All save tasks has been finished",
-  "log.text_util.warn.charset_not_found": "The encoding format of the file \"{}\" cannot be parsed and will be parsed using the default UTF-8",
-  "log.main_factory.error.load_preview_failed": "Error while loading preview text: {}",
-  "log.main_factory.error.tts_execute_failed": "An error occurred while executing the task: {}",
-  "log.main_factory.info.load_preview": "Loading preview text...",
-  "log.main_factory.info.tts_all_finished": "All tasks were completed in {}",
-  "log.main_factory.info.tts_interrupted": "Task interrupted by user",
-  "log.runtime.warn.color_parse_failed": "Can't parse theme color \"{}\", is it correct?",
-  "log.tts.warn.natural_tts_online": "Looks like you're using an online Natural TTS model, and you've set up way too many threads—Microsoft's servers can't handle it! To keep the freebies coming sustainably, don't go overboard with threads. We’ve adjusted your thread count to 4 for this task. 😊",
-  "log.main_factory.error.natural_tts_disabled": "Natural TTS is disabled. You must make sure you are using a correct OS and have installed jacob-1.21-x64.dll",
-  "log.main.warn.natural_tts_dll_not_loadable": "Jacob's DLL not found, you can't use Natural TTS SAPI until you install it and restart the application"
+	"context":{
+		"menu":{
+			"new_file":"New File",
+			"new_folder":"New Folder",
+			"paste":"Paste",
+			"rename":"Rename",
+			"expand_all":"Expand All",
+			"clear":"Clear",
+			"copy":"Copy",
+			"cut":"Cut",
+			"paste_append":"Paste(Append)",
+			"move_up":"Move Up",
+			"move_down":"Move Down",
+			"delete":"Delete",
+			"undo":"Undo",
+			"select_all":"Select All"
+		}
+	},
+	"main":{
+		"general":{
+			"button":{
+				"start":"Start",
+				"stop":"Stop"
+			},
+			"label":{
+				"tts":"Text To Speech",
+				"after_process":"After Process",
+				"text_process":"Text Process"
+			}
+		},
+		"tts":{
+			"edge":{
+				"label":{
+					"lang":"Language",
+					"model":"Model",
+					"rate":"Voice Rate",
+					"volume":"Voice Volume",
+					"pitch":"Voice Pith",
+					"thread_count":"TTS Thread Count"
+				}
+			},
+			"natural":{
+				"label":{
+					"model":"Model",
+					"rate":"Voice Rate",
+					"volume":"Voice Volume",
+					"thread_count":"TTS Thread Count",
+					"disabled":"You must install jacob-1.21-x64.dll to use this feature"
+				}
+			},
+			"general":{
+				"label":{
+					"tts_engine":"TTS Engine",
+					"audio_folder":"Audio Save Folder"
+				},
+				"input":{
+					"audio_folder":"path to save audio file"
+				}
+			}
+		},
+		"text":{
+			"load":{
+				"title":"Load",
+				"label":{
+					"source":"Load Source",
+					"uri":"Load URI"
+				},
+				"input":{
+					"uri":"uri to load"
+				}
+			},
+			"save":{
+				"title":"Save",
+				"label":{
+					"method":"Save Method"
+				},
+				"choice":{
+					"method":{
+						"text_tree":"Text Tree",
+						"epub":"Epub"
+					}
+				},
+				"text_tree":{
+					"label":{
+						"encoding":"Text Encoding"
+					}
+				}
+			},
+			"ordinal":{
+				"title":"Ordinal",
+				"input":{
+					"format":"enter string format"
+				},
+				"label":{
+					"format":"Ordinal Format",
+					"start_by_zero":"Start by zero"
+				},
+				"button":{
+					"run":"Run"
+				}
+			}
+		},
+		"audio":{
+			"general":{
+				"switch":"Enable"
+			},
+			"srt":{
+				"title":"SubRip Text"
+			},
+			"shift":{
+				"title":"Shift",
+				"label":{
+					"rate":"Voice Rate",
+					"pitch":"Voice Pitch"
+				}
+			},
+			"section":{
+				"title":"Section",
+				"label":{
+					"duration":"Section Duration",
+					"read_head":"Read Start",
+					"unit_pattern":"Unit Pattern"
+				},
+				"input":{
+					"unit_pattern":"string format"
+				}
+			}
+		},
+		"prompt":{
+			"text_area":{
+				"no_selected":"Choose a file to edit",
+				"directory_selected":"Unable to edit a directory"
+			}
+		}
+	},
+	"settings":{
+		"window":{
+			"title":"Window",
+			"label":{
+				"dark_mode":"Dark Mode",
+				"theme_color":"Theme Color",
+				"background_image":"Background Image",
+				"background_opacity":"Background Opacity",
+				"background_blur":"Background Blur",
+				"background_scale":"Background Scale",
+				"lang":"Language"
+			},
+			"input":{
+				"theme_color":"color hex start with \"#\"",
+				"background_image":"url or file directory"
+			}
+		},
+		"net":{
+			"title":"Network",
+			"label":{
+				"timeout":"Timeout Seconds",
+				"max_retries":"Max Retries"
+			}
+		},
+		"misc":{
+			"title":"Misc",
+			"label":{
+				"log_level":"Log Level",
+				"preview_text":"Preview Text",
+				"split_thresholds":"Split Thresholds",
+				"split_force":"Force Split Chars",
+				"split":"Split Chars"
+			},
+			"input":{
+				"preview_text":"enter text to preview here",
+				"split_force":"enter char sequence",
+				"split":"enter char sequence"
+			}
+		}
+	},
+	"stage":{
+		"main":{
+			"title":"VeloVoice"
+		},
+		"settings":{
+			"title":"Settings"
+		},
+		"log":{
+			"title":"Logs"
+		},
+		"local_txt":{
+			"title":"Edit Local TXT File Parse Rules"
+		}
+	},
+	"source":{
+		"local_txt":{
+			"name":"Local Text File",
+			"label":{
+				"html_char":"Parse HTML Chars",
+				"parse_structures":"Parse Structures",
+				"ignore_empty_unit":"Ignore Empty Unit",
+				"mark_title":"Mark Title",
+				"parse_rules":"Parsing Rules"
+			},
+			"window":{
+				"button":{
+					"add":"+Add"
+				},
+				"popup":{
+					"title": {
+						"add": "Add",
+						"rename": "Rename"
+					}
+				},
+				"label":{
+					"value":"Value",
+					"description":"Description"
+				}
+			}
+		},
+		"wenku8":{
+			"name":"Wen ku 8",
+			"label":{
+				"mark_volume":"Mark Volume",
+				"mark_chapter":"Mark Chapter"
+			}
+		},
+		"epub":{
+			"name":"Local Epub",
+			"label":{
+				"parse_method":"Parse Method"
+			}
+		}
+	},
+	"log":{
+		"progress":{
+			"initializing":"Initializing...",
+			"total":"Total",
+			"current":"Current"
+		},
+		"config_manager":{
+			"error":{
+				"load_failed":"Failed to load config, overwrite as default",
+				"save_failed":"Can't save config file"
+			},
+			"warn":{
+				"config_not_found":"Config file not found, creating a new one"
+			}
+		},
+		"resource":{
+			"error":{
+				"load_failed":"Resources load failed"
+			}
+		},
+		"audio_player":{
+			"error":{
+				"failed":"Failed to play audio"
+			},
+			"info":{
+				"playing":"Playing..."
+			}
+		},
+		"audio_saver":{
+			"error":{
+				"srt_save_failed":"Can't save SRT file"
+			}
+		},
+		"local_txt":{
+			"error":{
+				"folder_not_exist":"Folder not exist: {}"
+			},
+			"info":{
+				"processed":"Successfully load files from {}"
+			}
+		},
+		"edge_tts_voice":{
+			"error_load_json":"Failed to load Edge TTS voice list"
+		},
+		"tts_pool":{
+			"info":{
+				"connecting":"Connecting to TTS by {} threads",
+				"connected":"{} threads connected",
+				"closed":"All threads have been shut down"
+			},
+			"error":{
+				"connect_failed":"Failed to connect to TTS",
+				"all_failed":"All threads were terminated due to exceptions, and the TTS task will be aborted!"
+			},
+			"warn":{
+				"thread_failed":"An error occurred in this thread while executing tts, the current text \"{}\" will be ignored!",
+				"thread_shutdown":"This thread terminated with exception: {}"
+			}
+		},
+		"text_process_factory":{
+			"error":{
+				"no_select":"No target selected",
+				"load_failed": "Failed to load texts from {} : {}",
+				"no_such_file_or_directory": "No such file or directory: {}"
+			},
+			"info":{
+				"load_success": "Successfully load texts from {}",
+				"load_interrupted": "Text load interrupted"
+			}
+		},
+		"text_util":{
+			"error":{
+				"load_error":"Can't load file: {}",
+				"save_failed":"An error occurred while saving file: ",
+				"create_file_failed":"Can't create file: {}"
+			},
+			"info":{
+				"save_success":"All save tasks has been finished"
+			},
+			"warn":{
+				"charset_not_found":"The encoding format of the file \"{}\" cannot be parsed and will be parsed using the default UTF-8"
+			}
+		},
+		"main_factory":{
+			"error":{
+				"load_preview_failed":"Error while loading preview text: {}",
+				"tts_execute_failed":"An error occurred while executing the task: {}",
+				"natural_tts_disabled":"Natural TTS is disabled. You must make sure you are using a correct OS and have installed jacob-1.21-x64.dll"
+			},
+			"info":{
+				"load_preview":"Loading preview text...",
+				"tts_all_finished":"All tasks were completed in {}",
+				"tts_interrupted":"Task interrupted by user"
+			}
+		},
+		"runtime":{
+			"warn":{
+				"color_parse_failed":"Can't parse theme color \"{}\", is it correct?"
+			}
+		},
+		"tts":{
+			"warn":{
+				"natural_tts_online":"Looks like you're using an online Natural TTS model, and you've set up way too many threads—Microsoft's servers can't handle it! To keep the freebies coming sustainably, don't go overboard with threads. We’ve adjusted your thread count to 4 for this task. 😊"
+			}
+		},
+		"main":{
+			"warn":{
+				"natural_tts_dll_not_loadable":"Jacob's DLL not found, you can't use Natural TTS SAPI until you install it and restart the application"
+			}
+		},
+		"epub": {
+			"info": {
+				"not_a_epub_file": "{} is not a valid epub file"
+			}
+		}
+	}
 }

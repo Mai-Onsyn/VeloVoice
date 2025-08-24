@@ -5,7 +5,7 @@
     <formats>
         <format>jar</format>
     </formats>
-    <includeBaseDirectory>false</includeBaseDirectory>
+    <includeBaseDirectory>true</includeBaseDirectory>
     <dependencySets>
         <dependencySet>
             <outputDirectory>/</outputDirectory>

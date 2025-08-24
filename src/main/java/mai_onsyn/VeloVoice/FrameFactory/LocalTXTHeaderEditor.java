@@ -102,7 +102,7 @@ public class LocalTXTHeaderEditor extends HDoubleSplitPane {
 
             addButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                 if (e.getButton() == MouseButton.PRIMARY) {
-                    inputPopup.showOnCenter(I18N.getCurrentValue("source.local_txt.window.popup.title"), this.getScene().getWindow());
+                    inputPopup.showOnCenter(I18N.getCurrentValue("source.local_txt.window.popup.title.add"), this.getScene().getWindow());
                     inputPopup.setOnTextAvailable((o, ov, nv) -> {
                         Item item = new Item(nv);
                         itemBox.addConfigItem(item);
@@ -175,7 +175,7 @@ public class LocalTXTHeaderEditor extends HDoubleSplitPane {
 
             renameButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 if (event.getButton() == MouseButton.PRIMARY) {
-                    inputPopup.showOnCenter("Rename", this.getScene().getWindow());
+                    inputPopup.showOnCenter(I18N.getCurrentValue("source.local_txt.window.popup.title.rename"), this.getScene().getWindow());
                     inputPopup.setOnTextAvailable((o, ov, nv) -> {
                         titleLabel.setText(nv);
                         selectedItem.setName(nv);
@@ -256,7 +256,7 @@ public class LocalTXTHeaderEditor extends HDoubleSplitPane {
             I18N.registerComponent(addButton);
 
             addButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                inputPopup.showOnCenter(I18N.getCurrentValue("source.local_txt.window.popup.title"), this.getScene().getWindow());
+                inputPopup.showOnCenter(I18N.getCurrentValue("source.local_txt.window.popup.title.add"), this.getScene().getWindow());
                 inputPopup.setOnTextAvailable((o, ov, nv) -> {
                     content.getChildren().add(content.getChildren().size() - 1, new ItemPane(nv));
                 });
@@ -381,7 +381,7 @@ public class LocalTXTHeaderEditor extends HDoubleSplitPane {
 
             renameButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 if (event.getButton() == MouseButton.PRIMARY) {
-                    inputPopup.showOnCenter("Rename", this.getScene().getWindow());
+                    inputPopup.showOnCenter(I18N.getCurrentValue("source.local_txt.window.popup.title.rename"), this.getScene().getWindow());
                     inputPopup.setOnTextAvailable((o, ov, nv) -> {
                         nameLabel.setText(nv);
                     });

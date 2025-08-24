@@ -1,5 +1,6 @@
 package mai_onsyn.VeloVoice.App;
 
+import mai_onsyn.VeloVoice.NetWork.LoadTarget.Epub;
 import mai_onsyn.VeloVoice.NetWork.LoadTarget.LocalTXT;
 import mai_onsyn.VeloVoice.NetWork.LoadTarget.Source;
 import mai_onsyn.VeloVoice.NetWork.LoadTarget.Wenku8;
@@ -25,6 +26,7 @@ public class Constants {
     public static final Map<String, Source> sources = new LinkedHashMap<>();
     static {    //在这里添加自定义的加载源
         sources.put("LocalTXT", new LocalTXT());
+        sources.put("Epub", new Epub());
         sources.put(("Wenku8"), new Wenku8());
     }
 

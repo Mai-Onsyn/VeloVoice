@@ -35,7 +35,7 @@ public class DefaultAXTreeViewStyle extends DefaultAXBaseStyle implements AXTree
     }
 
     @Override
-    public AXButtonStyle getSelectedItemStyle() {
+    public AXButtonStyle getSelectedButtonStyle() {
         return new DefaultAXButtonGroupStyle();
     }
 
