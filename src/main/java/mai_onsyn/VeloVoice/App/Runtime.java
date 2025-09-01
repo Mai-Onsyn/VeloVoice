@@ -75,7 +75,10 @@ public class Runtime {
             textConfig.registerString("LoadSource", "LocalTXT");
             textConfig.registerString("LoadUri", "C:/Users/Administrator/Desktop/");
             textConfig.registerString("SaveMethod", "TXTTree");
-            textConfig.registerString("SaveUri", "C:/Users/Administrator/Desktop/");
+            textConfig.registerBoolean("SaveSelected", false);
+            textConfig.registerString("EpubTitle", "An EPUB Book");
+            textConfig.registerString("EpubAuthor", "VeloVoice EPUB Writer");
+            textConfig.registerString("EpubCover", "");
             textConfig.registerString("TXTSaveEncoding", "UTF-8");
             textConfig.registerString("OrdinalFormat", "%02d. %s");
             textConfig.registerBoolean("OrdinalStartByZero", false);

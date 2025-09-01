@@ -53,6 +53,7 @@ public class Epub extends Source {
 
     public Epub() {
         super.config.registerString("ParseMethod", "OPF-NCX");
+        super.config.registerBoolean("MarkTitle", true);
     }
 
     @Override
@@ -60,10 +61,12 @@ public class Epub extends Source {
         Config.ConfigBox configBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
 
         Config.ConfigItem parseMethod = config.genChooseStringItem("ParseMethod", List.of("OPF-NCX", "OPF-NAV(Linear)"));
+        Config.ConfigItem markTitle = config.genSwitchItem("MarkTitle");
         parseMethod.setI18NKey("source.epub.label.parse_method");
-        I18N.registerComponent(parseMethod);
+        markTitle.setI18NKey("source.epub.label.mark_title");
+        I18N.registerComponents(parseMethod, markTitle);
 
-        configBox.addConfigItem(parseMethod);
+        configBox.addConfigItem(parseMethod, markTitle);
 
         return configBox;
     }
@@ -156,12 +159,14 @@ public class Epub extends Source {
         //log.info("Title: {}", title);
 
         Resource resource = tocReference.getResource();
-        List<String> lines = parseContent(resource);
-        SimpleStringProperty data = (SimpleStringProperty) attribution.getDataCreator().create();
+        if (!resource.getHref().startsWith("static_folder_resources/")) {
+            List<String> lines = parseContent(resource);
+            SimpleStringProperty data = (SimpleStringProperty) attribution.getDataCreator().create();
 
-        data.set(formatLines(lines));
+            data.set(formatLines(lines));
 
-        Platform.runLater(() -> parent.add(attribution.createFileItem(title, data)));
+            Platform.runLater(() -> parent.add(attribution.createFileItem(title, data)));
+        }
 
         List<TOCReference> children = tocReference.getChildren();
         if (children != null && !children.isEmpty()) {
@@ -179,7 +184,9 @@ public class Epub extends Source {
         List<String> lines = new ArrayList<>();
         Document document = Jsoup.parse(htmlContent);
 
-        Elements elements = document.select("p, h1, h2, h3, h4, h5, h6");
+        Elements elements;
+        if (config.getBoolean("MarkTitle")) elements = document.select("p, h1, h2, h3, h4, h5, h6");
+        else elements = document.select("p");
         for (Element element : elements) {
             String trimmed = element.text().trim();
             if (!trimmed.isEmpty()) lines.add(trimmed);

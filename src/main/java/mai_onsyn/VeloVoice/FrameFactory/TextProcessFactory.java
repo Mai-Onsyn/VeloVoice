@@ -4,29 +4,33 @@ import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import mai_onsyn.AnimeFX.I18N;
 import mai_onsyn.AnimeFX.Module.AXButton;
 import mai_onsyn.AnimeFX.Module.AXChoiceBox;
 import mai_onsyn.AnimeFX.Module.AXTextField;
-import mai_onsyn.AnimeFX.Utls.AXButtonGroup;
-import mai_onsyn.AnimeFX.Utls.AXDataTreeItem;
-import mai_onsyn.AnimeFX.Utls.AXDatableButtonGroup;
-import mai_onsyn.AnimeFX.Utls.AXTreeItem;
+import mai_onsyn.AnimeFX.Utls.*;
 import mai_onsyn.AnimeFX.layout.AXContextPane;
 import mai_onsyn.AnimeFX.layout.AutoPane;
 import mai_onsyn.VeloVoice.App.Config;
-import mai_onsyn.VeloVoice.App.Constants;
+import mai_onsyn.VeloVoice.App.Resource;
 import mai_onsyn.VeloVoice.NetWork.LoadTarget.Source;
+import mai_onsyn.VeloVoice.Text.Epublib.EpubBook;
 import mai_onsyn.VeloVoice.Text.ExecuteItem;
 import mai_onsyn.VeloVoice.Text.TextUtil;
+import nl.siegmann.epublib.domain.Author;
+import nl.siegmann.epublib.domain.Metadata;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +42,6 @@ import static mai_onsyn.VeloVoice.FrameFactory.MainFactory.treeView;
 import static mai_onsyn.VeloVoice.FrameFactory.FrameThemes.*;
 
 public class TextProcessFactory {
-
 
     private static final Logger log = LogManager.getLogger(TextProcessFactory.class);
 
@@ -230,19 +233,21 @@ public class TextProcessFactory {
         Config.ConfigBox saveBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
         saveBox.setAlignment(Pos.TOP_RIGHT);
 
-        Config.ConfigItem saveMethodItem = textConfig.genChooseStringItem("SaveMethod", List.of("TXTTree", "Epub"));
-        {
-            saveMethodItem.setI18NKey("main.text.save.label.method");
-            saveMethodItem.setChildrenI18NKeys(Map.of(
+        Config.ConfigItem saveMethod = textConfig.genChooseStringItem("SaveMethod", List.of("TXTTree", "Epub")); {
+            saveMethod.setI18NKey("main.text.save.label.method");
+            saveMethod.setChildrenI18NKeys(Map.of(
                     "TXTTree", "main.text.save.choice.method.text_tree",
                     "Epub", "main.text.save.choice.method.epub"
             ));
-            I18N.registerComponent(saveMethodItem);
+            I18N.registerComponent(saveMethod);
+            Platform.runLater(() -> ((AXChoiceBox) saveMethod.getContent()).flushChosenButton());
         }
-        Platform.runLater(() -> ((AXChoiceBox) saveMethodItem.getContent()).flushChosenButton());
+        Config.ConfigItem saveSelected = textConfig.genSwitchItem("SaveSelected"); {
+            saveSelected.setI18NKey("main.text.save.label.save_selected");
+            I18N.registerComponent(saveSelected);
+        }
 
-        Config.ConfigBox txtTreeBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
-        {
+        Config.ConfigBox txtTreeBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT); {
             Config.ConfigItem encodingItem = textConfig.genChooseStringItem("TXTSaveEncoding", List.of("UTF-8", "ISO-8859-1", "US-ASCII", "UTF-16", "UTF-16BE", "UTF-16LE", "UTF-32", "UTF-32BE", "UTF-32LE"));
 
             encodingItem.setI18NKey("main.text.save.text_tree.label.encoding");
@@ -252,14 +257,17 @@ public class TextProcessFactory {
         }
 
         Config.ConfigBox epubBBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT); {
-            //wait for update
-            AutoPane autoPane = new AutoPane();
-            Label label = new Label("Stay tuned for updates!");
-            label.setTextFill(Color.GRAY);
-            autoPane.getChildren().add(label);
-            epubBBox.addConfigItem(autoPane);
+            Config.ConfigItem epubTitle = textConfig.genInputStringItem("EpubTitle", "main.text.save.epub.input.title");
+            Config.ConfigItem epubAuthor = textConfig.genInputStringItem("EpubAuthor", "main.text.save.epub.input.author");
+            Config.ConfigItem epubCover = textConfig.genInputStringItem("EpubCover", "main.text.save.epub.input.cover");
+            epubTitle.setI18NKey("main.text.save.epub.label.title");
+            epubAuthor.setI18NKey("main.text.save.epub.label.author");
+            epubCover.setI18NKey("main.text.save.epub.label.cover");
+            I18N.registerComponents(epubTitle, epubAuthor, epubCover);
+
+            epubBBox.addConfigItem(epubTitle, epubAuthor, epubCover);
         }
-        ((AXChoiceBox) saveMethodItem.getContent()).getButtonGroup().addOnSelectChangedListener((o, ov, nv) -> {
+        ((AXChoiceBox) saveMethod.getContent()).getButtonGroup().addOnSelectChangedListener((o, ov, nv) -> {
             String oldKey = ov.getUserData().toString();
             String newKey = nv.getUserData().toString();
             //log.debug("Switch from " + oldKey + " to " + newKey);
@@ -287,18 +295,61 @@ public class TextProcessFactory {
                     DirectoryChooser dc = new DirectoryChooser();
                     File folder = dc.showDialog(saveButton.getScene().getWindow());
                     if (folder != null) {
-                        AXTreeItem item = treeView.getGroup().getData(treeView.getGroup().getSelectedButton());
-                        if (item == null) log.error(I18N.getCurrentValue("log.text_process_factory.error.no_select"));
-                        else Thread.ofVirtual().name("Text-Save-Thread").start(() -> TextUtil.save(item, folder));
+                        if (textConfig.getBoolean("SaveSelected")) {
+                            AXTreeItem item = treeView.getGroup().getData(treeView.getGroup().getSelectedButton());
+                            if (item == null) log.error(I18N.getCurrentValue("log.text_process_factory.error.no_select"));
+                            else Thread.ofVirtual().name("Text-Save-Thread").start(() -> TextUtil.save(item, folder));
+                        } else {
+                            Thread.ofVirtual().name("Text-Save-Thread").start(() -> TextUtil.save(treeView.getRoot(), folder));
+                        }
                     }
-                } else {
-                    log.info("Epub is not implemented yet, please wait for the next update");
+                } else if (textConfig.getString("SaveMethod").equals("Epub")) {
+                    FileChooser fc = new FileChooser();
+                    fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Epub", "*.epub"));
+                    File file = fc.showSaveDialog(saveButton.getScene().getWindow());
+                    try {
+                        EpubBook book = new EpubBook();
+
+                        if (textConfig.getBoolean("SaveSelected")) {
+                            AXTreeItem item = treeView.getGroup().getData(treeView.getGroup().getSelectedButton());
+                            if (item == null) {
+                                log.error(I18N.getCurrentValue("log.text_process_factory.error.no_select"));
+                                return;
+                            }
+                            else book.setBookTree(item);
+                        }
+                        else {
+                            book.setBookTree(treeView.getRoot());
+                        }
+                        Metadata metadata = book.getMetadata();
+                        metadata.addTitle(textConfig.getString("EpubTitle"));
+                        metadata.addAuthor(new Author(textConfig.getString("EpubAuthor")));
+                        File epubCoverFile = new File(textConfig.getString("EpubCover"));
+                        if (epubCoverFile.exists()) {
+                            nl.siegmann.epublib.domain.Resource cover = new nl.siegmann.epublib.domain.Resource(new FileInputStream(epubCoverFile), "cover.png");
+                            book.setCoverImage(cover);
+                            book.addResource(cover);
+                        } else {
+                            log.warn("Epub cover image not found");
+                        }
+
+                        Thread.ofVirtual().name("Epub-Save-Thread").start(() -> {
+                            try {
+                                book.write(file.getAbsolutePath());
+                                log.info(I18N.getCurrentValue("log.text_process_factory.info.save_success"), file.getAbsolutePath());
+                            } catch (IOException e) {
+                                log.error(I18N.getCurrentValue("log.text_process_factory.error.save_failed"), file.getAbsolutePath(), e);
+                            }
+                        });
+                    } catch (IOException e) {
+                        log.error(I18N.getCurrentValue("log.text_process_factory.error.save_failed"), file.getAbsolutePath(), e);
+                    }
                 }
             });
         }
 
 
-        saveBox.addConfigItem(saveMethodItem);
+        saveBox.addConfigItem(saveSelected, saveMethod);
         saveBox.getChildren().addAll(switch (textConfig.getString("SaveMethod")) {
             case "TXTTree" -> txtTreeBox;
             case "Epub" -> epubBBox;

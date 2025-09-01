@@ -8,13 +8,13 @@ import java.util.*;
 
 public class JsonFixer {
     // 配置选项
-    private static final String BASE_LANG = "en_us.json"; // 基准语言文件
+    private static final String BASE_LANG = "zh_cn.json"; // 基准语言文件
     private static final boolean USE_TODO_MARK = false;    // 是否用 TODO 标记
 
     public static void main(String[] args) {
         // 配置参数
         String folderPath = "D:\\Users\\Desktop\\Files\\Projects\\Java\\VeloVoice\\src\\main\\resources\\lang";
-        LinkedHashSet<String> excludeFiles = new LinkedHashSet<>(List.of("lang_info.json"));
+        LinkedHashSet<String> excludeFiles = new LinkedHashSet<>(List.of("lang_info.json", "ja_jp.json", "zh_tw.json"));
 
         // 1. 解析所有 JSON 文件 -> 扁平化 Map
         LinkedHashMap<String, LinkedHashMap<String, String>> flatDataMap = parseJsonFiles(folderPath, excludeFiles);

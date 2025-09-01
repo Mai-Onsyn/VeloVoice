@@ -71,9 +71,9 @@
 				}
 			},
 			"save":{
-				"title":"保存",
+				"title":"エクスポート",
 				"label":{
-					"method":"保存方法"
+					"method":"エクスポート方法"
 				},
 				"choice":{
 					"method":{
@@ -290,7 +290,7 @@
 		"text_process_factory":{
 			"error":{
 				"no_select":"ターゲットが選択されていません",
-				"load_failed":"\"{}\" からテキストの読み込みに失敗しました: {}",
+				"load_failed":"\"{}\" からテキストの読み込みに失敗しました",
 				"no_such_file_or_directory": "\"{}\"が見つかりません"
 			},
 			"info":{
@@ -301,11 +301,11 @@
 		"text_util":{
 			"error":{
 				"load_error":"ファイルを読み込めません: {}",
-				"save_failed":"ファイル保存時にエラーが発生しました: {}",
+				"save_failed":"txtファイル保存時にエラーが発生しました: {}",
 				"create_file_failed":"ファイルを作成できません: {}"
 			},
 			"info":{
-				"save_success":"すべての保存タスクが完了しました"
+				"save_success":"すべてのtxt保存タスクが完了しました"
 			},
 			"warn":{
 				"charset_not_found":"ファイル\"{}\"のエンコーディング形式を解析できず、デフォルトのUTF-8で解析します"

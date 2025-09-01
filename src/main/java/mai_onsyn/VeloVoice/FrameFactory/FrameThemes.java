@@ -34,7 +34,7 @@ public class FrameThemes {
 
     public static final Color TEXT_INPUT_SELECTED_BACKGROUND = Color.web("#0051b2");
 
-    public static final double LIGHT_GRAY = 0.9647;
+    public static final double LIGHT_GRAY = 0.9412;
     public static final double DARK_GRAY = 0.2313;
 
     public static final double ANIME_RATE = 1.0;

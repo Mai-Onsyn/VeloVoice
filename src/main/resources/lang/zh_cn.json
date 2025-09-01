@@ -71,9 +71,10 @@
 				}
 			},
 			"save":{
-				"title":"保存",
+				"title":"导出",
 				"label":{
-					"method":"保存方式"
+					"method":"导出方式",
+					"save_selected": "仅导出选中"
 				},
 				"choice":{
 					"method":{
@@ -84,6 +85,18 @@
 				"text_tree":{
 					"label":{
 						"encoding":"文本编码方式"
+					}
+				},
+				"epub":{
+					"label":{
+						"title":"标题",
+						"author":"作者",
+						"cover":"封面路径"
+					},
+					"input": {
+						"title": "epub标题",
+						"author": "epub作者",
+						"cover": "epub封面图片路径"
 					}
 				}
 			},
@@ -224,7 +237,8 @@
 		"epub":{
 			"name":"本地Epub文件",
 			"label":{
-				"parse_method":"解析方法"
+				"parse_method":"解析方法",
+				"mark_title":"添加标题"
 			}
 		}
 	},
@@ -290,25 +304,27 @@
 		"text_process_factory":{
 			"error":{
 				"no_select":"未选择目标",
-				"load_failed":"加载文本失败：{} ：{}",
-				"no_such_file_or_directory": "找不到文件或目录: {}"
+				"load_failed":"加载文本失败：{}",
+				"no_such_file_or_directory": "找不到文件或目录: {}",
+				"save_failed":"导出EPUB文件失败：{}"
 			},
 			"info":{
 				"load_success":"成功从 \"{}\" 加载文本",
-				"load_interrupted":"文本加载被用户中断"
+				"load_interrupted":"文本加载被用户中断",
+				"save_success":"成功导出EPUB文件：{}"
 			}
 		},
 		"text_util":{
 			"error":{
 				"load_error":"无法加载文件: {}",
-				"save_failed":"保存文件时发生错误: {}",
+				"save_failed":"保存txt文件时发生错误: {}",
 				"create_file_failed":"无法创建文件: {}"
 			},
 			"info":{
-				"save_success":"所有保存任务已完成"
+				"save_success":"所有txt保存任务已完成"
 			},
 			"warn":{
-				"charset_not_found":"文件\"{}\"的编码格式无法解析，将使用默认UTF-8格式解析"
+				"charset_not_found":"无法识别文件\"{}\"的编码格式，将使用默认UTF-8编码解析"
 			}
 		},
 		"main_factory":{

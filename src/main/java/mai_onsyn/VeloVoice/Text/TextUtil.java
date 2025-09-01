@@ -4,6 +4,10 @@ import mai_onsyn.AnimeFX.I18N;
 import mai_onsyn.AnimeFX.Utls.AXTreeItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Entities;
 import org.jsoup.parser.Parser;
 import org.mozilla.universalchardet.UniversalDetector;
 
@@ -48,6 +52,18 @@ public class TextUtil {
         }
 
         return splitText;
+    }
+
+    public static List<String> splitWrap(String text) {
+        String[] split = text.split("\n");
+        List<String> lines = new ArrayList<>();
+        for (String line : split) {
+            String trimmed = line.trim();
+            if (!trimmed.isEmpty()) {
+                lines.add(trimmed);
+            }
+        }
+        return lines;
     }
 
     public static String load(File file) {
@@ -144,6 +160,43 @@ public class TextUtil {
         long seconds = totalSeconds % 60;
 
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+    public static String createHtmlChapter(String title, List<String> lines) {
+        // 使用XML解析器，更适合epub格式
+        Document doc = Jsoup.parse("", "", Parser.xmlParser());
+        doc.outputSettings().charset("UTF-8");
+        doc.outputSettings().prettyPrint(true);
+
+        // 添加XML声明和DOCTYPE
+        doc.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+        doc.append("<!DOCTYPE html>");
+
+        // 创建HTML元素
+        Element html = doc.appendElement("html");
+        html.attr("xmlns", "http://www.w3.org/1999/xhtml");
+//        html.attr("xmlns:epub", "http://www.idpf.org/2007/ops");
+//        html.attr("lang", "zh-CN");
+//        html.attr("xml:lang", "zh-CN");
+
+        // Head部分
+        Element head = html.appendElement("head");
+        head.appendElement("title").text(title);
+        head.appendElement("meta").attr("charset", "UTF-8");
+
+        // Body部分
+        Element body = html.appendElement("body");
+        body.appendElement("h1").text(title);
+
+        // 处理内容行
+        for (String line : lines) {
+            String trimmedLine = line.trim();
+            if (!trimmedLine.isEmpty()) {
+                body.appendElement("p").text(trimmedLine);
+            }
+        }
+
+        return doc.html();
     }
 
 

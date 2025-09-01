@@ -71,9 +71,9 @@
 				}
 			},
 			"save":{
-				"title":"儲存",
+				"title":"匯出",
 				"label":{
-					"method":"儲存方式"
+					"method":"匯出方式"
 				},
 				"choice":{
 					"method":{
@@ -290,7 +290,7 @@
 		"text_process_factory":{
 			"error":{
 				"no_select":"未選擇目標",
-				"load_failed":"從 \"{}\" 載入文本失敗: {}",
+				"load_failed":"從 \"{}\" 載入文本失敗",
 				"no_such_file_or_directory": "找不到文件或目錄: {}"
 			},
 			"info":{
@@ -301,11 +301,11 @@
 		"text_util":{
 			"error":{
 				"load_error":"無法載入檔案: {}",
-				"save_failed":"儲存檔案時發生錯誤: {}",
+				"save_failed":"儲存txt檔案時發生錯誤: {}",
 				"create_file_failed":"無法建立檔案: {}"
 			},
 			"info":{
-				"save_success":"所有儲存任務已完成"
+				"save_success":"所有txt儲存任務已完成"
 			},
 			"warn":{
 				"charset_not_found":"檔案\"{}\"的編碼格式無法解析，將使用預設UTF-8格式解析"

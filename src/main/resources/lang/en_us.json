@@ -71,9 +71,10 @@
 				}
 			},
 			"save":{
-				"title":"Save",
+				"title":"Export",
 				"label":{
-					"method":"Save Method"
+					"method":"Export Method",
+					"save_selected":"Export Selected Only"
 				},
 				"choice":{
 					"method":{
@@ -84,6 +85,18 @@
 				"text_tree":{
 					"label":{
 						"encoding":"Text Encoding"
+					}
+				},
+				"epub":{
+					"label":{
+						"title":"Title",
+						"author":"Author",
+						"cover":"Cover Path"
+					},
+					"input":{
+						"title":"epub title",
+						"author":"epub author",
+						"cover":"epub cover path"
 					}
 				}
 			},
@@ -203,9 +216,9 @@
 					"add":"+Add"
 				},
 				"popup":{
-					"title": {
-						"add": "Add",
-						"rename": "Rename"
+					"title":{
+						"add":"Add",
+						"rename":"Rename"
 					}
 				},
 				"label":{
@@ -224,7 +237,8 @@
 		"epub":{
 			"name":"Local Epub",
 			"label":{
-				"parse_method":"Parse Method"
+				"parse_method":"Parse Method",
+				"mark_title":"Add Title"
 			}
 		}
 	},
@@ -290,22 +304,24 @@
 		"text_process_factory":{
 			"error":{
 				"no_select":"No target selected",
-				"load_failed": "Failed to load texts from {} : {}",
-				"no_such_file_or_directory": "No such file or directory: {}"
+				"load_failed":"Failed to load texts from {}",
+				"no_such_file_or_directory":"No such file or directory: {}",
+				"save_failed":"Failed to export the epub file：{}"
 			},
 			"info":{
-				"load_success": "Successfully load texts from {}",
-				"load_interrupted": "Text load interrupted"
+				"load_success":"Successfully load texts from {}",
+				"load_interrupted":"Text load interrupted",
+				"save_success":"Successfully export the epub file：{}"
 			}
 		},
 		"text_util":{
 			"error":{
 				"load_error":"Can't load file: {}",
-				"save_failed":"An error occurred while saving file: ",
+				"save_failed":"An error occurred while saving txt file: ",
 				"create_file_failed":"Can't create file: {}"
 			},
 			"info":{
-				"save_success":"All save tasks has been finished"
+				"save_success":"All txt save tasks has been finished"
 			},
 			"warn":{
 				"charset_not_found":"The encoding format of the file \"{}\" cannot be parsed and will be parsed using the default UTF-8"
@@ -338,9 +354,9 @@
 				"natural_tts_dll_not_loadable":"Jacob's DLL not found, you can't use Natural TTS SAPI until you install it and restart the application"
 			}
 		},
-		"epub": {
-			"info": {
-				"not_a_epub_file": "{} is not a valid epub file"
+		"epub":{
+			"info":{
+				"not_a_epub_file":"{} is not a valid epub file"
 			}
 		}
 	}
