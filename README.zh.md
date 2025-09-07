@@ -18,6 +18,7 @@
 ### 🧨支持的TTS引擎🧨
 - **Microsoft Edge TTS**: 默认引擎，可使用4线程
 - **Natural TTS SAPI**: 一个没有线程数量限制的本地TTS引擎，配置[NaturalVoiceSAPIAdapter](https://github.com/gexgd0419/NaturalVoiceSAPIAdapter)后可使用自然语音
+- **Multi TTS API**: 一个安卓软件的TTS API，虽然只能以单线程运行，但其灵活性使得它支持几乎所有的可白嫖TTS模型
 ### 🎫支持的文本加载源🎫
 - **TXT**: 加载本地的txt文件，使用正则表达式自定义文本的解析规则
 - **EPUB**: 支持加载文件夹或epub文件，可加载EPUB 2.0.1标准文件，或线性标题的EPUB 3.0标准文件

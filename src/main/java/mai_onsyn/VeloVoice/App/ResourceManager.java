@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Resource {
+public class ResourceManager {
 
     public static final List<WritableImage> grayResources = new ArrayList<>();
 
@@ -22,9 +22,10 @@ public class Resource {
     public static final WritableImage edit;
     public static final WritableImage list;
     public static final WritableImage pc;
+    public static final WritableImage flush;
     public static final Image error;
     public static final Image icon_wenku8;
-    private static final Logger log = LogManager.getLogger(Resource.class);
+    private static final Logger log = LogManager.getLogger(ResourceManager.class);
 
 
     static {
@@ -35,12 +36,13 @@ public class Resource {
             list = new WritableImage(Toolkit.loadImage("textures/icons/app/log.png").getPixelReader(), 512, 512);
             pc = new WritableImage(Toolkit.loadImage("textures/icons/app/pc.png").getPixelReader(), 512, 512);
             error = new WritableImage(Toolkit.loadImage("textures/icons/app/error.png").getPixelReader(), 512, 512);
+            flush = Toolkit.flipHorizontalTransform(mai_onsyn.AnimeFX.ResourceManager.undo);
 
 
             icon = Toolkit.loadImage("textures/icons/app/icon.png");
             icon_wenku8 = Toolkit.loadImage("textures/icons/app/icon_wenku8.png");
 
-            grayResources.addAll(List.of(horn, setting, edit, list, pc));
+            grayResources.addAll(List.of(horn, setting, edit, list, pc, flush));
 
             log.debug("Resources loaded");
         } catch (IOException e) {

@@ -18,6 +18,7 @@ This is the stable release. If you need to check the test version, please visit 
 ### 🧨Supports TTS Engines🧨
 - **Microsoft Edge TTS**: The default online engine, supporting a maximum of 4 concurrent threads
 - **Natural TTS SAPI**: A local TTS engine that supports up to 64 concurrent threads. You can use natural speech after configuring [NaturalVoiceSAPIAdapter](https://github.com/gexgd0419/NaturalVoiceSAPIAdapter)
+- **Multi TTS API**: An Android TTS software API. Although it operates only in a single-threaded manner, it supports countless models
 ### 🎫Supports Text Sources🎫
 - **TXT**: Load local text files with powerful and customizable parsing rules
 - **EPUB**: Load local EPUB files that comply with the EPUB 2.0.1 standard or the EPUB 3.0 standard with a linear navigation document

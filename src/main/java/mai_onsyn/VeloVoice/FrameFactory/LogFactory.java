@@ -10,7 +10,7 @@ import mai_onsyn.AnimeFX.Module.AXProgressBar;
 import mai_onsyn.AnimeFX.Utls.AXLangLabel;
 import mai_onsyn.VeloVoice.App.WindowManager;
 import mai_onsyn.AnimeFX.layout.AutoPane;
-import mai_onsyn.VeloVoice.App.Resource;
+import mai_onsyn.VeloVoice.App.ResourceManager;
 
 import java.text.SimpleDateFormat;
 
@@ -72,7 +72,7 @@ public class LogFactory {
         logStage.setScene(scene);
         logStage.setMinWidth(400);
         logStage.setMinHeight(300);
-        logStage.getIcons().add(Resource.icon);
+        logStage.getIcons().add(ResourceManager.icon);
         logStage.setTitle("Logs");
         WindowManager.register(logStage);
         I18N.addOnChangedAction(() -> logStage.setTitle(I18N.getCurrentValue("stage.log.title")));

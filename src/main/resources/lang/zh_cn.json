@@ -57,6 +57,18 @@
 				"input":{
 					"audio_folder":"输入音频文件保存路径"
 				}
+			},
+			"multi":{
+				"label":{
+					"url":"地址",
+					"voice_model":"模型",
+					"voice_rate":"语速",
+					"voice_volume":"音量",
+					"voice_pitch":"音调"
+				},
+				"input":{
+					"url":"输入有效的URL"
+				}
 			}
 		},
 		"text":{
@@ -74,7 +86,7 @@
 				"title":"导出",
 				"label":{
 					"method":"导出方式",
-					"save_selected": "仅导出选中"
+					"save_selected":"仅导出选中"
 				},
 				"choice":{
 					"method":{
@@ -93,10 +105,10 @@
 						"author":"作者",
 						"cover":"封面路径"
 					},
-					"input": {
-						"title": "epub标题",
-						"author": "epub作者",
-						"cover": "epub封面图片路径"
+					"input":{
+						"title":"epub标题",
+						"author":"epub作者",
+						"cover":"epub封面图片路径"
 					}
 				}
 			},
@@ -305,7 +317,7 @@
 			"error":{
 				"no_select":"未选择目标",
 				"load_failed":"加载文本失败：{}",
-				"no_such_file_or_directory": "找不到文件或目录: {}",
+				"no_such_file_or_directory":"找不到文件或目录: {}",
 				"save_failed":"导出EPUB文件失败：{}"
 			},
 			"info":{
@@ -357,6 +369,19 @@
 		"epub":{
 			"info":{
 				"not_a_epub_file":"\"{}\" 不是一个EPUB文件"
+			}
+		},
+		"multi_tts_client": {
+			"warn": {
+				"get_voice_list_failed": "加载模型列表失败: {}"
+			},
+			"error": {
+				"url_error": "\"{}\" 不是一个有效的URL"
+			}
+		},
+		"tts_factory": {
+			"info": {
+				"flushed": "已刷新MultiTTS模型"
 			}
 		}
 	}

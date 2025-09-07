@@ -20,7 +20,7 @@ import mai_onsyn.AnimeFX.Utls.AXTreeItem;
 import mai_onsyn.AnimeFX.layout.AutoPane;
 import mai_onsyn.VeloVoice.App.WindowManager;
 import mai_onsyn.VeloVoice.App.Config;
-import mai_onsyn.VeloVoice.App.Resource;
+import mai_onsyn.VeloVoice.App.ResourceManager;
 import mai_onsyn.VeloVoice.FrameFactory.LocalTXTHeaderEditor;
 import mai_onsyn.VeloVoice.Text.TextUtil;
 import org.apache.logging.log4j.LogManager;
@@ -75,7 +75,7 @@ public class LocalTXT extends Source {
 
     @Override
     protected Image getIcon() {
-        return Resource.pc;
+        return ResourceManager.pc;
     }
 
     @Override
@@ -93,7 +93,7 @@ public class LocalTXT extends Source {
             editButton.setTheme(BUTTON);
             themeManager.register(editButton);
 
-            ImageView editIcon = new ImageView(Resource.edit);
+            ImageView editIcon = new ImageView(ResourceManager.edit);
             editIcon.setFitWidth(UI_HEIGHT * 0.8);
             editIcon.setFitHeight(UI_HEIGHT * 0.8);
             editButton.getChildren().add(editIcon);
@@ -116,7 +116,7 @@ public class LocalTXT extends Source {
             LocalTXTHeaderEditor headerItemsEditor = new LocalTXTHeaderEditor(JSONArray.parseArray(config.getString("HeaderItems")));
             headerStage.setScene(new Scene(headerItemsEditor, 800, 600));
             headerItemsEditor.requestFocus();
-            headerStage.getIcons().add(Resource.icon);
+            headerStage.getIcons().add(ResourceManager.icon);
             WindowManager.register(headerStage);
             I18N.addOnChangedAction(() -> headerStage.setTitle(I18N.getCurrentValue("stage.local_txt.title")));
         }

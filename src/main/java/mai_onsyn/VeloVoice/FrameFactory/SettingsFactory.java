@@ -11,7 +11,7 @@ import mai_onsyn.VeloVoice.App.WindowManager;
 import mai_onsyn.AnimeFX.layout.AXScrollPane;
 import mai_onsyn.AnimeFX.layout.AutoPane;
 import mai_onsyn.VeloVoice.App.Config;
-import mai_onsyn.VeloVoice.App.Resource;
+import mai_onsyn.VeloVoice.App.ResourceManager;
 
 import java.util.*;
 
@@ -25,7 +25,7 @@ public class SettingsFactory {
 
     static {
         settingsStage.setTitle("Settings");
-        settingsStage.getIcons().add(Resource.icon);
+        settingsStage.getIcons().add(ResourceManager.icon);
         WindowManager.register(settingsStage);
         I18N.addOnChangedAction(() -> settingsStage.setTitle(I18N.getCurrentValue("stage.settings.title")));
 

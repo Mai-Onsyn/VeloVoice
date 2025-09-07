@@ -8,7 +8,7 @@ import java.util.*;
 
 public class JsonFixer {
     // 配置选项
-    private static final String BASE_LANG = "zh_cn.json"; // 基准语言文件
+    private static final String BASE_LANG = "en_us.json"; // 基准语言文件
     private static final boolean USE_TODO_MARK = false;    // 是否用 TODO 标记
 
     public static void main(String[] args) {

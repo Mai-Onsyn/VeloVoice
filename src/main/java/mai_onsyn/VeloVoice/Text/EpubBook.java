@@ -1,9 +1,8 @@
-package mai_onsyn.VeloVoice.Text.Epublib;
+package mai_onsyn.VeloVoice.Text;
 
 import javafx.beans.property.SimpleStringProperty;
 import mai_onsyn.AnimeFX.Utls.AXDataTreeItem;
 import mai_onsyn.AnimeFX.Utls.AXTreeItem;
-import mai_onsyn.VeloVoice.Text.TextUtil;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.domain.SpineReference;

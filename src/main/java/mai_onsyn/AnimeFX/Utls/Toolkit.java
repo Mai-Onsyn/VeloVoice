@@ -15,6 +15,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+import java.awt.geom.AffineTransform;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -226,4 +227,22 @@ public class Toolkit {
         return Color.rgb(inverseRed, inverseGreen, inverseBlue, alpha / 255.0);
     }
 
+    public static WritableImage flipHorizontalTransform(WritableImage image) {
+        int width = (int) image.getWidth();
+        int height = (int) image.getHeight();
+
+        WritableImage flipped = new WritableImage(width, height);
+        PixelWriter writer = flipped.getPixelWriter();
+        PixelReader reader = image.getPixelReader();
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int flippedX = width - x - 1;
+                int pixel = reader.getArgb(x, y);
+                writer.setArgb(flippedX, y, pixel);
+            }
+        }
+
+        return flipped;
+    }
 }

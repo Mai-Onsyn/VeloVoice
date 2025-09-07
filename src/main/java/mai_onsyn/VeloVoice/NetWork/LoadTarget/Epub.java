@@ -8,6 +8,7 @@ import mai_onsyn.AnimeFX.Module.AXTreeView;
 import mai_onsyn.AnimeFX.Utls.AXDataTreeItem;
 import mai_onsyn.AnimeFX.Utls.AXTreeItem;
 import mai_onsyn.VeloVoice.App.Config;
+import mai_onsyn.VeloVoice.App.ResourceManager;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.domain.Resources;
@@ -47,7 +48,7 @@ public class Epub extends Source {
 
     @Override
     protected Image getIcon() {
-        return mai_onsyn.VeloVoice.App.Resource.pc;
+        return ResourceManager.pc;
     }
 
 

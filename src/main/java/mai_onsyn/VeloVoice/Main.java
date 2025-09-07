@@ -3,6 +3,7 @@ package mai_onsyn.VeloVoice;
 import javafx.application.Application;
 import mai_onsyn.AnimeFX.I18N;
 import mai_onsyn.VeloVoice.NetWork.TTS.EdgeTTSClient;
+import mai_onsyn.VeloVoice.NetWork.TTS.MultiTTSClient;
 import mai_onsyn.VeloVoice.NetWork.TTS.NaturalTTSClient;
 import mai_onsyn.VeloVoice.NetWork.TTS.ResumableTTSClient;
 import org.apache.logging.log4j.Level;
@@ -56,6 +57,12 @@ public class Main {
         }
         NaturalTTSClient.setVoiceRate(naturalTTSConfig.getInteger("VoiceRate"));
         NaturalTTSClient.setVoiceVolume(naturalTTSConfig.getDouble("VoiceVolume"));
+
+        //Multi TTS
+        MultiTTSClient.setVoiceModel(multiTTSConfig.getString("VoiceModel"));
+        MultiTTSClient.setVoiceRate(multiTTSConfig.getInteger("VoiceRate"));
+        MultiTTSClient.setVoiceVolume(multiTTSConfig.getInteger("VoiceVolume"));
+        MultiTTSClient.setVoicePitch(multiTTSConfig.getInteger("VoicePitch"));
 
         //Universal
         for (ResumableTTSClient.ClientType clientType : ResumableTTSClient.ClientType.values()) {

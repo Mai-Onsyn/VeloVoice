@@ -180,4 +180,73 @@ public class AudioEncodeUtils {
         }
     }
 
+    public static class WavInfo {
+        public int sampleRate;
+        public int bitsPerSample;
+        public int channels;
+        public byte[] audioData;
+
+        @Override
+        public String toString() {
+            return "WavInfo{" +"sampleRate=" + sampleRate + ", bitsPerSample=" + bitsPerSample + ", channels=" + channels + ", audioData=" + audioData.length + '}';
+        }
+    }
+
+    public static WavInfo parseWav(byte[] wavData) {
+        WavInfo info = new WavInfo();
+
+        // 基本验证
+        if (wavData.length < 44 ||
+                !"RIFF".equals(new String(wavData, 0, 4)) ||
+                !"WAVE".equals(new String(wavData, 8, 4))) {
+            throw new IllegalArgumentException("无效的WAV文件");
+        }
+
+        int fmtChunkOffset = 12;
+        int dataChunkOffset = -1;
+
+        // 查找fmt和data块
+        int pos = 12;
+        while (pos < wavData.length - 8) {
+            String chunkId = new String(wavData, pos, 4);
+            int chunkSize = byteArrayToInt(wavData, pos + 4);
+
+            if ("fmt ".equals(chunkId)) {
+                // 解析音频格式信息
+                info.sampleRate = byteArrayToInt(wavData, pos + 12);
+                info.bitsPerSample = byteArrayToShort(wavData, pos + 22);
+                info.channels = byteArrayToShort(wavData, pos + 10);
+            } else if ("data".equals(chunkId)) {
+                dataChunkOffset = pos + 8;
+                break;
+            }
+
+            pos += 8 + chunkSize;
+        }
+
+        if (dataChunkOffset == -1) {
+            throw new IllegalArgumentException("未找到数据块");
+        }
+
+        // 提取音频数据
+        info.audioData = new byte[wavData.length - dataChunkOffset];
+        System.arraycopy(wavData, dataChunkOffset, info.audioData, 0, info.audioData.length);
+
+        return info;
+    }
+
+    // 辅助方法：将4字节转换为int
+    private static int byteArrayToInt(byte[] bytes, int offset) {
+        return ((bytes[offset] & 0xFF) |
+                ((bytes[offset + 1] & 0xFF) << 8) |
+                ((bytes[offset + 2] & 0xFF) << 16) |
+                ((bytes[offset + 3] & 0xFF) << 24));
+    }
+
+    // 辅助方法：将2字节转换为short
+    private static short byteArrayToShort(byte[] bytes, int offset) {
+        return (short)((bytes[offset] & 0xFF) |
+                ((bytes[offset + 1] & 0xFF) << 8));
+    }
+
 }

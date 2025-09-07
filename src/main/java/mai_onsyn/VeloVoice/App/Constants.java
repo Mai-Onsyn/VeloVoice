@@ -8,9 +8,7 @@ import mai_onsyn.VeloVoice.NetWork.LoadTarget.Wenku8;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Constants {
 
@@ -28,6 +26,11 @@ public class Constants {
         sources.put("LocalTXT", new LocalTXT());
         sources.put("Epub", new Epub());
         sources.put(("Wenku8"), new Wenku8());
+    }
+
+    public static final List<String> availableTTSNames = new ArrayList<>();
+    static {    //在这里添加TTS引擎
+        availableTTSNames.addAll(List.of("Edge TTS", "Natural TTS", "Multi TTS"));
     }
 
 

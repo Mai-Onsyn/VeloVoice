@@ -16,7 +16,7 @@ import mai_onsyn.AnimeFX.layout.AXScrollPane;
 import mai_onsyn.AnimeFX.layout.AutoPane;
 import mai_onsyn.AnimeFX.layout.HDoubleSplitPane;
 import mai_onsyn.VeloVoice.App.Config;
-import mai_onsyn.VeloVoice.App.Resource;
+import mai_onsyn.VeloVoice.App.ResourceManager;
 import mai_onsyn.VeloVoice.Text.TTS;
 import mai_onsyn.VeloVoice.Text.TextUtil;
 import org.apache.logging.log4j.LogManager;
@@ -202,7 +202,7 @@ public class MainFactory {
         AutoPane ctrlArea = new AutoPane();
         {
             AXButton logButton = new AXButton();
-            ImageView logIcon = new ImageView(Resource.list); {
+            ImageView logIcon = new ImageView(ResourceManager.list); {
                 logIcon.setFitWidth(UI_HEIGHT * 0.8);
                 logIcon.setFitHeight(UI_HEIGHT * 0.8);
                 logButton.getChildren().add(logIcon);
@@ -335,7 +335,7 @@ public class MainFactory {
         configButton.setTheme(FrameThemes.TRANSPARENT_BUTTON);
         themeManager.register(configButton);
 
-        ImageView settingIcon = new ImageView(Resource.setting);
+        ImageView settingIcon = new ImageView(ResourceManager.setting);
         configButton.getChildren().add(settingIcon);
         configButton.setPosition(settingIcon, AutoPane.AlignmentMode.CENTER, AutoPane.LocateMode.RELATIVE, 0.5, 0.5);
         settingIcon.setFitWidth(UI_HEIGHT);

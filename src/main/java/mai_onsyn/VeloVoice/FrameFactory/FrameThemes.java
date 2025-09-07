@@ -4,10 +4,9 @@ import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import mai_onsyn.AnimeFX.ResourceManager;
 import mai_onsyn.AnimeFX.Styles.*;
 import mai_onsyn.AnimeFX.Utls.Toolkit;
-import mai_onsyn.VeloVoice.App.Resource;
+import mai_onsyn.VeloVoice.App.ResourceManager;
 
 import static mai_onsyn.VeloVoice.App.Constants.UI_HEIGHT;
 import static mai_onsyn.VeloVoice.App.Runtime.themeManager;
@@ -47,8 +46,8 @@ public class FrameThemes {
         MAIN_TEXT_COLOR = darkMode ? Color.WHITE : Color.BLACK;
 
         Platform.runLater(() -> {
+            mai_onsyn.AnimeFX.ResourceManager.grayResources.forEach((r) -> Toolkit.adjustImageColor(r, MAIN_TEXT_COLOR));
             ResourceManager.grayResources.forEach((r) -> Toolkit.adjustImageColor(r, MAIN_TEXT_COLOR));
-            Resource.grayResources.forEach((r) -> Toolkit.adjustImageColor(r, MAIN_TEXT_COLOR));
         });
 
         MODULE_BASE_COLOR = darkMode ? Color.gray(0.12, 0.5) : Color.gray(1, 0.6);
@@ -779,7 +778,7 @@ public class FrameThemes {
             return new AXTreeItemStyle() {
                 @Override
                 public Image getIcon() {
-                    return ResourceManager.fork;
+                    return mai_onsyn.AnimeFX.ResourceManager.fork;
                 }
 
                 @Override
@@ -869,7 +868,7 @@ public class FrameThemes {
             return new AXTreeItemStyle() {
                 @Override
                 public Image getIcon() {
-                    return ResourceManager.folder;
+                    return mai_onsyn.AnimeFX.ResourceManager.folder;
                 }
 
                 @Override
@@ -959,7 +958,7 @@ public class FrameThemes {
             return new AXTreeItemStyle() {
                 @Override
                 public Image getIcon() {
-                    return ResourceManager.file;
+                    return mai_onsyn.AnimeFX.ResourceManager.file;
                 }
 
                 @Override
@@ -1319,7 +1318,7 @@ public class FrameThemes {
 
         @Override
         public Image getSignalImage() {
-            return ResourceManager.triangle;
+            return mai_onsyn.AnimeFX.ResourceManager.triangle;
         }
 
         @Override

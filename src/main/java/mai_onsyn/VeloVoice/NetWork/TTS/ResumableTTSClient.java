@@ -13,7 +13,8 @@ public class ResumableTTSClient implements TTSClient {
 
     public enum ClientType {
         EDGE("Edge TTS"),
-        NATURAL("Natural TTS");
+        NATURAL("Natural TTS"),
+        MULTI("Multi TTS");
 
         private final String name;
 
@@ -31,6 +32,7 @@ public class ResumableTTSClient implements TTSClient {
             return switch (type) {
                 case EDGE -> new EdgeTTSClient();
                 case NATURAL -> new NaturalTTSClient();
+                case MULTI -> new MultiTTSClient();
             };
         }
     }

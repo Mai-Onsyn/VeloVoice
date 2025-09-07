@@ -88,6 +88,7 @@ public class AXChoiceBox extends AXButton {
 
     public void removeItem(AXButton item) {
         itemPane.removeItem(item);
+        //Platform.runLater(() -> buttonGroup.remove(item));
     }
 
     public void showItem(AXButton item) {

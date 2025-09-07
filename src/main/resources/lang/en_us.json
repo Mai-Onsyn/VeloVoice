@@ -49,6 +49,18 @@
 					"disabled":"You must install jacob-1.21-x64.dll to use this feature"
 				}
 			},
+			"multi": {
+				"label":{
+					"url": "URL",
+					"voice_model": "Voice Model",
+					"voice_rate": "Voice Rate",
+					"voice_volume": "Voice Volume",
+					"voice_pitch": "Voice Pitch"
+				},
+				"input":{
+					"url": "Enter a valid URL"
+				}
+			},
 			"general":{
 				"label":{
 					"tts_engine":"TTS Engine",
@@ -357,6 +369,19 @@
 		"epub":{
 			"info":{
 				"not_a_epub_file":"{} is not a valid epub file"
+			}
+		},
+		"multi_tts_client": {
+			"warn": {
+				"get_voice_list_failed": "Error while getting voice models: {}"
+			},
+			"error": {
+				"url_error": "URL \"{}\" is invalid"
+			}
+		},
+		"tts_factory": {
+			"info": {
+				"flushed": "MultiTTS model has been flushed"
 			}
 		}
 	}

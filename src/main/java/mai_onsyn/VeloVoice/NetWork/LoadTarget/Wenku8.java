@@ -9,8 +9,7 @@ import mai_onsyn.AnimeFX.Module.AXTreeView;
 import mai_onsyn.AnimeFX.Utls.AXDataTreeItem;
 import mai_onsyn.AnimeFX.Utls.AXTreeItem;
 import mai_onsyn.VeloVoice.App.Config;
-import mai_onsyn.VeloVoice.App.Resource;
-import mai_onsyn.VeloVoice.App.Runtime;
+import mai_onsyn.VeloVoice.App.ResourceManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jsoup.nodes.Document;
@@ -54,7 +53,7 @@ public class Wenku8 extends Source {
 
     @Override
     protected Image getIcon() {
-        return Resource.icon_wenku8;
+        return ResourceManager.icon_wenku8;
     }
 
     @Override

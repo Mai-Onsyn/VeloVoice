@@ -99,10 +99,10 @@ public class TTSPool {
                         try {
                             Sentence sentence = client.process(text);
                             resultPool.put(thisIndex, sentence);
-                        } catch (Exception e) {
+                        } catch (Throwable e) {
                             log.warn(I18N.getCurrentValue("log.tts_pool.warn.thread_failed"), text, e);
 
-                            log.warn(I18N.getCurrentValue("log.tts_pool.warn.thread_shutdown"), e.getMessage(), e);
+                            log.warn(I18N.getCurrentValue("log.tts_pool.warn.thread_shutdown"), e.getMessage());
 
                             aliveThreads.getAndDecrement();
                             if (aliveThreads.get() == 0) {

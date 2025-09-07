@@ -36,6 +36,7 @@ public class Runtime {
     public static final Config config = new Config();
     public static final Config edgeTTSConfig = new Config();
     public static final Config naturalTTSConfig = new Config();
+    public static final Config multiTTSConfig = new Config();
     public static final Config textConfig = new Config();
     public static final Config voiceConfig = new Config();
     public static final Config windowConfig = new Config();
@@ -66,7 +67,17 @@ public class Runtime {
             naturalTTSConfig.registerDouble("VoiceVolume", 1.0);
             naturalTTSConfig.registerInteger("ThreadCount", 16);
         }
-        
+
+        config.registerConfig("MultiTTS", multiTTSConfig);
+        {
+            multiTTSConfig.registerString("Url", "192.168.0.13:8774");
+            multiTTSConfig.registerString("VoiceModel", "Default");
+            multiTTSConfig.registerInteger("VoiceRate", 50);
+            multiTTSConfig.registerInteger("VoiceVolume", 50);
+            multiTTSConfig.registerInteger("VoicePitch", 50);
+        }
+
+
         config.registerConfig("Text", textConfig);
         {
             textConfig.registerInteger("SplitThresholds", 512);

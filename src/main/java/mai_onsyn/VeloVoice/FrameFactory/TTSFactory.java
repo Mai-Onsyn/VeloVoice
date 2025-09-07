@@ -1,7 +1,6 @@
 package mai_onsyn.VeloVoice.FrameFactory;
 
 import com.alibaba.fastjson.JSONObject;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -16,12 +15,9 @@ import mai_onsyn.AnimeFX.Utls.AXIntegerTextField;
 import mai_onsyn.AnimeFX.Utls.AXLangLabel;
 import mai_onsyn.AnimeFX.layout.AutoPane;
 import mai_onsyn.VeloVoice.App.Config;
-import mai_onsyn.VeloVoice.App.Resource;
+import mai_onsyn.VeloVoice.App.ResourceManager;
 import mai_onsyn.VeloVoice.Audio.AudioPlayer;
-import mai_onsyn.VeloVoice.NetWork.TTS.EdgeTTSClient;
-import mai_onsyn.VeloVoice.NetWork.TTS.EdgeTTSVoice;
-import mai_onsyn.VeloVoice.NetWork.TTS.NaturalTTSClient;
-import mai_onsyn.VeloVoice.NetWork.TTS.ResumableTTSClient;
+import mai_onsyn.VeloVoice.NetWork.TTS.*;
 import mai_onsyn.VeloVoice.Text.Sentence;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,7 +26,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static mai_onsyn.VeloVoice.App.Constants.*;
 import static mai_onsyn.VeloVoice.App.Constants.LANG_NAME_TO_HEADCODE_MAPPING;
@@ -45,22 +41,12 @@ public class TTSFactory {
 
         Config.ConfigBox ttsArea = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
 
-        Config.ConfigItem ttsEngine = config.genChooseStringItem("TTSEngine", List.of("Edge TTS", "Natural TTS"));
+        Config.ConfigItem ttsEngine = config.genChooseStringItem("TTSEngine", availableTTSNames);
         ttsEngine.setI18NKey("main.tts.general.label.tts_engine");
         I18N.registerComponent(ttsEngine);
         ttsArea.addConfigItem(ttsEngine);
 
-        List<Config.ConfigBox> ttsBoxList = new ArrayList<>();
-
-        //Edge TTS
-        Config.ConfigBox edgeTTSBox = getEdgeTTSBox();
-        edgeTTSBox.setUserData("Edge TTS");
-        ttsBoxList.add(edgeTTSBox);
-
-        //Natural TTS
-        Config.ConfigBox naturalTTSBox = getNaturalTTSBox();
-        naturalTTSBox.setUserData("Natural TTS");
-        ttsBoxList.add(naturalTTSBox);
+        List<Config.ConfigBox> ttsBoxList = getTTSBoxList();
 
         for (Config.ConfigBox box : ttsBoxList) {
             if (config.getString("TTSEngine").equals(box.getUserData())) {
@@ -97,6 +83,26 @@ public class TTSFactory {
         ttsArea.addConfigItem(audioFolderItem);
 
         return ttsArea;
+    }
+
+    private static List<Config.ConfigBox> getTTSBoxList() {
+        List<Config.ConfigBox> ttsBoxList = new ArrayList<>();
+
+        //Edge TTS
+        Config.ConfigBox edgeTTSBox = getEdgeTTSBox();
+        edgeTTSBox.setUserData("Edge TTS");
+        ttsBoxList.add(edgeTTSBox);
+
+        //Natural TTS
+        Config.ConfigBox naturalTTSBox = getNaturalTTSBox();
+        naturalTTSBox.setUserData("Natural TTS");
+        ttsBoxList.add(naturalTTSBox);
+
+        //Multi TTS
+        Config.ConfigBox multiTTSBox = getMultiTTSBox();
+        multiTTSBox.setUserData("Multi TTS");
+        ttsBoxList.add(multiTTSBox);
+        return ttsBoxList;
     }
 
     private static Config.ConfigBox getEdgeTTSBox() {
@@ -241,6 +247,101 @@ public class TTSFactory {
         return naturalTTSBox;
     }
 
+    private static Config.ConfigBox getMultiTTSBox() {
+        Config.ConfigBox multiTTSBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
+
+        List<String> voices = MultiTTSClient.getVoiceIDs();
+        voices.addFirst("Default");
+        Config.ConfigItem url = multiTTSConfig.genInputStringItem("Url", "main.tts.multi.input.url");
+        Config.ConfigItem voiceModel = multiTTSConfig.genChooseStringItem("VoiceModel", voices);
+        Config.ConfigItem voiceRate = multiTTSConfig.genIntegerSlidItem("VoiceRate", 0, 100, 1);
+        Config.ConfigItem voiceVolume = multiTTSConfig.genIntegerSlidItem("VoiceVolume", 0, 100, 1);
+        Config.ConfigItem voicePitch = multiTTSConfig.genIntegerSlidItem("VoicePitch", 0, 100, 1);
+        addPreviewButton(voiceModel);
+        url.setI18NKey("main.tts.multi.label.url");
+        voiceModel.setI18NKey("main.tts.multi.label.voice_model");
+        voiceRate.setI18NKey("main.tts.multi.label.voice_rate");
+        voiceVolume.setI18NKey("main.tts.multi.label.voice_volume");
+        voicePitch.setI18NKey("main.tts.multi.label.voice_pitch");
+        I18N.registerComponents(url, voiceModel, voiceRate, voiceVolume, voicePitch);
+
+        //UI implements
+        {
+            ((AXChoiceBox) voiceModel.getContent()).getButtonGroup().addOnSelectChangedListener((o, ov, nv) -> MultiTTSClient.setVoiceModel(nv.getText()));
+
+            ((AXIntegerTextField) voiceRate.getContent().getChildren().get(1)).valueProperty().addListener((o, ov, nv) -> MultiTTSClient.setVoiceRate(nv.intValue()));
+
+            ((AXIntegerTextField) voiceVolume.getContent().getChildren().get(1)).valueProperty().addListener((o, ov, nv) -> MultiTTSClient.setVoiceVolume(nv.intValue()));
+
+            ((AXIntegerTextField) voicePitch.getContent().getChildren().get(1)).valueProperty().addListener((o, ov, nv) -> MultiTTSClient.setVoicePitch(nv.intValue()));
+        }
+
+        //flush model button
+        {
+            AXButton flushButton = new AXButton();
+            ImageView icon = new ImageView(ResourceManager.flush);
+            icon.setFitWidth(UI_HEIGHT * 0.8);
+            icon.setFitHeight(UI_HEIGHT * 0.8);
+            flushButton.getChildren().add(icon);
+            flushButton.setPosition(icon, AutoPane.AlignmentMode.CENTER, AutoPane.LocateMode.RELATIVE, 0.5, 0.5);
+            flushButton.setTheme(BUTTON);
+            themeManager.register(flushButton);
+
+            url.setPosition(url.getContent(), true, false, false, false, 0.4, UI_HEIGHT * 2, 0, 0);
+            url.getChildren().add(flushButton);
+            url.setPosition(flushButton, false, UI_HEIGHT * 1.4, 0, 0, 0);
+            url.flipRelativeMode(flushButton, AutoPane.Motion.LEFT);
+
+            AXChoiceBox modelChoiceBox = (AXChoiceBox) voiceModel.getContent();
+            flushButton.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+                if (e.getButton() == MouseButton.PRIMARY) {
+                    List<AXButton> oldItemList = modelChoiceBox.getButtonGroup().getButtonList();
+                    List<String> oldOptions = oldItemList.stream().map(b -> (String) b.getUserData()).toList();
+                    List<AXButton> oldExclusions = new ArrayList<>();
+
+                    List<String> options = MultiTTSClient.getVoiceIDs();
+                    options.addFirst("Default");
+                    for (String option : options) {
+                        if (oldOptions.contains(option)) {
+                            List<AXButton> buttonList = modelChoiceBox.getButtonGroup().getButtonList();
+                            AXButton targetButton = null;
+                            for (AXButton button : buttonList) {
+                                if (button.getUserData().equals(option)) {
+                                    targetButton = button;
+                                    break;
+                                }
+                            }
+                            if (!modelChoiceBox.containsItem(targetButton)) modelChoiceBox.showItem(targetButton);
+                            continue;
+                        }
+                        AXButton item = modelChoiceBox.createItem();
+                        item.setUserData(option);
+                        item.setText(option);
+                        item.setOnMouseClicked(event -> {
+                            multiTTSConfig.setString("VoiceModel", option);
+                            modelChoiceBox.getTextLabel().setText(item.getText());
+                        });
+                    }
+                    multiTTSConfig.setString("VoiceModel", "Default");
+                    modelChoiceBox.getTextLabel().setText("Default");
+
+                    oldItemList.forEach(b -> {
+                        if (!options.contains((String) b.getUserData())) oldExclusions.add(b);
+                    });
+                    oldExclusions.forEach(modelChoiceBox::removeItem);
+
+                    modelChoiceBox.getButtonGroup().selectButton(modelChoiceBox.getButtonGroup().getButtonList().getFirst());
+
+                    log.info(I18N.getCurrentValue("log.tts_factory.info.flushed"));
+                }
+            });
+        }
+
+
+        multiTTSBox.addConfigItem(url, voiceModel, voiceRate, voiceVolume, voicePitch);
+        return multiTTSBox;
+    }
+
     private static void showEdgeTTSModel(AXChoiceBox box, String lang) {
         box.getButtonGroup().getButtonList().forEach(button -> {
             String name = button.getText();
@@ -254,10 +355,9 @@ public class TTSFactory {
         AXChoiceBox modelChoiceBox = (AXChoiceBox) modelItem.getContent();
 
         // 按钮图标和样式配置
-        ImageView horn = new ImageView(Resource.horn);
+        ImageView horn = new ImageView(ResourceManager.horn);
         previewButton.getChildren().add(horn);
-        previewButton.setPosition(horn, AutoPane.AlignmentMode.CENTER,
-                AutoPane.LocateMode.RELATIVE, 0.5, 0.5);
+        previewButton.setPosition(horn, AutoPane.AlignmentMode.CENTER, AutoPane.LocateMode.RELATIVE, 0.5, 0.5);
         horn.setFitWidth(UI_HEIGHT * 0.8);
         horn.setFitHeight(UI_HEIGHT * 0.8);
         previewButton.setTheme(BUTTON);
