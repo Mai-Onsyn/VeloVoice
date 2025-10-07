@@ -18,7 +18,7 @@ module mai_onsyn {
     requires org.java_websocket;
     requires srt.library;
     requires epublib.core;
-    requires okhttp3;
+    requires java.net.http;
     //requires annotations;
 
     opens mai_onsyn.AnimeFX.Module to org.apache.logging.log4j.core;

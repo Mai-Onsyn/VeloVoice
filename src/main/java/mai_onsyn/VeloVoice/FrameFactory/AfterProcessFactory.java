@@ -13,7 +13,7 @@ public class AfterProcessFactory {
     static Config.ConfigBox mkAfterProcessArea() {
         Config.ConfigBox configBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
 
-        configBox.getChildren().addAll(getSRTBox(), getShiftBox(), getSectionBox());
+        configBox.getChildren().addAll(getSRTBox(), getShiftBox(), getSectionBox(), getClipBox());
 
         return configBox;
     }
@@ -23,11 +23,13 @@ public class AfterProcessFactory {
         srtBox.getChildren().add(mkTitleBar("main.audio.srt.title"));
 
         Config.ConfigItem switchItem = voiceConfig.genSwitchItem("SaveSRT");
+        Config.ConfigItem deleteSRTEndSymbol = voiceConfig.genSwitchItem("DeleteSRTEndSymbol");
         switchItem.setI18NKey("main.audio.general.switch");
-        I18N.registerComponent(switchItem);
+        deleteSRTEndSymbol.setI18NKey("main.audio.srt.label.delete_end_symbol");
+        I18N.registerComponents(switchItem, deleteSRTEndSymbol);
 
 
-        srtBox.addConfigItem(switchItem);
+        srtBox.addConfigItem(switchItem, deleteSRTEndSymbol);
 
         return srtBox;
     }
@@ -67,6 +69,23 @@ public class AfterProcessFactory {
         sectionBox.addConfigItem(switchItem, lengthItem, readHeadItem, unitPatternItem);
 
         return sectionBox;
+    }
+
+    private static Config.ConfigBox getClipBox() {
+        Config.ConfigBox cutBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
+        cutBox.addConfigItem(mkTitleBar("main.audio.clip.title"));
+
+        Config.ConfigItem switchItem = voiceConfig.genSwitchItem("ClipAudio");
+        Config.ConfigItem startClipMillis = voiceConfig.genIntegerSlidItem("StartClipMillis", 0, 1000, 10);
+        Config.ConfigItem endClipMillis = voiceConfig.genIntegerSlidItem("EndClipMillis", 0, 1000, 10);
+        switchItem.setI18NKey("main.audio.general.switch");
+        startClipMillis.setI18NKey("main.audio.clip.label.start");
+        endClipMillis.setI18NKey("main.audio.clip.label.end");
+        I18N.registerComponents(switchItem, startClipMillis, endClipMillis);
+
+        cutBox.addConfigItem(switchItem, startClipMillis, endClipMillis);
+
+        return cutBox;
     }
 
 }

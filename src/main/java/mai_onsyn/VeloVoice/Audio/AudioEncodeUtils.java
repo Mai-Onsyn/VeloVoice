@@ -57,7 +57,7 @@ public class AudioEncodeUtils {
         return out.getData();
     }
 
-    private static byte[] decodeMp3ToPcm(byte[] mp3Data) {
+    public static byte[] decodeMp3ToPcm(byte[] mp3Data) {
         // 准备输入流和输出流
         ByteArrayOutputStream pcmOutputStream = new ByteArrayOutputStream();
         InputStream inputStream = new ByteArrayInputStream(mp3Data);
@@ -88,6 +88,39 @@ public class AudioEncodeUtils {
         }
 
         return pcmOutputStream.toByteArray();
+    }
+
+    public static byte[] wavRedicode(WavInfo wav, int targetRate, int targetBPS, int targetChannels) throws IOException {
+
+        // 创建原始音频格式
+        javax.sound.sampled.AudioFormat originalFormat = new javax.sound.sampled.AudioFormat(wav.sampleRate, wav.bitsPerSample, wav.channels, true, false);
+
+        // 创建目标音频格式
+        javax.sound.sampled.AudioFormat targetFormat = new javax.sound.sampled.AudioFormat(targetRate, targetBPS, targetChannels, true, false);
+
+        // 将字节数组转换为音频输入流
+        ByteArrayInputStream bais = new ByteArrayInputStream(wav.audioData);
+        AudioInputStream originalStream = new AudioInputStream(bais, originalFormat,
+                wav.audioData.length / (targetBPS / 8));
+
+        // 使用AudioSystem进行采样率转换
+        AudioInputStream convertedStream = AudioSystem.getAudioInputStream(targetFormat, originalStream);
+
+        // 将转换后的流读回字节数组
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[4096];
+        int bytesRead;
+
+        while ((bytesRead = convertedStream.read(buffer)) != -1) {
+            baos.write(buffer, 0, bytesRead);
+        }
+
+        // 关闭流
+        originalStream.close();
+        convertedStream.close();
+        baos.close();
+
+        return baos.toByteArray();
     }
 
     // 将 int 型样本数组转为小端序 byte[]
@@ -185,6 +218,15 @@ public class AudioEncodeUtils {
         public int bitsPerSample;
         public int channels;
         public byte[] audioData;
+
+        public WavInfo(int sampleRate, int bitsPerSample, int channels, byte[] audioData) {
+            this.sampleRate = sampleRate;
+            this.bitsPerSample = bitsPerSample;
+            this.channels = channels;
+            this.audioData = audioData;
+        }
+
+        public WavInfo() {}
 
         @Override
         public String toString() {

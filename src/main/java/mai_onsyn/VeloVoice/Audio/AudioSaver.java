@@ -7,6 +7,7 @@ import com.jonathanedgecombe.srt.Timestamp;
 import mai_onsyn.AnimeFX.I18N;
 import mai_onsyn.VeloVoice.NetWork.TTS.ResumableTTSClient;
 import mai_onsyn.VeloVoice.Text.Sentence;
+import mai_onsyn.VeloVoice.Text.TextUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,13 +18,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static mai_onsyn.VeloVoice.App.Runtime.textConfig;
 import static mai_onsyn.VeloVoice.App.Runtime.voiceConfig;
 
 public class AudioSaver {
 
-    private static final int MP3_24KHZ_16BIT_UNIT_DURATION = 6;   //mp3 byte length of 1 millisecond
-    private static final int WAV_24KHZ_16BIT_UNIT_DURATION = 48;
-    private static final int WAV_22KHZ_16BIT_UNIT_DURATION = 44;
+    public static final int MP3_24KHZ_16BIT_UNIT_DURATION = 6;   //mp3 byte length of 1 millisecond
+    public static final int WAV_24KHZ_16BIT_UNIT_DURATION = 48;
+    public static final int WAV_22KHZ_16BIT_UNIT_DURATION = 44;
     private static final String illegalChars = "[\\\\/:*?\"<>|]";
 
     private static final Logger log = LogManager.getLogger(AudioSaver.class);
@@ -109,7 +111,8 @@ public class AudioSaver {
                 final int unitDuration = getUnitDuration(sentence.audioFormat());
                 Subtitle subtitle = new Subtitle(new Timestamp(formatDuration(tick / unitDuration)), new Timestamp(formatDuration((tick+=sentence.audioByteArray().length) / unitDuration)));
 
-                subtitle.addLine(sentence.text());
+                if (voiceConfig.getBoolean("DeleteSRTEndSymbol")) subtitle.addLine(TextUtil.deleteEndSymbol(sentence.text()));
+                else subtitle.addLine(sentence.text());
 
                 srt.addSubtitle(subtitle);
             }

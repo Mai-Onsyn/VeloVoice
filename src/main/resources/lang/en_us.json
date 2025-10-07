@@ -131,7 +131,10 @@
 				"switch":"Enable"
 			},
 			"srt":{
-				"title":"SubRip Text"
+				"title":"SubRip Text",
+                "label":{
+                    "delete_end_symbol":"Delete End Symbol"
+                }
 			},
 			"shift":{
 				"title":"Shift",
@@ -150,7 +153,14 @@
 				"input":{
 					"unit_pattern":"string format"
 				}
-			}
+			},
+            "clip": {
+                "title": "Clip",
+                "label": {
+                  "start": "Start",
+                  "end": "End"
+                }
+            }
 		},
 		"prompt":{
 			"text_area":{

@@ -98,6 +98,7 @@ public class Runtime {
         config.registerConfig("Voice", voiceConfig);
         {
             voiceConfig.registerBoolean("SaveSRT", false);
+            voiceConfig.registerBoolean("DeleteSRTEndSymbol", false);
             voiceConfig.registerBoolean("EnableVoiceShift", false);
             voiceConfig.registerDouble("VoiceRate", 1.0);
             voiceConfig.registerDouble("VoicePitch", 1.0);
@@ -105,6 +106,9 @@ public class Runtime {
             voiceConfig.registerInteger("SectionLength", 20);
             voiceConfig.registerBoolean("SectionReadHead", true);
             voiceConfig.registerString("SectionUnitPattern", "_p%02d");
+            voiceConfig.registerBoolean("ClipAudio", false);
+            voiceConfig.registerInteger("StartClipMillis", 0);
+            voiceConfig.registerInteger("EndClipMillis", 0);
         }
         config.registerConfig("Window", windowConfig);
         {

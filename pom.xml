@@ -6,7 +6,7 @@
 
     <groupId>mai_onsyn.VeloVoice</groupId>
     <artifactId>VeloVoice</artifactId>
-    <version>1.2</version>
+    <version>1.2.1</version>
 
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
@@ -126,12 +126,6 @@
             <version>1.21</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/jacob-1.21/jacob.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>4.12.0</version>
         </dependency>
     </dependencies>
 

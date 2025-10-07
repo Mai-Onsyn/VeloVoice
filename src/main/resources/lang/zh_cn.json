@@ -131,7 +131,10 @@
 				"switch":"启用"
 			},
 			"srt":{
-				"title":"字幕"
+				"title":"字幕",
+				"label":{
+					"delete_end_symbol":"删除句尾切片字符"
+				}
 			},
 			"shift":{
 				"title":"音频调整",
@@ -149,6 +152,13 @@
 				},
 				"input":{
 					"unit_pattern":"输入后缀格式"
+				}
+			},
+			"clip":{
+				"title":"音频剪切",
+				"label":{
+					"start":"起始剪切时长(毫秒)",
+					"end":"结束剪切时长(毫秒)"
 				}
 			}
 		},
@@ -371,17 +381,17 @@
 				"not_a_epub_file":"\"{}\" 不是一个EPUB文件"
 			}
 		},
-		"multi_tts_client": {
-			"warn": {
-				"get_voice_list_failed": "加载模型列表失败: {}"
+		"multi_tts_client":{
+			"warn":{
+				"get_voice_list_failed":"加载模型列表失败: {}"
 			},
-			"error": {
-				"url_error": "\"{}\" 不是一个有效的URL"
+			"error":{
+				"url_error":"\"{}\" 不是一个有效的URL"
 			}
 		},
-		"tts_factory": {
-			"info": {
-				"flushed": "已刷新MultiTTS模型"
+		"tts_factory":{
+			"info":{
+				"flushed":"已刷新MultiTTS模型"
 			}
 		}
 	}

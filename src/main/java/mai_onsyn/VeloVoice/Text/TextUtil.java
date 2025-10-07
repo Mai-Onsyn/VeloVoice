@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Entities;
 import org.jsoup.parser.Parser;
 import org.mozilla.universalchardet.UniversalDetector;
 
@@ -197,6 +196,28 @@ public class TextUtil {
         }
 
         return doc.html();
+    }
+
+    public static String deleteEndSymbol(String s) {
+        char[] forceSplitChars = unescape(textConfig.getString("ForceSplitChars")).toCharArray();
+        char[] splitChars = unescape(textConfig.getString("SplitChars")).toCharArray();
+
+        List<Character> endSymbols = new ArrayList<>(forceSplitChars.length + splitChars.length);
+        for (char c : forceSplitChars) endSymbols.add(c);
+        for (char c : splitChars) {
+            if (!endSymbols.contains(c)) endSymbols.add(c);
+        }
+
+        String result = s;
+
+        for (Character endSymbol : endSymbols) {
+            if (s.endsWith(endSymbol.toString())) {
+                result = s.substring(0, s.length() - 1);
+                break;
+            }
+        }
+
+        return result;
     }
 
 
