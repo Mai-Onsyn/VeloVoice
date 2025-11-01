@@ -14,6 +14,7 @@ public class JsonFixer {
     public static void main(String[] args) {
         // 配置参数
         String folderPath = "D:\\Users\\Desktop\\Files\\Projects\\Java\\VeloVoice\\src\\main\\resources\\lang";
+//        LinkedHashSet<String> excludeFiles = new LinkedHashSet<>(List.of("lang_info.json"));
         LinkedHashSet<String> excludeFiles = new LinkedHashSet<>(List.of("lang_info.json", "ja_jp.json", "zh_tw.json"));
 
         // 1. 解析所有 JSON 文件 -> 扁平化 Map

@@ -90,7 +90,7 @@ public class AudioEncodeUtils {
         return pcmOutputStream.toByteArray();
     }
 
-    public static byte[] wavRedicode(WavInfo wav, int targetRate, int targetBPS, int targetChannels) throws IOException {
+    public static byte[] wavRedecode(WavInfo wav, int targetRate, int targetBPS, int targetChannels) throws IOException {
 
         // 创建原始音频格式
         javax.sound.sampled.AudioFormat originalFormat = new javax.sound.sampled.AudioFormat(wav.sampleRate, wav.bitsPerSample, wav.channels, true, false);

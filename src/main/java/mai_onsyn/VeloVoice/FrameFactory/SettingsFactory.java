@@ -126,8 +126,8 @@ public class SettingsFactory {
         Config.ConfigBox networkBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
         networkBox.getChildren().add(mkTitleBar("settings.net.title"));
 
-        Config.ConfigItem timeoutSeconds = config.genIntegerSlidItem("TimeoutSeconds", 1, 60, 1);
-        Config.ConfigItem maxRetries = config.genIntegerSlidItem("MaxRetries", 1, 10, 1);
+        Config.ConfigItem timeoutSeconds = config.genIntegerSlidItem("TimeoutSeconds", 1, 120, 1);
+        Config.ConfigItem maxRetries = config.genIntegerSlidItem("MaxRetries", 1, 15, 1);
 
         timeoutSeconds.setI18NKey("settings.net.label.timeout");
         maxRetries.setI18NKey("settings.net.label.max_retries");

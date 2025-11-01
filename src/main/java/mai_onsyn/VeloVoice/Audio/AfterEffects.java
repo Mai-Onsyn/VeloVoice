@@ -74,7 +74,7 @@ public class AfterEffects {
         for (Sentence sentence : source) {
             byte[] pcm = switch (sentence.audioFormat()) {
                 case MP3_24KHZ_16BIT -> AudioEncodeUtils.decodeMp3ToPcm(sentence.audioByteArray());
-                case WAV_22KHZ_16BIT -> AudioEncodeUtils.wavRedicode(new AudioEncodeUtils.WavInfo(22000, 16, 1, sentence.audioByteArray()), 24000, 16, 1);
+                case WAV_22KHZ_16BIT -> AudioEncodeUtils.wavRedecode(new AudioEncodeUtils.WavInfo(22000, 16, 1, sentence.audioByteArray()), 24000, 16, 1);
                 case WAV_24KHZ_16BIT -> sentence.audioByteArray();
             };
 

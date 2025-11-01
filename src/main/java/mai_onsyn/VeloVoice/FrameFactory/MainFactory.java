@@ -17,6 +17,7 @@ import mai_onsyn.AnimeFX.layout.AutoPane;
 import mai_onsyn.AnimeFX.layout.HDoubleSplitPane;
 import mai_onsyn.VeloVoice.App.Config;
 import mai_onsyn.VeloVoice.App.ResourceManager;
+import mai_onsyn.VeloVoice.NetWork.TTS.ResumableTTSClient;
 import mai_onsyn.VeloVoice.Text.TTS;
 import mai_onsyn.VeloVoice.Text.TextUtil;
 import org.apache.logging.log4j.LogManager;
@@ -254,7 +255,7 @@ public class MainFactory {
 
                     TTS_THREAD = Thread.ofVirtual().name("TTS-Main").start(() -> {
                         try {
-                            if (disableNaturalTTS) {
+                            if (CLIENT_TYPE == ResumableTTSClient.ClientType.NATURAL && disableNaturalTTS) {
                                 log.error(I18N.getCurrentValue("log.main_factory.error.natural_tts_disabled"));
                                 return;
                             }

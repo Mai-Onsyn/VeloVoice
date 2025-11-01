@@ -69,6 +69,37 @@
 				"input":{
 					"url":"输入有效的URL"
 				}
+			},
+			"gpt":{
+				"label":{
+					"url":"地址",
+					"text_lang":"文本语言",
+					"ref_audio_path":"参考音频路径",
+					"prompt_lang":"参考音频文本语言",
+					"prompt_text":"参考音频文本",
+					"top_k":"Top K",
+					"top_p":"Top P",
+					"temperature":"Temperature",
+					"text_split_method":"文本分割方法",
+					"batch_size":"批处理大小",
+					"batch_threshold":"批处理阈值",
+					"split_bucket":"分桶处理",
+					"speed_factor":"速度因子",
+					"fragment_interval":"片断间隔时长",
+					"seed":"种子",
+					"media_type":"音频格式",
+					"repetition_penalty":"重复惩罚",
+					"sample_steps":"采样步数",
+					"super_sampling":"超采样",
+					"advance":"高级"
+				},
+				"input":{
+					"url":"localhost:9880",
+					"ref_audio_path":"参考音频文件路径",
+					"prompt_text":"参考音频的文本",
+					"text_split_method":"必须为合法的方法",
+					"seed":"输入-1随机"
+				}
 			}
 		},
 		"text":{
@@ -106,9 +137,9 @@
 						"cover":"封面路径"
 					},
 					"input":{
-						"title":"epub标题",
-						"author":"epub作者",
-						"cover":"epub封面图片路径"
+						"title":"标题",
+						"author":"作者",
+						"cover":"封面图片路径"
 					}
 				}
 			},
@@ -221,6 +252,9 @@
 		},
 		"local_txt":{
 			"title":"编辑本地TXT文本解析规则"
+		},
+		"sovits_advance":{
+			"title":"高级设置"
 		}
 	},
 	"source":{

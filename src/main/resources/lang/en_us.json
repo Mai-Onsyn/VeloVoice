@@ -58,7 +58,38 @@
 					"voice_pitch": "Voice Pitch"
 				},
 				"input":{
-					"url": "Enter a valid URL"
+					"url": "enter a valid URL"
+				}
+			},
+			"gpt": {
+				"label":{
+					"url": "URL",
+					"text_lang": "Text Language",
+					"ref_audio_path": "Reference Audio Path",
+					"prompt_lang": "Prompt Language",
+					"prompt_text": "Prompt Text",
+					"top_k": "Top K",
+					"top_p": "Top P",
+					"temperature": "Temperature",
+					"text_split_method": "Text Split Method",
+					"batch_size": "Batch Size",
+					"batch_threshold": "Batch Threshold",
+					"split_bucket": "Split Bucket",
+					"speed_factor": "Speed Factor",
+					"fragment_interval": "Fragment Interval",
+					"seed": "Seed",
+					"media_type": "Media Type",
+					"repetition_penalty": "Repetition Penalty",
+					"sample_steps": "Sample Steps",
+					"super_sampling": "Super Sampling",
+					"advance": "Advance"
+				},
+				"input":{
+					"url": "localhost:9880",
+					"ref_audio_path": "path to your reference audio file",
+					"prompt_text": "text of your reference audio",
+					"text_split_method": "enter a valid text split method",
+					"seed": "type -1 to randomize"
 				}
 			},
 			"general":{
@@ -221,6 +252,9 @@
 		},
 		"local_txt":{
 			"title":"Edit Local TXT File Parse Rules"
+		},
+		"sovits_advance":{
+			"title":"Advance Settings"
 		}
 	},
 	"source":{

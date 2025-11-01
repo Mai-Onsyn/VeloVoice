@@ -14,7 +14,8 @@ public class ResumableTTSClient implements TTSClient {
     public enum ClientType {
         EDGE("Edge TTS"),
         NATURAL("Natural TTS"),
-        MULTI("Multi TTS");
+        MULTI("Multi TTS"),
+        GPT_SOVITS("GPT-SoVITS TTS");
 
         private final String name;
 
@@ -33,6 +34,7 @@ public class ResumableTTSClient implements TTSClient {
                 case EDGE -> new EdgeTTSClient();
                 case NATURAL -> new NaturalTTSClient();
                 case MULTI -> new MultiTTSClient();
+                case GPT_SOVITS -> new GPTSoVITSClient();
             };
         }
     }

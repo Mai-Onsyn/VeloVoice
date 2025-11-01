@@ -14,6 +14,7 @@ import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.*;
 
@@ -62,12 +63,12 @@ public class MultiTTSClient implements TTSClient {
         StringBuilder sb = new StringBuilder(url);
         if (!url.endsWith("/")) sb.append("/");
         sb.append("forward?");
-        sb.append("text=").append(URLEncoder.encode(s, java.nio.charset.StandardCharsets.UTF_8));
+        sb.append("text=").append(URLEncoder.encode(s, StandardCharsets.UTF_8));
         sb.append("&speed=").append(voiceRate);
         sb.append("&volume=").append(voiceVolume);
         sb.append("&pitch=").append(voicePitch);
         if (!Objects.equals(voiceModel, "Default")) {
-            sb.append("&voice=").append(URLEncoder.encode(voiceModel, java.nio.charset.StandardCharsets.UTF_8));
+            sb.append("&voice=").append(URLEncoder.encode(voiceModel, StandardCharsets.UTF_8));
         }
 
         HttpClient client = HttpClient.newBuilder()
@@ -90,7 +91,7 @@ public class MultiTTSClient implements TTSClient {
                     AudioEncodeUtils.AudioFormat.WAV_24KHZ_16BIT
             );
         } catch (Exception e) {
-            log.error("TTS request failed: {}", e.getMessage());
+            log.error("Multi TTS request failed: {}", e.getMessage());
             return null;
         }
     }

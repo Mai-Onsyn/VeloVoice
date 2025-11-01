@@ -30,7 +30,7 @@ public class Constants {
 
     public static final List<String> availableTTSNames = new ArrayList<>();
     static {    //在这里添加TTS引擎
-        availableTTSNames.addAll(List.of("Edge TTS", "Natural TTS", "Multi TTS"));
+        availableTTSNames.addAll(List.of("Edge TTS", "Natural TTS", "Multi TTS", "GPT-SoVITS TTS"));
     }
 
 

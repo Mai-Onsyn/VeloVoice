@@ -57,6 +57,49 @@
 				"input":{
 					"audio_folder":"輸入音訊檔案儲存路徑"
 				}
+			},
+			"multi":{
+				"label":{
+					"url":"URL",
+					"voice_model":"語音模型",
+					"voice_rate":"語音速率",
+					"voice_volume":"語音音量",
+					"voice_pitch":"語音音調"
+				},
+				"input":{
+					"url":"輸入有效URL"
+				}
+			},
+			"gpt":{
+				"label":{
+					"url":"URL",
+					"text_lang":"文本語言",
+					"ref_audio_path":"參考音頻路徑",
+					"prompt_lang":"參考音頻語言",
+					"prompt_text":"參考音頻文本",
+					"top_k":"Top K",
+					"top_p":"Top P",
+					"temperature":"Temperature",
+					"text_split_method":"文本分割方法",
+					"batch_size":"批次大小",
+					"batch_threshold":"批次閾值",
+					"split_bucket":"分割儲存桶",
+					"speed_factor":"速度因子",
+					"fragment_interval":"片段間隔",
+					"seed":"隨機種子",
+					"media_type":"媒體類型",
+					"repetition_penalty":"重複懲罰係數",
+					"sample_steps":"採樣步數",
+					"super_sampling":"超級採樣",
+					"advance":"進階設定"
+				},
+				"input":{
+					"url":"localhost:9880",
+					"ref_audio_path":"參考音頻檔案路徑",
+					"prompt_text":"參考音頻的文本內容",
+					"text_split_method":"有效的文本分割方法",
+					"seed":"-1表示隨機生成"
+				}
 			}
 		},
 		"text":{
@@ -73,7 +116,8 @@
 			"save":{
 				"title":"匯出",
 				"label":{
-					"method":"匯出方式"
+					"method":"匯出方式",
+					"save_selected":"僅匯出選取項目"
 				},
 				"choice":{
 					"method":{
@@ -84,6 +128,18 @@
 				"text_tree":{
 					"label":{
 						"encoding":"文字編碼方式"
+					}
+				},
+				"epub":{
+					"label":{
+						"title":"標題",
+						"author":"作者",
+						"cover":"封面路徑"
+					},
+					"input":{
+						"title":"標題",
+						"author":"作者",
+						"cover":"封面路徑"
 					}
 				}
 			},
@@ -106,7 +162,10 @@
 				"switch":"啟用"
 			},
 			"srt":{
-				"title":"字幕"
+				"title":"字幕",
+				"label":{
+					"delete_end_symbol":"刪除結束切片符號"
+				}
 			},
 			"shift":{
 				"title":"音訊調整",
@@ -124,6 +183,13 @@
 				},
 				"input":{
 					"unit_pattern":"輸入後綴格式"
+				}
+			},
+			"clip":{
+				"title":"裁剪",
+				"label":{
+					"start":"開始時間",
+					"end":"結束時間"
 				}
 			}
 		},
@@ -186,6 +252,9 @@
 		},
 		"local_txt":{
 			"title":"編輯本地TXT文字解析規則"
+		},
+		"sovits_advance":{
+			"title":"高級設定"
 		}
 	},
 	"source":{
@@ -224,7 +293,8 @@
 		"epub":{
 			"name":"本地Epub檔案",
 			"label":{
-				"parse_method":"解析方法"
+				"parse_method":"解析方法",
+				"mark_title":"加入標題"
 			}
 		}
 	},
@@ -291,11 +361,13 @@
 			"error":{
 				"no_select":"未選擇目標",
 				"load_failed":"從 \"{}\" 載入文本失敗",
-				"no_such_file_or_directory": "找不到文件或目錄: {}"
+				"no_such_file_or_directory":"找不到文件或目錄: {}",
+				"save_failed":"匯出EPUB檔案失敗：{}"
 			},
 			"info":{
 				"load_success":"成功從 \"{}\" 載入文本",
-				"load_interrupted":"文本載入被用戶中斷"
+				"load_interrupted":"文本載入被用戶中斷",
+				"save_success":"成功匯出EPUB檔案：{}"
 			}
 		},
 		"text_util":{
@@ -341,6 +413,19 @@
 		"epub":{
 			"info":{
 				"not_a_epub_file":"\"{}\" 並非EPUB檔案"
+			}
+		},
+		"multi_tts_client":{
+			"warn":{
+				"get_voice_list_failed":"取得語音模型時發生錯誤：{}"
+			},
+			"error":{
+				"url_error":"URL「{}」無效"
+			}
+		},
+		"tts_factory":{
+			"info":{
+				"flushed":"MultiTTS模型已刷新"
 			}
 		}
 	}

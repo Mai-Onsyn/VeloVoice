@@ -57,6 +57,49 @@
 				"input":{
 					"audio_folder":"音声ファイル保存パス"
 				}
+			},
+			"multi":{
+				"label":{
+					"url":"URL",
+					"voice_model":"音声モデル",
+					"voice_rate":"音声速度",
+					"voice_volume":"音声音量",
+					"voice_pitch":"音声ピッチ"
+				},
+				"input":{
+					"url":"有効なURLを入力"
+				}
+			},
+			"gpt":{
+				"label":{
+					"url":"URL",
+					"text_lang":"テキスト言語",
+					"ref_audio_path":"参照音声パス",
+					"prompt_lang":"参照音声言語",
+					"prompt_text":"参照音声テキスト",
+					"top_k":"Top K",
+					"top_p":"Top P",
+					"temperature":"Temperature",
+					"text_split_method":"テキスト分割方法",
+					"batch_size":"バッチサイズ",
+					"batch_threshold":"バッチ閾値",
+					"split_bucket":"分割バケット",
+					"speed_factor":"速度係数",
+					"fragment_interval":"フラグメント間隔",
+					"seed":"シード値",
+					"media_type":"メディアタイプ",
+					"repetition_penalty":"反復ペナルティ",
+					"sample_steps":"サンプリングステップ数",
+					"super_sampling":"スーパーサンプリング",
+					"advance":"詳細設定"
+				},
+				"input":{
+					"url":"localhost:9880",
+					"ref_audio_path":"参照音声ファイルのパス",
+					"prompt_text":"参照音声のテキスト内容",
+					"text_split_method":"有効なテキスト分割方法",
+					"seed":"「-1」入力でランダム生成"
+				}
 			}
 		},
 		"text":{
@@ -73,7 +116,8 @@
 			"save":{
 				"title":"エクスポート",
 				"label":{
-					"method":"エクスポート方法"
+					"method":"エクスポート方法",
+					"save_selected":"選択項目のみエクスポート"
 				},
 				"choice":{
 					"method":{
@@ -84,6 +128,18 @@
 				"text_tree":{
 					"label":{
 						"encoding":"テキストエンコーディング"
+					}
+				},
+				"epub":{
+					"label":{
+						"title":"タイトル",
+						"author":"作者",
+						"cover":"カバーパス"
+					},
+					"input":{
+						"title":"タイトル",
+						"author":"作者",
+						"cover":"カバーパス"
 					}
 				}
 			},
@@ -106,7 +162,10 @@
 				"switch":"有効"
 			},
 			"srt":{
-				"title":"字幕"
+				"title":"字幕",
+				"label":{
+					"delete_end_symbol":"分割記号を削除"
+				}
 			},
 			"shift":{
 				"title":"音声調整",
@@ -124,6 +183,13 @@
 				},
 				"input":{
 					"unit_pattern":"接尾辞フォーマットを入力"
+				}
+			},
+			"clip":{
+				"title":"クリップ",
+				"label":{
+					"start":"開始時間",
+					"end":"終了時間"
 				}
 			}
 		},
@@ -186,6 +252,9 @@
 		},
 		"local_txt":{
 			"title":"ローカルTXT解析ルール編集"
+		},
+		"sovits_advance":{
+			"title":"高級設定"
 		}
 	},
 	"source":{
@@ -224,7 +293,8 @@
 		"epub":{
 			"name":"ローカルEpubファイル",
 			"label":{
-				"parse_method":"解析方法"
+				"parse_method":"解析方法",
+				"mark_title":"タイトルを追加"
 			}
 		}
 	},
@@ -291,11 +361,13 @@
 			"error":{
 				"no_select":"ターゲットが選択されていません",
 				"load_failed":"\"{}\" からテキストの読み込みに失敗しました",
-				"no_such_file_or_directory": "\"{}\"が見つかりません"
+				"no_such_file_or_directory":"\"{}\"が見つかりません",
+				"save_failed":"EPUBファイルのエクスポートに失敗しました：{}"
 			},
 			"info":{
 				"load_success":"{} からテキストを正常に読み込みました",
-				"load_interrupted":"テキストの読み込みが中断されました"
+				"load_interrupted":"テキストの読み込みが中断されました",
+				"save_success":"EPUBファイルを正常にエクスポートしました：{}"
 			}
 		},
 		"text_util":{
@@ -341,6 +413,19 @@
 		"epub":{
 			"info":{
 				"not_a_epub_file":"\"{}\"はEPUBファイルではありません"
+			}
+		},
+		"multi_tts_client":{
+			"warn":{
+				"get_voice_list_failed":"音声モデルの取得中にエラーが発生しました：{}"
+			},
+			"error":{
+				"url_error":"URL「{}」は無効です"
+			}
+		},
+		"tts_factory":{
+			"info":{
+				"flushed":"MultiTTSモデルがリフレッシュされました"
 			}
 		}
 	}

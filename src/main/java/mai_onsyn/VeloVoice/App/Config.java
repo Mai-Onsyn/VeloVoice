@@ -156,6 +156,23 @@ public class Config extends JSONObject {
         return new ConfigItem(key, textField, 0.4);
     }
 
+    public ConfigItem genInputIntegerItem(String key, int min, int max, String promptNameSpace) {
+        log.debug("Setup input integer for key: {}", key);
+        AXIntegerTextField textField = new AXIntegerTextField(min, max, getInteger(key));
+//        textField.setText(getString(key));
+        textField.valueProperty().addListener((o, ov, nv) -> {
+            setInteger(key, nv.intValue());
+        });
+
+        textField.setI18NKey(promptNameSpace);
+        I18N.registerComponent(textField);
+
+        textField.setTheme(TEXT_FIELD);
+        themeManager.register(textField);
+
+        return new ConfigItem(key, textField, 0.4);
+    }
+
     public ConfigItem genChooseStringItem(String key, List<String> options) {
         log.debug("Setup choose string for key: {}", key);
         AXChoiceBox choiceBox = new AXChoiceBox();

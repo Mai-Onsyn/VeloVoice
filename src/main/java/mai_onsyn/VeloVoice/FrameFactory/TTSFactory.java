@@ -2,9 +2,11 @@ package mai_onsyn.VeloVoice.FrameFactory;
 
 import com.alibaba.fastjson.JSONObject;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import mai_onsyn.AnimeFX.I18N;
 import mai_onsyn.AnimeFX.Module.AXButton;
 import mai_onsyn.AnimeFX.Module.AXChoiceBox;
@@ -13,9 +15,11 @@ import mai_onsyn.AnimeFX.Utls.AXButtonGroup;
 import mai_onsyn.AnimeFX.Utls.AXFloatTextField;
 import mai_onsyn.AnimeFX.Utls.AXIntegerTextField;
 import mai_onsyn.AnimeFX.Utls.AXLangLabel;
+import mai_onsyn.AnimeFX.layout.AXScrollPane;
 import mai_onsyn.AnimeFX.layout.AutoPane;
 import mai_onsyn.VeloVoice.App.Config;
 import mai_onsyn.VeloVoice.App.ResourceManager;
+import mai_onsyn.VeloVoice.App.WindowManager;
 import mai_onsyn.VeloVoice.Audio.AudioPlayer;
 import mai_onsyn.VeloVoice.NetWork.TTS.*;
 import mai_onsyn.VeloVoice.Text.Sentence;
@@ -101,6 +105,12 @@ public class TTSFactory {
         Config.ConfigBox multiTTSBox = getMultiTTSBox();
         multiTTSBox.setUserData("Multi TTS");
         ttsBoxList.add(multiTTSBox);
+
+        //GPT-SoVITS
+        Config.ConfigBox gptSoVITSBox = getGPTSoVITSBox();
+        gptSoVITSBox.setUserData("GPT-SoVITS TTS");
+        ttsBoxList.add(gptSoVITSBox);
+
         return ttsBoxList;
     }
 
@@ -339,6 +349,99 @@ public class TTSFactory {
 
         multiTTSBox.addConfigItem(url, voiceModel, voiceRate, voiceVolume, voicePitch);
         return multiTTSBox;
+    }
+
+    private static Config.ConfigBox getGPTSoVITSBox() {
+        Config.ConfigBox gptSoVITSBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
+
+        List<String> langs = List.of("zh", "ja", "en", "ko", "yue");
+        Config.ConfigItem url = gptSoVITSConfig.genInputStringItem("Url", "main.tts.gpt.input.url");
+        Config.ConfigItem textLang = gptSoVITSConfig.genChooseStringItem("TextLang", langs);
+        Config.ConfigItem refAudioPath = gptSoVITSConfig.genInputStringItem("RefAudioPath", "main.tts.gpt.input.ref_audio_path");
+        Config.ConfigItem promptLang = gptSoVITSConfig.genChooseStringItem("PromptLang", langs);
+        Config.ConfigItem promptText = gptSoVITSConfig.genInputStringItem("PromptText", "main.tts.gpt.input.prompt_text");
+
+        Config.ConfigItem topK = gptSoVITSConfig.genIntegerSlidItem("TopK", 1, 100, 1);
+        Config.ConfigItem topP = gptSoVITSConfig.genFloatSlidItem("TopP", 0, 1, 0.05);
+        Config.ConfigItem temperature = gptSoVITSConfig.genFloatSlidItem("Temperature", 0, 1, 0.05);
+
+        Config.ConfigItem textSplitMethod = gptSoVITSConfig.genInputStringItem("TextSplitMethod", "main.tts.gpt.input.text_split_method");
+        Config.ConfigItem batchSize = gptSoVITSConfig.genIntegerSlidItem("BatchSize", 1, 16, 1);
+        Config.ConfigItem batchThreshold = gptSoVITSConfig.genFloatSlidItem("BatchThreshold", 0.1, 1.0, 0.05);
+        Config.ConfigItem splitBucket = gptSoVITSConfig.genSwitchItem("SplitBucket");
+        Config.ConfigItem speedFactor = gptSoVITSConfig.genFloatSlidItem("SpeedFactor", 0.5, 2.0, 0.05);
+        Config.ConfigItem fragmentInterval = gptSoVITSConfig.genFloatSlidItem("FragmentInterval", 0.01, 1.0, 0.01);
+        Config.ConfigItem seed = gptSoVITSConfig.genInputIntegerItem("Seed", -2147483648, 2147483647, "main.tts.gpt.input.seed");
+        Config.ConfigItem mediaType = gptSoVITSConfig.genInputStringItem("MediaType", "Unsupported");
+        Config.ConfigItem repetitionPenalty = gptSoVITSConfig.genFloatSlidItem("RepetitionPenalty", 1.0, 2.0, 0.05);
+        Config.ConfigItem sampleSteps = gptSoVITSConfig.genIntegerSlidItem("SampleSteps", 16, 64, 16);
+        Config.ConfigItem superSampling = gptSoVITSConfig.genSwitchItem("SuperSampling");
+        mediaType.setDisable(true);
+
+        url.setI18NKey("main.tts.gpt.label.url");
+        textLang.setI18NKey("main.tts.gpt.label.text_lang");
+        refAudioPath.setI18NKey("main.tts.gpt.label.ref_audio_path");
+        promptLang.setI18NKey("main.tts.gpt.label.prompt_lang");
+        promptText.setI18NKey("main.tts.gpt.label.prompt_text");
+        topK.setI18NKey("main.tts.gpt.label.top_k");
+        topP.setI18NKey("main.tts.gpt.label.top_p");
+        temperature.setI18NKey("main.tts.gpt.label.temperature");
+        textSplitMethod.setI18NKey("main.tts.gpt.label.text_split_method");
+        batchSize.setI18NKey("main.tts.gpt.label.batch_size");
+        batchThreshold.setI18NKey("main.tts.gpt.label.batch_threshold");
+        splitBucket.setI18NKey("main.tts.gpt.label.split_bucket");
+        speedFactor.setI18NKey("main.tts.gpt.label.speed_factor");
+        fragmentInterval.setI18NKey("main.tts.gpt.label.fragment_interval");
+        seed.setI18NKey("main.tts.gpt.label.seed");
+        mediaType.setI18NKey("main.tts.gpt.label.media_type");
+        repetitionPenalty.setI18NKey("main.tts.gpt.label.repetition_penalty");
+        sampleSteps.setI18NKey("main.tts.gpt.label.sample_steps");
+        superSampling.setI18NKey("main.tts.gpt.label.super_sampling");
+
+
+        Stage advanceStage = new Stage();
+        {
+            advanceStage.setTitle("Settings");
+            advanceStage.getIcons().add(ResourceManager.icon);
+            WindowManager.register(advanceStage);
+            I18N.addOnChangedAction(() -> advanceStage.setTitle(I18N.getCurrentValue("stage.sovits_advance.title")));
+
+            AutoPane root = new AutoPane();
+            advanceStage.setScene(new Scene(root, 640, 480));
+            advanceStage.setMinWidth(540);
+            advanceStage.setMinHeight(300);
+
+            advanceStage.setOnShown(event -> root.requestFocus());
+
+            Config.ConfigBox advanceBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
+            AXScrollPane scrollPane = new AXScrollPane(advanceBox);
+            scrollPane.setFitToWidth(true);
+            advanceBox.addConfigItem(textSplitMethod, batchSize, batchThreshold, splitBucket, seed, mediaType, repetitionPenalty, sampleSteps, superSampling);
+            root.getChildren().add(scrollPane);
+            root.setPosition(scrollPane, false, 20, 20, 20, 20);
+        }
+        AXButton advanceButton = new AXButton();
+        Config.ConfigItem advance = new Config.ConfigItem("Advance", advanceButton, 0.4);
+        {
+            advanceButton.setTheme(BUTTON);
+            themeManager.register(advanceButton);
+            ImageView editIcon = new ImageView(ResourceManager.edit);
+            editIcon.setFitWidth(UI_HEIGHT * 0.8);
+            editIcon.setFitHeight(UI_HEIGHT * 0.8);
+            advanceButton.getChildren().add(editIcon);
+            advanceButton.setPosition(editIcon, AutoPane.AlignmentMode.CENTER, AutoPane.LocateMode.RELATIVE, 0.5, 0.5);
+            advanceButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    if (advanceStage.isShowing()) advanceStage.toFront();
+                    else advanceStage.show();
+                }
+            });
+        }
+
+        advance.setI18NKey("main.tts.gpt.label.advance");
+        I18N.registerComponents(url, textLang, refAudioPath, promptLang, promptText, topK, topP, temperature, textSplitMethod, batchSize, batchThreshold, splitBucket, speedFactor, fragmentInterval, seed, mediaType, repetitionPenalty, sampleSteps, superSampling, advance);
+        gptSoVITSBox.addConfigItem(url, textLang, refAudioPath, promptLang, promptText, speedFactor, fragmentInterval, topK, topP, temperature, advance);
+        return gptSoVITSBox;
     }
 
     private static void showEdgeTTSModel(AXChoiceBox box, String lang) {

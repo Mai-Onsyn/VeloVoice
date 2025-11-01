@@ -1,13 +1,15 @@
 # VeloVoice
+
 [English Version](README.md)
 
 ## 📢简介
 
 这是一个用于将txt格式小说按章节目录形式拆解为文件目录结构，或从网络上爬取小说存储为文件目录结构，并通过TTS引擎将章节文本转为mp3或wav语音文件。
-- <https://www.bilibili.com/video/BV15ketemETA>
-- <https://www.bilibili.com/video/BV159tbeqEDA>
 
-🎐此为正式版内容，若你需要查看测试版的内容，请访问[历史标签](<https://github.com/Mai-Onsyn/VeloVoice/tree/Test-v0.6.2>)
+- [https://www.bilibili.com/video/BV15ketemETA](https://www.bilibili.com/video/BV15ketemETA)
+- [https://www.bilibili.com/video/BV159tbeqEDA](https://www.bilibili.com/video/BV159tbeqEDA)
+
+🎐此为正式版内容，若你需要查看测试版的内容，请访问[历史标签](https://github.com/Mai-Onsyn/VeloVoice/tree/Test-v0.6.2)
 
 ## ✨特点
 
@@ -16,22 +18,31 @@
 - **泛用性高**：可手动操作的文本结构树，不仅是小说朗读，还可轻松用于其他文字转语音的相关需求
 
 ### 🧨支持的TTS引擎🧨
+
 - **Microsoft Edge TTS**: 默认引擎，可使用4线程
 - **Natural TTS SAPI**: 一个没有线程数量限制的本地TTS引擎，配置[NaturalVoiceSAPIAdapter](https://github.com/gexgd0419/NaturalVoiceSAPIAdapter)后可使用自然语音
 - **Multi TTS API**: 一个安卓软件的TTS API，虽然只能以单线程运行，但其灵活性使得它支持几乎所有的可白嫖TTS模型
+- **GPT-SoVITS TTS API**: 我要让你读我的小说！！！
+
 ### 🎫支持的文本加载源🎫
+
 - **TXT**: 加载本地的txt文件，使用正则表达式自定义文本的解析规则
 - **EPUB**: 支持加载文件夹或epub文件，可加载EPUB 2.0.1标准文件，或线性标题的EPUB 3.0标准文件
 - **[轻小说文库](https://www.wenku8.net/index.php)**: 好东西
 
 ## 🐵使用
 
-程序使用JDK22开发（使用了未命名变量），因此至少需要JDK22运行   
+程序使用JDK22开发（使用了未命名变量），因此至少需要JDK22运行
 zip压缩包中自带运行环境，以及各种运行库，可直接使用
 
 如果要使用本地SAPI（Natural TTS），需要在运行jar文件的jre的bin目录，或是C:/Windows/System32/中放入jacob-1.21-x64.dll，并重启软件
+如果无法运行Release的压缩包中的可执行文件，说明你的系统不支持Natural TTS。请删除"jre/bin/jacob-1.21-x64.dll"文件后，改用其他TTS引擎
+
+如果要使用GPT-SoVITS，你需要运行API v2服务。我无法确保非v2版本的API能够正常运行
+
 - [软件教程](https://github.com/Mai-Onsyn/VeloVoice/wiki)
 - [jacob获取](https://github.com/freemansoft/jacob-project/releases/tag/Root_B-1_21)
+- [GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS)
 
 ## ⚠注意事项⚠
 
@@ -42,6 +53,6 @@ zip压缩包中自带运行环境，以及各种运行库，可直接使用
 
 ## 🛴下载
 
-[Releases](https://github.com/Mai-Onsyn/VeloVoice/releases)  
-蓝奏：<https://wwpz.lanzouv.com/b0ukj384f> 密码：14ix  
-如果你心情很好或者有钞能力也可以选择去这里下载：<https://pan.baidu.com/s/1uAGJ3xO1p4pJuM41pKftfQ?pwd=jvav>
+[Releases](https://github.com/Mai-Onsyn/VeloVoice/releases)
+蓝奏：[https://wwpz.lanzouv.com/b0ukj384f](https://wwpz.lanzouv.com/b0ukj384f) 密码：14ix
+如果你心情很好或者有钞能力也可以选择去这里下载：[https://pan.baidu.com/s/1uAGJ3xO1p4pJuM41pKftfQ?pwd=jvav](https://pan.baidu.com/s/1uAGJ3xO1p4pJuM41pKftfQ?pwd=jvav)
