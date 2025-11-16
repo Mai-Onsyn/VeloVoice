@@ -51,7 +51,7 @@ public class GPTSoVITSClient implements TTSClient {
             );
         } catch (Exception e) {
             log.error("GPT-SoVITS TTS request failed: {}", e.getMessage());
-            return null;
+            throw e;
         }
     }
 

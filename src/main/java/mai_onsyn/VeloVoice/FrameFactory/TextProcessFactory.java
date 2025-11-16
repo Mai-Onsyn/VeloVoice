@@ -186,36 +186,7 @@ public class TextProcessFactory {
         AtomicReference<Thread> textLoadThread = new AtomicReference<>();
         startButton.setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.PRIMARY) {
-                if (isTextLoadRunning.get()) {
-                    textLoadThread.get().interrupt();
-                    isTextLoadRunning.set(false);
-                } else {
-                    isTextLoadRunning.set(true);
-
-                    Source source = sources.get(textConfig.getString("LoadSource"));
-                    AXDatableButtonGroup<AXTreeItem> group = treeView.getGroup();
-
-                    AXTreeItem target = (group.getSelectedButton() == null || group.getData(group.getSelectedButton()) instanceof AXDataTreeItem<?>) ? treeView.getRoot() : group.getData(group.getSelectedButton());
-
-                    textLoadThread.set(Thread.ofVirtual().name("Text-Load-Thread").start(() -> {
-                        String loadUri = textConfig.getString("LoadUri");
-
-                        try {
-                            if (!new File(loadUri).exists()) {
-                                log.error(I18N.getCurrentValue("log.text_process_factory.error.no_such_file_or_directory"), loadUri);
-                                return;
-                            }
-                            source.process(loadUri, target);
-                            log.info(I18N.getCurrentValue("log.text_process_factory.info.load_success"), loadUri);
-                        } catch (InterruptedException ie) {
-                            log.info(I18N.getCurrentValue("log.text_process_factory.info.load_interrupted"));
-                        } catch (Exception ex) {
-                            log.error(I18N.getCurrentValue("log.text_process_factory.error.load_failed"), loadUri, ex);
-                        } finally {
-                            isTextLoadRunning.set(false);
-                        }
-                    }));
-                }
+                loadText(textLoadThread, sources.get(textConfig.getString("LoadSource")), textConfig.getString("LoadUri"));
             }
         });
 
@@ -223,6 +194,39 @@ public class TextProcessFactory {
         loadBox.getChildren().addAll(sourceConfigBox, startButton);
 
         return loadBox;
+    }
+
+    static void loadText(AtomicReference<Thread> textLoadThread, Source source, String loadUri) {
+        if (isTextLoadRunning.get()) {
+            textLoadThread.get().interrupt();
+            isTextLoadRunning.set(false);
+        } else {
+            isTextLoadRunning.set(true);
+
+//            Source source = sources.get(textConfig.getString("LoadSource"));
+            AXDatableButtonGroup<AXTreeItem> group = treeView.getGroup();
+
+            AXTreeItem target = (group.getSelectedButton() == null || group.getData(group.getSelectedButton()) instanceof AXDataTreeItem<?>) ? treeView.getRoot() : group.getData(group.getSelectedButton());
+
+            textLoadThread.set(Thread.ofVirtual().name("Text-Load-Thread").start(() -> {
+//                String loadUri = textConfig.getString("LoadUri");
+
+                try {
+                    if (!new File(loadUri).exists()) {
+                        log.error(I18N.getCurrentValue("log.text_process_factory.error.no_such_file_or_directory"), loadUri);
+                        return;
+                    }
+                    source.process(loadUri, target);
+                    log.info(I18N.getCurrentValue("log.text_process_factory.info.load_success"), loadUri);
+                } catch (InterruptedException ie) {
+                    log.info(I18N.getCurrentValue("log.text_process_factory.info.load_interrupted"));
+                } catch (Exception ex) {
+                    log.error(I18N.getCurrentValue("log.text_process_factory.error.load_failed"), loadUri, ex);
+                } finally {
+                    isTextLoadRunning.set(false);
+                }
+            }));
+        }
     }
 
     private static Config.ConfigBox getSaveBox() {

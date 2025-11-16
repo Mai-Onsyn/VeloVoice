@@ -55,13 +55,14 @@ public class ResumableTTSClient implements TTSClient {
     public void establish() throws Exception {
         int retry = 0;
         int maxRetries = config.getInteger("MaxRetries");
-        while (retry++ <= maxRetries) {
+        while (retry < maxRetries) {
             try {
                 client.establish();
                 return;
             } catch (Exception e) {
                 log.debug("Failed to connect to EdgeTTS, retrying({})...", retry, e);
             }
+            retry++;
         }
         throw new TTSException("Out of retries: " + retry);
     }
@@ -75,7 +76,7 @@ public class ResumableTTSClient implements TTSClient {
     public Sentence process(String s) throws Exception {
         int retry = 0;
         int maxRetries = config.getInteger("MaxRetries");
-        while (retry++ <= maxRetries) {
+        while (retry < maxRetries) {
             try {
                 if (!client.isActive()) client.establish();
                 return client.process(s);
@@ -85,6 +86,7 @@ public class ResumableTTSClient implements TTSClient {
                 if (client.isActive()) client.terminate();
                 client = clientFactory.createClient();
             }
+            retry++;
         }
         throw new TTSException("Out of retries: " + retry);
     }

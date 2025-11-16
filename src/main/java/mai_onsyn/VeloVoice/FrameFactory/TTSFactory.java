@@ -259,7 +259,7 @@ public class TTSFactory {
     private static Config.ConfigBox getMultiTTSBox() {
         Config.ConfigBox multiTTSBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
 
-        List<String> voices = MultiTTSClient.getVoiceIDs();
+        List<String> voices = new ArrayList<>();
         voices.addFirst("Default");
         Config.ConfigItem url = multiTTSConfig.genInputStringItem("Url", "main.tts.multi.input.url");
         Config.ConfigItem voiceModel = multiTTSConfig.genChooseStringItem("VoiceModel", voices);
@@ -398,6 +398,7 @@ public class TTSFactory {
         sampleSteps.setI18NKey("main.tts.gpt.label.sample_steps");
         superSampling.setI18NKey("main.tts.gpt.label.super_sampling");
 
+        addPreviewButton(url);
 
         Stage advanceStage = new Stage();
         {
@@ -454,7 +455,7 @@ public class TTSFactory {
 
     private static void addPreviewButton(Config.ConfigItem modelItem) {
         AXButton previewButton = new AXButton();
-        AXChoiceBox modelChoiceBox = (AXChoiceBox) modelItem.getContent();
+        AutoPane modelChoiceBox = modelItem.getContent();
 
         // 按钮图标和样式配置
         ImageView horn = new ImageView(ResourceManager.horn);

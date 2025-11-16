@@ -8,6 +8,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
 import mai_onsyn.AnimeFX.I18N;
 import mai_onsyn.AnimeFX.Module.*;
@@ -24,6 +25,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static mai_onsyn.VeloVoice.App.Constants.*;
 import static mai_onsyn.VeloVoice.App.Runtime.*;
@@ -56,6 +59,35 @@ public class MainFactory {
 
         drawConfigButton(root);
         LogFactory.drawLogFrame();
+        makeTreeViewDropPreference();
+    }
+
+    private static void makeTreeViewDropPreference() {
+        treeView.setOnDragOver(e -> {
+            e.acceptTransferModes(TransferMode.COPY);
+//            e.consume();
+        });
+        treeView.setOnDragDropped(e ->   {
+            e.setDropCompleted(true);
+//            e.consume();
+
+            List<File> files = e.getDragboard().getFiles();
+            if (files  == null || files.isEmpty()) return;
+
+            AtomicReference<Thread> loadThread = new AtomicReference<>();
+            for (File file : files) {
+                if (file.isDirectory() || file.isFile() && file.getName().endsWith(".txt")) {
+//                    System.out.println(file.getAbsolutePath());
+                    TextProcessFactory.loadText(loadThread, sources.get("LocalTXT"), file.getAbsolutePath());
+                    try {
+                        loadThread.get().join();
+                    } catch (InterruptedException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                else log.warn("\"{}\" is not a text file", file.getName());
+            }
+        });
     }
 
     private static HDoubleSplitPane getTextEditArea() {

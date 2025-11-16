@@ -19,7 +19,7 @@ import org.fxmisc.richtext.InlineCssTextArea;
 import java.util.List;
 import java.util.Map;
 
-public class AXInlineTextArea extends AXBase implements Localizable {
+public class  AXInlineTextArea extends AXBase implements Localizable {
     protected AXInlineTextAreaStyle style = new DefaultAXInlineTextAreaStyle();
 
     private final InlineCssTextArea textArea = new InlineCssTextArea();
@@ -169,9 +169,11 @@ public class AXInlineTextArea extends AXBase implements Localizable {
         textArea.replaceText(s);
     }
     public void appendText(String s) {
-        textArea.appendText(s);
-        textArea.setStyle(textArea.getLength() - s.length(), textArea.getLength(),
-                "-fx-fill: #" + style.getDefaultTextColor().toString().substring(2) + ";");
+        synchronized (this) {
+            textArea.appendText(s);
+            textArea.setStyle(textArea.getLength() - s.length(), textArea.getLength(),
+                    "-fx-fill: #" + style.getDefaultTextColor().toString().substring(2) + ";");
+        }
     }
     public void deleteText(int start, int end) {
         textArea.deleteText(start, end);

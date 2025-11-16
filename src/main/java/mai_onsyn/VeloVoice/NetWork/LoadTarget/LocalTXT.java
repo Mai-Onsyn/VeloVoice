@@ -182,7 +182,7 @@ public class LocalTXT extends Source {
         // 传递参数
         addToTree(folder, root, attribution, parseStructures, ignoreEmptyParsedFile, markTitle, regexIdentifiers);
 
-        log.info(I18N.getCurrentValue("log.local_txt.info.processed"), uri);
+//        log.info(I18N.getCurrentValue("log.local_txt.info.processed"), uri);
     }
 
 

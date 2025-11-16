@@ -92,7 +92,7 @@ public class MultiTTSClient implements TTSClient {
             );
         } catch (Exception e) {
             log.error("Multi TTS request failed: {}", e.getMessage());
-            return null;
+            throw e;
         }
     }
 
@@ -111,7 +111,7 @@ public class MultiTTSClient implements TTSClient {
         String fullUrl = url + (url.endsWith("/") ? "" : "/") + "voices";
 
         HttpClient client = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(1))
+                .connectTimeout(Duration.ofSeconds(4))
                 .build();
 
         HttpRequest request = HttpRequest.newBuilder()
