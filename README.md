@@ -50,9 +50,12 @@ To use GPT-SoVITS, you must run the API v2 service. I cannot guarantee that the 
 - Please report any bugs you encounter. As an independently developed project, thorough testing hasn't been possible. You can create Issues here or [contact the author on Bilibili](https://space.bilibili.com/544189344)
 - This tool was designed for optimizing novel volume and directory structure management, not recommended for single-file conversion. Memory overflow may occur when processing overly large single files against intended use cases
 - ⚠ Always save your project before using SAPI (Natural TTS)! **This TTS engine tends to crash when running on CPUs with weak single-core performance!**
+- A random User-Agent is generated when the software starts. If Edge TTS is unavailable, please check your Edge’s UA and replace it in Settings → Network.
 
 ## 🛴Download
 
 [Releases](https://github.com/Mai-Onsyn/VeloVoice/releases)
+
 LanZou: [https://wwpz.lanzouv.com/b0ukj384f](https://wwpz.lanzouv.com/b0ukj384f) Password: 14ix
+
 If you're feeling generous: [https://pan.baidu.com/s/1uAGJ3xO1p4pJuM41pKftfQ?pwd=jvav](https://pan.baidu.com/s/1uAGJ3xO1p4pJuM41pKftfQ?pwd=jvav)

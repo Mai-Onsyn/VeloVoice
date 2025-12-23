@@ -221,7 +221,11 @@
 			"title":"网络",
 			"label":{
 				"timeout":"超时时间(秒)",
-				"max_retries":"最大重试次数"
+				"max_retries":"最大重试次数",
+				"user_agent":"UA"
+			},
+			"input":{
+				"user_agent":"浏览器UA"
 			}
 		},
 		"misc":{

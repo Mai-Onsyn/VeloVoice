@@ -24,6 +24,7 @@ public class ConfigInitializer {
         config.registerString("LogLevel", "INFO");
         config.registerInteger("TimeoutSeconds", 30);
         config.registerInteger("MaxRetries", 5);
+        config.registerString("User-Agent", Constants.genUA());
         config.registerString("AudioSaveFolder", "C:/Users/Administrator/Desktop/");
         config.registerString("PreviewText", "In the distance, the sound of waves crashing against the shore brought a sense of calm.");
         config.registerString("TTSEngine", "Edge TTS");

@@ -221,7 +221,11 @@
 			"title":"Network",
 			"label":{
 				"timeout":"Timeout Seconds",
-				"max_retries":"Max Retries"
+				"max_retries":"Max Retries",
+				"user_agent":"User-Agent"
+			},
+			"input":{
+				"user_agent":"browser user agent"
 			}
 		},
 		"misc":{

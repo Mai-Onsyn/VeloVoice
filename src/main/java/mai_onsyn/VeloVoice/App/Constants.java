@@ -8,13 +8,14 @@ import mai_onsyn.VeloVoice.NetWork.LoadTarget.Wenku8;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.*;
 
 public class Constants {
 
     private static String URL;
 
-    public static final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36 Edg/99.0.1150.55";
+//    public static final String USER_AGENT = "Mozilla/5.0 (Windows NT 11.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0";
     public static final String ORIGIN = "chrome-extension://jdiccldimpdaibmpdkjnbmckianbfold";
     public static final String VOICES_LIST_URL = "https://speech.platform.bing.com/consumer/speech/synthesize/readaloud/voices/list?trustedclienttoken=6A5AA1D4EAFF4E9FB37E23D68491D6F4";
 
@@ -32,7 +33,6 @@ public class Constants {
     static {    //在这里添加TTS引擎
         availableTTSNames.addAll(List.of("Edge TTS", "Natural TTS", "Multi TTS", "GPT-SoVITS TTS"));
     }
-
 
     public static final Map<String, String> LANG_HEADCODE_TO_NAME_MAPPING;
     public static final Map<String, String> LANG_NAME_TO_HEADCODE_MAPPING;
@@ -120,7 +120,6 @@ public class Constants {
         }
     }
 
-
     private static String genSecMsGec() {
         long currentTime = System.currentTimeMillis();
         long ticks = (long) ((currentTime / 1000.0) + 11644473600L) * 10000000L;
@@ -144,6 +143,23 @@ public class Constants {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static String genUA() {
+        SecureRandom rnd = new SecureRandom();
+
+        int major = 137 + rnd.nextInt(5); // 137–142
+
+        int chromeBuild = 6000 + rnd.nextInt(501); // 6000–6500
+        int edgeBuild   = 2000 + rnd.nextInt(601); // 2000–2600
+
+        return String.format(
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/%d.0.%d.0 Safari/537.36 Edg/%d.0.%d.0",
+                major,
+                chromeBuild,
+                major,
+                edgeBuild
+        );
     }
 
     public static void updateSec_MS_GEC() {

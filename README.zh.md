@@ -50,9 +50,12 @@ zip压缩包中自带运行环境，以及各种运行库，可直接使用
 - 若是遇到Bug，请尽可能提供反馈，这是我独立开发的软件，缺乏测试，Bug肯定很多。你可以在这里提Issue，或是在B站[私信作者](https://space.bilibili.com/544189344)
 - 本工具的设计初衷是优化小说分卷及目录结构管理，不推荐仅用于单文件转换。若强行以非预期方式使用（如处理超大单文件导致内存溢出），开发者不会针对此类场景进行适配或优化。请合理规划文件结构，以获得最佳体验
 - ⚠使用 SAPI（Natural TTS）前请务必保存项目！**该TTS引擎在单核性能较弱的 CPU 上运行时容易崩溃！**
+- 软件启动时会生成一个随机的User-Agent 如果Edge TTS无法使用 请查一下自己的浏览器UA然后在设置→网络中替换
 
 ## 🛴下载
 
 [Releases](https://github.com/Mai-Onsyn/VeloVoice/releases)
+
 蓝奏：[https://wwpz.lanzouv.com/b0ukj384f](https://wwpz.lanzouv.com/b0ukj384f) 密码：14ix
+
 如果你心情很好或者有钞能力也可以选择去这里下载：[https://pan.baidu.com/s/1uAGJ3xO1p4pJuM41pKftfQ?pwd=jvav](https://pan.baidu.com/s/1uAGJ3xO1p4pJuM41pKftfQ?pwd=jvav)

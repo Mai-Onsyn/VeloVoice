@@ -31,7 +31,7 @@ public class EdgeTTSClient extends WebSocketClient implements TTSClient {
         HEADERS.put("Origin", ORIGIN);
         HEADERS.put("Pragma", "no-cache");
         HEADERS.put("Cache-Control", "no-cache");
-        HEADERS.put("User-Agent", USER_AGENT);
+        HEADERS.put("User-Agent", config.getString("User-Agent"));
     }
 
     private static double voicePitch = 1.0;
