@@ -1,5 +1,5 @@
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.Feature;
+import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.JSONWriter;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -75,7 +75,7 @@ public class JsonFixer {
 
             try {
                 String content = new String(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
-                JSONObject jsonObj = JSONObject.parseObject(content, Feature.OrderedField);
+                JSONObject jsonObj = JSONObject.parseObject(content);
 
                 LinkedHashMap<String, String> flatMap = new LinkedHashMap<>();
                 flattenJson("", jsonObj, flatMap);
@@ -132,7 +132,7 @@ public class JsonFixer {
     // 写回 JSON 文件
     private static void writeJsonToFile(String filePath, JSONObject json) {
         try (Writer writer = new OutputStreamWriter(new FileOutputStream(filePath), "UTF-8")) {
-            writer.write(JSONObject.toJSONString(json, true)); // 美化输出
+            writer.write(JSONObject.toJSONString(json, JSONWriter.Feature.PrettyFormat)); // 美化输出
         } catch (IOException e) {
             System.err.println("写入文件失败: " + filePath + " - " + e.getMessage());
         }

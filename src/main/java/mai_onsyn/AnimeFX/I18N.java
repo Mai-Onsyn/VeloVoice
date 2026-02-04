@@ -1,7 +1,7 @@
 package mai_onsyn.AnimeFX;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.Feature;
+import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.JSONWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,7 +25,7 @@ public class I18N {
     private I18N() {}
 
     static {
-        langInfos = JSONObject.parseObject(readJsonFile("lang/lang_info.json"), Feature.OrderedField);
+        langInfos = JSONObject.parseObject(readJsonFile("lang/lang_info.json"));
         readLanguages();
     }
 
@@ -82,7 +82,7 @@ public class I18N {
     }
 
     private static void readLanguages() {
-        log.debug("Lang Infos: \n{}", JSONObject.toJSONString(I18N.langInfos, true));
+        log.debug("Lang Infos: \n{}", JSONObject.toJSONString(I18N.langInfos, JSONWriter.Feature.PrettyFormat));
 
         for (String key : I18N.langInfos.keySet()) {
             try {

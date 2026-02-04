@@ -1,7 +1,7 @@
 package mai_onsyn.VeloVoice.FrameFactory;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -226,7 +226,7 @@ public class LocalTXTHeaderEditor extends HDoubleSplitPane {
 
         Runtime.cycleTasks.add(() -> {
             mkJson();
-            config.setString("HeaderItems", JSONArray.toJSONString(root, false));
+            config.setString("HeaderItems", JSONArray.toJSONString(root));
         });
     }
 

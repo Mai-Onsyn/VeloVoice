@@ -33,8 +33,6 @@ public class LogFactory {
     public static final AXLangLabel totalTime = new AXLangLabel("00:00:00 | 00:00:00");
     public static final AXLangLabel currentTime = new AXLangLabel("00:00:00 | 00:00:00");
 
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-
     static {
         totalFinished.addListener((o, ov, nv) -> {
             totalProgressBar.setProgress(totalFinished.doubleValue() / totalCount);

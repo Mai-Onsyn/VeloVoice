@@ -33,6 +33,11 @@ public class AXLog4j2 extends AXInlineTextArea {
 
     private int lineCount = 0;
     private final VirtualizedScrollPane<?> virtualizedScrollPane = (VirtualizedScrollPane<?>) textArea().getParent();
+    private volatile boolean showThread = true;
+    private volatile boolean showLevel  = true;
+
+    private static final int MAX_LINES = 2000;
+    private static final int TRIM_LINES = 500;
 
     public AXLog4j2() {
         super.setEditable(false);
@@ -61,45 +66,77 @@ public class AXLog4j2 extends AXInlineTextArea {
     }
 
     private void appendLog(LogEventSnapshot logEvent) {
-        // 确保在JavaFX应用线程执行
         Platform.runLater(() -> {
 
-            if (lineCount > 1000) {
-                super.textArea().deleteText(0, super.textArea().getText().indexOf("\n") + 1);
+            trimIfNeeded();
+
+            int start = textArea().getLength();
+            StringBuilder sb = new StringBuilder();
+
+            // 时间
+            int timeStart = sb.length();
+            sb.append('[').append(logEvent.time).append("] ");
+
+            // 线程
+            int threadStart = -1;
+            if (showThread) {
+                threadStart = sb.length();
+                sb.append('[').append(logEvent.thread).append("] ");
             }
 
+            // level
+            int levelStart = -1;
+            if (showLevel) {
+                levelStart = sb.length();
+                sb.append('[').append(logEvent.level).append("] ");
+            }
 
-            // 获取当前文本长度作为插入位置
-            int timeStartPos = super.textArea().getLength();
-            int threadStartPos = timeStartPos + logEvent.time.length() + 3;
-            int levelStartPos = threadStartPos + logEvent.thread.length() + 3;
+            // message
+            int messageStart = sb.length();
+            sb.append(logEvent.message).append('\n');
 
-            // 构建带格式的日志行
-            String formattedLog = String.format("[%s] [%s] [%s] %s\n",
-                    logEvent.time,
-                    logEvent.thread,
-                    logEvent.level,
-                    logEvent.message
-            );
+            appendText(sb.toString());
 
-            appendText(formattedLog);
+            // === 样式 ===
+            textArea().setStyle(start + timeStart, start + timeStart + logEvent.time.length() + 2, "-fx-fill:#3993d4;");
 
-            String cssStyle = getStyleForLevel(logEvent.level);
-            int messageEndPos = levelStartPos + logEvent.level.length() + 3 + logEvent.message.length();
+            if (showThread) {
+                textArea().setStyle(start + threadStart, start + threadStart + logEvent.thread.length() + 2, "-fx-fill:#90890e;");
+            }
 
-            Platform.runLater(() -> {
-                textArea().setStyle(timeStartPos, threadStartPos, "-fx-fill: #3993d4;");
-                textArea().setStyle(threadStartPos, levelStartPos, "-fx-fill: #90890e;");
-                textArea().setStyle(levelStartPos, messageEndPos, cssStyle);
-            });
+            String levelStyle = getStyleForLevel(logEvent.level);
+            if (showLevel) {
+                textArea().setStyle(start + levelStart, start + levelStart + logEvent.level.length() + 2, levelStyle);
+            }
 
-            virtualizedScrollPane.scrollYBy(2147483647);
+            textArea().setStyle(start + messageStart, start + messageStart + logEvent.message.length(), levelStyle);
 
-
+            virtualizedScrollPane.scrollYBy(Double.MAX_VALUE);
             lineCount++;
-
         });
     }
+
+    private void trimIfNeeded() {
+        if (lineCount <= MAX_LINES) return;
+
+        int removeTo = nthNewLine(TRIM_LINES);
+        if (removeTo > 0) {
+            textArea().deleteText(0, removeTo);
+            lineCount -= TRIM_LINES;
+        }
+    }
+
+    private int nthNewLine(int n) {
+        String text = textArea().getText();
+        int count = 0;
+        for (int i = 0; i < text.length(); i++) {
+            if (text.charAt(i) == '\n' && ++count == n) {
+                return i + 1;
+            }
+        }
+        return -1;
+    }
+
 
     // 根据日志级别返回对应的CSS样式
     private String getStyleForLevel(String level) {
@@ -124,13 +161,8 @@ public class AXLog4j2 extends AXInlineTextArea {
         public void append(LogEvent logEvent) {
             if (logEvent.getLevel() != Level.TRACE && logEvent.getLevel() != Level.ALL) {
                 synchronized (AXLog4j2.class) {
-                    Throwable throwable = logEvent.getThrown();
-                    String message;
-                    if (throwable != null) {
-                        StringWriter sw = new StringWriter();
-                        throwable.printStackTrace(new PrintWriter(sw));
-                        message = logEvent.getMessage().getFormattedMessage() + "\n" + sw;
-                    } else message = logEvent.getMessage().getFormattedMessage();
+//                    Throwable throwable = logEvent.getThrown();
+                    String message = logEvent.getMessage().getFormattedMessage();
                     logTemps.add(new LogEventSnapshot(
                             dateFormat.format(new Date(logEvent.getTimeMillis())),
                             logEvent.getThreadName(),

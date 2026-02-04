@@ -6,7 +6,7 @@
 
     <groupId>mai_onsyn.VeloVoice</groupId>
     <artifactId>VeloVoice</artifactId>
-    <version>1.3.2</version>
+    <version>1.3.3</version>
 
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
@@ -33,9 +33,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.83</version>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>2.0.52</version>
         </dependency>
 
         <dependency>

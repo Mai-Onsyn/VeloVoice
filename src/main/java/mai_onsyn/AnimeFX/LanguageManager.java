@@ -1,6 +1,6 @@
 package mai_onsyn.AnimeFX;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 
 import java.io.*;
 import java.util.*;

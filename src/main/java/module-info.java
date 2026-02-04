@@ -7,7 +7,7 @@ module mai_onsyn {
     requires org.apache.logging.log4j.core;
     requires org.apache.logging.log4j.slf4j;
     requires java.desktop;
-    requires fastjson;
+    requires com.alibaba.fastjson2;
     requires TarsosDSP;
     requires jlayer;
     requires org.jsoup;

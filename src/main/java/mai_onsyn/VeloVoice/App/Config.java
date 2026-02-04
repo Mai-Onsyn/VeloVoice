@@ -1,7 +1,7 @@
 package mai_onsyn.VeloVoice.App;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.Feature;
+import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.JSONWriter;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -37,7 +37,7 @@ public class Config extends JSONObject {
 
     @Override
     public String toString() {
-        return JSONObject.toJSONString(this, true);
+        return JSONObject.toJSONString(this, JSONWriter.Feature.PrettyFormat);
     }
 
     public ConfigType getType(String key) {
@@ -129,10 +129,10 @@ public class Config extends JSONObject {
     }
 
     public static LinkedHashMap<String, String> parseMap(String s) {
-        Map<String, Object> innerMap = JSONObject.parseObject(s, Feature.OrderedField).getInnerMap();
+        Map<String, Object> innerMap = JSONObject.parseObject(s);
 
         LinkedHashMap<String, String> linkedHashMap = new LinkedHashMap<>();
-        for (Entry<String, Object> entry : innerMap.entrySet()) {
+        for (Map.Entry<String, Object> entry : innerMap.entrySet()) {
             linkedHashMap.put(entry.getKey(), (String) entry.getValue());
         }
         return linkedHashMap;
@@ -388,6 +388,6 @@ public class Config extends JSONObject {
 
 
     private String formatMap(Map<String, String> map) {
-        return JSONObject.toJSONString(map, true);
+        return JSONObject.toJSONString(map, JSONWriter.Feature.PrettyFormat);
     }
 }

@@ -78,7 +78,7 @@ public class AfterEffects {
                 case WAV_24KHZ_16BIT -> sentence.audioByteArray();
             };
 
-            int cutLength = AudioSaver.WAV_24KHZ_16BIT_UNIT_DURATION * millis;
+            int cutLength = AudioSaveUtil.WAV_24KHZ_16BIT_UNIT_DURATION * millis;
             int decodedLength = pcm.length > cutLength ? pcm.length - cutLength : 0;
             byte[] decodedPCM = new byte[decodedLength];
 

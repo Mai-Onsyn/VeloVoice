@@ -1,7 +1,7 @@
 package mai_onsyn.VeloVoice.NetWork.TTS;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 import mai_onsyn.AnimeFX.I18N;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

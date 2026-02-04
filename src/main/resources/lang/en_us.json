@@ -231,6 +231,7 @@
 		"misc":{
 			"title":"Misc",
 			"label":{
+				"save_state":"Auto Save",
 				"log_level":"Log Level",
 				"preview_text":"Preview Text",
 				"split_thresholds":"Split Thresholds",
@@ -430,6 +431,12 @@
 		"tts_factory": {
 			"info": {
 				"flushed": "MultiTTS model has been flushed"
+			}
+		},
+		"auto_save_listener": {
+			"error": {
+				"save_failed": "Failed to save data",
+				"load_failed": "Failed to load data"
 			}
 		}
 	}

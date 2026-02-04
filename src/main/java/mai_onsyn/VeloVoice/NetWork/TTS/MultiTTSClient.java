@@ -1,8 +1,7 @@
 package mai_onsyn.VeloVoice.NetWork.TTS;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.Feature;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 import mai_onsyn.AnimeFX.I18N;
 import mai_onsyn.VeloVoice.Audio.AudioEncodeUtils;
 import mai_onsyn.VeloVoice.Text.Sentence;
@@ -121,7 +120,7 @@ public class MultiTTSClient implements TTSClient {
 
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            JSONObject responseJson = JSONObject.parseObject(response.body(), Feature.OrderedField);
+            JSONObject responseJson = JSONObject.parseObject(response.body());
             if (responseJson.getBoolean("success")) {
                 extractIds(responseJson, result);
             }

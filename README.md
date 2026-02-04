@@ -32,7 +32,7 @@ This is the stable release. If you need to check the test version, please visit 
 
 ## 🐵Usage
 
-The program requires JDK22 to run (uses unnamed variables)
+The program requires JDK22 to run (uses unnamed variables)  
 The zip package includes runtime environment and necessary libraries for immediate use
 
 To use local SAPI (Natural TTS), place jacob-1.21-x64.dll in either your JRE's bin directory or C:/Windows/System32/, then restart the software
@@ -58,4 +58,4 @@ To use GPT-SoVITS, you must run the API v2 service. I cannot guarantee that the 
 
 LanZou: [https://wwpz.lanzouv.com/b0ukj384f](https://wwpz.lanzouv.com/b0ukj384f) Password: 14ix
 
-If you're feeling generous: [https://pan.baidu.com/s/1uAGJ3xO1p4pJuM41pKftfQ?pwd=jvav](https://pan.baidu.com/s/1uAGJ3xO1p4pJuM41pKftfQ?pwd=jvav)
+** Disk: [https://pan.baidu.com/s/1uAGJ3xO1p4pJuM41pKftfQ?pwd=jvav](https://pan.baidu.com/s/1uAGJ3xO1p4pJuM41pKftfQ?pwd=jvav)

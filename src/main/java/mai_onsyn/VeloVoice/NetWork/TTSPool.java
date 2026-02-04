@@ -2,7 +2,7 @@ package mai_onsyn.VeloVoice.NetWork;
 
 import mai_onsyn.AnimeFX.I18N;
 import mai_onsyn.VeloVoice.Audio.AfterEffects;
-import mai_onsyn.VeloVoice.Audio.AudioSaver;
+import mai_onsyn.VeloVoice.Audio.AudioSaveUtil;
 import mai_onsyn.VeloVoice.NetWork.TTS.ResumableTTSClient;
 import mai_onsyn.VeloVoice.NetWork.TTS.TTSClient;
 import mai_onsyn.VeloVoice.Text.Sentence;
@@ -157,6 +157,6 @@ public class TTSPool {
         }
 
         //after处理，保存
-        AudioSaver.save(AfterEffects.process(result), outputFolder, fileName);
+        AudioSaveUtil.save(AfterEffects.process(result), outputFolder, fileName);
     }
 }

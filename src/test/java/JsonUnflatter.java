@@ -1,4 +1,4 @@
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,7 +25,7 @@ public class JsonUnflatter {
         }
 
         // 输出为嵌套格式，缩进 2 格
-        String prettyJson = JSONObject.toJSONString(nested, true);
+        String prettyJson = JSONObject.toJSONString(nested);
 
         try (Writer writer = new OutputStreamWriter(new FileOutputStream(outputFile), "UTF-8")) {
             writer.write(prettyJson);

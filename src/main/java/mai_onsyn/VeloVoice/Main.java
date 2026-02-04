@@ -2,6 +2,7 @@ package mai_onsyn.VeloVoice;
 
 import javafx.application.Application;
 import mai_onsyn.AnimeFX.I18N;
+import mai_onsyn.VeloVoice.App.AutoSaveListener;
 import mai_onsyn.VeloVoice.NetWork.TTS.EdgeTTSClient;
 import mai_onsyn.VeloVoice.NetWork.TTS.MultiTTSClient;
 import mai_onsyn.VeloVoice.NetWork.TTS.NaturalTTSClient;
@@ -23,6 +24,7 @@ public class Main {
     public static void main(String[] args) {
         init();
         Application.launch(FrameApp.class);
+        AutoSaveListener.trySave();
     }
 
     private static void init() {

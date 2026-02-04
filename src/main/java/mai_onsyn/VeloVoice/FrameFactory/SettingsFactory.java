@@ -1,6 +1,6 @@
 package mai_onsyn.VeloVoice.FrameFactory;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import mai_onsyn.AnimeFX.I18N;
@@ -144,11 +144,13 @@ public class SettingsFactory {
         Config.ConfigBox miscBox = new Config.ConfigBox(UI_SPACING, UI_HEIGHT);
         miscBox.getChildren().add(mkTitleBar("settings.misc.title"));
 
+        Config.ConfigItem saveState = config.genSwitchItem("SaveState");
         Config.ConfigItem logLevel = config.genChooseStringItem("LogLevel", List.of("TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL"));
         Config.ConfigItem previewText = config.genInputStringItem("PreviewText", "settings.misc.input.preview_text");
         Config.ConfigItem splitThresholds = textConfig.genIntegerSlidItem("SplitThresholds", 16, 4096, 16);
         Config.ConfigItem forceSplitChars = textConfig.genInputStringItem("ForceSplitChars", "settings.misc.input.split_force");
         Config.ConfigItem splitChars = textConfig.genInputStringItem("SplitChars", "settings.misc.input.split");
+        saveState.setI18NKey("settings.misc.label.save_state");
         logLevel.setI18NKey("settings.misc.label.log_level");
         previewText.setI18NKey("settings.misc.label.preview_text");
         splitThresholds.setI18NKey("settings.misc.label.split_thresholds");
@@ -157,10 +159,9 @@ public class SettingsFactory {
         previewText.setChildrenI18NKeys(I18nKeyMaps.CONTEXT);
         forceSplitChars.setChildrenI18NKeys(I18nKeyMaps.CONTEXT);
         splitChars.setChildrenI18NKeys(I18nKeyMaps.CONTEXT);
-        I18N.registerComponents(logLevel, previewText, splitThresholds, forceSplitChars, splitChars);
+        I18N.registerComponents(saveState, logLevel, previewText, splitThresholds, forceSplitChars, splitChars);
 
-        miscBox.addConfigItem(logLevel, previewText, splitThresholds, forceSplitChars, splitChars);
+        miscBox.addConfigItem(saveState, logLevel, previewText, splitThresholds, forceSplitChars, splitChars);
         return miscBox;
     }
-
 }

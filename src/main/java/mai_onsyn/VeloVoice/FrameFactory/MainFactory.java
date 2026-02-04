@@ -16,7 +16,9 @@ import mai_onsyn.AnimeFX.Utls.*;
 import mai_onsyn.AnimeFX.layout.AXScrollPane;
 import mai_onsyn.AnimeFX.layout.AutoPane;
 import mai_onsyn.AnimeFX.layout.HDoubleSplitPane;
+import mai_onsyn.VeloVoice.App.AutoSaveListener;
 import mai_onsyn.VeloVoice.App.Config;
+import mai_onsyn.VeloVoice.App.ConfigManager;
 import mai_onsyn.VeloVoice.App.ResourceManager;
 import mai_onsyn.VeloVoice.NetWork.TTS.ResumableTTSClient;
 import mai_onsyn.VeloVoice.Text.TTS;
@@ -118,6 +120,16 @@ public class MainFactory {
             }
         });
 
+        {
+            AutoSaveListener.setListenerObject(treeView.getRoot());
+            configManager.addOnChangedListener("SaveState", () -> {
+                if (config.getBoolean("SaveState")) AutoSaveListener.start();
+                else {
+                    AutoSaveListener.stop();
+                    AutoSaveListener.DATA_FILE.delete();
+                }
+            });
+        }
         if (firstLaunch) {
             AXTreeItem main = treeView.createFolderItem("Fastly Getting Start");
             AXTreeItem english = treeView.createFileItem("English", new SimpleStringProperty("""
@@ -147,6 +159,10 @@ public class MainFactory {
             treeView.add(treeView.getRoot(), main);
             treeView.add(main, english);
             treeView.add(main, chinese);
+        }
+        else if (config.getBoolean("SaveState")) {
+            AutoSaveListener.start();
+            AutoSaveListener.tryLoad();
         }
 
         leftPane.getChildren().add(treeView);

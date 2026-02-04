@@ -1,6 +1,6 @@
 package mai_onsyn.VeloVoice.App;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import javafx.scene.paint.Color;
 import javafx.util.Pair;
 import mai_onsyn.AnimeFX.I18N;

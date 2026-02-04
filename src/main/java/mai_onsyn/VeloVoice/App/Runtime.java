@@ -43,9 +43,10 @@ public class Runtime {
     public static final Config voiceConfig = new Config();
     public static final Config windowConfig = new Config();
 
+    private static final File CONFIG_FILE = new File(System.getProperty("user.dir") + "\\config.json");
     static {
         ConfigInitializer.initializeConfig();
-        configManager = new ConfigManager(config, new File(System.getProperty("user.dir") + "\\config.json"), 500);
+        configManager = new ConfigManager(config, CONFIG_FILE, 500);
         configManager.start();
         ConfigInitializer.initializeListener();
     }

@@ -56,7 +56,7 @@ public class AfterProcessFactory {
         sectionBox.getChildren().add(mkTitleBar("main.audio.section.title"));
 
         Config.ConfigItem switchItem = voiceConfig.genSwitchItem("SaveInSections");
-        Config.ConfigItem lengthItem = voiceConfig.genIntegerSlidItem("SectionLength", 1, 60, 1);
+        Config.ConfigItem lengthItem = voiceConfig.genIntegerSlidItem("SectionLength", 1, 120, 1);
         Config.ConfigItem readHeadItem = voiceConfig.genSwitchItem("SectionReadHead");
         Config.ConfigItem unitPatternItem = voiceConfig.genInputStringItem("SectionUnitPattern", "main.audio.section.input.unit_pattern");
         switchItem.setI18NKey("main.audio.general.switch");

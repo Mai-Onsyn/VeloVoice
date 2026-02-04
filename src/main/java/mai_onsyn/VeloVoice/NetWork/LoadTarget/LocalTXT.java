@@ -1,7 +1,7 @@
 package mai_onsyn.VeloVoice.NetWork.LoadTarget;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Scene;

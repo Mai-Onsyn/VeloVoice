@@ -18,17 +18,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static mai_onsyn.VeloVoice.App.Runtime.textConfig;
 import static mai_onsyn.VeloVoice.App.Runtime.voiceConfig;
 
-public class AudioSaver {
+public class AudioSaveUtil {
 
     public static final int MP3_24KHZ_16BIT_UNIT_DURATION = 6;   //mp3 byte length of 1 millisecond
     public static final int WAV_24KHZ_16BIT_UNIT_DURATION = 48;
     public static final int WAV_22KHZ_16BIT_UNIT_DURATION = 44;
     private static final String illegalChars = "[\\\\/:*?\"<>|]";
 
-    private static final Logger log = LogManager.getLogger(AudioSaver.class);
+    private static final Logger log = LogManager.getLogger(AudioSaveUtil.class);
 
     public static void save(List<Sentence> sentences, File folder, String filename) throws IOException {
         AudioEncodeUtils.AudioFormat audioFormat = sentences.getFirst().audioFormat();
@@ -48,7 +47,7 @@ public class AudioSaver {
             for (Sentence sentence : sentences) {
                 if (byteLength > sectionByteLength) {
                     byteLength = 0;
-                    saveAudio(saveTemp, new File(folder, String.format(sectionUnitNamePattern, i)), audioFormat);
+                    saveAudio(saveTemp, new File(folder, String.format(sectionUnitNamePattern, i++)), audioFormat);
                     saveTemp.clear();
 
                     //if enabled, every section will read the first sentence of the file
@@ -56,7 +55,7 @@ public class AudioSaver {
                         try {
                             ResumableTTSClient fixedEdgeTTSClient = new ResumableTTSClient();
                             fixedEdgeTTSClient.establish();
-                            Sentence head = fixedEdgeTTSClient.process(String.format(sentences.getFirst().text() + voiceConfig.getString("SectionUnitPattern"), ++i));
+                            Sentence head = fixedEdgeTTSClient.process(String.format(sentences.getFirst().text() + voiceConfig.getString("SectionUnitPattern"), i));
                             byteLength += head.audioByteArray().length;
                             saveTemp.add(head);
                             fixedEdgeTTSClient.terminate();
@@ -71,7 +70,8 @@ public class AudioSaver {
             }
             saveAudio(saveTemp, new File(folder, String.format(sectionUnitNamePattern, i)), audioFormat);
 
-        } else {
+        }
+        else {
             File audioFile = new File(folder, name + "." + audioFormat.getFormat());
             saveAudio(sentences, audioFile, audioFormat);
 

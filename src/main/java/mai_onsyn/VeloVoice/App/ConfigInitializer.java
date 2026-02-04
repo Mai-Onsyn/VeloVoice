@@ -22,6 +22,7 @@ public class ConfigInitializer {
 
     static void initializeConfig() {
         config.registerString("LogLevel", "INFO");
+        config.registerBoolean("SaveState", true);
         config.registerInteger("TimeoutSeconds", 30);
         config.registerInteger("MaxRetries", 5);
         config.registerString("User-Agent", Constants.genUA());
@@ -149,7 +150,7 @@ public class ConfigInitializer {
             try {
                 WindowManager.setBackgroundImage(Toolkit.loadImage(imgUri));
             } catch (IOException e) {
-                log.trace("Failed to load background image: " + e.getMessage());
+                log.trace("Failed to load background image: {}", e.getMessage());
             }
         });
         configManager.addOnChangedListener("Window.BackgroundOpacity", () -> {

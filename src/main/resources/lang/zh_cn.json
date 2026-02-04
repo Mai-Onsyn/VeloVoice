@@ -189,7 +189,7 @@
 				"title":"音频剪切",
 				"label":{
 					"start":"起始剪切时长(毫秒)",
-					"end":"结束剪切时长(毫秒)"
+					"end":"终止剪切时长(毫秒)"
 				}
 			}
 		},
@@ -231,6 +231,7 @@
 		"misc":{
 			"title":"杂项",
 			"label":{
+				"save_state":"自动保存",
 				"log_level":"日志等级",
 				"preview_text":"预览文本",
 				"split_thresholds":"切片阈值",
@@ -430,6 +431,12 @@
 		"tts_factory":{
 			"info":{
 				"flushed":"已刷新MultiTTS模型"
+			}
+		},
+		"auto_save_listener": {
+			"error": {
+				"save_failed": "保存数据失败",
+				"load_failed": "加载数据失败"
 			}
 		}
 	}

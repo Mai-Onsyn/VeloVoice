@@ -1,6 +1,6 @@
 package mai_onsyn.VeloVoice.FrameFactory;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
