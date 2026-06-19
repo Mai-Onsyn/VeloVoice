@@ -162,32 +162,26 @@ public class TextUtil {
     }
 
     public static String createHtmlChapter(String title, List<String> lines) {
-        // 使用XML解析器，更适合epub格式
         Document doc = Jsoup.parse("", "", Parser.xmlParser());
         doc.outputSettings().charset("UTF-8");
         doc.outputSettings().prettyPrint(true);
 
-        // 添加XML声明和DOCTYPE
         doc.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
         doc.append("<!DOCTYPE html>");
 
-        // 创建HTML元素
         Element html = doc.appendElement("html");
         html.attr("xmlns", "http://www.w3.org/1999/xhtml");
 //        html.attr("xmlns:epub", "http://www.idpf.org/2007/ops");
 //        html.attr("lang", "zh-CN");
 //        html.attr("xml:lang", "zh-CN");
 
-        // Head部分
         Element head = html.appendElement("head");
         head.appendElement("title").text(title);
         head.appendElement("meta").attr("charset", "UTF-8");
 
-        // Body部分
         Element body = html.appendElement("body");
         body.appendElement("h1").text(title);
 
-        // 处理内容行
         for (String line : lines) {
             String trimmedLine = line.trim();
             if (!trimmedLine.isEmpty()) {

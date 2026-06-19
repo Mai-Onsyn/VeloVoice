@@ -165,7 +165,8 @@ public class Constants {
     public static void updateSec_MS_GEC() {
 
         String SEC_MS_GEC = genSecMsGec();
-        String SEC_MS_GEC_Version = "1-131.0.2903.112";
+        String SEC_MS_GEC_Version = "1-146.0.3856.109";
+//        String SEC_MS_GEC_Version = "1-131.0.2903.112";
 
         URL = String.format("wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1?TrustedClientToken=6A5AA1D4EAFF4E9FB37E23D68491D6F4&Sec-MS-GEC=%s&Sec-MS-GEC-Version=%s", SEC_MS_GEC, SEC_MS_GEC_Version);
     }

@@ -32,6 +32,7 @@ public class EdgeTTSClient extends WebSocketClient implements TTSClient {
         HEADERS.put("Pragma", "no-cache");
         HEADERS.put("Cache-Control", "no-cache");
         HEADERS.put("User-Agent", config.getString("User-Agent"));
+//        HEADERS.put("Cookie", "");
     }
 
     private static double voicePitch = 1.0;
@@ -59,6 +60,7 @@ public class EdgeTTSClient extends WebSocketClient implements TTSClient {
     private CompletableFuture<String> locker;
     private final List<byte[]> audioBytesTemp = new ArrayList<>();
     private final List<Sentence.Word> wordsTemp = new ArrayList<>();
+    private Exception exception;
 
     @Override
     public void establish() throws TTSException, ExecutionException, InterruptedException, TimeoutException {
@@ -140,11 +142,15 @@ public class EdgeTTSClient extends WebSocketClient implements TTSClient {
 
     @Override
     public void onClose(int i, String s, boolean b) {
-
+        if (!s.isEmpty()) {
+            log.warn("Edge TTS closed: {}", s);
+        }
+        locker.complete("closed");
     }
 
     @Override
     public void onError(Exception e) {
+        exception = e;
         locker.complete("error");
     }
 
@@ -176,7 +182,11 @@ public class EdgeTTSClient extends WebSocketClient implements TTSClient {
 
         locker = new CompletableFuture<>();
         String res = locker.get(config.getInteger("TimeoutSeconds"), TimeUnit.SECONDS);
-        if (res.equals("error")) throw new TTSException("Server not response");
+        if (res.equals("error")) {
+            throw exception;
+        } else if (res.equals("closed")) {
+            return null;
+        }
         Sentence sentence = new Sentence(s, Sentence.mergeAudio(audioBytesTemp), List.copyOf(wordsTemp), AudioEncodeUtils.AudioFormat.MP3_24KHZ_16BIT);
         //log.debug(sentence.toString());
 
