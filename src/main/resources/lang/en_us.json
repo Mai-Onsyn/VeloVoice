@@ -222,6 +222,7 @@
 			"label":{
 				"timeout":"Timeout Seconds",
 				"max_retries":"Max Retries",
+				"fetch_failed": "Failure wait millis",
 				"user_agent":"User-Agent"
 			},
 			"input":{

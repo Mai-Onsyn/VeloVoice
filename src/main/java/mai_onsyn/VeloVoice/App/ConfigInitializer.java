@@ -25,6 +25,7 @@ public class ConfigInitializer {
         config.registerBoolean("SaveState", true);
         config.registerInteger("TimeoutSeconds", 30);
         config.registerInteger("MaxRetries", 5);
+        config.registerInteger("FetchFailWaitMillis", 5000);
         config.registerString("User-Agent", Constants.genUA());
         config.registerString("AudioSaveFolder", "C:/Users/Administrator/Desktop/");
         config.registerString("PreviewText", "In the distance, the sound of waves crashing against the shore brought a sense of calm.");

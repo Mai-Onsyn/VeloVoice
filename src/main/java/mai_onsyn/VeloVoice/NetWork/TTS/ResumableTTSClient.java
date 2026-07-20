@@ -81,6 +81,7 @@ public class ResumableTTSClient implements TTSClient {
                 if (!client.isActive()) client.establish();
                 return client.process(s);
             } catch (Exception e) {
+                Thread.sleep(config.getInteger("FetchFailWaitMillis"));
                 //if (retry == maxRetries) break;
                 log.debug("Failed to processing, retrying({})...", retry, e);
                 if (client.isActive()) client.terminate();

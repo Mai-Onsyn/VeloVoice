@@ -128,14 +128,16 @@ public class SettingsFactory {
 
         Config.ConfigItem timeoutSeconds = config.genIntegerSlidItem("TimeoutSeconds", 1, 120, 1);
         Config.ConfigItem maxRetries = config.genIntegerSlidItem("MaxRetries", 1, 15, 1);
+        Config.ConfigItem fetchFailedWaitMillis = config.genIntegerSlidItem("FetchFailWaitMillis", 100, 20_000, 100);
         Config.ConfigItem ua = config.genInputStringItem("User-Agent", "settings.net.input.user_agent");
 
         timeoutSeconds.setI18NKey("settings.net.label.timeout");
         maxRetries.setI18NKey("settings.net.label.max_retries");
+        fetchFailedWaitMillis.setI18NKey("settings.net.label.fetch_failed");
         ua.setI18NKey("settings.net.label.user_agent");
-        I18N.registerComponents(timeoutSeconds, maxRetries, ua);
+        I18N.registerComponents(timeoutSeconds, maxRetries, fetchFailedWaitMillis, ua);
 
-        networkBox.addConfigItem(timeoutSeconds, maxRetries, ua);
+        networkBox.addConfigItem(timeoutSeconds, maxRetries, fetchFailedWaitMillis, ua);
 
         return networkBox;
     }

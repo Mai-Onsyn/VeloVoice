@@ -222,6 +222,7 @@
 			"label":{
 				"timeout":"超时时间(秒)",
 				"max_retries":"最大重试次数",
+				"fetch_failed": "失败等待时长(毫秒)",
 				"user_agent":"UA"
 			},
 			"input":{
