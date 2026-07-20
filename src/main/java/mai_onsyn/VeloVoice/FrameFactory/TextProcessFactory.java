@@ -26,6 +26,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -212,14 +213,16 @@ public class TextProcessFactory {
 //                String loadUri = textConfig.getString("LoadUri");
 
                 try {
-                    if (!new File(loadUri).exists()) {
-                        log.error(I18N.getCurrentValue("log.text_process_factory.error.no_such_file_or_directory"), loadUri);
-                        return;
-                    }
+//                    if (!new File(loadUri).exists()) {
+//                        log.error(I18N.getCurrentValue("log.text_process_factory.error.no_such_file_or_directory"), loadUri);
+//                        return;
+//                    }
                     source.process(loadUri, target);
                     log.info(I18N.getCurrentValue("log.text_process_factory.info.load_success"), loadUri);
                 } catch (InterruptedException ie) {
                     log.info(I18N.getCurrentValue("log.text_process_factory.info.load_interrupted"));
+                } catch (FileNotFoundException nff) {
+                    log.error(I18N.getCurrentValue("log.text_process_factory.error.no_such_file_or_directory"), loadUri);
                 } catch (Exception ex) {
                     log.error(I18N.getCurrentValue("log.text_process_factory.error.load_failed"), loadUri, ex);
                 } finally {

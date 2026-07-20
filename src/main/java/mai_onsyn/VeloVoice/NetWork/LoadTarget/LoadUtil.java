@@ -35,7 +35,7 @@ public class LoadUtil {
                 if (retries < maxRetries) {
                     log.warn("Load Failed, retrying... (Attempt {} of {}): {}", retries, maxRetries, url);
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(3000);
                     } catch (InterruptedException ie) {
                         Thread.currentThread().interrupt();
                         log.debug("Thread interrupted while waiting for retry");

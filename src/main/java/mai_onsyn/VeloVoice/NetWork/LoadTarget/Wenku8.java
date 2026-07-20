@@ -100,6 +100,7 @@ public class Wenku8 extends Source {
                 if (Thread.currentThread().isInterrupted()) throw new InterruptedException();
 
                 List<String> contentLines = getContent(chapter_url.getValue());
+                Thread.sleep(1000); // 防止防爬虫
 
                 StringBuilder sb = new StringBuilder();
 
