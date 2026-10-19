@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import mai_onsyn.AnimeFX.I18N;
 import mai_onsyn.AnimeFX.Module.AXBackGround;
 import mai_onsyn.AnimeFX.Utls.Toolkit;
 import mai_onsyn.AnimeFX.layout.AutoPane;
@@ -33,15 +34,17 @@ public class WindowManager {
         log.debug("Initialized window count = {}", windows.size());
         for (Window window : windows) {
             Parent parent = window.getScene().getRoot();
-            try {
-                if (parent instanceof AutoPane root) {
-                    AXBackGround backGround = new AXBackGround(Toolkit.loadImage(windowConfig.getString("BackgroundImage")), Color.gray(windowConfig.getBoolean("DarkMode") ? FrameThemes.DARK_GRAY : FrameThemes.LIGHT_GRAY, windowConfig.getDouble("BackgroundOpacity")), windowConfig.getDouble("BackgroundScale"), windowConfig.getDouble("BackgroundBlur"));
-                    backgrounds.add(backGround);
-                    root.getChildren().addFirst(backGround);
-                    root.setPosition(backGround, false, 0, 0, 0, 0);
+            if (parent instanceof AutoPane root) {
+                Image image = null;
+                try {
+                    image = Toolkit.loadImage(windowConfig.getString("BackgroundImage"));
+                } catch (IOException e) {
+                    log.warn(I18N.getCurrentValue("log.window_manager.warn.load_image_failed"), windowConfig.getString("BackgroundImage"));
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+                AXBackGround backGround = new AXBackGround(image, Color.gray(windowConfig.getBoolean("DarkMode") ? FrameThemes.DARK_GRAY : FrameThemes.LIGHT_GRAY, windowConfig.getDouble("BackgroundOpacity")), windowConfig.getDouble("BackgroundScale"), windowConfig.getDouble("BackgroundBlur"));
+                backgrounds.add(backGround);
+                root.getChildren().addFirst(backGround);
+                root.setPosition(backGround, false, 0, 0, 0, 0);
             }
         }
     }

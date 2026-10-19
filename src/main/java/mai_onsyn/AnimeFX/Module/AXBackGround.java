@@ -39,16 +39,10 @@ public class AXBackGround extends AutoPane {
         effect.setRadius(blur);
         scaleStrengthProperty = new SimpleDoubleProperty(scaleStrength);
 
-        imageView = new ImageView(image);
-        imageView.setEffect(effect);
         shadow = new Rectangle(0, 0, style.getBGShadow());
-
         shadow.widthProperty().bind(super.widthProperty());
         shadow.heightProperty().bind(super.heightProperty());
 
-        final double imgW = image.getWidth();
-        final double imgH = image.getHeight();
-        imgRatio = imgW / imgH;
 
         super.layoutBoundsProperty().addListener((o, ov, nv) -> {
             boxW = nv.getWidth();
@@ -82,6 +76,19 @@ public class AXBackGround extends AutoPane {
         scale.addListener((o, ov, nv) -> {
             layoutOffset();
         });
+
+        if (image != null) {
+            imageView = new ImageView(image);
+            final double imgW = image.getWidth();
+            final double imgH = image.getHeight();
+            imgRatio = imgW / imgH;
+        } else {
+            imageView = new ImageView();
+            imgRatio = 1;
+        }
+
+        imageView.setEffect(effect);
+
 
         super.getChildren().addAll(imageView, shadow);
     }
@@ -124,6 +131,9 @@ public class AXBackGround extends AutoPane {
 
     public void setImage(Image image) {
         imageView.setImage(image);
+        if (image != null) {
+            imgRatio = image.getWidth() / image.getHeight();
+        }
     }
 
 //    private void layoutOffset() {

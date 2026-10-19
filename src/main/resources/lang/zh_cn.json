@@ -439,6 +439,11 @@
 				"save_failed": "保存数据失败",
 				"load_failed": "加载数据失败"
 			}
+		},
+		"window_manager": {
+			"warn": {
+				"load_image_failed": "无法加载背景图片文件：{}"
+			}
 		}
 	}
 }

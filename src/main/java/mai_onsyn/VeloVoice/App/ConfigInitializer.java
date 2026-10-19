@@ -120,7 +120,7 @@ public class ConfigInitializer {
         {
             windowConfig.registerBoolean("DarkMode", true);
             windowConfig.registerString("ThemeColor", "#F08080");
-            windowConfig.registerString("BackgroundImage", "textures/bg.png");
+            windowConfig.registerString("BackgroundImage", "");
             windowConfig.registerDouble("BackgroundOpacity", 1.0);
             windowConfig.registerDouble("BackgroundBlur", 0);
             windowConfig.registerDouble("BackgroundScale", 1.01);

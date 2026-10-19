@@ -439,6 +439,11 @@
 				"save_failed": "Failed to save data",
 				"load_failed": "Failed to load data"
 			}
+		},
+		"window_manager": {
+			"warn": {
+				"load_image_failed": "Cannot load background image file: {}"
+			}
 		}
 	}
 }
