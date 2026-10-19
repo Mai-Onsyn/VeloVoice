@@ -4,7 +4,8 @@ import java.util.Locale;
 
 /**
  * DeepSeek 网页版生成<br>
- * 参考<a href="https://github.com/rany2/edge-tts/blob/b2ffbdd9f43f28f03cc939b5de0f3964aa62d60e/src/edge_tts/drm.py">edge-tts</a>的提交实现翻译为Java
+ * 参考<a href="https://github.com/rany2/edge-tts/blob/b2ffbdd9f43f28f03cc939b5de0f3964aa62d60e/src/edge_tts/drm.py">edge-tts</a>的提交实现翻译为Java<br>
+ * 放心这段注释是人写的 :)
  */
 public class SecMsGecV2 {
 
