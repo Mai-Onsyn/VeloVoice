@@ -226,7 +226,7 @@
 				"user_agent":"UA"
 			},
 			"input":{
-				"user_agent":"浏览器UA"
+				"user_agent":"不填或者没填对就用 Edge TTS 会被 403 哦~"
 			}
 		},
 		"misc":{

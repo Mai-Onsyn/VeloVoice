@@ -267,7 +267,7 @@ public class AudioEncodeUtils {
         }
 
         if (dataChunkOffset == -1) {
-            throw new IllegalArgumentException("未找到数据块");
+            throw new IllegalArgumentException("未找到数据块: " + wavData.length + " bytes");
         }
 
         // 提取音频数据

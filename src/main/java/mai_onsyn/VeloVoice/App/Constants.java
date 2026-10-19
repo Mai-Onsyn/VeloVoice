@@ -15,6 +15,8 @@ public class Constants {
 
     private static String URL;
 
+    private static SecureRandom rnd = new SecureRandom();
+
 //    public static final String USER_AGENT = "Mozilla/5.0 (Windows NT 11.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0";
     public static final String ORIGIN = "chrome-extension://jdiccldimpdaibmpdkjnbmckianbfold";
     public static final String VOICES_LIST_URL = "https://speech.platform.bing.com/consumer/speech/synthesize/readaloud/voices/list?trustedclienttoken=6A5AA1D4EAFF4E9FB37E23D68491D6F4";
@@ -146,12 +148,10 @@ public class Constants {
     }
 
     public static String genUA() {
-        SecureRandom rnd = new SecureRandom();
-
-        int major = 137 + rnd.nextInt(5); // 137–142
+        int major = 137 + rnd.nextInt(11); // 137–148
 
         int chromeBuild = 6000 + rnd.nextInt(501); // 6000–6500
-        int edgeBuild   = 2000 + rnd.nextInt(601); // 2000–2600
+        int edgeBuild = 2000 + rnd.nextInt(601); // 2000–2600
 
         return String.format(
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/%d.0.%d.0 Safari/537.36 Edg/%d.0.%d.0",
@@ -162,11 +162,31 @@ public class Constants {
         );
     }
 
+    public static String getEdgeVersionFromUA(String ua) {
+        List<String> prefixes = List.of("Edg/", "Edge/");
+        int vs = -1;
+        for (String prefix : prefixes) {
+            int idx = ua.indexOf(prefix);
+            if (idx != -1) {
+                vs = idx + prefix.length();
+            }
+        }
+        if (vs == -1) {
+            int major = 137 + rnd.nextInt(11); // 137–148
+            int edgeBuild = 2000 + rnd.nextInt(601);
+            return String.format("%d.0.%d.0", major, edgeBuild);
+        }
+
+        int ve = ua.indexOf(' ', vs + 1);
+        return ua.substring(vs, ve == -1 ? ua.length() : ve);
+    }
+
     public static void updateSec_MS_GEC() {
 
-        String SEC_MS_GEC = genSecMsGec();
-        String SEC_MS_GEC_Version = "1-146.0.3856.109";
-//        String SEC_MS_GEC_Version = "1-131.0.2903.112";
+        String SEC_MS_GEC = SecMsGecV2.genSecMsGecV2(null);
+//        String SEC_MS_GEC = genSecMsGec();
+//        String SEC_MS_GEC_Version = "1-146.0.3856.109";
+        String SEC_MS_GEC_Version = "2-" + getEdgeVersionFromUA(Runtime.config.getString("User-Agent"));
 
         URL = String.format("wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1?TrustedClientToken=6A5AA1D4EAFF4E9FB37E23D68491D6F4&Sec-MS-GEC=%s&Sec-MS-GEC-Version=%s", SEC_MS_GEC, SEC_MS_GEC_Version);
     }
@@ -175,7 +195,6 @@ public class Constants {
         updateSec_MS_GEC();
         return URL;
     }
-
 
     public static class I18nKeyMaps {
         public static final Map<String, String> CONTEXT = new HashMap<>();
