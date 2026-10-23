@@ -176,7 +176,7 @@ public class EdgeTTSClient extends WebSocketClient implements TTSClient {
                 (voiceRate - 1) * 100,
                 voiceVolume >= 1.0 ? "+" : "",
                 (voiceVolume - 1) * 100,
-                s.replaceAll("&", "&amp;").replaceAll("<", "&lt;")
+                s.replace("&", "&amp;").replace("<", "&lt;")
         );
         this.send(message);
 
@@ -185,6 +185,8 @@ public class EdgeTTSClient extends WebSocketClient implements TTSClient {
         if (res.equals("error")) {
             throw exception;
         } else if (res.equals("closed")) {
+            audioBytesTemp.clear();
+            wordsTemp.clear();
             return null;
         }
         Sentence sentence = new Sentence(s, Sentence.mergeAudio(audioBytesTemp), List.copyOf(wordsTemp), AudioEncodeUtils.AudioFormat.MP3_24KHZ_16BIT);

@@ -79,12 +79,13 @@ public class ResumableTTSClient implements TTSClient {
         while (retry < maxRetries) {
             try {
                 if (!client.isActive()) client.establish();
-                return client.process(s);
+                Sentence sentence = client.process(s);
+                if (sentence == null) throw new TTSException("TTS didn't return any data!");
+                return sentence;
             } catch (Exception e) {
                 Thread.sleep(config.getInteger("FetchFailWaitMillis"));
-                //if (retry == maxRetries) break;
                 log.debug("Failed to processing, retrying({})...", retry, e);
-                if (client.isActive()) client.terminate();
+                try { client.terminate(); } catch (Exception _) {}
                 client = clientFactory.createClient();
             }
             retry++;

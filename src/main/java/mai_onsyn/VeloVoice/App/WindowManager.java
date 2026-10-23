@@ -32,15 +32,15 @@ public class WindowManager {
     public static void initialize(Window main) {
         setMainWindow(main);
         log.debug("Initialized window count = {}", windows.size());
+        Image image = null;
+        if (!windowConfig.getString("BackgroundImage").isBlank()) try {
+            image = Toolkit.loadImage(windowConfig.getString("BackgroundImage"));
+        } catch (IOException e) {
+            log.warn(I18N.getCurrentValue("log.window_manager.warn.load_image_failed"), windowConfig.getString("BackgroundImage"));
+        }
         for (Window window : windows) {
             Parent parent = window.getScene().getRoot();
             if (parent instanceof AutoPane root) {
-                Image image = null;
-                try {
-                    image = Toolkit.loadImage(windowConfig.getString("BackgroundImage"));
-                } catch (IOException e) {
-                    log.warn(I18N.getCurrentValue("log.window_manager.warn.load_image_failed"), windowConfig.getString("BackgroundImage"));
-                }
                 AXBackGround backGround = new AXBackGround(image, Color.gray(windowConfig.getBoolean("DarkMode") ? FrameThemes.DARK_GRAY : FrameThemes.LIGHT_GRAY, windowConfig.getDouble("BackgroundOpacity")), windowConfig.getDouble("BackgroundScale"), windowConfig.getDouble("BackgroundBlur"));
                 backgrounds.add(backGround);
                 root.getChildren().addFirst(backGround);
