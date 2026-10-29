@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -70,7 +71,7 @@ public class TTSPool {
 
         log.debug("Received {} sentences", input.size());
 
-        Map<Integer, Sentence> resultPool = new HashMap<>();
+        Map<Integer, Sentence> resultPool = new ConcurrentHashMap<>();
 
         AtomicInteger processIndex = new AtomicInteger();
         CountDownLatch countDownLatch = new CountDownLatch(input.size());
